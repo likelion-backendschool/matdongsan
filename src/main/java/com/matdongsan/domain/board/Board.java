@@ -22,4 +22,6 @@ public class Board {
 
     private String content;
 
+    private int pageView;
+
 }
