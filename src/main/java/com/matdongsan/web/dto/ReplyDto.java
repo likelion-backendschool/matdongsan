@@ -11,5 +11,4 @@ public class ReplyDto {
     String body;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
-
 }
