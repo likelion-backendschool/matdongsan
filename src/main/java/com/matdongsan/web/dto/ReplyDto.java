@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+//replayDto
 @Data
 public class ReplyDto {
     Long id;
@@ -11,4 +12,5 @@ public class ReplyDto {
     String body;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+
 }
