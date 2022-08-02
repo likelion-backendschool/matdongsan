@@ -1,4 +1,2 @@
-package com.matdongsan.service;
-
-public class ReplyService {
+package com.matdongsan.service;public class ReplyService {
 }
