@@ -1,10 +1,11 @@
-package com.matdongsan.web.controller.board;
+package com.matdongsan.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-public class ReplyController {
-    // source code
+@Slf4j
+public class MemberController {
 }
