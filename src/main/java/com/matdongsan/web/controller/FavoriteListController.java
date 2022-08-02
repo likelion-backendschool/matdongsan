@@ -7,5 +7,5 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class FavoriteList {
+public class FavoriteListController {
 }
