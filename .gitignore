@@ -12,6 +12,7 @@
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/vcs.xml
+.idea/misc.xml
 vcs.xml
 
 # AWS User-specific
@@ -32,7 +33,6 @@ vcs.xml
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
-.gradle
 .gradle/
 build/
 
@@ -90,7 +90,7 @@ fabric.properties
 
 # *.iml
 # modules.xml
-# .idea/misc.xml
+
 # *.ipr
 
 # Sonarlint plugin
