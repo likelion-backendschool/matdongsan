@@ -17,7 +17,7 @@ public class MemberDto {
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-zA-Z0-9_-]{3,20}$")
     private String loginId;
 
-    private String loginPwd;
+    private String password;
 
     @NotBlank
     @Length(min = 3, max = 20)
