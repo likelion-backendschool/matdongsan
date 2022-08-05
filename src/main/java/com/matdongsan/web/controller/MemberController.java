@@ -16,13 +16,13 @@ import javax.validation.Valid;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/signup")
+    @GetMapping("/login")
     public String showSignUpPage(Model model) {
         model.addAttribute(new MemberDto());
-        return "member/signup";
+        return "member/member-login";
     }
 
-    @GetMapping("/signup")
+//    @GetMapping("/member/signup")
     public String createNewMember(@Valid MemberDto memberDto) {
         memberService.saveNewMember(memberDto);
         return "redirect:/";
