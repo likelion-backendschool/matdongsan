@@ -27,36 +27,43 @@
                     <div class="login-form-wrap">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a th:href="@{/login}" class="nav-link active"><i class="icofont-users-alt-4"></i> Sign In </a>
+                                <a th:href="@{/login}" class="nav-link"><i class="icofont-users-alt-4"></i> Sign In </a>
                             </li>
                             <li class="nav-item">
-                                <a th:href="@{/signup}" class="nav-link"><i class="icofont-download"></i> Registration</a>
+                                <a th:href="@{/signup}" class="nav-link active"><i class="icofont-download"></i> Registration</a>
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane login-tab fade show active" id="login-tab" role="tabpanel">
-                                <h3 class="item-title">Sign Into <span>Your Account</span></h3>
-                                <div class="google-signin">
-                                    <a href="#"><img src="media/figure/google-icon.png" alt="Google">Google Sign in</a>
-                                </div>
-                                <form th:action method="post" novalidate th:object="${memberLoginDto}">
+                            <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
+                                <h3 class="item-title">Sign Up Your Account</h3>
+                                <form th:action="@{/signup}" method="post" th:object="${memberSignUpDto}">
                                     <div class="form-group">
-                                        <input type="text" id="username" required class="form-control" th:field="*{username}" placeholder="아이디를 입력하세요." autocomplete="off">
+                                        <input type="text" th:field="*{username}" class="form-control" placeholder="아이디를 입력해주세요." autocomplete="off">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" id="password" required class="form-control" th:field="*{password}" placeholder="비밀번호를 입력하세요." autocomplete="off">
+                                        <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요." autocomplete="off">
                                     </div>
-                                    <div class="form-group reset-password">
-                                        <a href="#">* Reset Password</a>
+                                    <div class="form-group">
+                                        <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요." autocomplete="off">
                                     </div>
-                                    <div class="form-group mb-4">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="validationFormCheck2">
-                                            <label class="form-check-label" for="validationFormCheck2">Keep me as signed in</a></label>
+                                    <div class="form-group">
+                                        <input type="date" th:field="*{birth}" class="form-control" placeholder="Your Birth Day" autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="select2" th:field="*{gender}" data-placeholder="Select Gender">
+                                            <option value=""></option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <div class="form-check mb-3">
+                                            <input type="checkbox" class="form-check-input" id="validationFormCheck1">
+                                            <label class="form-check-label" for="validationFormCheck1">I accept the <a href="#">Terms and Conditions</a></label>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
-                                        <input type="submit" name="login-btn" class="submit-btn" value="Login">
+                                        <input type="submit" name="registration" class="submit-btn" value="Complete Registration">
                                     </div>
                                 </form>
                             </div>

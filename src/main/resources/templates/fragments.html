@@ -375,7 +375,7 @@
                                             <span class="acc-verified"><i class="icofont-check"></i></span>
                                         </span>
                                         <span class="media-body">
-                                            <span class="item-title">닉네임</span>
+                                            <span class="item-title" th:text="${member.getUsername()}">닉네임</span>
                                         </span>
                                     </span>
                             </button>
@@ -387,7 +387,14 @@
                                     <li><a th:href="@{/member/forums}">Settings</a></li>
                                     <li><a th:href="@{/member/forums}">Terms and Conditions</a></li>
                                     <li><a th:href="@{/member/forums}">Contact</a></li>
-                                    <li><a th:href="@{/member/logout}">Log Out</a></li>
+<!--                                    <li><a th:href="@{/logout}">Log Out</a></li>-->
+                                    <li>
+                                        <form action="#" name="logout" th:action="@{/logout}" method="post">
+                                            <a href="javascript:logout.submit();">
+                                                로그아웃
+                                            </a>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
