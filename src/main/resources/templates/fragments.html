@@ -59,9 +59,9 @@
                     <nav id="dropdown" class="template-main-menu">
                         <ul class="menu-content">
                             <li class="header-nav-item">
-                                <a class="menu-link active">Home</a>
+                                <a th:href="@{/post/new}" class="menu-link active">맛집 추가</a>
                             </li>
-                            <li class="header-nav-item">
+                            <!--<li class="header-nav-item">
                                 <a href="#" class="menu-link have-sub">Community</a>
                                 <ul class="mega-menu mega-menu-col-2">
                                     <li>
@@ -115,8 +115,8 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="header-nav-item">
+                            </li>-->
+                            <!--<li class="header-nav-item">
                                 <a href="#" class="menu-link have-sub">Pages</a>
                                 <ul class="sub-menu">
                                     <li>
@@ -138,7 +138,7 @@
                                         <a href="contact.html">Contact Us</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                     </nav>
                 </div>
@@ -152,60 +152,6 @@
                         </div>
                     </div>
                     <div class="inline-item d-flex align-items-center">
-                        <div class="dropdown dropdown-cart">
-                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                <i class="icofont-shopping-cart"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="item-heading">
-                                    <h6 class="heading-title">Shopping Cart: <span>3</span></h6>
-                                </div>
-                                <div class="item-body">
-                                    <div class="media">
-                                        <div class="item-img">
-                                            <img src="media/figure/cart_1.jpg" alt="Product">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="item-title"><a href="#">Black Coffee Mug</a></h6>
-                                            <div class="item-category">COFFEE MUGS</div>
-                                            <div class="item-price">$29 x 1</div>
-                                            <div class="btn-area">
-                                                <a href="#" class="close-btn"><i class="icofont-ui-close"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="item-img">
-                                            <img src="media/figure/cart_2.jpg" alt="Product">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="item-title"><a href="#">Head Phone</a></h6>
-                                            <div class="item-category">Assets</div>
-                                            <div class="item-price">$15 x 1</div>
-                                            <div class="btn-area">
-                                                <a href="#" class="close-btn"><i class="icofont-ui-close"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="item-img">
-                                            <img src="media/figure/cart_3.jpg" alt="Product">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="item-title"><a href="#">Black Watch</a></h6>
-                                            <div class="item-category">Watch</div>
-                                            <div class="item-price">$59 x 1</div>
-                                            <div class="btn-area">
-                                                <a href="#" class="close-btn"><i class="icofont-ui-close"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item-footer">
-                                    <a href="#" class="view-btn">View All Product</a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="dropdown dropdown-friend">
                             <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                 <i class="icofont-users-alt-4"></i>
@@ -381,12 +327,8 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <ul class="admin-options">
-                                    <li><a th:href="@{/member/setting}">Profile Settings</a></li>
-                                    <li><a th:href="@{/member/setting}">Groups</a></li>
-                                    <li><a th:href="@{/member/forums}">Forums</a></li>
-                                    <li><a th:href="@{/member/forums}">Settings</a></li>
-                                    <li><a th:href="@{/member/forums}">Terms and Conditions</a></li>
-                                    <li><a th:href="@{/member/forums}">Contact</a></li>
+                                    <li><a th:href="@{/member/setting}">프로필 설정</a></li>
+                                    <li><a th:href="@{/member/post}">나만의 맛집</a></li>
 <!--                                    <li><a th:href="@{/logout}">Log Out</a></li>-->
                                     <li>
                                         <form action="#" name="logout" th:action="@{/logout}" method="post">
@@ -416,15 +358,14 @@
             <div class="sidebar-menu-wrap">
                 <div class="mCustomScrollbar" data-mcs-theme="dark" data-mcs-axis="y">
                     <ul class="side-menu">
-                        <li><a href="newsfeed.html" class="menu-link" data-toggle="tooltip" data-placement="right" title=" NEWSFEED"><i class="icofont-newspaper"></i></a></li>
-                        <li><a href="member/member-timeline.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="MEMBERS TIMELINE"><i class="icofont-list"></i></a></li>
-                        <li><a href="user-groups.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="GROUPS"><i class="icofont-users-alt-2"></i></a></li>
-                        <li><a href="user-friends.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="MEMBERS FRIENDS"><i class="icofont-users-alt-4"></i></a></li>
-                        <li><a href="user-photo.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="GALLERY"><i class="icofont-photobucket"></i></a></li>
-                        <li><a href="user-video.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="VIDEOS"><i class="icofont-play-alt-1"></i></a></li>
-                        <li><a href="#" class="menu-link" data-toggle="tooltip" data-placement="right" title="EVENT SCHEDULE"><i class="icofont-calendar"></i></a></li>
-                        <li><a href="forums-timeline.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="FORUM"><i class="icofont-ui-text-chat"></i></a></li>
-                        <li><a href="shop.html" class="menu-link" data-toggle="tooltip" data-placement="right" title="SHOP"><i class="icofont-shopping-cart"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="맛집 둘러보기"><i class="icofont-list"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="GROUPS"><i class="icofont-users-alt-2"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="MEMBERS FRIENDS"><i class="icofont-users-alt-4"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="GALLERY"><i class="icofont-photobucket"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="VIDEOS"><i class="icofont-play-alt-1"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="EVENT SCHEDULE"><i class="icofont-calendar"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="FORUM"><i class="icofont-ui-text-chat"></i></a></li>
+                        <li><a th:href="@{/post}" class="menu-link" data-toggle="tooltip" data-placement="right" title="SHOP"><i class="icofont-shopping-cart"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -443,17 +384,24 @@
             <div class="sidebar-menu-wrap">
                 <div class="mCustomScrollbar" data-mcs-theme="dark" data-mcs-axis="y">
                     <ul class="side-menu">
-                        <li><a href="newsfeed.html" class="menu-link"><i class="icofont-newspaper"></i><span class="menu-title">Newsfeed</span></a></li>
-                        <li><a href="member/member-timeline.html" class="menu-link"><i class="icofont-list"></i><span class="menu-title">Members Timeline</span></a></li>
-                        <li><a href="user-groups.html" class="menu-link"><i class="icofont-users-alt-2"></i><span class="menu-title">Groups</span></a></li>
-                        <li><a href="user-friends.html" class="menu-link"><i class="icofont-users-alt-4"></i><span class="menu-title">Members Friends</span></a></li>
-                        <li><a href="user-photo.html" class="menu-link"><i class="icofont-photobucket"></i><span class="menu-title">Gallery</span></a></li>
-                        <li><a href="user-video.html" class="menu-link"><i class="icofont-play-alt-1"></i><span class="menu-title">Videos</span></a></li>
-                        <li><a href="#" class="menu-link"><i class="icofont-calendar"></i><span class="menu-title">Event Schedule</span></a></li>
-                        <li><a href="forums-timeline.html" class="menu-link"><i class="icofont-ui-text-chat"></i><span class="menu-title">Forum</span></a></li>
-                        <li><a href="shop.html" class="menu-link"><i class="icofont-shopping-cart"></i><span class="menu-title">Shop</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-list"></i><span class="menu-title">맛집 둘러보기</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-users-alt-2"></i><span class="menu-title">Groups</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-users-alt-4"></i><span class="menu-title">Members Friends</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-photobucket"></i><span class="menu-title">Gallery</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-play-alt-1"></i><span class="menu-title">Videos</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-calendar"></i><span class="menu-title">Event Schedule</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-ui-text-chat"></i><span class="menu-title">Forum</span></a></li>
+                        <li><a th:href="@{/post}" class="menu-link"><i class="icofont-shopping-cart"></i><span class="menu-title">Shop</span></a></li>
                     </ul>
-                    <ul class="top-menu-mobile">
+                    <!--=====================================-->
+                    <!--=        Footer Area Start       	=-->
+                    <!--=====================================-->
+                    <footer class="footer-wrap footer-dashboard">
+                        <div class="footer-bottom">
+                            <div class="footer-copyright">Copy© Matdongsan 2022. All Rights Reserved</div>
+                        </div>
+                    </footer>
+                    <!--<ul class="top-menu-mobile">
                         <li class="menu-label">Community</li>
                         <li>
                             <a href="user-about.html" class="menu-link">Profile About</a>
@@ -495,7 +443,7 @@
                         <li>
                             <a href="contact.html" class="menu-link">Contact Us</a>
                         </li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
         </div>
