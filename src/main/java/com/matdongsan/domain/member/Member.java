@@ -3,6 +3,7 @@ package com.matdongsan.domain.member;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,10 +27,16 @@ public class Member {
     private String password;
 
     @Column(unique = true)
-    private String nickname;
+    private String email;
+
+    private String gender;
 
     private LocalDateTime signUpDate;
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
+    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword) {
+        return passwordEncoder.matches(checkPassword, getPassword());
+    }
 }
