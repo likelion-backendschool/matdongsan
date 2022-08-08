@@ -2,13 +2,12 @@ package com.matdongsan.infra;
 
 import com.matdongsan.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -17,37 +16,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;
 
     @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                    .antMatchers("/login", "/signup", "/user", "/").permitAll()
-                    // 누구나 접근 허용하는 페이지
-                    .antMatchers("/admin").hasRole("ADMIN")
-                    // ADMIN 권한이 있는 사람만 이용 가능한 페이지
-                    .anyRequest().authenticated()
-                    // 나머지 요청은 모두 권한(로그인)이 있어야지 접근 가능
-                .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    // 로그인 페이지 링크
-                    .defaultSuccessUrl("/")
-                    // 로그인 완료 시 리다이렉트 주소
-                .and()
-                    .logout()
-                    .logoutSuccessUrl("/login")
-                    // 로그아웃 성공 시 리다이렉트 주소
-                    .invalidateHttpSession(true);
-                    // 로그아웃 후 세션 날리기
-    }
 
+        http.authorizeRequests()
+                .mvcMatchers("/login", "/signup").permitAll() // 누구나 접근 가능
+                .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능
+                .anyRequest().authenticated(); // 나머지 요청은 권한이 있어야함
+        /*
+        * 기존 formLogin 로직
+        http.formLogin()
+                .loginPage("/login")
+                .permitAll();
+        */
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/");
+
+        // 인증 필요시 로그인 페이지와 로그인 성공시 리다이랙팅 경로 지정
+        http.formLogin()
+                .loginPage("/login")    // 로그인 페이지 링크
+                .defaultSuccessUrl("/", true); // 로그인 성공 후 리다이렉트 주소
+
+        // 로그인이 수행될 uri 매핑 (post 요청이 기본)
+        /*http.formLogin()
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true);*/
+
+        http.exceptionHandling().accessDeniedPage("/");
+
+        http.userDetailsService(memberService);
+
+        http.rememberMe()
+                .userDetailsService(memberService);
+    }
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService)
-                // MemberService implements UserDetailsService -> loadUserByUsername() 구현
-                .passwordEncoder(new BCryptPasswordEncoder());
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .mvcMatchers("/dependencies/**", "/assets/**", "/media/**", "/php/**", "/sass/**")
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }

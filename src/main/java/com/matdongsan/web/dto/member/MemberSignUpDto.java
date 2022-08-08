@@ -1,10 +1,9 @@
-package com.matdongsan.web.dto;
+package com.matdongsan.web.dto.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -12,16 +11,19 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class MemberDto {
+public class MemberSignUpDto {
 
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-zA-Z0-9_-]{3,20}$")
-    private String loginId;
+    private String username;
 
     private String password;
 
     @NotBlank
-    @Length(min = 3, max = 20)
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-zA-Z0-9_-]{3,20}$")
-    private String nickname;
+    private String email;
+
+    @NotBlank
+    private String birth;
+
+    private String gender;
 
 }
