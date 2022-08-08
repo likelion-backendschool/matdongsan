@@ -1,87 +1,23 @@
-# Project Title
+# 맛동산 프로젝트
 
-One Paragraph of project description goes here
+맛동산 프로젝트는 회원가입 시 생년월일을 입력받아 나이대별로 맛집을 추천해주는 `Web Application`입니다.<br>
+또한 날씨 API를 받아와 오늘 날씨에 어울리는 맛집을 추천해주며, 음악 플레이리스트와 같이 나만의 맛집을 카테고리 별로 저장하는 기능을 제공합니다.
 
-## Getting Started
+## 프로젝트 소개
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+맛동산 프로젝트는 **`멋쟁이사자처럼 백엔드스쿨 1기 해커톤 프로젝트`**입니다.<br>
+아이디어톤을 통해 정해진 결과를 토대로 발전시킨 결과물입니다.<br>
 
-### Prerequisites
+### Tech Stack
+> 아래 내용은 이후에 변동될 수 있습니다.
+- Java / Spring Boot
+- Thymeleaf
+- MySQL
+- Hibernate / JPA
+- JUnit
+- AWS EC2, S3, RDS
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+### Dependencies
+> 아래 내용은 이후에 변동될 수 있습니다.
+- Lombok
+- Spring Security
