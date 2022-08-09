@@ -4,7 +4,6 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.domain.member.MemberRole;
 import com.matdongsan.infra.SecurityUser;
-import com.matdongsan.web.dto.member.MemberLoginDto;
 import com.matdongsan.web.dto.member.MemberSignUpDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

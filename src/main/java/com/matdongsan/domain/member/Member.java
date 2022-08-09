@@ -1,19 +1,14 @@
 package com.matdongsan.domain.member;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Entity
-@Getter @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
@@ -35,6 +30,16 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
+    @Builder
+    public Member(String username, String password, String email, String gender, LocalDateTime signUpDate, MemberRole memberRole) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.signUpDate = signUpDate;
+        this.memberRole = memberRole;
+    }
 
     public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword) {
         return passwordEncoder.matches(checkPassword, getPassword());
