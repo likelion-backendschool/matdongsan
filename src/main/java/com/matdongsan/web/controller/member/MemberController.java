@@ -1,4 +1,4 @@
-package com.matdongsan.web.controller;
+package com.matdongsan.web.controller.member;
 
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.service.MemberService;
