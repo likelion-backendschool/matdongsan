@@ -35,6 +35,7 @@ public class MemberService implements UserDetailsService {
                 .username(memberSignUpDto.getUsername())
                 .password(passwordEncoder.encode(memberSignUpDto.getPassword()))
                 .email(memberSignUpDto.getEmail())
+                .birth(memberSignUpDto.getBirth())
                 .gender(memberSignUpDto.getGender())
                 .signUpDate(LocalDateTime.now())
                 .memberRole(MemberRole.ROLE_USER)
