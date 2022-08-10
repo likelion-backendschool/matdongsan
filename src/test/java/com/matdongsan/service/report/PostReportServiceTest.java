@@ -39,6 +39,7 @@ class PostReportServiceTest {
     @Rollback
     @DisplayName("PostReport 생성")
     void createPostReport(){
+        // 멤버, 게시글 생성
         Member member = new Member("memberA", "123",
                 "email", "gender", LocalDateTime.now(), MemberRole.ROLE_USER);
         Posts posts = new Posts(null, "title", "content");
@@ -46,10 +47,11 @@ class PostReportServiceTest {
         Member savedMember = memberRepository.save(member);
         Posts savedPost = postsRepository.save(posts);
 
-        PostReport savedReport = postReportService.savePostReport(savedMember.getId(), savedPost.getId(), ReportCategory.TYPE1, "content");
-
+        // 결과 비교
+        PostReport savedReport = postReportService
+                .savePostReport(savedMember.getId(), savedPost.getId(), ReportCategory.TYPE1, "content");
         PostReport findReport = postReportRepository.findById(savedReport.getId()).get();
 
-        Assertions.assertThat(savedReport).isEqualTo(findReport);
+        assertThat(savedReport).isEqualTo(findReport);
     }
 }
