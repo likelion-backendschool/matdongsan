@@ -8,7 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ public class TestDataInit {
                     .password(passwordEncoder.encode("member1"))
                     .email("member1@gmail.com")
                     .gender("male")
+                    .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
                     .signUpDate(LocalDateTime.now())
                     .memberRole(MemberRole.ROLE_USER)
                     .build());
