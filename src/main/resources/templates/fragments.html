@@ -26,16 +26,14 @@
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
-</head>
-<th:block th:fragment="header-sidebar">
     <!-- Jquery Js -->
     <script src="/dependencies/jquery/js/jquery.min.js"></script>
+    <script src="/dependencies/sal.js/sal.js"></script>
     <script src="/dependencies/popper.js/js/popper.min.js"></script>
     <script src="/dependencies/bootstrap/js/bootstrap.min.js"></script>
     <script src="/dependencies/imagesloaded/js/imagesloaded.pkgd.min.js"></script>
     <script src="/dependencies/isotope-layout/js/isotope.pkgd.min.js"></script>
     <script src="/dependencies/slick-carousel/js/slick.min.js"></script>
-    <script src="/dependencies/sal.js/sal.js"></script>
     <script src="/dependencies/magnific-popup/js/jquery.magnific-popup.min.js"></script>
     <script src="/dependencies/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="/dependencies/select2/js/select2.min.js"></script>
@@ -43,16 +41,15 @@
     <script src="/dependencies/bootstrap-validator/js/validator.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtmXSwv4YmAKtcZyyad9W7D4AC08z0Rb4"></script>
 
-    <!-- Site Scripts -->
-    <script src="assets/js/app.js"></script>
-
+</head>
+<div th:fragment="sidebar">
     <!-- Top Header -->
     <header class="fixed-header">
         <div class="header-menu">
             <div class="navbar">
                 <div class="nav-item d-none d-sm-block">
                     <div class="header-logo">
-                        <a th:href="@{/}"><img src="media/logo.png" alt="Cirkle"></a>
+                        <a th:href="@{/}"><img src="/media/logo.png" alt="Cirkle"></a>
                     </div>
                 </div>
                 <div class="nav-item nav-top-menu">
@@ -167,7 +164,7 @@
                                 <div class="item-body">
                                     <div class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/chat_5.jpg" alt="Notify">
+                                            <img src="/media/figure/chat_5.jpg" alt="Notify">
                                             <span class="chat-status offline"></span>
                                         </div>
                                         <div class="media-body">
@@ -181,7 +178,7 @@
                                     </div>
                                     <div class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/chat_1.jpg" alt="Notify">
+                                            <img src="/media/figure/chat_1.jpg" alt="Notify">
                                             <span class="chat-status online"></span>
                                         </div>
                                         <div class="media-body">
@@ -195,7 +192,7 @@
                                     </div>
                                     <div class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/chat_8.jpg" alt="Notify">
+                                            <img src="/media/figure/chat_8.jpg" alt="Notify">
                                             <span class="chat-status online"></span>
                                         </div>
                                         <div class="media-body">
@@ -228,7 +225,7 @@
                                 <div class="item-body">
                                     <a href="#" class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/notifiy_1.png" alt="Notify">
+                                            <img src="/media/figure/notifiy_1.png" alt="Notify">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="item-title">Diana Jameson</h6>
@@ -238,7 +235,7 @@
                                     </a>
                                     <a href="#" class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/notifiy_2.png" alt="Notify">
+                                            <img src="/media/figure/notifiy_2.png" alt="Notify">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="item-title">Quirty</h6>
@@ -248,7 +245,7 @@
                                     </a>
                                     <a href="#" class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/notifiy_3.png" alt="Notify">
+                                            <img src="/media/figure/notifiy_3.png" alt="Notify">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="item-title">Zinia Jessy</h6>
@@ -277,7 +274,7 @@
                                 <div class="item-body">
                                     <a href="#" class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/notifiy_1.png" alt="Notify">
+                                            <img src="/media/figure/notifiy_1.png" alt="Notify">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="item-title">Diana Jameson</h6>
@@ -287,7 +284,7 @@
                                     </a>
                                     <a href="#" class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/notifiy_2.png" alt="Notify">
+                                            <img src="/media/figure/notifiy_2.png" alt="Notify">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="item-title">Quirty</h6>
@@ -297,7 +294,7 @@
                                     </a>
                                     <a href="#" class="media">
                                         <div class="item-img">
-                                            <img src="media/figure/notifiy_3.png" alt="Notify">
+                                            <img src="/media/figure/notifiy_3.png" alt="Notify">
                                         </div>
                                         <div class="media-body">
                                             <h6 class="item-title">Zinia Jessy</h6>
@@ -317,7 +314,7 @@
                             <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                     <span class="media">
                                         <span class="item-img">
-                                            <img src="media/figure/chat_5.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_5.jpg" alt="Chat">
                                             <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
                                         </span>
                                         <span class="media-body">
@@ -373,7 +370,7 @@
         <div class="fixed-sidebar-left large-sidebar">
             <div class="sidebar-toggle">
                 <div class="sidebar-logo">
-                    <a href="index_example.html"><img src="media/logo2.png" alt="Logo"></a>
+                    <a href="index_example.html"><img src="/media/logo2.png" alt="Logo"></a>
                 </div>
                 <button class="toggle-btn toggler-close">
                     <span></span>
@@ -461,13 +458,13 @@
                     <ul class="user-chat-list">
                         <li class="chat-item chat-open">
                             <div class="author-img">
-                                <img src="media/figure/chat_1.jpg" alt="chat">
+                                <img src="/media/figure/chat_1.jpg" alt="chat">
                                 <span class="chat-status offline"></span>
                             </div>
                         </li>
                         <li class="chat-item chat-open">
                             <div class="author-img">
-                                <img src="media/figure/chat_5.jpg" alt="chat">
+                                <img src="/media/figure/chat_5.jpg" alt="chat">
                                 <span class="chat-status online"></span>
                             </div>
                         </li>
@@ -476,5 +473,57 @@
             </div>
         </div>
     </div>
-</th:block>
+    <!-- Chat Modal Here -->
+    <div class="chat-conversion-box" id="chat-box-modal" tabindex="-1" aria-labelledby="chat-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="chat-modal-label">Fahim Rahman <span class="online"></span></h6>
+                    <div class="action-icon">
+                        <button class="chat-shrink"><i class="icofont-minus"></i></button>
+                        <button type="button" class="close chat-close chat-open" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <ul class="chat-conversion">
+                        <li class="chat-others">
+                            <div class="author-img">
+                                <img src="/media/figure/chat_12.jpg" alt="Chat">
+                            </div>
+                            <div class="author-text">
+                                <span>How are you Fahim vai ? Tommorow office will be your last day of Bachelor life.</span>
+                            </div>
+                        </li>
+                        <li class="chat-you">
+                            <div class="author-img">
+                                <img src="/media/figure/chat_11.jpg" alt="Chat">
+                            </div>
+                            <div class="author-text">
+                                <span>hmm That's great</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Write your text here.....">
+                            <div class="chat-plus-icon"><i class="icofont-plus-circle"></i></div>
+                            <div class="file-attach-icon">
+                                <a href="#"><i class="icofont-slightly-smile"></i></a>
+                                <a href="#"><i class="icofont-camera"></i></a>
+                                <a href="#"><i class="icofont-image"></i></a>
+                                <a href="#"><i class="icofont-mic"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Site Scripts -->
+    <script src="/assets/js/app.js"></script>
+</div>
 </html>

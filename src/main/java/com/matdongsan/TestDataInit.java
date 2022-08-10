@@ -20,7 +20,14 @@ public class TestDataInit {
     @PostConstruct
     public void dataInit() {
         if (memberRepository.findByUsername("member1").isEmpty()) {
-            memberRepository.save(new Member(null, "member1", passwordEncoder.encode("member1"), "member1.gmail.com", "male", LocalDateTime.now(), MemberRole.ROLE_USER));
+            memberRepository.save(Member.builder()
+                    .username("member1")
+                    .password(passwordEncoder.encode("member1"))
+                    .email("member1@gmail.com")
+                    .gender("male")
+                    .signUpDate(LocalDateTime.now())
+                    .memberRole(MemberRole.ROLE_USER)
+                    .build());
         }
     }
 }
