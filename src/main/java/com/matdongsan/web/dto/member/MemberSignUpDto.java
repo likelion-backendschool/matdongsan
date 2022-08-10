@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,8 +23,8 @@ public class MemberSignUpDto {
     @NotBlank
     private String email;
 
-    @NotBlank
-    private String birth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birth;
 
     private String gender;
 
