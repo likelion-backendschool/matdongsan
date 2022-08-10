@@ -34,8 +34,8 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String createNewMember(@Valid MemberSignUpDto memberSignUpDto, Errors errors) {
-        if (errors.hasErrors()) {
-            return "member/member-signup";
+        if (errors.hasErrors() || memberService.existMemberCheck(memberSignUpDto)) {
+            return "redirect:/signup";
         }
         log.info("memberSignUpDto={}", memberSignUpDto);
         Member member = memberService.saveNewMember(memberSignUpDto);
