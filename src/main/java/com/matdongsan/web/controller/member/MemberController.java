@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -33,9 +34,10 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String createNewMember(@Valid MemberSignUpDto memberSignUpDto, Errors errors) {
+    public String createNewMember(@Valid MemberSignUpDto memberSignUpDto, Errors errors, Model model) {
         if (errors.hasErrors() || memberService.existMemberCheck(memberSignUpDto)) {
-            return "redirect:/signup";
+            model.addAttribute("memberSignUpDto", memberSignUpDto);
+            return "member/member-signup";
         }
         log.info("memberSignUpDto={}", memberSignUpDto);
         Member member = memberService.saveNewMember(memberSignUpDto);
