@@ -5,9 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
-@Entity
-@Getter
+@Entity @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -24,22 +26,14 @@ public class Member {
     @Column(unique = true)
     private String email;
 
+    private Date birth;
+
     private String gender;
 
     private LocalDateTime signUpDate;
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
-
-    @Builder
-    public Member(String username, String password, String email, String gender, LocalDateTime signUpDate, MemberRole memberRole) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.gender = gender;
-        this.signUpDate = signUpDate;
-        this.memberRole = memberRole;
-    }
 
     public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword) {
         return passwordEncoder.matches(checkPassword, getPassword());
