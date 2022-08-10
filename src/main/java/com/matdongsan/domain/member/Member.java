@@ -34,8 +34,4 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
-
-    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword) {
-        return passwordEncoder.matches(checkPassword, getPassword());
-    }
 }
