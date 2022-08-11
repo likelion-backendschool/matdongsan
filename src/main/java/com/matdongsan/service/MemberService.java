@@ -35,6 +35,7 @@ public class MemberService implements UserDetailsService {
                 .username(memberSignUpDto.getUsername())
                 .password(passwordEncoder.encode(memberSignUpDto.getPassword()))
                 .email(memberSignUpDto.getEmail())
+                .birth(memberSignUpDto.getBirth())
                 .gender(memberSignUpDto.getGender())
                 .signUpDate(LocalDateTime.now())
                 .memberRole(MemberRole.ROLE_USER)
@@ -54,6 +55,12 @@ public class MemberService implements UserDetailsService {
     public Member findMemberByUsername(String username) {
         Optional<Member> currentMember = memberRepository.findByUsername(username);
         return currentMember.get();
+    }
+
+    public boolean existMemberCheck(MemberSignUpDto memberSignUpDto) {
+        boolean existUsername = memberRepository.existsByUsername(memberSignUpDto.getUsername());
+        boolean existEmail = memberRepository.existsByEmail(memberSignUpDto.getEmail());
+        return existUsername || existEmail;
     }
 
     @Override
