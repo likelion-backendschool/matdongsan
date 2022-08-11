@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostReport {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
