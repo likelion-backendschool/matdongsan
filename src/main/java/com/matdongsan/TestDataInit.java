@@ -17,13 +17,15 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
+// 처음 프로젝트를 실행할 때만 작성되는 class
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     @PostConstruct
-    public void dataInit() {
+    public void memberDataInit() {
         if (memberRepository.findByUsername("member1").isEmpty()) {
+            // 등록된 username 중 member1이 없다면 새로운 member 등록
             memberRepository.save(Member.builder()
                     .username("member1")
                     .password(passwordEncoder.encode("member1!"))
