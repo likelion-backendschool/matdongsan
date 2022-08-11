@@ -42,6 +42,6 @@ public class Member {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Posts> postsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
-    private List<Reply> replyList = new ArrayList<>();
+//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
+//    private List<Reply> replyList = new ArrayList<>();
 }
