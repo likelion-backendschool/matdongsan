@@ -26,6 +26,7 @@ public class TestDataInit {
     public void memberDataInit() {
         if (memberRepository.findByUsername("member1").isEmpty()) {
             // 등록된 username 중 member1이 없다면 새로운 member 등록
+            // 빌드 이용
             memberRepository.save(Member.builder()
                     .username("member1")
                     .password(passwordEncoder.encode("member1!"))
