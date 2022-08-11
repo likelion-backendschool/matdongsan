@@ -15,6 +15,7 @@ public class MainPageController {
 
     @GetMapping("/")
     public String mainPageMapping(@CurrentUser Member member, Model model) {
+        log.info("member = {}",member);
         model.addAttribute(member);
 
         return "index";
