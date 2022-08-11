@@ -3,6 +3,7 @@ package com.matdongsan;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.domain.member.MemberRole;
+import com.matdongsan.domain.posts.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class TestDataInit {
         if (memberRepository.findByUsername("member1").isEmpty()) {
             memberRepository.save(Member.builder()
                     .username("member1")
-                    .password(passwordEncoder.encode("member1"))
+                    .password(passwordEncoder.encode("member1!"))
                     .email("member1@gmail.com")
                     .gender("male")
                     .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
