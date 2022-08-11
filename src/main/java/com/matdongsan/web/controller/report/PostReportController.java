@@ -7,9 +7,11 @@ import com.matdongsan.domain.report.PostReportRepository;
 import com.matdongsan.service.report.PostReportService;
 import com.matdongsan.web.dto.report.PostReportDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class PostReportController {
@@ -24,9 +26,9 @@ public class PostReportController {
             @PathVariable("postId") Long postId,
             @CurrentUser Member member
             ){
-//        PostReport report = postReportService.savePostReport(member.getId(), postId,
-//                reportDto.getReportCategory(), reportDto.getContent());
-        // TODO : Post Entity 가 완료되면 컨트롤러 완성하겠습니다.
+        PostReport report = postReportService.savePostReport(member.getId(), postId,
+                reportDto.getReportCategory(), reportDto.getContent());
+        log.info("report = {}",report);
         return "OK";
     }
 }

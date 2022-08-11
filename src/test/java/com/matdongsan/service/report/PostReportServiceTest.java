@@ -42,7 +42,7 @@ class PostReportServiceTest {
         // 멤버, 게시글 생성
         Member member = new Member("memberA", "123",
                 "email", "gender", LocalDateTime.now(), MemberRole.ROLE_USER);
-        Posts posts = new Posts(null, "title", "content");
+        Posts posts = new Posts(null, member, "title", "content", LocalDateTime.now(), LocalDateTime.now());
 
         Member savedMember = memberRepository.save(member);
         Posts savedPost = postsRepository.save(posts);

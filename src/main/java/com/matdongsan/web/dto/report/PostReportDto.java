@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 public class PostReportDto {
-
     ReportCategory reportCategory;
     String content;
-
 
 }
