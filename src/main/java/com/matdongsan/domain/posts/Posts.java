@@ -1,20 +1,26 @@
 package com.matdongsan.domain.posts;
 
+import com.matdongsan.domain.member.Member;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Posts {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 100)
-    private String author;  // 작성자
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member author;  // 작성자
 
     @Column(length = 200)
     private String title;
