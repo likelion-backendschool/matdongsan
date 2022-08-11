@@ -1,6 +1,7 @@
 package com.matdongsan.domain.member;
 
 import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.reply.Reply;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,5 +40,8 @@ public class Member {
     private MemberRole memberRole;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Posts> likesList = new ArrayList<>();
+    private List<Posts> postsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
+    private List<Reply> replyList = new ArrayList<>();
 }
