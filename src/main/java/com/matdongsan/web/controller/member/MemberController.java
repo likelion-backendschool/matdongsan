@@ -37,7 +37,7 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String createNewMember(@Valid MemberSignUpDto memberSignUpDto, Errors errors, Model model) {
-        // 주석 추가
+        // 주석 추가2
         if (errors.hasErrors() || memberService.existMemberCheck(memberSignUpDto)) {
             // DTO에 작성한 Valid에 맞지 않거나, 이미 존재하는 username 혹은 email일 경우
             // 해당 내용을 다시 dto에 담아서 회원가입 폼으로 돌려줌
