@@ -23,14 +23,14 @@ public class Posts {
     private Member author;  // 작성자
 
     @Column(length = 200)
-    private String title;
+    private String title; // 제목
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String content; // 내용
 
-    private LocalDateTime createdTime;
+    private LocalDateTime createdTime; // 생성 날짜
 
-    private LocalDateTime modifiedTime;
+    private LocalDateTime modifiedTime; // 수정 날짜
 
 
 
