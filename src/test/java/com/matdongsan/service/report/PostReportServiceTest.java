@@ -13,11 +13,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +36,8 @@ class PostReportServiceTest {
     private MemberRepository memberRepository;
     @Autowired
     private PostsRepository postsRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     @Transactional
@@ -40,8 +45,15 @@ class PostReportServiceTest {
     @DisplayName("PostReport 생성")
     void createPostReport(){
         // 멤버, 게시글 생성
-        Member member = new Member("memberA", "123",
-                "email", "gender", LocalDateTime.now(), MemberRole.ROLE_USER);
+        Member member = Member.builder()
+                .username("memberA")
+                .password(passwordEncoder.encode("123"))
+                .email("memberA@gmail.com")
+                .gender("male")
+                .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
+                .signUpDate(LocalDateTime.now())
+                .memberRole(MemberRole.ROLE_USER)
+                .build();
         Posts posts = new Posts(null, member, "title", "content", LocalDateTime.now(), LocalDateTime.now());
 
         Member savedMember = memberRepository.save(member);
