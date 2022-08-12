@@ -318,14 +318,14 @@
                                             <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
                                         </span>
                                         <span class="media-body">
-                                            <span class="item-title" th:text="${member.getUsername()}">닉네임</span>
+                                            <span class="item-title" sec:authentication="principal.username">닉네임</span>
                                         </span>
                                     </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <ul class="admin-options">
-                                    <li><a th:href="@{/member/setting}">프로필 설정</a></li>
-                                    <li><a th:href="@{/member/post}">나만의 맛집</a></li>
+                                    <li><a th:href="@{/profile/setting}">프로필 설정</a></li>
+                                    <li><a th:href="@{/profile/post}">나만의 맛집</a></li>
 <!--                                    <li><a th:href="@{/logout}">Log Out</a></li>-->
                                     <li>
                                         <form action="#" name="logout" th:action="@{/logout}" method="post">

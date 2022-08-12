@@ -2,12 +2,16 @@ package com.matdongsan.web.controller.member;
 
 import com.matdongsan.domain.member.CurrentUser;
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
+import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -15,19 +19,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final MemberService memberService;
 
     @GetMapping("/profile")
-    public String showMyProfile(@CurrentUser Member member, Model model) {
-
-        model.addAttribute("member", member);
+    public String showMyProfile() {
 
         return "profile/profile-main";
     }
 
     @GetMapping("/profile/setting")
-    public String showProfilePage(@CurrentUser Member member, Model model) {
+    public String showProfilePage(Principal principal, Model model) {
+        log.info("principal.getName()={}", principal.getName());
 
-        model.addAttribute("member", member);
+        MemberVo member = memberService.getReadOnlyMember(principal.getName());
+        model.addAttribute(member);
 
         return "profile/profile-setting";
     }
