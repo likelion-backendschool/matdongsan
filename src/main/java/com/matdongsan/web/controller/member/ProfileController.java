@@ -24,8 +24,6 @@ public class ProfileController {
     @GetMapping("/profile")
     public String showMyProfile() {
 
-//        model.addAttribute("member", member);
-
         return "profile/profile-main";
     }
 
