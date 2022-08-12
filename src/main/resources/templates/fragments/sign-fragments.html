@@ -318,7 +318,7 @@
                                             <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
                                         </span>
                                         <span class="media-body">
-                                            <span class="item-title" th:text="${member.getUsername()}">닉네임</span>
+                                            <span class="item-title" sec:authentication="principal.username">닉네임</span>
                                         </span>
                                     </span>
                             </button>
