@@ -5,6 +5,7 @@ import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.domain.member.MemberRole;
 import com.matdongsan.infra.SecurityUser;
 import com.matdongsan.web.dto.member.MemberSignUpDto;
+import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -53,9 +55,9 @@ public class MemberService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 
-    public Member findMemberByUsername(String username) {
+    public Member findMemberByUsername(String username){
         Optional<Member> currentMember = memberRepository.findByUsername(username);
-        return currentMember.orElse(null);
+        return currentMember.orElseThrow(NoSuchElementException::new);
     }
 
     public boolean existMemberCheck(MemberSignUpDto memberSignUpDto) {
@@ -63,6 +65,17 @@ public class MemberService implements UserDetailsService {
         boolean existUsername = memberRepository.existsByUsername(memberSignUpDto.getUsername());
         boolean existEmail = memberRepository.existsByEmail(memberSignUpDto.getEmail());
         return existUsername || existEmail;
+    }
+
+    public MemberVo getReadOnlyMember(String username) {
+        Member member = findMemberByUsername(username);
+        return MemberVo.builder()
+                .username(member.getUsername())
+                .email(member.getEmail())
+                .birth(member.getBirth())
+                .gender(member.getGender())
+                .postsList(member.getPostsList())
+                .build();
     }
 
     @Override

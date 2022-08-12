@@ -10,8 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter @Setter
 public class MemberSignUpDto {
 
