@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainPageController {
 
     @GetMapping("/")
-    public String mainPageMapping(@CurrentUser Member member, Model model) {
-        log.info("member = {}",member);
-        model.addAttribute(member);
-
+    public String mainPageMapping() {
         return "index";
     }
 }

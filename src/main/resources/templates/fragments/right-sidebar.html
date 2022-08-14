@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+  <!-- Sidebar Right -->
+  <div class="fixed-sidebar right" th:fragment="right-sidebar">
+    <div class="fixed-sidebar-right small-sidebar">
+      <div class="sidebar-toggle" id="chat-head-toggle">
+        <button class="chat-icon">
+          <i class="icofont-speech-comments"></i>
+        </button>
+      </div>
+      <div class="sidebar-menu-wrap">
+        <div class="mCustomScrollbar" data-mcs-theme="dark" data-mcs-axis="y">
+          <ul class="user-chat-list">
+            <li class="chat-item chat-open">
+              <div class="author-img">
+                <img src="/media/figure/chat_1.jpg" alt="chat">
+                <span class="chat-status offline"></span>
+              </div>
+            </li>
+            <li class="chat-item chat-open">
+              <div class="author-img">
+                <img src="/media/figure/chat_5.jpg" alt="chat">
+                <span class="chat-status online"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
