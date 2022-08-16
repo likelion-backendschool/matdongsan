@@ -10,112 +10,108 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <!-- Page Content -->
-    <div class="page-content">
-
-        <!--=====================================-->
-        <!--=        Newsfeed  Area Start       =-->
-        <!--=====================================-->
-        <div class="container">
-            <!-- Banner Area Start -->
-            <div class="banner-user">
-                <div class="banner-content">
-                    <div class="media">
-                        <div class="item-img">
-                            <img src="/media/banner/user_1.jpg" alt="User">
-                        </div>
-                        <div class="media-body">
-                            <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
-                            <div class="item-subtitle">United State of America</div>
-                            <ul class="item-social">
-                                <li><a href="#" class="bg-fb"><i class="icofont-facebook"></i></a></li>
-                                <li><a href="#" class="bg-twitter"><i class="icofont-twitter"></i></a></li>
-                                <li><a href="#" class="bg-dribble"><i class="icofont-dribbble"></i></a></li>
-                                <li><a href="#" class="bg-youtube"><i class="icofont-brand-youtube"></i></a></li>
-                                <li><a href="#" class="bg-behance"><i class="icofont-behance"></i></a></li>
-                            </ul>
-                        </div>
+    <!--=====================================-->
+    <!--=       Container  Area Start       =-->
+    <!--=====================================-->
+    <div class="container">
+        <!-- Banner Area Start -->
+        <div class="banner-user">
+            <div class="banner-content">
+                <div class="media">
+                    <div class="item-img">
+                        <img src="/media/banner/user_1.jpg" alt="User">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
+                        <div class="item-subtitle">United State of America</div>
+                        <ul class="item-social">
+                            <li><a href="#" class="bg-fb"><i class="icofont-facebook"></i></a></li>
+                            <li><a href="#" class="bg-twitter"><i class="icofont-twitter"></i></a></li>
+                            <li><a href="#" class="bg-dribble"><i class="icofont-dribbble"></i></a></li>
+                            <li><a href="#" class="bg-youtube"><i class="icofont-brand-youtube"></i></a></li>
+                            <li><a href="#" class="bg-behance"><i class="icofont-behance"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="block-box user-top-header">
-                <ul class="menu-list">
-                    <li class="active"><a href="#">내 정보</a></li>
-                    <li><a href="#">맛집 정보</a></li>
-                    <li><a href="#">팔로잉</a></li>
-                    <li><a href="#">팔로워</a></li>
-                    <li>
+        </div>
+        <div class="block-box user-top-header">
+            <ul class="menu-list">
+                <li class="active"><a href="#">내 정보</a></li>
+                <li><a href="#">맛집 정보</a></li>
+                <li><a href="#">팔로잉</a></li>
+                <li><a href="#">팔로워</a></li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Shop</a>
+                            <a class="dropdown-item" href="#">Blog</a>
+                            <a class="dropdown-item" href="#">Others</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="block-box user-about">
+                    <div class="widget-heading">
+                        <h3 class="widget-title">Contact Info</h3>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">...</button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Close</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="user-info">
+                        <li>
+                            <label>소개</label>
+                            <p>방구뿡</p>
+                        </li>
+                        <li>
+                            <label>Phone:</label>
+                            <p>+123 98566836</p>
+                        </li>
+                        <li>
+                            <label>Address:</label>
+                            <p>59 Street, Newyorkc City</p>
+                        </li>
+                        <li>
+                            <label>Website:</label>
+                            <p><a href="#">www.rebeca.com</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 widget-block widget-break-lg mb-3">
+                <div class="widget widget-user-about">
+                    <div class="widget-heading">
+                        <h3 class="widget-title">About Me</h3>
                         <div class="dropdown">
                             <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                 ...
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Shop</a>
-                                <a class="dropdown-item" href="#">Blog</a>
-                                <a class="dropdown-item" href="#">Others</a>
+                                <a class="dropdown-item" href="#">Close</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Delete</a>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="block-box user-about">
-                        <div class="widget-heading">
-                            <h3 class="widget-title">Contact Info</h3>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">...</button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Close</a>
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="user-info">
-                            <li>
-                                <label>소개</label>
-                                <p>방구뿡</p>
-                            </li>
-                            <li>
-                                <label>Phone:</label>
-                                <p>+123 98566836</p>
-                            </li>
-                            <li>
-                                <label>Address:</label>
-                                <p>59 Street, Newyorkc City</p>
-                            </li>
-                            <li>
-                                <label>Website:</label>
-                                <p><a href="#">www.rebeca.com</a></p>
-                            </li>
-                        </ul>
                     </div>
-                </div>
-                <div class="col-lg-4 widget-block widget-break-lg mb-3">
-                    <div class="widget widget-user-about">
-                        <div class="widget-heading">
-                            <h3 class="widget-title">About Me</h3>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                    ...
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Close</a>
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <ul class="info-list">
-                                <!--                                    <li><span>가입일</span><a th:text="${#temporals.format(#authentication.principal.signUpDate,'yyyy-MM-dd')}">가입날짜</a></li>-->
-                                <li><span>이메일</span><a sec:authentication="principal">이메일</a></li>
-                                <li><span>등록한 맛집</span><a>100</a></li>
-                                <li><span>등록한 댓글</span><a>100</a></li>
-                                <li><span>조회수 총합</span><a>100</a></li>
-                            </ul>
-                        </div>
+                    <div class="user-info">
+                        <ul class="info-list">
+                            <!--                                    <li><span>가입일</span><a th:text="${#temporals.format(#authentication.principal.signUpDate,'yyyy-MM-dd')}">가입날짜</a></li>-->
+                            <li><span>이메일</span><a sec:authentication="principal">이메일</a></li>
+                            <li><span>등록한 맛집</span><a>100</a></li>
+                            <li><span>등록한 댓글</span><a>100</a></li>
+                            <li><span>조회수 총합</span><a>100</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
