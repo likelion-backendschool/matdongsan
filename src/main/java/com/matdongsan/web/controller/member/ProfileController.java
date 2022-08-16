@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
@@ -23,8 +24,17 @@ public class ProfileController {
     private final MemberService memberService;
 
     @GetMapping("/profile")
-    public String showMyProfile() {
+    public String showMyProfile(Principal principal, Model model) {
+        MemberVo member = memberService.getReadOnlyMember(principal.getName());
+        model.addAttribute(member);
 
+        return "profile/profile-main";
+    }
+
+    @GetMapping("/profile/{nickname}")
+    public String showOtherMemberProfile(@PathVariable String nickname, Model model) {
+        MemberVo member = memberService.getReadOnlyMember(nickname);
+        model.addAttribute(member);
         return "profile/profile-main";
     }
 

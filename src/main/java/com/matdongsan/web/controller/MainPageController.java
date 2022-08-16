@@ -17,4 +17,9 @@ public class MainPageController {
     public String mainPageMapping() {
         return "index";
     }
+
+    @GetMapping("/error-page")
+    public String errorNotFoundPage() {
+        return "error-page";
+    }
 }

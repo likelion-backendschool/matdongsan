@@ -45,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe()
                 .rememberMeParameter("remember-me")
                 .userDetailsService(memberService);
+
+        http.exceptionHandling()
+                .accessDeniedPage("/error-page");
     }
 
 

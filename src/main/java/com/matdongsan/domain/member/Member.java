@@ -34,6 +34,8 @@ public class Member {
 
     private String gender;
 
+    private String introduce;
+
     private LocalDateTime signUpDate;
 
     @Enumerated(EnumType.STRING)
