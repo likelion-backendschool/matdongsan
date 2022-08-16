@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import java.util.List;
 public class MemberVo {
     private final String username;
     private final String email;
+    private final String introduce;
     private final Date birth;
+    private final LocalDateTime signUpDate;
     private final String gender;
     private final List<Posts> postsList;
 

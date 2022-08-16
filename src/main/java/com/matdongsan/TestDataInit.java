@@ -31,6 +31,7 @@ public class TestDataInit {
                     .username("member1")
                     .password(passwordEncoder.encode("member1!"))
                     .email("member1@gmail.com")
+                    .introduce("hello world")
                     .gender("male")
                     .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
                     .signUpDate(LocalDateTime.now())

@@ -687,14 +687,11 @@
                             </div>
                         </div>
                         <div class="user-info">
-                            <p>Hi! My name is Rebeca Powel but some people may know me asserty GamePagla! I have a Newbike channel where I stream.</p>
+                            <p class="text-dark" th:text="${member.getIntroduce()}">소개글</p>
                             <ul class="info-list">
-                                <li><span>Joined:</span><a>가입일</a></li>
+                                <li><span>Joined:</span><span class="text-dark" th:text="${#temporals.format(member.getSignUpDate(), 'yyyy-MM-dd')}"></span></li>
                                 <li><span>E-mail:</span>info@gmail.com</li>
                                 <li><span>Address:</span>59 Street Neworkcity</li>
-                                <li><span>Phone:</span>+123 9856836</li>
-                                <li><span>Country:</span>USA</li>
-                                <li><span>Web:</span><a href="#">www.rebeca.com</a></li>
                                 <li class="social-share"><span>Social:</span>
                                     <div class="social-icon">
                                         <a href="#"><i class="icofont-facebook"></i></a>

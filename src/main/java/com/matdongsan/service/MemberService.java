@@ -72,7 +72,9 @@ public class MemberService implements UserDetailsService {
         return MemberVo.builder()
                 .username(member.getUsername())
                 .email(member.getEmail())
+                .introduce(member.getIntroduce())
                 .birth(member.getBirth())
+                .signUpDate(member.getSignUpDate())
                 .gender(member.getGender())
                 .postsList(member.getPostsList())
                 .build();

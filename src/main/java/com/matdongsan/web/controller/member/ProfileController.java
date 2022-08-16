@@ -26,7 +26,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String showMyProfile(Principal principal, Model model) {
         MemberVo member = memberService.getReadOnlyMember(principal.getName());
-        model.addAttribute(member);
+        model.addAttribute("member", member);
 
         return "profile/profile-main";
     }
@@ -34,7 +34,7 @@ public class ProfileController {
     @GetMapping("/profile/{nickname}")
     public String showOtherMemberProfile(@PathVariable String nickname, Model model) {
         MemberVo member = memberService.getReadOnlyMember(nickname);
-        model.addAttribute(member);
+        model.addAttribute("member", member);
         return "profile/profile-main";
     }
 
@@ -43,7 +43,7 @@ public class ProfileController {
         log.info("principal.getName()={}", principal.getName());
 
         MemberVo member = memberService.getReadOnlyMember(principal.getName());
-        model.addAttribute(member);
+        model.addAttribute("member", member);
 
         return "profile/profile-setting";
     }
