@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
+    // 주석 추가
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
