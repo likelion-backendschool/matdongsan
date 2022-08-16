@@ -55,8 +55,11 @@
         <header th:replace="fragments/header::header"></header>
         <div th:replace="fragments/left-sidebar :: left-sidebar"></div>
         <div th:replace="fragments/right-sidebar :: right-sidebar"></div>
-        <div layout:fragment="content">
-            <div>내용</div>
+        <div class="page-content">
+            <div layout:fragment="content">
+
+            </div>
+            <div th:replace="fragments/footer :: footer"></div>
         </div>
     </div>
 
