@@ -32,8 +32,9 @@ public class Reply {
     @ManyToOne
     private Posts posts;
 
-    @ManyToOne
-    private Member member;
+    @ManyToOne //댓글 작성자
+    private Member writer;
+
 
     //데이터 필드를 가지고 있는 단에서 비즈니스 로직내기
     public void updateComment(String comment) {
