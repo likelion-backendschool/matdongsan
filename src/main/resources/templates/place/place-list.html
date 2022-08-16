@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout.html}">
+<head>
+    <title>맛동산 | 음식점</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Page Content -->
+    <div class="page-content">
+
+        <!--=====================================-->
+        <!--=        Newsfeed  Area Start       =-->
+        <!--=====================================-->
+        <div class="container">
+
+            <!-- Banner Area Start -->
+            <div class="block-box user-search-bar justify-content-between">
+                <div class="box-item">
+                    <div class="item-show-title">Total 20 Posts</div>
+                </div>
+                <div class="box-item search-filter">
+                    <div class="dropdown">
+                        <label>Order By:</label>
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Newest Post</button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">All Post</a>
+                            <a class="dropdown-item" href="#">Newest Post</a>
+                            <a class="dropdown-item" href="#">Oldest Post</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row gutters-20">
+                <div class="col-lg-4 col-md-6" th:each="place : ${places}">
+                    <div class="block-box user-blog">
+                        <div class="blog-img">
+                            <a href="#"><img src="media/blog/blog_4.jpg" alt="Blog"></a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-category">
+                                <p th:text="${place.categoryName}">가정,생활 > 문구,사무용품 > 디자인문구 > 카카오프렌즈</p>
+                            </div>
+                            <h3 class="blog-title"><a href="#" th:text="${place.placeName}">카카오프렌즈 코엑스점 </a></h3>
+                            <div class="blog-date"><i class="icofont-ui-call"></i><span th:text="${place.phone}"></span></div>
+                            <div th:text="${place.addressName}">서울 강남구 영동대로 513</div>
+                            <div th:text="${place.roadAddressName}">서울 강남구 삼성동 159</div>
+                        </div>
+                        <div class="blog-meta">
+                            <ul>
+                                <li class="blog-reaction">
+                                    <div class="meta-text"><a th:href="${place.placeUrl}">웹페이지로 이동</a></div>
+                                </li>
+                                <li>
+                                    <span th:text="${place.distance}+m">200m</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="load-more-post">
+                <a href="#" class="item-btn"><i class="icofont-refresh"></i>Load More Posts</a>
+            </div>
+        </div>
+        <!--=====================================-->
+        <!--=        Footer Area Start       	=-->
+        <!--=====================================-->
+    </div>
+</div>
+</body>
+
+</html>
