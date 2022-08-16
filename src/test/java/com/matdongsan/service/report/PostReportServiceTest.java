@@ -44,6 +44,7 @@ class PostReportServiceTest {
     @Rollback
     @DisplayName("PostReport 생성")
     void createPostReport(){
+        // test comment
         // 멤버, 게시글 생성
 //        Member member = Member.builder()
 //                .username("memberA")
