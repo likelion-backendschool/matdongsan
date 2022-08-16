@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
+// 수정해봤는데 잘 되나요 ?
+
 @Controller
 @RequiredArgsConstructor
 public class PostsController {
