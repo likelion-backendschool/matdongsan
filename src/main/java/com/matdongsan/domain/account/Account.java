@@ -1,9 +1,7 @@
-package com.matdongsan.domain.member;
+package com.matdongsan.domain.account;
 
 import com.matdongsan.domain.posts.Posts;
-import com.matdongsan.domain.reply.Reply;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Account {
     // 주석 추가
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +37,7 @@ public class Member {
     private LocalDateTime signUpDate;
 
     @Enumerated(EnumType.STRING)
-    private MemberRole memberRole;
+    private AccountRole accountRole;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Posts> postsList = new ArrayList<>();

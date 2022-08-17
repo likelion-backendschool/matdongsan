@@ -1,6 +1,6 @@
 package com.matdongsan.web.dto.posts;
 
-import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ public class PostsDto {
 
     private Long id;
 
-    private Member author;  // 작성자
+    private Account author;  // 작성자
 
     private String title; // 제목
 
@@ -36,7 +36,7 @@ public class PostsDto {
     }
 
     @Builder
-    public PostsDto(Long id, Member author, String title, String content, LocalDateTime createdTime, LocalDateTime modifiedTime) {
+    public PostsDto(Long id, Account author, String title, String content, LocalDateTime createdTime, LocalDateTime modifiedTime) {
         this.id = id;
         this.author = author;
         this.title = title;

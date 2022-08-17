@@ -1,8 +1,8 @@
 package com.matdongsan.service;
 
-import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.member.MemberRepository;
-import com.matdongsan.domain.member.MemberRole;
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AccountRepository;
+import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.infra.SecurityUser;
 import com.matdongsan.web.dto.member.MemberSignUpDto;
 import com.matdongsan.web.vo.MemberVo;
@@ -29,54 +29,54 @@ import java.util.Optional;
 @Transactional
 public class MemberService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
+    private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Member saveNewMember(MemberSignUpDto memberSignUpDto) {
+    public Account saveNewMember(MemberSignUpDto memberSignUpDto) {
         // 회원가입한 Member를 저장하는 로직
-        Member newMember = Member.builder()
+        Account newAccount = Account.builder()
                 .username(memberSignUpDto.getUsername())
                 .password(passwordEncoder.encode(memberSignUpDto.getPassword()))
                 .email(memberSignUpDto.getEmail())
                 .birth(memberSignUpDto.getBirth())
                 .gender(memberSignUpDto.getGender())
                 .signUpDate(LocalDateTime.now())
-                .memberRole(MemberRole.ROLE_USER)
+                .accountRole(AccountRole.ROLE_USER)
                 .build();
-        return memberRepository.save(newMember);
+        return accountRepository.save(newAccount);
     }
 
-    public void login(Member member) {
+    public void login(Account account) {
         // Security를 이용하여 member를 로그인 시켜줌(회원가입 시에만 사용)
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                new SecurityUser(member),
-                member.getPassword(),
+                new SecurityUser(account),
+                account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 
-    public Member findMemberByUsername(String username){
-        Optional<Member> currentMember = memberRepository.findByUsername(username);
+    public Account findMemberByUsername(String username){
+        Optional<Account> currentMember = accountRepository.findByUsername(username);
         return currentMember.orElseThrow(NoSuchElementException::new);
     }
 
     public boolean existMemberCheck(MemberSignUpDto memberSignUpDto) {
         // 이미 존재하는 username 혹은 email 인지 확인하는 폼
-        boolean existUsername = memberRepository.existsByUsername(memberSignUpDto.getUsername());
-        boolean existEmail = memberRepository.existsByEmail(memberSignUpDto.getEmail());
+        boolean existUsername = accountRepository.existsByUsername(memberSignUpDto.getUsername());
+        boolean existEmail = accountRepository.existsByEmail(memberSignUpDto.getEmail());
         return existUsername || existEmail;
     }
 
     public MemberVo getReadOnlyMember(String username) {
-        Member member = findMemberByUsername(username);
+        Account account = findMemberByUsername(username);
         return MemberVo.builder()
-                .username(member.getUsername())
-                .email(member.getEmail())
-                .introduce(member.getIntroduce())
-                .birth(member.getBirth())
-                .signUpDate(member.getSignUpDate())
-                .gender(member.getGender())
-                .postsList(member.getPostsList())
+                .username(account.getUsername())
+                .email(account.getEmail())
+                .introduce(account.getIntroduce())
+                .birth(account.getBirth())
+                .signUpDate(account.getSignUpDate())
+                .gender(account.getGender())
+                .postsList(account.getPostsList())
                 .build();
     }
 
@@ -85,7 +85,7 @@ public class MemberService implements UserDetailsService {
         // 로그인을 하기 위해 가입된 member 정보를 조회
         // UserDetailsService 구현
 
-        Optional<Member> member = memberRepository.findByUsername(username);
+        Optional<Account> member = accountRepository.findByUsername(username);
 
         if (member.isEmpty()) {
             throw new UsernameNotFoundException(username);

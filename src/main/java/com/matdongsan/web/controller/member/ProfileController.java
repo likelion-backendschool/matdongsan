@@ -1,7 +1,5 @@
 package com.matdongsan.web.controller.member;
 
-import com.matdongsan.domain.member.CurrentUser;
-import com.matdongsan.domain.member.Member;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
 import com.matdongsan.web.vo.MemberVo;
@@ -44,6 +42,16 @@ public class ProfileController {
 
         MemberVo member = memberService.getReadOnlyMember(principal.getName());
         model.addAttribute("member", member);
+
+        return "profile/profile-setting";
+    }
+
+    @PostMapping("/profile/setting")
+    public String changeMemberProfile(Model model) {
+
+
+//        MemberVo member = memberService.getReadOnlyMember(principal.getName());
+//        model.addAttribute("member", member);
 
         return "profile/profile-setting";
     }

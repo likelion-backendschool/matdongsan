@@ -611,9 +611,9 @@
                         </div>
                     </div>
                     <div class="user-info">
-                        <p class="text-dark" th:text="${member.getIntroduce()}">소개글</p>
+                        <p class="text-dark" th:text="${account.getIntroduce()}">소개글</p>
                         <ul class="info-list">
-                            <li><span>Joined:</span><span class="text-dark" th:text="${#temporals.format(member.getSignUpDate(), 'yyyy-MM-dd')}"></span></li>
+                            <li><span>Joined:</span><span class="text-dark" th:text="${#temporals.format(account.getSignUpDate(), 'yyyy-MM-dd')}"></span></li>
                             <li><span>Posts:</span><span class="text-dark" th:text="${10}">게시글 수</span></li>
                             <li><span>Replies:</span><span class="text-dark" th:text="${10}">댓글 수</span></li>
                             <li><span>Views:</span><span class="text-dark" th:text="${10}">조회수</span></li>

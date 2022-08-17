@@ -1,8 +1,7 @@
 package com.matdongsan.domain.reply;
 
-import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.posts.Posts;
-import com.matdongsan.service.ReplyService;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -33,7 +32,7 @@ public class Reply {
     private Posts posts;
 
     @ManyToOne //댓글 작성자
-    private Member writer;
+    private Account writer;
 
 
     //데이터 필드를 가지고 있는 단에서 비즈니스 로직내기

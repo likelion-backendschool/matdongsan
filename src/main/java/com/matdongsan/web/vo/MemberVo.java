@@ -1,11 +1,9 @@
 package com.matdongsan.web.vo;
 
-import com.matdongsan.domain.member.MemberRole;
 import com.matdongsan.domain.posts.Posts;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
