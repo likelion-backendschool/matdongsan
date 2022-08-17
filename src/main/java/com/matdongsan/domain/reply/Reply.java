@@ -1,5 +1,6 @@
 package com.matdongsan.domain.reply;
 
+import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import lombok.*;
@@ -20,6 +21,8 @@ public class Reply {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false, length = 500)
     private String comment;
 
     @CreatedDate
@@ -29,9 +32,11 @@ public class Reply {
     private LocalDateTime modifyComment;
 
     @ManyToOne
+//    @JoinColumn(name = "postId")
     private Posts posts;
 
     @ManyToOne //댓글 작성자
+//    @JoinColumn(name="writerId")
     private Member writer;
 
 
@@ -39,5 +44,11 @@ public class Reply {
     public void updateComment(String comment) {
         this.comment = comment;
     }
+
+
+//    public void save(Posts post, Member member) {
+//        this.posts = post;
+//        this.writer = member;
+//    }
 
 }
