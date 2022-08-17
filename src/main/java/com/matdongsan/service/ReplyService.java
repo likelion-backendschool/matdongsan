@@ -20,11 +20,12 @@ public class ReplyService {
     private final MemberRepository memberRepository;
 
     //댓글 저장
-    public void saveReply(Member member, Posts posts, ReplyDto replyDto) {
+    public void saveReply(Member member, Posts post, ReplyDto replyDto) {
         Reply reply = Reply.builder()
                 .comment(replyDto.getComment()).build();
         Reply savedReply = replyRepository.save(reply);     //id와 comment만 등록되어 있는 상태.
-//        posts.addReply(Reply savedReply);                 //Reply에 Post객체 초기화
+        post.addReply(savedReply);                 //Reply에 Post객체 초기화
+//        member.addReply(savedReply);  //Member클래스에 reply추가 + member정보 Reply에 초기
     }
 
     //댓글 업데이트

@@ -36,41 +36,22 @@
                         <div class="tab-content">
                             <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
                                 <h3 class="item-title">Sign Up Your Account</h3>
-                                <form th:action="@{/signup}" method="post" th:object="${memberSignUpDto}" novalidate>
+                                <form th:action="@{/signup}" method="post" th:object="${accountSignUpDto}" novalidate>
                                     <div class="form-group">
                                         <input type="text" th:field="*{username}" class="form-control" placeholder="아이디를 입력해주세요." autocomplete="off" required>
                                         <small class="invalid-feedback">이미 사용중인 아이디거나 사용 불가능한 아이디입니다.</small>
                                         <small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
                                     </div>
                                     <div class="form-group">
+                                        <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요." autocomplete="off" required>
+                                        <small class="invalid-feedback">이미 사용중인 아이디거나 사용 불가능한 이메일입니다.</small>
+                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</small>
+                                    </div>
+                                    <div class="form-group">
                                         <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요." autocomplete="off" required>
                                         <small class="invalid-feedback">비밀번호 양식에 맞게 작성해주세요.</small>
                                         <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요." autocomplete="off" required>
-                                        <small class="invalid-feedback">정확한 이메일을 입력해주세요.</small>
-                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="date" th:field="*{birth}" class="form-control" placeholder="Your Birth Day" autocomplete="off" required>
-                                        <small class="invalid-feedback">정확한 생일을 입력해주세요.</small>
-                                        <small class="form-text text-danger" th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}">Birth Error</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="select2" th:field="*{gender}" data-placeholder="Select Gender" required>
-                                            <option value=""></option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
-                                        <small class="invalid-feedback">닉네임을 양식에 맞게 입력해주세요.</small>
-                                    </div>
-                                    <!--<div class="form-group">
-                                        <div class="form-check mb-3">
-                                            <input type="checkbox" class="form-check-input" id="validationFormCheck1">
-                                            <label class="form-check-label" for="validationFormCheck1">I accept the <a href="#">Terms and Conditions</a></label>
-                                        </div>
-                                    </div>-->
                                     <div class="form-group">
                                         <input type="submit" name="registration" class="submit-btn" value="Complete Registration">
                                     </div>

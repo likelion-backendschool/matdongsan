@@ -1,7 +1,7 @@
 package com.matdongsan.service;
 
-import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.member.MemberRepository;
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProfileService {
 
-    private final MemberRepository memberRepository;
+    private final AccountRepository accountRepository;
 
-    public Member findUserInfoByUserName(String username) {
-        Optional<Member> currentMember = memberRepository.findByUsername(username);
+    public Account findUserInfoByUserName(String username) {
+        Optional<Account> currentMember = accountRepository.findByUsername(username);
         return currentMember.orElse(null);
+    }
+
+    public Account updateMemberProfile() {
+
+        return null;
     }
 }

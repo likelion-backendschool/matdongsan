@@ -1,6 +1,6 @@
 package com.matdongsan.web.dto.posts;
 
-import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class PostDetailDto {
 
     private Long id;
 
-    private Member author;  // 작성자
+    private Account author;  // 작성자
 
     private String title; // 제목
 
