@@ -29,7 +29,7 @@ public class PostReportService {
         Posts post = postsRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없음"));
         return postReportRepository.save(
-                PostReport.createReport(account, post, reportCategory, content)
+                PostReport.createReport(account.getMember(), post, reportCategory, content)
         );
     }
 

@@ -1,6 +1,6 @@
 package com.matdongsan.domain.posts;
 
-import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
 
@@ -18,7 +18,7 @@ public class Posts extends TimeEntity{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account author;  // 작성자
+    private Member author;  // 작성자
 
     @Column(length = 200)
     private String title; // 제목
@@ -30,7 +30,7 @@ public class Posts extends TimeEntity{
 
 
     @Builder
-    public Posts(Long id, Account author, String title, String content, boolean privateStatus) {
+    public Posts(Long id, Member author, String title, String content, boolean privateStatus) {
         this.id = id;
         this.author = author;
         this.title = title;

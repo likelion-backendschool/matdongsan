@@ -1,6 +1,6 @@
 package com.matdongsan.domain.reply;
 
-import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,7 +32,7 @@ public class Reply {
     private Posts posts;
 
     @ManyToOne //댓글 작성자
-    private Account writer;
+    private Member writer;
 
 
     //데이터 필드를 가지고 있는 단에서 비즈니스 로직내기

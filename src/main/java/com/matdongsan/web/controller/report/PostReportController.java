@@ -3,7 +3,7 @@ package com.matdongsan.web.controller.report;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.report.PostReport;
 import com.matdongsan.domain.report.PostReportRepository;
-import com.matdongsan.service.MemberService;
+import com.matdongsan.service.AccountService;
 import com.matdongsan.service.report.PostReportService;
 import com.matdongsan.web.dto.report.PostReportDto;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class PostReportController {
 
     private final PostReportRepository postReportRepository;
     private final PostReportService postReportService;
-    private final MemberService memberService;
+    private final AccountService accountService;
 
     @PostMapping("/posts/{postId}/report")
     @ResponseBody
@@ -29,7 +29,7 @@ public class PostReportController {
             @PathVariable("postId") Long postId,
             Principal principal
     ) {
-        Account account = memberService.findMemberByUsername(principal.getName());
+        Account account = accountService.findMemberByUsername(principal.getName());
         PostReport report = postReportService.savePostReport(account.getId(), postId,
                 reportDto.getReportCategory(), reportDto.getContent());
         log.info("report = {}", report);
