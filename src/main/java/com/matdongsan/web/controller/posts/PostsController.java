@@ -2,16 +2,17 @@ package com.matdongsan.web.controller.posts;
 
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.service.PostsService;
+import com.matdongsan.web.dto.posts.PostsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-// 수정해봤는데 잘 되나요 ?
 
 @Controller
 @RequiredArgsConstructor
@@ -48,11 +49,32 @@ public class PostsController {
 
     // 게시글 등록 posts
     @PostMapping("/post/create")
-    public String createPost(Posts post){
+    public String createPost(PostsDto postsDto , Model model){
 
-        postsService.create(post);
+        Long savePostId = postsService.savePost(postsDto);
+        model.addAttribute("savePost", savePostId);
 
+        // 생성된 게시글을 가지고 와서 보여준다.
         return "redirect:posts/posts-details";
     }
+
+    // 게시글 수정 뷰 페이지
+    @GetMapping("/post/update/{id}")
+    public String updatePost(@PathVariable Long id ,Model model) {
+        Posts findPost = postsService.findById(id);
+        model.addAttribute("findPost", findPost);
+
+        return "posts/posts-update";
+    }
+
+    @PatchMapping("/post/edit")
+    public String editPost(PostsDto postsDto){
+        postsService.update();
+        return "redirect:posts/posts-details";
+    }
+
+
+
+
 
 }

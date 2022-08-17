@@ -2,21 +2,16 @@ package com.matdongsan.domain.posts;
 
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.reply.Reply;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Posts {
+public class Posts extends TimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,9 +26,18 @@ public class Posts {
     @Column(columnDefinition = "TEXT")
     private String content; // 내용
 
-    private LocalDateTime createdTime; // 생성 날짜
+    private boolean privateStatus; // 공개 / 비공개 여부  true => 비공개 , false => 공개
 
-    private LocalDateTime modifiedTime; // 수정 날짜
+
+    @Builder
+    public Posts(Long id, Member author, String title, String content, boolean privateStatus) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.content = content;
+        this.privateStatus = privateStatus;
+
+    }
 
     //   2.post단에 추가할것
 

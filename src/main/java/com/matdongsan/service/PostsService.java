@@ -2,6 +2,7 @@ package com.matdongsan.service;
 
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.posts.PostsRepository;
+import com.matdongsan.web.dto.posts.PostsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,13 @@ public class PostsService {
         return postsRepository.findAll();
     }
 
-    public Posts create(Posts post) {
-        return postsRepository.save(post);
+    public Long savePost(PostsDto postsDto) {
+
+        return postsRepository.save(postsDto.toEntity()).getId();
+
+    }
+
+    public void update() {
+        // 미구현
     }
 }
