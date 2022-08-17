@@ -32,7 +32,11 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public void addMember(Member member) {
+        this.member = member;
+    }
 }
