@@ -39,7 +39,7 @@
                                 <div class="google-signin">
                                     <a href="#"><img src="media/figure/google-icon.png" alt="Google">Google Sign in</a>
                                 </div>
-                                <form th:action method="post" novalidate th:object="${memberLoginDto}">
+                                <form th:action method="post" novalidate th:object="${accountLoginDto}">
                                     <div class="form-group">
                                         <input type="text" id="username" required class="form-control" th:field="*{username}" placeholder="아이디를 입력하세요." autocomplete="off">
                                     </div>

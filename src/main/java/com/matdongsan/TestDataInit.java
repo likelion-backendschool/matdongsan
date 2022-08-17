@@ -23,7 +23,7 @@ public class TestDataInit {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @PostConstruct
+//    @PostConstruct
     public void memberDataInit() {
         if (accountRepository.findByUsername("member1").isEmpty()) {
             // 등록된 username 중 member1이 없다면 새로운 member 등록
@@ -32,8 +32,9 @@ public class TestDataInit {
                     .username("member1")
                     .password(passwordEncoder.encode("member1!"))
                     .email("member1@gmail.com")
+                    .member(null)
                     .build());
-            memberRepository.save(Member.builder()
+            Member member = memberRepository.save(Member.builder()
                     .introduce("hello world")
                     .gender("male")
                     .account(newAccount)
