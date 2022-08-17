@@ -36,7 +36,7 @@
                         <div class="tab-content">
                             <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
                                 <h3 class="item-title">Sign Up Your Account</h3>
-                                <form th:action="@{/signup}" method="post" th:object="${memberSignUpDto}" novalidate>
+                                <form th:action="@{/signup}" method="post" th:object="${accountSignUpDto}" novalidate>
                                     <div class="form-group">
                                         <input type="text" th:field="*{username}" class="form-control" placeholder="아이디를 입력해주세요." autocomplete="off" required>
                                         <small class="invalid-feedback">이미 사용중인 아이디거나 사용 불가능한 아이디입니다.</small>

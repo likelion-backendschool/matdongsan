@@ -1,15 +1,12 @@
-package com.matdongsan.web.dto.member;
+package com.matdongsan.web.dto.account;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Getter @Setter
-public class MemberLoginDto {
+public class AccountLoginDto {
 
     @NotBlank
     private String username;

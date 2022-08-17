@@ -1,5 +1,6 @@
 package com.matdongsan.domain.account;
 
+import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import lombok.*;
 
@@ -28,20 +29,10 @@ public class Account {
     @Column(unique = true)
     private String email;
 
-    private Date birth;
-
-    private String gender;
-
-    private String introduce;
-
-    private LocalDateTime signUpDate;
-
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Posts> postsList = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
-//    private List<Reply> replyList = new ArrayList<>();
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

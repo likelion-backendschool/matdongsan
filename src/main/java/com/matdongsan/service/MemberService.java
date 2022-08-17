@@ -3,8 +3,10 @@ package com.matdongsan.service;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
+import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.infra.SecurityUser;
-import com.matdongsan.web.dto.member.MemberSignUpDto;
+import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,19 +32,23 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Account saveNewMember(MemberSignUpDto memberSignUpDto) {
+    public Account saveNewMember(AccountSignUpDto accountSignUpDto) {
         // 회원가입한 Member를 저장하는 로직
         Account newAccount = Account.builder()
-                .username(memberSignUpDto.getUsername())
-                .password(passwordEncoder.encode(memberSignUpDto.getPassword()))
-                .email(memberSignUpDto.getEmail())
-                .birth(memberSignUpDto.getBirth())
-                .gender(memberSignUpDto.getGender())
-                .signUpDate(LocalDateTime.now())
-                .accountRole(AccountRole.ROLE_USER)
+                .username(accountSignUpDto.getUsername())
+                .password(passwordEncoder.encode(accountSignUpDto.getPassword()))
+                .email(accountSignUpDto.getEmail())
                 .build();
+        Member newMember = Member.builder()
+                .birth(accountSignUpDto.getBirth())
+                .gender(accountSignUpDto.getGender())
+                .signUpDate(LocalDateTime.now())
+                .account(newAccount)
+                .build();
+        memberRepository.save(newMember);
         return accountRepository.save(newAccount);
     }
 
@@ -60,10 +66,10 @@ public class MemberService implements UserDetailsService {
         return currentMember.orElseThrow(NoSuchElementException::new);
     }
 
-    public boolean existMemberCheck(MemberSignUpDto memberSignUpDto) {
+    public boolean existMemberCheck(AccountSignUpDto accountSignUpDto) {
         // 이미 존재하는 username 혹은 email 인지 확인하는 폼
-        boolean existUsername = accountRepository.existsByUsername(memberSignUpDto.getUsername());
-        boolean existEmail = accountRepository.existsByEmail(memberSignUpDto.getEmail());
+        boolean existUsername = accountRepository.existsByUsername(accountSignUpDto.getUsername());
+        boolean existEmail = accountRepository.existsByEmail(accountSignUpDto.getEmail());
         return existUsername || existEmail;
     }
 
@@ -72,11 +78,6 @@ public class MemberService implements UserDetailsService {
         return MemberVo.builder()
                 .username(account.getUsername())
                 .email(account.getEmail())
-                .introduce(account.getIntroduce())
-                .birth(account.getBirth())
-                .signUpDate(account.getSignUpDate())
-                .gender(account.getGender())
-                .postsList(account.getPostsList())
                 .build();
     }
 
