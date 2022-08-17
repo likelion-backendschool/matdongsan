@@ -20,9 +20,4 @@ public class AccountSignUpDto {
     @NotBlank
     private String email;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birth;
-
-    private String gender;
-
 }
