@@ -16,15 +16,9 @@
     <div class="container">
         <div class="product-breadcrumb block-box">
             <div class="breadcrumb-area">
-                <h1 class="item-title">Shop Page</h1>
+                <h1 class="item-title" th:text="${place.placeName}">가게 명</h1>
                 <ul>
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                        <a href="shop.html">Shop</a>
-                    </li>
-                    <li>Black Coffee Mug</li>
+                    <li th:text="${place.categoryName}"></li>
                 </ul>
             </div>
         </div>
@@ -35,44 +29,44 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade active show" id="related1">
                                 <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="media/figure/product_10.jpg" data-zoom-image="media/figure/product_10.jpg">
+                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="/media/figure/product_10.jpg">
                                 </a>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="related2">
                                 <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="media/figure/product_10.jpg" data-zoom-image="media/figure/product_10.jpg">
+                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="/media/figure/product_10.jpg">
                                 </a>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="related3">
                                 <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="media/figure/product_10.jpg" data-zoom-image="media/figure/product_10.jpg">
+                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="/media/figure/product_10.jpg">
                                 </a>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="related4">
                                 <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="media/figure/product_10.jpg" data-zoom-image="media/figure/product_10.jpg">
+                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="media/figure/product_10.jpg">
                                 </a>
                             </div>
                         </div>
                         <ul class="nav nav-tabs tab-nav-list">
                             <li class="nav-item">
                                 <a class="active" href="#related1" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related1" src="media/figure/product_11.png" class="img-fluid">
+                                    <img alt="related1" src="/media/figure/product_11.png" class="img-fluid">
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#related2" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related2" src="media/figure/product_11.png" class="img-fluid">
+                                    <img alt="related2" src="/media/figure/product_11.png" class="img-fluid">
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#related3" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related3" src="media/figure/product_11.png" class="img-fluid">
+                                    <img alt="related3" src="/media/figure/product_11.png" class="img-fluid">
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="#related4" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related3" src="media/figure/product_11.png" class="img-fluid">
+                                    <img alt="related3" src="/media/figure/product_11.png" class="img-fluid">
                                 </a>
                             </li>
                         </ul>
@@ -80,33 +74,45 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="product-content">
-                        <div class="item-category">BAG</div>
-                        <h2 class="item-title">Women Stylist Leather bag</h2>
-                        <div class="item-price">$59.00</div>
+                        <div class="item-category">PLACE</div>
+                        <h2 class="item-title" style="margin-bottom:0 " th:text="${place.placeName}">가게명</h2>
+                        <div class="item-price"><a th:href="${place.placeUrl}" style="font-size: small">웹 페이지로 가기</a></div>
                         <ul class="entry-meta">
-                            <li>SKU:
-                                <span>9856000</span>
+                            <li>Category:
+                                <span th:text="${place.categoryName}">카테고리</span>
                             </li>
-                            <li>Tags:
-                                <a href="#">Bag,</a>
-                                <a href="#">Leather</a>
+                            <li>Address:
+                                <span th:text="${place.addressName}"></span>
                             </li>
+                            <li>Road Address:
+                                <span th:text="${place.roadAddressName}"></span>
+                            </li>
+                            <li>
+                                Phone:
+                                <span th:text="${place.phone}">010-0000-0000</span>
+                            </li>
+                                <li th:if='${not #strings.isEmpty(place.menus)}'>
+                                    Menu:
+                                    <div  th:each="menu : ${#strings.arraySplit(place.menus,'//')}">
+                                        <span style="padding-right: 20px" th:text="${#strings.arraySplit(menu,'=')[0]}">메뉴명</span>
+                                        <span th:text="${#strings.arraySplit(menu,'=')[1]}">가격</span>
+                                    </div>
+                                </li>
                         </ul>
-                        <p>Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper et, consectetur ac metus. Duis auctor tpulvinar.Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper et, consectetur ac metus. Duis auctor tellus vitae cursus pulvinar.Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper Duis auctor tellus vitae cursus pulvinar.</p>
+<!--                        <p>Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper et, consectetur ac metus. Duis auctor tpulvinar.Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper et, consectetur ac metus. Duis auctor tellus vitae cursus pulvinar.Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper Duis auctor tellus vitae cursus pulvinar.</p>-->
                         <ul class="action-area">
                             <li id="quantity-holder">
                                 <div class="input-group quantity-holder">
-                                    <button class="quantity-btn quantity-plus" type="button">
-                                        <i class="icofont-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <input type="text" name='quantity' class="form-control quantity-input" value="1" placeholder="1">
+<!--                                    <button class="quantity-btn quantity-plus" type="button">-->
+<!--                                        <i class="icofont-heart" aria-hidden="true"></i>-->
+<!--                                        <span th:text="30">30</span>-->
+<!--                                    </button>-->
+<!--                                    <div style="width: 10px"></div>-->
                                     <button class="quantity-btn quantity-minus" type="button">
-                                        <i class="icofont-minus" aria-hidden="true"></i>
+                                        <i class="icofont-book-mark" aria-hidden="true"></i>
+                                        <span th:text="30">30</span>
                                     </button>
                                 </div>
-                            </li>
-                            <li>
-                                <a href="#" class="cart-btn">Add to Cart</a>
                             </li>
                         </ul>
                     </div>
@@ -158,7 +164,7 @@
                     <div class="product-review">
                         <div class="media">
                             <div class="item-img">
-                                <img src="media/figure/author_5.jpg" alt="blog">
+                                <img src="/media/figure/author_5.jpg" alt="blog">
                             </div>
                             <div class="media-body">
                                 <div class="item-date">July 11, 2020</div>
@@ -178,7 +184,7 @@
                         </div>
                         <div class="media">
                             <div class="item-img">
-                                <img src="media/figure/author_6.jpg" alt="blog">
+                                <img src="/media/figure/author_6.jpg" alt="blog">
                             </div>
                             <div class="media-body">
                                 <div class="item-date">July 11, 2020</div>
@@ -219,53 +225,6 @@
                             </div>
                             <div class="form-response"></div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="related-product">
-            <h3 class="heading-title">Related Products</h3>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="block-box product-box">
-                        <div class="product-img">
-                            <a href="#"><img src="media/figure/product_7.png" alt="product"></a>
-                        </div>
-                        <div class="product-content">
-                            <div class="item-category">
-                                <a href="#">COFFEE MUGS</a>
-                            </div>
-                            <h3 class="product-title"><a href="#">Black Coffee Mug</a></h3>
-                            <div class="product-price">$29</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="block-box product-box">
-                        <div class="product-img">
-                            <a href="#"><img src="media/figure/product_8.png" alt="product"></a>
-                        </div>
-                        <div class="product-content">
-                            <div class="item-category">
-                                <a href="#">COFFEE MUGS</a>
-                            </div>
-                            <h3 class="product-title"><a href="#">Black Coffee Mug</a></h3>
-                            <div class="product-price">$29</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="block-box product-box">
-                        <div class="product-img">
-                            <a href="#"><img src="media/figure/product_9.png" alt="product"></a>
-                        </div>
-                        <div class="product-content">
-                            <div class="item-category">
-                                <a href="#">COFFEE MUGS</a>
-                            </div>
-                            <h3 class="product-title"><a href="#">Black Coffee Mug</a></h3>
-                            <div class="product-price">$29</div>
-                        </div>
                     </div>
                 </div>
             </div>
