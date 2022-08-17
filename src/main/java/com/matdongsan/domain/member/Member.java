@@ -3,6 +3,7 @@ package com.matdongsan.domain.member;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.reply.Reply;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,6 +37,6 @@ public class Member {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Posts> postsList = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
-//    private List<Reply> replyList = new ArrayList<>();
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
+    private List<Reply> replyList = new ArrayList<>();
 }
