@@ -25,8 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
-                .mvcMatchers("/login", "/signup").permitAll() // 누구나 접근 가능
+        http.csrf().disable()
+                .authorizeRequests()
+                .mvcMatchers("/login", "/signup","/api/place").permitAll() // 누구나 접근 가능
                 .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능
                 .anyRequest().authenticated(); // 나머지 요청은 권한이 있어야함
         http.logout()

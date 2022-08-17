@@ -1,8 +1,6 @@
-package com.matdongsan.web.dto;
+package com.matdongsan.domain.place;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.matdongsan.domain.place.Place;
 import lombok.Data;
 
 @Data
