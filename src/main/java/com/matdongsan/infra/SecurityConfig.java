@@ -1,33 +1,27 @@
 package com.matdongsan.infra;
 
-import com.matdongsan.service.MemberService;
+import com.matdongsan.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final MemberService memberService;
+    private final AccountService accountService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .mvcMatchers("/login", "/signup","/api/place").permitAll() // 누구나 접근 가능
+                .mvcMatchers("/login", "/signup","/api/place", "/info-init").permitAll() // 누구나 접근 가능
                 .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능
                 .anyRequest().authenticated(); // 나머지 요청은 권한이 있어야함
         http.logout()
@@ -41,11 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().accessDeniedPage("/");
 
-        http.userDetailsService(memberService);
+        http.userDetailsService(accountService);
 
         http.rememberMe()
                 .rememberMeParameter("remember-me")
-                .userDetailsService(memberService);
+                .userDetailsService(accountService);
 
         http.exceptionHandling()
                 .accessDeniedPage("/error-page");
