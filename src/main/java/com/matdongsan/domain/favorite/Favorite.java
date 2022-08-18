@@ -20,11 +20,13 @@ public class Favorite {
     @Column(length = 200)
     private String subject;
     // 북마크 장소 1대다 매치
+    /*
     @OneToMany(mappedBy = "place")
     private List<Place> placeList = new ArrayList<>();
 
     public void addPlace(Place place) {
-        // place.setFavorite(this);
+        place.setFavorite(this);
         getPlaceList().add(place);
     }
+    */
 }
