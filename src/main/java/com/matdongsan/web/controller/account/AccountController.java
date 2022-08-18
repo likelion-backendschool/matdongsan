@@ -42,12 +42,11 @@ public class AccountController {
 
     @PostMapping("/signup")
     public String createNewMember(@Valid AccountSignUpDto accountSignUpDto,
-                                  RedirectAttributes redirectAttributes,
                                   BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors() || accountService.existMemberCheck(accountSignUpDto)) {
             // DTO에 작성한 Valid에 맞지 않거나, 이미 존재하는 username 혹은 email일 경우
             // 해당 내용을 다시 dto에 담아서 회원가입 폼으로 돌려줌
-            model.addAttribute("memberSignUpDto", accountSignUpDto);
+            model.addAttribute("accountSignUpDto", accountSignUpDto);
             return "account/account-signup";
         }
         // 아무 이상 없다면 로그인을 진행하고, 유저 프로필 작성 폼으로 넘어간다.
