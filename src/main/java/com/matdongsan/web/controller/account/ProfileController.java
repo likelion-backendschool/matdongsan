@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 
-//@Controller
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class ProfileController {

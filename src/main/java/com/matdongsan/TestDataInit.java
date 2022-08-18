@@ -30,20 +30,21 @@ public class TestDataInit {
         if (accountRepository.findByUsername("member1").isEmpty()) {
             // 등록된 username 중 member1이 없다면 새로운 member 등록
             // 빌드 이용
-            Account newAccount = accountRepository.save(Account.builder()
+
+            Account newAccount = Account.builder()
                     .username("member1")
                     .password(passwordEncoder.encode("member1!"))
                     .accountRole(AccountRole.ROLE_USER)
                     .email("member1@gmail.com")
-                    .build());
-            Member member = Member.builder()
+                    .build();
+            Member member = memberRepository.save(Member.builder()
                     .introduce("hello world")
                     .gender("male")
-                    .account(newAccount)
                     .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
                     .signUpDate(LocalDateTime.now())
-                    .build();
+                    .build());
             newAccount.addMember(member);
+            accountRepository.save(newAccount);
         }
     }
 }
