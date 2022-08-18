@@ -39,4 +39,14 @@ public class Member {
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
     private List<Reply> replyList = new ArrayList<>();
+
+    public void addBasicInfo(Date birth, String gender, String introduce) {
+        this.birth = birth;
+        this.gender = gender;
+        this.introduce = introduce;
+    }
+
+    public void changeBasicInfo(String introduce) {
+        this.introduce = introduce;
+    }
 }

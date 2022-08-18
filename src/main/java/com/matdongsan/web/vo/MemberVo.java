@@ -13,8 +13,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class MemberVo {
-    private final String username;
-    private final String email;
     private final String introduce;
     private final Date birth;
     private final LocalDateTime signUpDate;

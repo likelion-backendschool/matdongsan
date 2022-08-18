@@ -7,6 +7,7 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.infra.SecurityUser;
 import com.matdongsan.web.dto.account.AccountSignUpDto;
+import com.matdongsan.web.dto.member.MemberInfoDto;
 import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,10 +31,12 @@ import java.util.Optional;
 public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
+
+    private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Account saveNewMember(AccountSignUpDto accountSignUpDto) {
+    public Account saveNewAccount(AccountSignUpDto accountSignUpDto) {
         // 회원가입한 Member를 저장하는 로직
         Account newAccount = Account.builder()
                 .username(accountSignUpDto.getUsername())
@@ -43,6 +44,8 @@ public class AccountService implements UserDetailsService {
                 .email(accountSignUpDto.getEmail())
                 .accountRole(AccountRole.ROLE_USER)
                 .build();
+        MemberInfoDto emptyDto = memberService.createEmptyMemberInfoDto();
+        memberService.createNewMember(newAccount, emptyDto);
         return accountRepository.save(newAccount);
     }
 
@@ -55,7 +58,7 @@ public class AccountService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 
-    public Account findMemberByUsername(String username){
+    public Account findAccountByUsername(String username){
         Optional<Account> currentMember = accountRepository.findByUsername(username);
         return currentMember.orElse(null);
     }
@@ -68,10 +71,12 @@ public class AccountService implements UserDetailsService {
     }
 
     public MemberVo getReadOnlyMember(String username) {
-        Account account = findMemberByUsername(username);
+        Member currentMember = memberRepository.findByAccount(findAccountByUsername(username));
         return MemberVo.builder()
-                .username(account.getUsername())
-                .email(account.getEmail())
+                .introduce(currentMember.getIntroduce())
+                .birth(currentMember.getBirth())
+                .gender(currentMember.getGender())
+                .postsList(currentMember.getPostsList())
                 .build();
     }
 

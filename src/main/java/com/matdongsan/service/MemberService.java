@@ -32,4 +32,18 @@ public class MemberService {
         log.info("newMember={}", newMember);
         return memberRepository.save(newMember);
     }
+
+    public void updateCurrentMember(Member member, MemberInfoDto memberInfoDto) {
+        member.addBasicInfo(memberInfoDto.getBirth(),
+                memberInfoDto.getGender(),
+                memberInfoDto.getIntroduce());
+    }
+
+    public MemberInfoDto createEmptyMemberInfoDto() {
+        MemberInfoDto memberInfoDto = new MemberInfoDto();
+        memberInfoDto.setBirth(null);
+        memberInfoDto.setGender(null);
+        memberInfoDto.setIntroduce(null);
+        return memberInfoDto;
+    }
 }

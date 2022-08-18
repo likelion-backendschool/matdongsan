@@ -29,7 +29,7 @@ public class PostReportController {
             @PathVariable("postId") Long postId,
             Principal principal
     ) {
-        Account account = accountService.findMemberByUsername(principal.getName());
+        Account account = accountService.findAccountByUsername(principal.getName());
         PostReport report = postReportService.savePostReport(account.getId(), postId,
                 reportDto.getReportCategory(), reportDto.getContent());
         log.info("report = {}", report);

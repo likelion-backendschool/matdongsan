@@ -30,30 +30,33 @@
                                 <a th:href="@{/login}" class="nav-link"><i class="icofont-users-alt-4"></i> Sign In </a>
                             </li>
                             <li class="nav-item">
-                                <a th:href="@{/signup}" class="nav-link active"><i class="icofont-download"></i> Registration</a>
+                                <a th:href="@{/signup}" class="nav-link active"><i class="icofont-download"></i> Sign Up </a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
-                                <h3 class="item-title">Sign Up Your Account</h3>
+                                <h3 class="item-title">회원가입을 위해 아래 정보를 입력해주세요.</h3>
                                 <form th:action="@{/signup}" method="post" th:object="${accountSignUpDto}" novalidate>
                                     <div class="form-group">
                                         <input type="text" th:field="*{username}" class="form-control" placeholder="아이디를 입력해주세요." autocomplete="off" required>
+                                        <small>아이디를 입력해주세요.</small>
                                         <small class="invalid-feedback">이미 사용중인 아이디거나 사용 불가능한 아이디입니다.</small>
                                         <small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
                                     </div>
                                     <div class="form-group">
                                         <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요." autocomplete="off" required>
+                                        <small>이메일 형식에 맞춰 이메일을 입력해주세요.</small>
                                         <small class="invalid-feedback">이미 사용중인 아이디거나 사용 불가능한 이메일입니다.</small>
                                         <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</small>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요." autocomplete="off" required>
+                                        <small>특수문자(.,!@#$%^)를 사용해서 비밀번호를 입력해주세요.</small>
                                         <small class="invalid-feedback">비밀번호 양식에 맞게 작성해주세요.</small>
                                         <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" name="registration" class="submit-btn" value="Complete Registration">
+                                        <input type="submit" name="registration" class="submit-btn" value="회원가입">
                                     </div>
                                 </form>
                             </div>

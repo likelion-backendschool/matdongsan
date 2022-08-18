@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -41,25 +42,24 @@ public class AccountController {
 
     @PostMapping("/signup")
     public String createNewMember(@Valid AccountSignUpDto accountSignUpDto,
+                                  RedirectAttributes redirectAttributes,
                                   BindingResult bindingResult, Model model) {
-
-        // 주석 추가2
         if (bindingResult.hasErrors() || accountService.existMemberCheck(accountSignUpDto)) {
             // DTO에 작성한 Valid에 맞지 않거나, 이미 존재하는 username 혹은 email일 경우
             // 해당 내용을 다시 dto에 담아서 회원가입 폼으로 돌려줌
             model.addAttribute("memberSignUpDto", accountSignUpDto);
             return "account/account-signup";
         }
-        // 아무 이상 없다면 로그인을 진행하고, 메인 페이지로 보내준다.
+        // 아무 이상 없다면 로그인을 진행하고, 유저 프로필 작성 폼으로 넘어간다.
         log.info("accountSignUpDto={}", accountSignUpDto);
-        Account account = accountService.saveNewMember(accountSignUpDto);
+        Account account = accountService.saveNewAccount(accountSignUpDto);
         accountService.login(account);
         return "redirect:/info-init";
     }
 
     @GetMapping("/info-init")
     public String memberInformationInit(Principal principal, Model model) {
-        Account account = accountService.findMemberByUsername(principal.getName());
+        Account account = accountService.findAccountByUsername(principal.getName());
         if (account == null) {
             return "redirect:/";
         }
@@ -70,9 +70,9 @@ public class AccountController {
     @PostMapping("/info-init")
     public String createNewMember(MemberInfoDto memberInfoDto,
                                   Principal principal, Model model) {
-        Account account = accountService.findMemberByUsername(principal.getName());
-        Member newMember = memberService.createNewMember(account, memberInfoDto);
-        model.addAttribute("memberInfoDto", new MemberInfoDto());
+        Account account = accountService.findAccountByUsername(principal.getName());
+        Member currentMember = account.getMember();
+        memberService.updateCurrentMember(currentMember, memberInfoDto);
         return "redirect:/";
     }
 }

@@ -14,9 +14,6 @@ public class MemberInfoDto {
     @NotBlank
     private String introduce;
 
-    @NotBlank
-    private String email;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
 

@@ -1,5 +1,6 @@
 package com.matdongsan.domain.account;
 
+import com.matdongsan.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
