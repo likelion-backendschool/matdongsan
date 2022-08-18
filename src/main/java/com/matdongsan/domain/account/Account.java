@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity @Getter
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account {
     // 주석 추가
