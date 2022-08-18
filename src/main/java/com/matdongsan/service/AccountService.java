@@ -63,6 +63,10 @@ public class AccountService implements UserDetailsService {
         return currentMember.orElse(null);
     }
 
+    public boolean checkDuplicatedAccount(String username) {
+        return accountRepository.existsByUsername(username);
+    }
+
     public boolean existMemberCheck(AccountSignUpDto accountSignUpDto) {
         // 이미 존재하는 username 혹은 email 인지 확인하는 폼
         boolean existUsername = accountRepository.existsByUsername(accountSignUpDto.getUsername());
@@ -94,5 +98,4 @@ public class AccountService implements UserDetailsService {
             return new SecurityUser(account.get());
         }
     }
-
 }

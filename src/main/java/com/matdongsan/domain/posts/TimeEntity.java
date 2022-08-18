@@ -22,4 +22,8 @@ public class TimeEntity {
 
     @LastModifiedDate
     private LocalDate modifiedTime;
+
+    public void modify(LocalDate time){
+        this.modifiedTime = time;
+    }
 }

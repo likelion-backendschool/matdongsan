@@ -60,16 +60,25 @@ public class PostsController {
 
     // 게시글 수정 뷰 페이지
     @GetMapping("/post/update/{id}")
-    public String updatePost(@PathVariable Long id ,Model model) {
+    public String modifyPost(@PathVariable Long id ,Model model) {
+
         Posts findPost = postsService.findById(id);
         model.addAttribute("findPost", findPost);
 
         return "posts/posts-update";
     }
 
+    // 8 / 18 개발 시작 부분
     @PatchMapping("/post/edit")
-    public String editPost(PostsDto postsDto){
-        postsService.update();
+    public String editPost(@PathVariable Long id , PostsDto postsDto){
+        Posts post = postsService.update(id , postsDto);
+        return "redirect:posts/posts-details";
+    }
+
+    //
+    @GetMapping("/detail/delete/{id}")
+    public String deletePost(@PathVariable Long id){
+        postsService.delete(id);
         return "redirect:posts/posts-details";
     }
 

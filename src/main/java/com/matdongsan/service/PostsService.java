@@ -27,7 +27,27 @@ public class PostsService {
 
     }
 
-    public void update() {
-        // 미구현
+    public Posts update(Long id , PostsDto postsDto) {
+        Posts post= postsDto.toEntity();
+        Posts target = postsRepository.findById(id).orElse(null);
+
+        if (target == null) {
+            return null;
+        }
+
+        target.update(post);
+        return postsRepository.save(target);
+
+    }
+
+    public Posts delete(Long id) {
+        Posts post = postsRepository.findById(id).orElse(null);
+
+        if (post == null) {
+            return null;
+        }
+
+        postsRepository.delete(post);
+        return post;
     }
 }

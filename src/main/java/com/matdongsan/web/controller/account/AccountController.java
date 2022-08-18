@@ -12,8 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -54,6 +53,16 @@ public class AccountController {
         Account account = accountService.saveNewAccount(accountSignUpDto);
         accountService.login(account);
         return "redirect:/info-init";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/account/idCheck")
+    public boolean overlappedID(@RequestParam(value = "username") String username){
+        boolean flag = false;
+        if (accountService.checkDuplicatedAccount(username)) {
+            flag = true;
+        }
+        return flag;
     }
 
     @GetMapping("/info-init")
