@@ -25,14 +25,12 @@ public class PostsDto {
     private LocalDateTime modifiedTime;
 
     public Posts toEntity() {
-        Posts posts = Posts.builder()
+        return Posts.builder()
                 .id(id)
                 .author(author)
                 .title(title)
                 .content(content)
                 .build();
-
-        return posts;
     }
 
     @Builder
