@@ -23,6 +23,7 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String showMyProfile(Principal principal, Model model) {
+        log.info("principal.getName()={}", principal.getName());
         MemberVo member = accountService.getReadOnlyMember(principal.getName());
         model.addAttribute("member", member);
 

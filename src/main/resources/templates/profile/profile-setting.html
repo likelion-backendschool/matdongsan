@@ -72,7 +72,7 @@
                     <ul class="user-info">
                         <li>
                             <label>소개</label>
-                            <p>방구뿡</p>
+                            <p th:text="${member.getIntroduce()}">소개글</p>
                         </li>
                         <li>
                             <label>Phone:</label>
@@ -106,8 +106,8 @@
                     </div>
                     <div class="user-info">
                         <ul class="info-list">
-                            <!--                                    <li><span>가입일</span><a th:text="${#temporals.format(#authentication.principal.signUpDate,'yyyy-MM-dd')}">가입날짜</a></li>-->
-                            <li><span>이메일</span><a sec:authentication="principal">이메일</a></li>
+                            <!--<li><span>가입일</span><a th:text="${#temporals.format(#authentication.principal.signUpDate,'yyyy-MM-dd')}">가입날짜</a></li>-->
+                            <!--<li><span>이메일</span><a sec:authentication="principal">이메일</a></li>-->
                             <li><span>등록한 맛집</span><a>100</a></li>
                             <li><span>등록한 댓글</span><a>100</a></li>
                             <li><span>조회수 총합</span><a>100</a></li>
