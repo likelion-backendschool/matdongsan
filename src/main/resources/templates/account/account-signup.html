@@ -5,7 +5,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 
 <head th:replace="fragments/sign-fragments::head"></head>
-
 <body class="sticky-header">
     <a href="#wrapper" data-type="section-switch" class="scrollup">
         <i class="icofont-bubble-up"></i>
@@ -36,27 +35,29 @@
                         <div class="tab-content">
                             <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
                                 <h3 class="item-title">회원가입을 위해 아래 정보를 입력해주세요.</h3>
-                                <form th:action="@{/signup}" method="post" th:object="${accountSignUpDto}" novalidate>
+                                <form th:action="@{/signup}" method="post" id="signupForm" th:object="${accountSignUpDto}" novalidate>
                                     <div class="form-group">
-                                        <div class="input-box">
-                                            <input type="text" th:field="*{username}" class="form-control" placeholder="아이디를 입력해주세요." autocomplete="off" required>
+                                        <label for="username">아이디</label>
+                                        <div class="d-flex justify-content-between">
+                                            <input type="text" id="username" th:field="*{username}" class="form-control px-2" placeholder="아이디를 입력해주세요." autocomplete="off" required>
+                                            <button type="button" id="duplicateId" class="btn btn-primary w-25 ml-2">중복확인</button>
                                         </div>
-                                        <button class="btn btn-primary">중복 확인</button>
-                                        <small>아이디를 입력해주세요.</small>
+                                        <span id="dupplicateMsg"></span>
                                         <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요." autocomplete="off" required>
-                                        <small>이메일 형식에 맞춰 이메일을 입력해주세요.</small>
+                                        <label for="email">이메일</label>
+                                        <input type="email" id="email" th:field="*{email}" class="form-control px-2" placeholder="이메일을 입력해주세요." autocomplete="off" required>
                                         <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</small>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요." autocomplete="off" required>
+                                        <label for="password">비밀번호</label>
+                                        <input type="password" id="password" th:field="*{password}" class="form-control px-2" placeholder="비밀번호를 입력해주세요." autocomplete="off" required>
                                         <small>특수문자(.,!@#$%^)를 사용해서 비밀번호를 입력해주세요.</small>
                                         <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" name="registration" class="submit-btn" value="회원가입">
+                                        <input type="button" id="signup" name="registration" class="submit-btn" value="회원가입">
                                     </div>
                                 </form>
                             </div>
@@ -74,32 +75,40 @@
                 </div>
             </div>
         </div>
-
-        <!--=====================================-->
-        <!--=      Header Search Start          =-->
-        <!--=====================================-->
-        <div id="header-search" class="header-search">
-            <button type="button" class="close">×</button>
-            <form class="header-search-form">
-                <input type="search" value="" placeholder="Search here..." />
-                <button type="submit" class="search-btn">
-                    <i class="flaticon-search"></i>
-                </button>
-            </form>
-        </div>
     </div>
-    <!-- Jquery Js -->
-    <script src="/dependencies/jquery/js/jquery.min.js"></script>
-    <script src="/dependencies/popper.js/js/popper.min.js"></script>
-    <script src="/dependencies/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/dependencies/imagesloaded/js/imagesloaded.pkgd.min.js"></script>
-    <script src="/dependencies/isotope-layout/js/isotope.pkgd.min.js"></script>
-    <script src="/dependencies/slick-carousel/js/slick.min.js"></script>
-    <script src="/dependencies/sal.js/sal.js"></script>
-    <script src="/dependencies/magnific-popup/js/jquery.magnific-popup.min.js"></script>
-    <script src="/dependencies/bootstrap-validator/js/validator.min.js"></script>
-    <script src="/dependencies/select2/js/select2.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtmXSwv4YmAKtcZyyad9W7D4AC08z0Rb4"></script>
+    <script>
+        $("#duplicateId").click(function(){
+            $.ajax({
+                type: "get", /* 어떤 방식으로 요청할 것인지 > 주로 GET or POST */
+                url: "/account/idCheck",
+                data : $('#signupForm').serialize(),
+                async: true , /* Ajax를 동기로 사용할지 비동기로 사용할지 > Ajax는 비동기 처리를 위해 사용하지만 가끔은 동기로 사용해야할 경우가 있습니다
+				Ajax를 통해 서버측에 데이터를 요청하고, 이 데이터의 결과를 모두 수신 받은 다음 단계로 진행하도록 하는 경우가 있을 수 있다는 이야기입니다. */
+                /* Controller에서 데이터를 잘 넘겨받았을 경우 호출*/
+                success : function(flag){
+                    console.log(flag);
+                    if(flag) {
+                        $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
+                            .addClass("text-warning")
+                            .removeClass("text-primary");
+                        $("#signup").attr("type", "button");
+                    } else {
+                        $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
+                            .addClass("text-primary")
+                            .removeClass("text-warning");
+                        $("#username").attr("readonly", "true")
+                            .addClass("bg-light");
+                        $("#signup").attr("type", "submit");
+                    }
+                },
+                /* 400, 404, 415에러 발생, Controller에서 데이터를 넘겨받지 못했을 경우 호출*/
+                error :function(){
+
+                }
+
+            });
+        });
+    </script>
 
     <!-- Site Scripts -->
     <script src="assets/js/app.js"></script>

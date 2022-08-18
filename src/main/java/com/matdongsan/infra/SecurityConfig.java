@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .mvcMatchers("/login", "/signup","/api/place", "/info-init").permitAll() // 누구나 접근 가능
+                .mvcMatchers("/login", "/signup","/api/place", "/info-init", "/account/idCheck").permitAll() // 누구나 접근 가능
                 .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능
                 .anyRequest().authenticated(); // 나머지 요청은 권한이 있어야함
         http.logout()
