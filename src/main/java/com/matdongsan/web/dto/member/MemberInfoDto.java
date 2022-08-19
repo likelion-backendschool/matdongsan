@@ -1,5 +1,6 @@
 package com.matdongsan.web.dto.member;
 
+import com.matdongsan.domain.member.MemberAge;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,4 +19,6 @@ public class MemberInfoDto {
     private Date birth;
 
     private String gender;
+
+    private MemberAge memberAge;
 }

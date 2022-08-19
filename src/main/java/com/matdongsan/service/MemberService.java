@@ -36,7 +36,8 @@ public class MemberService {
     public void updateCurrentMember(Member member, MemberInfoDto memberInfoDto) {
         member.addBasicInfo(memberInfoDto.getBirth(),
                 memberInfoDto.getGender(),
-                memberInfoDto.getIntroduce());
+                memberInfoDto.getIntroduce(),
+                memberInfoDto.getMemberAge());
     }
 
     public MemberInfoDto createEmptyMemberInfoDto() {

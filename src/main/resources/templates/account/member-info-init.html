@@ -45,6 +45,12 @@
                                         <small class="form-text text-danger" th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}">Birth Error</small>
                                     </div>
                                     <div class="form-group">
+                                        <select class="select2" th:field="*{memberAge}" data-placeholder="Select Gender" required>
+                                            <option th:each="age : ${ages}" th:value="${age}" th:text="${age.getValue()}"></option>
+                                        </select>
+                                        <small class="invalid-feedback">닉네임을 양식에 맞게 입력해주세요.</small>
+                                    </div>
+                                    <div class="form-group">
                                         <select class="select2" th:field="*{gender}" data-placeholder="Select Gender" required>
                                             <option value=""></option>
                                             <option value="male">Male</option>

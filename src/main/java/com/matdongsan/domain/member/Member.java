@@ -31,6 +31,9 @@ public class Member {
 
     private LocalDateTime signUpDate;
 
+    @Enumerated(EnumType.STRING)
+    private MemberAge memberAge;
+
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private Account account;
 
@@ -45,10 +48,11 @@ public class Member {
         reply.setWriter(this);
     }
 
-    public void addBasicInfo(Date birth, String gender, String introduce) {
+    public void addBasicInfo(Date birth, String gender, String introduce, MemberAge memberAge) {
         this.birth = birth;
         this.gender = gender;
         this.introduce = introduce;
+        this.memberAge = memberAge;
     }
 
     public void changeBasicInfo(String introduce) {

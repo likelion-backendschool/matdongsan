@@ -4,6 +4,7 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.member.MemberAge;
 import com.matdongsan.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,7 @@ public class TestDataInit {
                     .gender("male")
                     .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
                     .signUpDate(LocalDateTime.now())
+                    .memberAge(MemberAge.MEMBER_AGE_20S)
                     .build());
             newAccount.addMember(member);
             accountRepository.save(newAccount);

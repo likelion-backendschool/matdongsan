@@ -2,6 +2,7 @@ package com.matdongsan.web.controller.account;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.member.MemberAge;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.web.dto.account.AccountLoginDto;
@@ -71,6 +72,7 @@ public class AccountController {
         if (account == null) {
             return "redirect:/";
         }
+        model.addAttribute("ages", MemberAge.values());
         model.addAttribute("memberInfoDto", new MemberInfoDto());
         return "account/member-info-init";
     }
