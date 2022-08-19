@@ -17,7 +17,7 @@ public class Posts extends TimeEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Member author;  // 작성자
 
