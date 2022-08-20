@@ -57,6 +57,11 @@
                                         <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
                                     </div>
                                     <div class="form-group">
+                                        <label for="passwordChk">비밀번호 확인</label>
+                                        <input type="password" id="passwordChk" class="form-control px-2" placeholder="비밀번호를 한번 더 입력해주세요." autocomplete="off" required>
+                                        <span id="passwordChkMsg"></span>
+                                    </div>
+                                    <div class="form-group">
                                         <input type="button" id="signup" name="registration" class="submit-btn" value="회원가입">
                                     </div>
                                 </form>
@@ -77,6 +82,8 @@
         </div>
     </div>
     <script>
+        let idChk = false;
+        let pwdChk = false;
         $("#duplicateId").click(function(){
             $.ajax({
                 type: "get", /* 어떤 방식으로 요청할 것인지 > 주로 GET or POST */
@@ -89,24 +96,51 @@
                     console.log(flag);
                     if(flag) {
                         $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
-                            .addClass("text-warning")
+                            .addClass("text-danger")
                             .removeClass("text-primary");
                         $("#signup").attr("type", "button");
                     } else {
+                        idChk = true;
+                        console.log("idChk : " + idChk);
                         $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
                             .addClass("text-primary")
-                            .removeClass("text-warning");
+                            .removeClass("text-danger");
                         $("#username").attr("readonly", "true")
                             .addClass("bg-light");
-                        $("#signup").attr("type", "submit");
                     }
                 },
-                /* 400, 404, 415에러 발생, Controller에서 데이터를 넘겨받지 못했을 경우 호출*/
-                error :function(){
+            });
+        });
+        $(function(){
+            $('#password').keyup(function(){
+                $('#passwordChkMsg').html('');
+            });
 
+            $('#password, #passwordChk').keyup(function(){
+
+                if($('#password').val() != $('#passwordChk').val()){
+                    pwdChk = false;
+                    $("#passwordChkMsg").text("비밀번호가 틀립니다.")
+                        .addClass("text-danger")
+                        .removeClass("text-primary");
+                } else{
+                    pwdChk = true;
+                    console.log("pwdChk : " + pwdChk);
+                    $("#passwordChkMsg").text("비밀번호가 일치합니다.")
+                        .addClass("text-primary")
+                        .removeClass("text-danger");
                 }
 
             });
+        });
+        $('#passwordChk, #password, #username').keyup(function (){
+            if (idChk && pwdChk) {
+                console.log("Correct");
+                $("#signup").attr("type", "submit");
+            } else {
+                console.log("Not Correct");
+                $("#signup").attr("type", "button");
+            }
         });
     </script>
 
