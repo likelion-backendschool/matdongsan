@@ -13,9 +13,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@RunWith(SpringRunner.class)
+@WebAppConfiguration
 @Slf4j
 class AccountServiceTest {
     @Autowired
@@ -33,6 +35,8 @@ class AccountServiceTest {
                 .accountRole(AccountRole.ROLE_USER)
                 .member(null)
                 .build();
-        accountRepository.save(newAccount);
+        Account createAccount = accountRepository.save(newAccount);
+
+        assertThat(newAccount.getId()).isEqualTo(createAccount.getId());
     }
 }
