@@ -14,7 +14,8 @@
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
     <div class="container">
-        <div class="product-breadcrumb block-box">
+        <div class="product-breadcrumb block-box" th:style="${not #strings.isEmpty(place.mainPhotoUrl)}?
+        'background-image:url('+${place.mainPhotoUrl}+');background-repeat: no-repeat, repeat; background-size: cover;' : ''">
             <div class="breadcrumb-area">
                 <h1 class="item-title" th:text="${place.placeName}">가게 명</h1>
                 <ul>

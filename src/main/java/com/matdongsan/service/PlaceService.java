@@ -63,6 +63,7 @@ public class PlaceService {
         try {
             String menus="";
             String facilityInfo="";
+            String mainPhotoUrl = "";
             String url = "https://place.map.kakao.com/main/v/" + place.getId();
             HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(new HttpHeaders());
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
@@ -83,6 +84,10 @@ public class PlaceService {
             }
             JSONObject basicInfo = (JSONObject) bodyJson.get("basicInfo");
 
+            if (basicInfo.containsKey("mainphotourl")) {
+                mainPhotoUrl = basicInfo.get("mainphotourl").toString();
+            }
+
             if (basicInfo.containsKey("facilityInfo")) {
                 JSONObject facility = (JSONObject) basicInfo.get("facilityInfo");
                 facilityInfo = facility.entrySet().stream().map(i -> {
@@ -90,7 +95,7 @@ public class PlaceService {
                     return entry.getKey() + "=" + entry.getValue();
                 }).collect(Collectors.joining("|")).toString();
             }
-            place.setAdditionalInfo(menus, facilityInfo);
+            place.setAdditionalInfo(menus, facilityInfo,mainPhotoUrl);
         } catch (ParseException e) {
             log.error("parser error",e);
             throw new RuntimeException(e);

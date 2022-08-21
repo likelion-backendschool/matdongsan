@@ -29,6 +29,7 @@ public class Place {
     @Column(columnDefinition = "TEXT")
     private String menus;
     private String facilityInfo;
+    private String mainPhotoUrl;
 
     public Place(long id, String placeName, String placeUrl, String categoryName, String addressName, String roadAddressName, String phone, String x, String y) {
         this.id = id;
@@ -41,8 +42,9 @@ public class Place {
         this.x = x;
         this.y = y;
     }
-    public void setAdditionalInfo(String menu,String facility){
+    public void setAdditionalInfo(String menu,String facility,String mainPhotoUrl){
         this.menus = menu;
         this.facilityInfo = facility;
+        this.mainPhotoUrl = mainPhotoUrl;
     }
 }
