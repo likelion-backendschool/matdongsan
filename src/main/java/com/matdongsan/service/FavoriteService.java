@@ -23,7 +23,6 @@ public class FavoriteService {
             return false;
         }else{ // 좋아요가 없다면 새로운 좋아요 저장
             Favorite favorite = new Favorite(member, place);
-            favoriteRepository.save(favorite);
             return true;
         }
     }

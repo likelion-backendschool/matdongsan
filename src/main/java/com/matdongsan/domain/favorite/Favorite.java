@@ -27,13 +27,14 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Place place;
 
-    public void addPlace(Place place) {
-        this.place = place;
-        place.getFavorites().add(this);
-    }
 
     public Favorite(Member member, Place place) {
         this.member = member;
+        setPlace(place);
+    }
+
+    private void setPlace(Place place) {
+        place.getFavorites().add(this);
         this.place = place;
     }
 }

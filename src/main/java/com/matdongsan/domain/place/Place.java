@@ -47,4 +47,6 @@ public class Place {
         this.facilityInfo = facility;
         this.mainPhotoUrl = mainPhotoUrl;
     }
+
+
 }
