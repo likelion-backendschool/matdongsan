@@ -232,9 +232,9 @@
             let bookmarkIconEl = document.getElementById("bookmarkIcon");
             let bookmarkBtnEl = document.getElementById("bookmarkBtn");
 
-            test();
+            updateFavoriteContent();
 
-            function test(){
+            function updateFavoriteContent(){
                 favoriteCountEl.innerText = favoriteCount;
                 if(isFavorite){
                     bookmarkIconEl.classList.replace("fa-regular","fa-solid")
@@ -249,13 +249,13 @@
                     method:"POST",
                 }).then(async res => {
                     var json = await res.json()
-                    console.log(json['favorite']);
+                    console.log(json);
                     favoriteCount = json['favoriteCount'];
                     isFavorite = json['favorite'];
 
                     console.log(favoriteCount);
                     console.log(isFavorite);
-                    test();
+                    updateFavoriteContent();
                 })
             }
 
