@@ -1,11 +1,12 @@
 package com.matdongsan.domain.place;
 
+import com.matdongsan.domain.favorite.Favorite;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,9 @@ public class Place {
     private String phone;
     private String x;
     private String y;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
+    private List<Favorite> favorites = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
     private String menus;

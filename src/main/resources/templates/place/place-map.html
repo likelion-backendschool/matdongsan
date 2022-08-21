@@ -205,6 +205,10 @@
                             displayInfowindow(marker, title);
                         };
 
+                        itemEl.onclick = function(){
+                            sendSaveRequest(place,place.id);
+                        }
+
                         itemEl.onmouseout =  function () {
                             infowindow.close();
                         };

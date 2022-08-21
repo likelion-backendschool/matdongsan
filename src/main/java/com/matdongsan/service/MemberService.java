@@ -20,7 +20,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     public Member createNewMember(Account account, MemberInfoDto memberInfoDto) {
-
         Member newMember = Member.builder()
                         .account(account)
                         .signUpDate(LocalDateTime.now())
@@ -46,5 +45,9 @@ public class MemberService {
         memberInfoDto.setGender(null);
         memberInfoDto.setIntroduce(null);
         return memberInfoDto;
+    }
+
+    public Member findMember(long memberId) {
+        return memberRepository.findById(memberId).orElseThrow();
     }
 }

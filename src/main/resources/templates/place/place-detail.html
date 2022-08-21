@@ -93,24 +93,18 @@
                             </li>
                                 <li th:if='${not #strings.isEmpty(place.menus)}'>
                                     Menu:
-                                    <div  th:each="menu : ${#strings.arraySplit(place.menus,'//')}">
+                                    <div  th:each="menu : ${#strings.arraySplit(place.menus,'|')}">
                                         <span style="padding-right: 20px" th:text="${#strings.arraySplit(menu,'=')[0]}">메뉴명</span>
                                         <span th:text="${#strings.arraySplit(menu,'=')[1]}">가격</span>
                                     </div>
                                 </li>
                         </ul>
-<!--                        <p>Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper et, consectetur ac metus. Duis auctor tpulvinar.Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper et, consectetur ac metus. Duis auctor tellus vitae cursus pulvinar.Suspendisse lobortis semper libero, non vehicula mi suscipit et. Sed tortor quam interdum sit amet ullamcorper Duis auctor tellus vitae cursus pulvinar.</p>-->
                         <ul class="action-area">
                             <li id="quantity-holder">
                                 <div class="input-group quantity-holder">
-<!--                                    <button class="quantity-btn quantity-plus" type="button">-->
-<!--                                        <i class="icofont-heart" aria-hidden="true"></i>-->
-<!--                                        <span th:text="30">30</span>-->
-<!--                                    </button>-->
-<!--                                    <div style="width: 10px"></div>-->
-                                    <button class="quantity-btn quantity-minus" type="button">
-                                        <i class="icofont-book-mark" aria-hidden="true"></i>
-                                        <span th:text="30">30</span>
+                                    <button id="bookmarkBtn" class="quantity-btn quantity-minus" type="button">
+                                        <i id="bookmarkIcon" class="fa-regular fa-bookmark"></i>
+                                        <span id="favoriteCount" >30</span>
                                     </button>
                                 </div>
                             </li>
@@ -229,6 +223,46 @@
                 </div>
             </div>
         </div>
+        <script th:inline="javascript">
+            let placeId = [[${place.id}]];
+            let favoriteCount = [[${favoriteCount}]];
+            let isFavorite = [[${isFavorite}]];
+
+            let favoriteCountEl = document.getElementById("favoriteCount");
+            let bookmarkIconEl = document.getElementById("bookmarkIcon");
+            let bookmarkBtnEl = document.getElementById("bookmarkBtn");
+
+            test();
+
+            function test(){
+                favoriteCountEl.innerText = favoriteCount;
+                if(isFavorite){
+                    bookmarkIconEl.classList.replace("fa-regular","fa-solid")
+                }else{
+                    bookmarkIconEl.classList.replace("fa-solid","fa-regular")
+                }
+            }
+
+            function sendFavorite(){
+                console.log("sendFavorite");
+                return fetch("/api/place/"+placeId+"/favorite",{
+                    method:"POST",
+                }).then(async res => {
+                    var json = await res.json()
+                    console.log(json['favorite']);
+                    favoriteCount = json['favoriteCount'];
+                    isFavorite = json['favorite'];
+
+                    console.log(favoriteCount);
+                    console.log(isFavorite);
+                    test();
+                })
+            }
+
+            bookmarkBtnEl.addEventListener("click",sendFavorite)
+
+
+        </script>
     </div>
 </div>
 </body>

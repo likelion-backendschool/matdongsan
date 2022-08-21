@@ -1,5 +1,6 @@
 package com.matdongsan.service;
 
+import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.place.PlaceDto;
 import com.matdongsan.domain.place.PlaceRepository;
@@ -25,13 +26,16 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PlaceService {
+
+    private final FavoriteService favoriteService;
+    private final MemberService memberService;
 
     private final PlaceRepository placeRepository;
     private final RestTemplate restTemplate;
     private final JSONParser parser = new JSONParser();
 
-    @Transactional
     public void savePlace(PlaceDto placeDto) {
         if (!placeRepository.existsById(placeDto.getId())) {
             Place place = placeDto.toPlace();
@@ -45,6 +49,15 @@ public class PlaceService {
         return place.orElseThrow(() -> new EntityNotFoundException("해당 음식점이 없음"));
     }
 
+    public boolean doFavorite(long memberId,long placeId) {
+        Place findPlace = findPlace(placeId);
+        Member findMember = memberService.findMember(memberId);
+
+        return favoriteService.doFavorite(findMember, findPlace);
+    }
+
+
+
     private void pullInfo(Place place) {
 
         try {
@@ -56,23 +69,26 @@ public class PlaceService {
             String body = response.getBody();
 
             JSONObject bodyJson = (JSONObject) parser.parse(body);
+
             if(bodyJson.containsKey("menuInfo")){
                 JSONObject menuInfo = (JSONObject) bodyJson.get("menuInfo");
                 JSONArray menuList = (JSONArray) menuInfo.get("menuList");
                 menus = menuList.stream().map(i -> {
                     JSONObject menuJson = (JSONObject) i;
                     String menu = menuJson.get("menu").toString();
+                    if(menu.contains("|")) return "";
                     String price = menuJson.get("price").toString();
                     return (menu + "=" + price);
-                }).collect(Collectors.joining("//")).toString();
+                }).collect(Collectors.joining("|")).toString();
             }
             JSONObject basicInfo = (JSONObject) bodyJson.get("basicInfo");
+
             if (basicInfo.containsKey("facilityInfo")) {
                 JSONObject facility = (JSONObject) basicInfo.get("facilityInfo");
-                for (Object o : facility.entrySet()) {
-                    Map.Entry<String,String> t= (Map.Entry<String, String>) o;
-                    log.info("key = {}, value = {}", t.getKey(), t.getValue());
-                }
+                facilityInfo = facility.entrySet().stream().map(i -> {
+                    Map.Entry<String, String> entry = (Map.Entry<String, String>) i;
+                    return entry.getKey() + "=" + entry.getValue();
+                }).collect(Collectors.joining("|")).toString();
             }
             place.setAdditionalInfo(menus, facilityInfo);
         } catch (ParseException e) {
