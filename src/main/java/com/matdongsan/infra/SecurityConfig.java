@@ -19,9 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        http
+                .csrf().ignoringAntMatchers("/api/**")
+                .and()
                 .authorizeRequests()
-                .mvcMatchers("/login", "/signup","/api/place", "/account/idCheck").permitAll() // 누구나 접근 가능
+                .mvcMatchers("/login", "/signup", "/account/idCheck").permitAll() // 누구나 접근 가능
                 .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능
                 .anyRequest().authenticated(); // 나머지 요청은 권한이 있어야함
         http.logout()
