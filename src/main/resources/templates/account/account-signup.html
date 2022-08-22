@@ -111,8 +111,28 @@
                 },
             });
         });
+        $("#signup").click(function(){
+            if (idChk && pwdChk) {
+                $('#signupForm').submit();
+            } else if (!idChk && pwdChk) {
+                Swal.fire({
+                    icon: 'error',
+                    text: '아이디 중복을 확인해주세요 !',
+                })
+            } else if (idChk && !pwdChk) {
+                Swal.fire({
+                    icon: 'error',
+                    text: '비밀번호 중복을 확인해주세요 !',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    text: '입력하신 정보를 다시 확인해주세요 !'
+                });
+            }
+        });
         $(function(){
-            $('#password').keyup(function(){
+            $('#password').on("propertychange change keyup paste input", function(){
                 $('#passwordChkMsg').html('');
             });
 
@@ -120,7 +140,7 @@
 
                 if($('#password').val() != $('#passwordChk').val()){
                     pwdChk = false;
-                    $("#passwordChkMsg").text("비밀번호가 틀립니다.")
+                    $("#passwordChkMsg").text("비밀번호가 일치하지 않습니다.")
                         .addClass("text-danger")
                         .removeClass("text-primary");
                 } else{
@@ -133,7 +153,7 @@
 
             });
         });
-        $('#passwordChk, #password, #username').keyup(function (){
+        $('#passwordChk, #password, #username, #email').on("propertychange change keyup paste input", function(){
             if (idChk && pwdChk) {
                 console.log("Correct");
                 $("#signup").attr("type", "submit");
@@ -142,6 +162,7 @@
                 $("#signup").attr("type", "button");
             }
         });
+
     </script>
 
     <!-- Site Scripts -->
