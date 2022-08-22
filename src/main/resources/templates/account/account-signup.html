@@ -73,6 +73,89 @@
             </div>
         </div>
     </div>
+    <script>
+        let idChk = false;
+        let pwdChk = false;
+        $("#duplicateId").click(function(){
+            $.ajax({
+                type: "get", /* 어떤 방식으로 요청할 것인지 > 주로 GET or POST */
+                url: "/account/idCheck",
+                data : $('#signupForm').serialize(),
+                async: true , /* Ajax를 동기로 사용할지 비동기로 사용할지 > Ajax는 비동기 처리를 위해 사용하지만 가끔은 동기로 사용해야할 경우가 있습니다
+				Ajax를 통해 서버측에 데이터를 요청하고, 이 데이터의 결과를 모두 수신 받은 다음 단계로 진행하도록 하는 경우가 있을 수 있다는 이야기입니다. */
+                /* Controller에서 데이터를 잘 넘겨받았을 경우 호출*/
+                success : function(flag){
+                    console.log(flag);
+                    if(flag) {
+                        $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
+                            .addClass("text-danger")
+                            .removeClass("text-primary");
+                        $("#signup").attr("type", "button");
+                    } else {
+                        idChk = true;
+                        console.log("idChk : " + idChk);
+                        $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
+                            .addClass("text-primary")
+                            .removeClass("text-danger");
+                        $("#username").attr("readonly", "true")
+                            .addClass("bg-light");
+                    }
+                },
+            });
+        });
+        $("#signup").click(function(){
+            if (idChk && pwdChk) {
+                $('#signupForm').submit();
+            } else if (!idChk && pwdChk) {
+                Swal.fire({
+                    icon: 'error',
+                    text: '아이디 중복을 확인해주세요 !',
+                })
+            } else if (idChk && !pwdChk) {
+                Swal.fire({
+                    icon: 'error',
+                    text: '비밀번호 중복을 확인해주세요 !',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    text: '입력하신 정보를 다시 확인해주세요 !'
+                });
+            }
+        });
+        $(function(){
+            $('#password').on("propertychange change keyup paste input", function(){
+                $('#passwordChkMsg').html('');
+            });
+
+            $('#password, #passwordChk').keyup(function(){
+
+                if($('#password').val() != $('#passwordChk').val()){
+                    pwdChk = false;
+                    $("#passwordChkMsg").text("비밀번호가 일치하지 않습니다.")
+                        .addClass("text-danger")
+                        .removeClass("text-primary");
+                } else{
+                    pwdChk = true;
+                    console.log("pwdChk : " + pwdChk);
+                    $("#passwordChkMsg").text("비밀번호가 일치합니다.")
+                        .addClass("text-primary")
+                        .removeClass("text-danger");
+                }
+
+            });
+        });
+        $('#passwordChk, #password, #username, #email').on("propertychange change keyup paste input", function(){
+            if (idChk && pwdChk) {
+                console.log("Correct");
+                $("#signup").attr("type", "submit");
+            } else {
+                console.log("Not Correct");
+                $("#signup").attr("type", "button");
+            }
+        });
+
+    </script>
 </div>
 </body>
 
