@@ -1,151 +1,79 @@
 <!DOCTYPE html>
-<html lang="ko"
-      class="no-js"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
-
-<head th:replace="fragments/sign-fragments::head"></head>
-<body class="sticky-header">
-    <a href="#wrapper" data-type="section-switch" class="scrollup">
-        <i class="icofont-bubble-up"></i>
-    </a>
-    <!-- Preloader Start Here -->
-    <div id="preloader"></div>
-    <!-- Preloader End Here -->
-    <div id="wrapper" class="wrapper overflow-hidden">
-
-        <!--=====================================-->
-        <!--=          Header Menu Start       	=-->
-        <!--=====================================-->
-        <div class="login-page-wrap">
-            <div class="content-wrap">
-                <div class="login-content">
-                    <div class="item-logo">
-                        <a href="#"><img src="media/logo_large.png" alt="logo"></a>
-                    </div>
-                    <div class="login-form-wrap">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a th:href="@{/login}" class="nav-link"><i class="icofont-users-alt-4"></i> Sign In </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/signup}" class="nav-link active"><i class="icofont-download"></i> Sign Up </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
-                                <h3 class="item-title">회원가입을 위해 아래 정보를 입력해주세요.</h3>
-                                <form th:action="@{/signup}" method="post" id="signupForm" th:object="${accountSignUpDto}" novalidate>
-                                    <div class="form-group">
-                                        <label for="username">아이디</label>
-                                        <div class="d-flex justify-content-between">
-                                            <input type="text" id="username" th:field="*{username}" class="form-control px-2" placeholder="아이디를 입력해주세요." autocomplete="off" required>
-                                            <button type="button" id="duplicateId" class="btn btn-primary w-25 ml-2">중복확인</button>
-                                        </div>
-                                        <span id="dupplicateMsg"></span>
-                                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/sign-layout.html}">
+<head>
+    <title>맛동산 | 회원가입</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="login-page-wrap">
+        <div class="content-wrap">
+            <div class="login-content">
+                <div class="item-logo">
+                    <a href="#"><img src="media/logo_large.png" alt="logo"></a>
+                </div>
+                <div class="login-form-wrap">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a th:href="@{/login}" class="nav-link"><i class="icofont-users-alt-4"></i> Sign In </a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/signup}" class="nav-link active"><i class="icofont-download"></i> Sign Up </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane registration-tab fade show active" id="registration-tab" role="tabpanel">
+                            <h3 class="item-title">회원가입을 위해 아래 정보를 입력해주세요.</h3>
+                            <form th:action="@{/signup}" method="post" id="signupForm" th:object="${accountSignUpDto}" novalidate>
+                                <div class="form-group">
+                                    <label for="username">아이디</label>
+                                    <div class="d-flex justify-content-between">
+                                        <input type="text" id="username" th:field="*{username}" class="form-control px-2" placeholder="아이디를 입력해주세요." autocomplete="off" required>
+                                        <button type="button" id="duplicateId" class="btn btn-primary w-25 ml-2">중복확인</button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="email">이메일</label>
-                                        <input type="email" id="email" th:field="*{email}" class="form-control px-2" placeholder="이메일을 입력해주세요." autocomplete="off" required>
-                                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">비밀번호</label>
-                                        <input type="password" id="password" th:field="*{password}" class="form-control px-2" placeholder="비밀번호를 입력해주세요." autocomplete="off" required>
-                                        <small>특수문자(.,!@#$%^)를 사용해서 비밀번호를 입력해주세요.</small>
-                                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="passwordChk">비밀번호 확인</label>
-                                        <input type="password" id="passwordChk" class="form-control px-2" placeholder="비밀번호를 한번 더 입력해주세요." autocomplete="off" required>
-                                        <span id="passwordChkMsg"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="button" id="signup" name="registration" class="submit-btn" value="회원가입">
-                                    </div>
-                                </form>
-                            </div>
+                                    <span id="dupplicateMsg"></span>
+                                    <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">이메일</label>
+                                    <input type="email" id="email" th:field="*{email}" class="form-control px-2" placeholder="이메일을 입력해주세요." autocomplete="off" required>
+                                    <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">비밀번호</label>
+                                    <input type="password" id="password" th:field="*{password}" class="form-control px-2" placeholder="비밀번호를 입력해주세요." autocomplete="off" required>
+                                    <small>특수문자(.,!@#$%^)를 사용해서 비밀번호를 입력해주세요.</small>
+                                    <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordChk">비밀번호 확인</label>
+                                    <input type="password" id="passwordChk" class="form-control px-2" placeholder="비밀번호를 한번 더 입력해주세요." autocomplete="off" required>
+                                    <span id="passwordChkMsg"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" id="signup" name="registration" class="submit-btn" value="회원가입">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="map-line">
-                    <img src="media/banner/map_line.png" alt="map">
-                    <ul class="map-marker">
-                        <li><img src="media/banner/marker_1.png" alt="marker"></li>
-                        <li><img src="media/banner/marker_2.png" alt="marker"></li>
-                        <li><img src="media/banner/marker_3.png" alt="marker"></li>
-                        <li><img src="media/banner/marker_4.png" alt="marker"></li>
-                    </ul>
-                </div>
+            </div>
+            <div class="map-line">
+                <img src="media/banner/map_line.png" alt="map">
+                <ul class="map-marker">
+                    <li><img src="media/banner/marker_1.png" alt="marker"></li>
+                    <li><img src="media/banner/marker_2.png" alt="marker"></li>
+                    <li><img src="media/banner/marker_3.png" alt="marker"></li>
+                    <li><img src="media/banner/marker_4.png" alt="marker"></li>
+                </ul>
             </div>
         </div>
     </div>
-    <script>
-        let idChk = false;
-        let pwdChk = false;
-        $("#duplicateId").click(function(){
-            $.ajax({
-                type: "get", /* 어떤 방식으로 요청할 것인지 > 주로 GET or POST */
-                url: "/account/idCheck",
-                data : $('#signupForm').serialize(),
-                async: true , /* Ajax를 동기로 사용할지 비동기로 사용할지 > Ajax는 비동기 처리를 위해 사용하지만 가끔은 동기로 사용해야할 경우가 있습니다
-				Ajax를 통해 서버측에 데이터를 요청하고, 이 데이터의 결과를 모두 수신 받은 다음 단계로 진행하도록 하는 경우가 있을 수 있다는 이야기입니다. */
-                /* Controller에서 데이터를 잘 넘겨받았을 경우 호출*/
-                success : function(flag){
-                    console.log(flag);
-                    if(flag) {
-                        $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
-                            .addClass("text-danger")
-                            .removeClass("text-primary");
-                        $("#signup").attr("type", "button");
-                    } else {
-                        idChk = true;
-                        console.log("idChk : " + idChk);
-                        $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
-                            .addClass("text-primary")
-                            .removeClass("text-danger");
-                        $("#username").attr("readonly", "true")
-                            .addClass("bg-light");
-                    }
-                },
-            });
-        });
-        $(function(){
-            $('#password').keyup(function(){
-                $('#passwordChkMsg').html('');
-            });
-
-            $('#password, #passwordChk').keyup(function(){
-
-                if($('#password').val() != $('#passwordChk').val()){
-                    pwdChk = false;
-                    $("#passwordChkMsg").text("비밀번호가 틀립니다.")
-                        .addClass("text-danger")
-                        .removeClass("text-primary");
-                } else{
-                    pwdChk = true;
-                    console.log("pwdChk : " + pwdChk);
-                    $("#passwordChkMsg").text("비밀번호가 일치합니다.")
-                        .addClass("text-primary")
-                        .removeClass("text-danger");
-                }
-
-            });
-        });
-        $('#passwordChk, #password, #username').keyup(function (){
-            if (idChk && pwdChk) {
-                console.log("Correct");
-                $("#signup").attr("type", "submit");
-            } else {
-                console.log("Not Correct");
-                $("#signup").attr("type", "button");
-            }
-        });
-    </script>
-
-    <!-- Site Scripts -->
-    <script src="assets/js/app.js"></script>
+</div>
 </body>
 
 </html>
