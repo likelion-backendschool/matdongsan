@@ -65,11 +65,13 @@ public class Posts extends TimeEntity{
 
     //   2.post단에 추가할것
 
-    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "posts" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
     public void addReply(Reply reply) {
         this.replyList.add(reply);
         reply.setPosts(this);
     }
+
+
 }
