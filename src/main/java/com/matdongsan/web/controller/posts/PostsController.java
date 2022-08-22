@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-// test
-
 @Controller
 @RequiredArgsConstructor
 public class PostsController {
