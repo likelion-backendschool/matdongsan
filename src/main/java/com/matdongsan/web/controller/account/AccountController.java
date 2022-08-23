@@ -36,11 +36,11 @@ public class AccountController {
         return "account/account-login";
     }
 
-    @ResponseBody
     @GetMapping("/account/kakao")
     public String kakaoLogin(@RequestParam String code) {
         log.info("kakaoLoginCode={}", code);
         String access_Token = loginApiService.getKakaoAccessToken(code);
+        log.info("access_Token={}", access_Token);
         Account currentAccount = accountService.createKakaoUser(access_Token);
         accountService.login(currentAccount);
         return "redirect:/";

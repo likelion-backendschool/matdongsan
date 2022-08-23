@@ -102,12 +102,15 @@ public class AccountService implements UserDetailsService {
             int id = element.getAsJsonObject().get("id").getAsInt();
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
             String email = "";
+            String nickname = "";
+            int idx = 5;
             if(hasEmail){
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
+                idx = email.indexOf("@");
             }
 
             AccountSignUpDto newDto = new AccountSignUpDto();
-            newDto.setUsername(String.valueOf(id));
+            newDto.setUsername(email.substring(0, idx));
             newDto.setEmail(email);
             newDto.setPassword(String.valueOf(UUID.randomUUID()));
 
@@ -115,6 +118,7 @@ public class AccountService implements UserDetailsService {
 
             log.info("id = {}", id);
             log.info("email = {}", email);
+            log.info("nickname = {}", nickname);
 
             if (!existMemberCheck(newDto)) {
                 return saveNewAccount(newDto);
