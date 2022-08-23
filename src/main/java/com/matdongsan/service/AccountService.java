@@ -43,6 +43,7 @@ public class AccountService implements UserDetailsService {
      */
     public Account saveNewAccount(AccountSignUpDto accountSignUpDto) {
         // 회원가입한 Member를 저장하는 로직
+        // 테스트
         Account newAccount = Account.builder()
                 .username(accountSignUpDto.getUsername())
                 .password(passwordEncoder.encode(accountSignUpDto.getPassword()))
