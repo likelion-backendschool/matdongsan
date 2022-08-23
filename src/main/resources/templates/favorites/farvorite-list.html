@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout.html}">
+<head>
+    <title>맛동산 | 메인</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--=====================================-->
+    <!--=       Container  Area Start       =-->
+    <!--=====================================-->
+    <div class="container">
+        <div class="banner-user banner-forum">
+            <div class="banner-content">
+                <div class="media">
+                    <div class="item-img">
+                        <img src="media/figure/forum_7.jpg" alt="User">
+                    </div>
+                    <div class="media-body">
+                        <h3 class="item-title">Graphic Route</h3>
+                        <div class="item-subtitle">@Graphic Route</div>
+                        <ul class="item-social">
+                            <li><a href="#" class="bg-fb"><i class="icofont-facebook"></i></a></li>
+                            <li><a href="#" class="bg-twitter"><i class="icofont-twitter"></i></a></li>
+                            <li><a href="#" class="bg-dribble"><i class="icofont-dribbble"></i></a></li>
+                            <li><a href="#" class="bg-youtube"><i class="icofont-brand-youtube"></i></a></li>
+                            <li><a href="#" class="bg-behance"><i class="icofont-behance"></i></a></li>
+                        </ul>
+                        <ul class="user-meta">
+                            <li>Group Type: <span>Public</span></li>
+                            <li>Posts: <span>30</span></li>
+                            <li>Members: <span>2,590</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-box user-top-header">
+            <ul class="menu-list">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Info</a></li>
+                <li><a href="#">Forum</a></li>
+                <li><a href="#">Members</a></li>
+                <li><a href="#">Media</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="block-box forum-media-status">
+                    <ul>
+                        <li><a href="#"><i class="icofont-film"></i>All <span>0</span></a></li>
+                        <li><a href="#"><i class="icofont-layers"></i>Albums: <span>0</span></a></li>
+                        <li><a href="#"><i class="icofont-image"></i>Photos: <span>0</span></a></li>
+                        <li><a href="#"><i class="icofont-ui-play"></i>Videos: <span>0</span></a></li>
+                        <li><a href="#"><i class="icofont-ui-music"></i>Music: <span>0</span></a></li>
+                    </ul>
+                </div>
+                <div class="block-box forum-media-gallery">
+                    <div class="media-upload">
+                        <h3 class="item-title">Media Gallery</h3>
+                        <a href="#" class="upload-btn"><i class="icofont-upload-alt"></i>Upload</a>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search Media">
+                        <div class="input-group-append">
+                            <button class="search-btn" type="button"><i class="icofont-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 widget-block widget-break-lg">
+                <div class="widget widget-memebers">
+                    <div class="widget-heading">
+                        <h3 class="widget-title">Group Administrators</h3>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                ...
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Close</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="members-list">
+                        <div class="media">
+                            <div class="item-img">
+                                <a href="#">
+                                    <img src="media/figure/chat_1.jpg" alt="Chat">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="item-title"><a href="#">Julia Zessy</a></h4>
+                                <div class="item-username">@zessy </div>
+                                <div class="member-status online"><i class="icofont-check"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget widget-memebers">
+                    <div class="widget-heading">
+                        <h3 class="widget-title">Members</h3>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                ...
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Close</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#newest-member" role="tab" aria-selected="true">NEWEST</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#popular-member" role="tab" aria-selected="false">POPULAR</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#active-member" role="tab" aria-selected="false">ACTIVE</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="newest-member" role="tabpanel">
+                            <div class="members-list">
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_1.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Aahat Akter</a></h4>
+                                        <div class="item-username">@Aahat </div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_2.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Kazi Rahman</a></h4>
+                                        <div class="item-username">@Rahman</div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_3.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Alia Karon</a></h4>
+                                        <div class="item-username">@Alia</div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_4.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Masterero</a></h4>
+                                        <div class="item-username">@Master</div>
+                                        <div class="member-status offline"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="popular-member" role="tabpanel">
+                            <div class="members-list">
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_1.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Aahat Akter</a></h4>
+                                        <div class="item-username">@Aahat </div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_2.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Kazi Rahman</a></h4>
+                                        <div class="item-username">@Rahman</div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_3.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Alia Karon</a></h4>
+                                        <div class="item-username">@Alia</div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_4.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Masterero</a></h4>
+                                        <div class="item-username">@Master</div>
+                                        <div class="member-status offline"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="active-member" role="tabpanel">
+                            <div class="members-list">
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_1.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Aahat Akter</a></h4>
+                                        <div class="item-username">@Aahat </div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_2.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Kazi Rahman</a></h4>
+                                        <div class="item-username">@Rahman</div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_3.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Alia Karon</a></h4>
+                                        <div class="item-username">@Alia</div>
+                                        <div class="member-status online"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="item-img">
+                                        <a href="#">
+                                            <img src="media/figure/chat_4.jpg" alt="Chat">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="item-title"><a href="#">Masterero</a></h4>
+                                        <div class="item-username">@Master</div>
+                                        <div class="member-status offline"><i class="icofont-check"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget widget-groups">
+                    <div class="widget-heading">
+                        <h3 class="widget-title">My Groups</h3>
+                        <div class="dropdown">
+                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                ...
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Close</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-list">
+                        <div class="media">
+                            <div class="item-img">
+                                <a href="#">
+                                    <img src="media/groups/groups_9.jpg" alt="group">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="item-title"><a href="#">Kito Development</a></h4>
+                                <div class="item-member">265 Members</div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="item-img">
+                                <a href="#">
+                                    <img src="media/groups/groups_10.jpg" alt="group">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="item-title"><a href="#">Chef Express</a></h4>
+                                <div class="item-member">4,265 Members</div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="item-img">
+                                <a href="#">
+                                    <img src="media/groups/groups_11.jpg" alt="group">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="item-title"><a href="#">Photo Contest</a></h4>
+                                <div class="item-member">1,265 Members</div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="item-img">
+                                <a href="#">
+                                    <img src="media/groups/groups_12.jpg" alt="group">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="item-title"><a href="#">WP Developers</a></h4>
+                                <div class="item-member">265 Members</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="see-all-btn">
+                        <a href="#" class="item-btn">See All Groups</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
