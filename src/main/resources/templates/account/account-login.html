@@ -9,9 +9,9 @@
 <head>
     <title>맛동산 | 로그인</title>
     <style>
-        .btn-google {
-            color: white;
-            background-color: #ea4335;
+        .btn-kakao {
+            color: #000000;
+            background-color: #FEE500;
         }
 
         .btn-facebook {
@@ -68,17 +68,11 @@
                                 </div>
                             </form>
                             <hr class="my-4">
-                            <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=062d843fa8ad7533ce772552a6b9ea9e&redirect_uri=/account/kakao&response_type=code">
-                                <!-- REST_API키 및 REDIRECT_URi는 본인걸로 수정하세요 -->
-                                <!-- 저는 redirect_uri을 http://localhost:8080/member/kakaoLogin로 했습니다. -->
-                                <!-- 본인걸로 수정 시 띄어쓰기 절대 하지 마세요. 오류납니다. -->
-
-                                <img src="/resources/icon/kakao_login_large_narrow.png" style="height:60px">
-                                <!-- 이미지는 카카오 개발자센터에서 제공하는 login 이미지를 사용했습니다. -->
-
+                            <a href="https://kauth.kakao.com/oauth/authorize?client_id=062d843fa8ad7533ce772552a6b9ea9e&redirect_uri=http://localhost:8080/account/kakao&response_type=code"
+                               class="btn btn-lg btn-kakao btn-block" type="submit">
+                                <img src="https://www.nicepng.com/png/full/388-3888984_open-png.png" width="20px" height="20px" class="mr-2 pb-1"/> 카카오로 시작하기
                             </a>
-                            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
+                            <a class="btn btn-lg btn-facebook btn-block" type="submit"><i class="fab fa-facebook-f mr-2"></i> 개발중</a>
                         </div>
                     </div>
                 </div>
