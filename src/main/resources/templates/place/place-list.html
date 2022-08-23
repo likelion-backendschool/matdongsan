@@ -24,7 +24,7 @@
 
         <div style="height: 50px"></div>
         <!-- Banner Area Start -->
-        <div id="card-list" class="row gutters-20">
+        <div id="card-list" class="row gutters-20" onload="getLocation()">
             <div class="col-lg-4 col-md-6" >
                 <div class="block-box user-blog">
                     <div class="blog-content">
@@ -50,8 +50,32 @@
             </div>
         </div>
         <script th:inline="javascript">
+
             let y_pos = 37.514322572335935;
             let x_pos = 127.06283102249932;
+
+            getLocation();
+
+            function getLocation() {
+                if (navigator.geolocation) { // GPS를 지원하면
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        y_pos = position.coords.latitude;
+                        x_pos = position.coords.longitude;
+                        alert(position.coords.latitude + ' ' + position.coords.longitude);
+                    }, function(error) {
+                        console.error(error);
+                    }, {
+                        enableHighAccuracy: false,
+                        maximumAge: 0,
+                        timeout: Infinity
+                    });
+                } else {
+                    alert('GPS를 지원하지 않습니다');
+                }
+            }
+            // getLocation();
+
+            console.log(y_pos, x_pos);
 
             document.getElementById("search-form").onsubmit = function(){
                 let sc = document.getElementById("search-input").value;
