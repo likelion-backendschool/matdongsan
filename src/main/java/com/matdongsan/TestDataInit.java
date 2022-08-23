@@ -48,5 +48,25 @@ public class TestDataInit {
             newAccount.addMember(member);
             accountRepository.save(newAccount);
         }
+        if (accountRepository.findByUsername("admin").isEmpty()) {
+            // 등록된 username 중 member1이 없다면 새로운 member 등록
+            // 빌드 이용
+
+            Account newAccount = Account.builder()
+                    .username("admin")
+                    .password(passwordEncoder.encode("admin!"))
+                    .accountRole(AccountRole.ROLE_USER)
+                    .email("admin@gmail.com")
+                    .build();
+            Member member = memberRepository.save(Member.builder()
+                    .introduce("hello world")
+                    .gender("male")
+                    .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
+                    .signUpDate(LocalDateTime.now())
+                    .memberAge(MemberAge.MEMBER_AGE_20S)
+                    .build());
+            newAccount.addMember(member);
+            accountRepository.save(newAccount);
+        }
     }
 }
