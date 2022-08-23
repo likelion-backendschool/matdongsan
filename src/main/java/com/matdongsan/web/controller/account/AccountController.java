@@ -33,6 +33,12 @@ public class AccountController {
         return "account/account-login";
     }
 
+    @GetMapping("/account/kakao")
+    public String kakaoLogin(@RequestParam(value = "code", required = false) String code) {
+        log.info("kakaoLoginCode={}", code);
+        return "/";
+    }
+
     @GetMapping("/signup")
     public String showSignUpPage(Model model) {
         // 회원가입 시 사용할 Dto 전달

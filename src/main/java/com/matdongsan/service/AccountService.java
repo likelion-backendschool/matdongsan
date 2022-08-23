@@ -43,7 +43,6 @@ public class AccountService implements UserDetailsService {
      */
     public Account saveNewAccount(AccountSignUpDto accountSignUpDto) {
         // 회원가입한 Member를 저장하는 로직
-        // 테스트
         Account newAccount = Account.builder()
                 .username(accountSignUpDto.getUsername())
                 .password(passwordEncoder.encode(accountSignUpDto.getPassword()))
@@ -68,6 +67,7 @@ public class AccountService implements UserDetailsService {
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
+
     /**
      * username을 통해 Account 객체를 찾는 메소드
      * @param username 로그인 id가 들어옴
