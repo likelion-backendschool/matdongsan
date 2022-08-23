@@ -36,6 +36,11 @@ public class AccountService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * 새로운 Account 객체를 생성하여 DB에 저장하는 메소드
+     * @param accountSignUpDto 회원가입 폼에서 받아온 DTO가 들어옴
+     * @returns 들어온 DTO를 바탕으로 새로운 Account 객체를 생성하여 반환
+     */
     public Account saveNewAccount(AccountSignUpDto accountSignUpDto) {
         // 회원가입한 Member를 저장하는 로직
         Account newAccount = Account.builder()
@@ -49,6 +54,11 @@ public class AccountService implements UserDetailsService {
         return accountRepository.save(newAccount);
     }
 
+    /**
+     * Account 객체를 받아 로그인을 시켜주는 메소드
+     * @param account 회원가입 시 생긴 Account 객체가 들어옴
+     * @returns 들어온 Account 객체를 Security를 이용하여 로그인 시켜줌
+     */
     public void login(Account account) {
         // Security를 이용하여 member를 로그인 시켜줌(회원가입 시에만 사용)
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
@@ -99,6 +109,11 @@ public class AccountService implements UserDetailsService {
                 .build();
     }
 
+    /**
+     * Spring Security에서만 사용하는 메소드
+     * @param username 로그인 id가 들어옴
+     * @returns 새로운 SecurityUser를 생성해줌
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 로그인을 하기 위해 가입된 member 정보를 조회
