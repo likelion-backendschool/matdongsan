@@ -67,6 +67,7 @@ public class AccountService implements UserDetailsService {
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
+
     /**
      * username을 통해 Account 객체를 찾는 메소드
      * @param username 로그인 id가 들어옴
