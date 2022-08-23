@@ -27,8 +27,7 @@ public class PostsController {
 
         model.addAttribute("detail" , postDetail);
 
-//        return "/posts/posts-detail";
-        return "posts/post-detail";
+        return "/posts/posts-detail";
     }
 
     // 게시글 전체 조회
