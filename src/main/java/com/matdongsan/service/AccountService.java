@@ -21,8 +21,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.io.BufferedReader;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +59,73 @@ public class AccountService implements UserDetailsService {
         MemberInfoDto emptyDto = memberService.createEmptyMemberInfoDto();
         memberService.createNewMember(newAccount, emptyDto);
         return accountRepository.save(newAccount);
+    }
+
+    /**
+     * Kakao 로그인으로 들어온 계정을 회원가입 혹은 로그인 시켜줌
+     * @param token social 로그인을 통해 받아온 token이 들어옴
+     * @returns 새로운 Account를 반환해줌
+     */
+    public Account createKakaoUser(String token) {
+
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+
+        //access_token을 이용하여 사용자 정보 조회
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Authorization", "Bearer " + token); //전송할 header 작성, access_token전송
+
+            //결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+
+            log.info("responseCode = {}", responseCode);
+
+            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            log.info("response body = {}", result);
+
+
+            //Gson 라이브러리로 JSON파싱
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+
+            int id = element.getAsJsonObject().get("id").getAsInt();
+            boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
+            String email = "";
+            if(hasEmail){
+                email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
+            }
+
+            AccountSignUpDto newDto = new AccountSignUpDto();
+            newDto.setUsername(String.valueOf(id));
+            newDto.setEmail(email);
+            newDto.setPassword(String.valueOf(UUID.randomUUID()));
+
+            br.close();
+
+            log.info("id = {}", id);
+            log.info("email = {}", email);
+
+            if (!existMemberCheck(newDto)) {
+                return saveNewAccount(newDto);
+            } else {
+                return findAccountByUsername(email);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
