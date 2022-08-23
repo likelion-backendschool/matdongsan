@@ -74,6 +74,11 @@ public class AccountService implements UserDetailsService {
         return existUsername || existEmail;
     }
 
+    /**
+     * username을 받아 MemberVO 객체로 반환하는 메소드
+     * @param username 로그인 id가 들어옴
+     * @returns Member가 아닌 VO 객체를 반환함
+     */
     public MemberVo getReadOnlyMember(String username) {
         Member currentMember = findAccountByUsername(username).getMember();
         log.info("currentUser.introduce={}", currentMember.getIntroduce());

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-
 @Controller
 @RequiredArgsConstructor
 public class PostsController {
@@ -68,7 +67,7 @@ public class PostsController {
         return "posts/posts-update";
     }
 
-    // 8 / 18 개발 시작 부분
+
     @PatchMapping("/post/edit")
     public String editPost(@PathVariable Long id , PostsDto postsDto){
         Posts post = postsService.update(id , postsDto);
