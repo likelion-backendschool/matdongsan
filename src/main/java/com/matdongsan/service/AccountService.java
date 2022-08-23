@@ -57,7 +57,11 @@ public class AccountService implements UserDetailsService {
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
-
+    /**
+     * username을 통해 Account 객체를 찾는 메소드
+     * @param username 로그인 id가 들어옴
+     * @returns 해당하는 유저가 있는지 찾고 없다면 null을 반환
+     */
     public Account findAccountByUsername(String username){
         Optional<Account> currentMember = accountRepository.findByUsername(username);
         return currentMember.orElse(null);
@@ -69,7 +73,7 @@ public class AccountService implements UserDetailsService {
 
     /**
      * 회원가입한 정보를 받아서 username 혹은 email이 중복으로 존재하는지 확인하는 메소드
-     * @param accountSignUpDto 로그인 id가 들어옴
+     * @param accountSignUpDto 회원가입 시 폼을 받아 전달하는 DTO
      * @returns username 혹은 email 둘 중에 하나라도 존재하는지 반환
      */
     public boolean existMemberCheck(AccountSignUpDto accountSignUpDto) {
