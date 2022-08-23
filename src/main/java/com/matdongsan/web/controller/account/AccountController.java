@@ -5,6 +5,7 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberAge;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.MemberService;
+import com.matdongsan.service.SocialLoginApiService;
 import com.matdongsan.web.dto.account.AccountLoginDto;
 import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
@@ -26,6 +27,8 @@ public class AccountController {
     private final AccountService accountService;
     private final MemberService memberService;
 
+    private final SocialLoginApiService loginApiService;
+
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         // 로그인할 때 사용할 Dto 전달
@@ -33,10 +36,12 @@ public class AccountController {
         return "account/account-login";
     }
 
+    @ResponseBody
     @GetMapping("/account/kakao")
-    public String kakaoLogin(@RequestParam(value = "code", required = false) String code) {
+    public String kakaoLogin(@RequestParam String code) {
         log.info("kakaoLoginCode={}", code);
-        return "/";
+        loginApiService.getKakaoAccessToken(code);
+        return "redirect:/";
     }
 
     @GetMapping("/signup")
