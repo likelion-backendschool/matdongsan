@@ -72,9 +72,31 @@
                             });
                         </script>
                     </div>
-                    <!-- 댓글 부분-->
-                    <!-- 댓글 부분 구현 어떻게 하지 ? -->
-                    <div></div>
+
+                    <!-- 사진 등록 부분-->
+                    <div class="form-floating mb-3">
+                        <picture>
+                            <source srcset="..." type="image/svg+xml">
+                            <img src="..." class="img-fluid img-thumbnail" alt="...">
+                        </picture>
+                    </div>
+
+                    <!-- 공개 비공개 여부 -->
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">공개 여부</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                            <label class="form-check-label" for="flexSwitchCheckChecked">공개 여부를 체크해주세요</label>
+                        </div>
+                    </div>
+
+                    <!-- 저장 / 취소 버튼  -->
+                    <div class="d-grid gap-2 d-md-block">
+                        <button class="btn btn-primary" type="button">저장</button>
+                        <button class="btn btn-primary" type="button">취소</button>
+                    </div>
+
+
                 </form>
             </div>
 
