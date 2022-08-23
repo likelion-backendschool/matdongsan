@@ -54,91 +54,103 @@
             let y_pos = 37.514322572335935;
             let x_pos = 127.06283102249932;
 
-            getLocation();
+            $(document).ready(function(){
 
-            function getLocation() {
-                if (navigator.geolocation) { // GPS를 지원하면
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        y_pos = position.coords.latitude;
-                        x_pos = position.coords.longitude;
-                        alert(position.coords.latitude + ' ' + position.coords.longitude);
-                    }, function(error) {
-                        console.error(error);
-                    }, {
-                        enableHighAccuracy: false,
-                        maximumAge: 0,
-                        timeout: Infinity
-                    });
-                } else {
-                    alert('GPS를 지원하지 않습니다');
+                function getLocation() {
+                    if (navigator.geolocation) { // GPS를 지원하면
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            console.log("getCurrentPosition() run")
+                            y_pos = position.coords.latitude;
+                            x_pos = position.coords.longitude;
+                            console.log("YES : " + y_pos, x_pos)
+                            // alert(position.coords.latitude + ' ' + position.coords.longitude);
+                        }, function(error) {
+                            console.error(error);
+                        }, {
+                            enableHighAccuracy: false,
+                            maximumAge: 0,
+                            timeout: Infinity
+                        });
+                    } else {
+                        alert('GPS를 지원하지 않습니다');
+                    }
                 }
-            }
-            // getLocation();
 
-            console.log(y_pos, x_pos);
+                getLocation();
 
-            document.getElementById("search-form").onsubmit = function(){
-                let sc = document.getElementById("search-input").value;
-                keywordApi(sc);
-                return false;
-            }
 
-            categoryApi();
+                // getLocation();
 
-            function categoryApi(){
-                return fetch("https://dapi.kakao.com/v2/local/search/category.json?y="+y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&radius=500",
-                    {
-                    method: "GET",
-                    headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
-                }).then( async res => {
-                    let tmp = await res.json();
-                    writeHtml(tmp);
-                })
-            }
+            });
 
-            function keywordApi(keyword) {
-                return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?y="+y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&query="+keyword,
-                    {
-                        method: "GET",
-                        headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
-                    }
-                ).then( async res =>{
-                    let tmp = await res.json();
-                    console.log(tmp);
-                    writeHtml(tmp);
-                })
-            }
+            setTimeout(function () {
+                console.log("NO : " + y_pos, x_pos);
 
-            function writeHtml(tmp){
-                let html = document.querySelector("#template-item").innerHTML;
-                let result = "";
-                tmp["documents"].forEach((list)=>{
-                    result += html.replace("{category_name}", list["category_name"])
-                        .replace("{place_name}", list["place_name"])
-                        .replace("{phone}", list["phone"])
-                        .replace("{address_name}", list["address_name"])
-                        .replace("{road_address_name}", list["road_address_name"])
-                        .replace("{place_url}", list["place_url"])
-                        .replace("{distance}", list["distance"])
-                        .replace("{id}", list["id"])
-                        .replace("{jsonStr}", JSON.stringify(list));
-                })
-                document.querySelector("#card-list").innerHTML = result;
-            }
+                document.getElementById("search-form").onsubmit = function(){
+                    let sc = document.getElementById("search-input").value;
+                    keywordApi(sc);
+                    return false;
+                }
 
-            function sendSaveRequest(jsonStr,placeId){
-                return fetch("/api/place",{
-                    method:"POST",
-                    body: JSON.stringify(jsonStr),
-                    headers:{
-                        'Content-Type': 'application/json'
-                    }
-                }).then((res)=>{
-                    if(res.status===200){
-                        location.href="/place/"+placeId+"/detail";
-                    }
-                })
-            }
+                categoryApi();
+
+
+                function categoryApi(){
+                    return fetch("https://dapi.kakao.com/v2/local/search/category.json?y="+y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&radius=500",
+                        {
+                            method: "GET",
+                            headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
+                        }).then( async res => {
+                        let tmp = await res.json();
+                        writeHtml(tmp);
+                    })
+                }
+
+                function keywordApi(keyword) {
+                    return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?y="+y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&query="+keyword,
+                        {
+                            method: "GET",
+                            headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
+                        }
+                    ).then( async res =>{
+                        let tmp = await res.json();
+                        console.log(tmp);
+                        writeHtml(tmp);
+                    })
+                }
+
+                function writeHtml(tmp){
+                    let html = document.querySelector("#template-item").innerHTML;
+                    let result = "";
+                    tmp["documents"].forEach((list)=>{
+                        result += html.replace("{category_name}", list["category_name"])
+                            .replace("{place_name}", list["place_name"])
+                            .replace("{phone}", list["phone"])
+                            .replace("{address_name}", list["address_name"])
+                            .replace("{road_address_name}", list["road_address_name"])
+                            .replace("{place_url}", list["place_url"])
+                            .replace("{distance}", list["distance"])
+                            .replace("{id}", list["id"])
+                            .replace("{jsonStr}", JSON.stringify(list));
+                    })
+                    document.querySelector("#card-list").innerHTML = result;
+                }
+
+                function sendSaveRequest(jsonStr,placeId){
+                    return fetch("/api/place",{
+                        method:"POST",
+                        body: JSON.stringify(jsonStr),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((res)=>{
+                        if(res.status===200){
+                            location.href="/place/"+placeId+"/detail";
+                        }
+                    })
+                }
+            }, 3500);
+
 
         </script>
 
