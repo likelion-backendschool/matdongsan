@@ -67,6 +67,11 @@ public class AccountService implements UserDetailsService {
         return accountRepository.existsByUsername(username);
     }
 
+    /**
+     * 회원가입한 정보를 받아서 username 혹은 email이 중복으로 존재하는지 확인하는 메소드
+     * @param accountSignUpDto 로그인 id가 들어옴
+     * @returns username 혹은 email 둘 중에 하나라도 존재하는지 반환
+     */
     public boolean existMemberCheck(AccountSignUpDto accountSignUpDto) {
         // 이미 존재하는 username 혹은 email 인지 확인하는 폼
         boolean existUsername = accountRepository.existsByUsername(accountSignUpDto.getUsername());
