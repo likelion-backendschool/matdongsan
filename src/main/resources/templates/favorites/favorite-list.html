@@ -60,15 +60,10 @@
                     </ul>
                 </div>
                 <div class="block-box forum-media-gallery">
-                    <div class="media-upload">
+                    <div th:each="favorite, loop : ${favorites}" class="media-upload">
                         <h3 class="item-title">Media Gallery</h3>
-                        <a href="#" class="upload-btn"><i class="icofont-upload-alt"></i>Upload</a>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search Media">
-                        <div class="input-group-append">
-                            <button class="search-btn" type="button"><i class="icofont-search"></i></button>
-                        </div>
+                        <div th:text="${favorite.place.addressName}"></div>
+                        <div th:text="${favorite.place.placeName}"></div>
                     </div>
                 </div>
             </div>

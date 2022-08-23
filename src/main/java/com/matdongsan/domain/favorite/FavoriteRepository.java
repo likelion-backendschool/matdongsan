@@ -4,6 +4,7 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
@@ -13,4 +14,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     boolean existsByMemberAndPlace(Member member, Place place);
 
     int countByPlace(Place place);
+
+    List<Favorite> findAllByMember(Member member);
 }
