@@ -27,7 +27,8 @@ public class PostsController {
 
         model.addAttribute("detail" , postDetail);
 
-        return "/posts/posts-detail";
+//        return "/posts/posts-detail";
+        return "posts/post-detail";
     }
 
     // 게시글 전체 조회
@@ -67,7 +68,7 @@ public class PostsController {
         return "posts/posts-update";
     }
 
-    // 8 / 18 개발 시작 부분
+
     @PatchMapping("/post/edit")
     public String editPost(@PathVariable Long id , PostsDto postsDto){
         Posts post = postsService.update(id , postsDto);
