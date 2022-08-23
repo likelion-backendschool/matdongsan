@@ -26,10 +26,16 @@ public class PlaceController {
     private final FavoriteService favoriteService;
     private final AccountService accountService;
 
+    @GetMapping
+    public String showList(){
+        return "place/place-list";
+    }
+
     @GetMapping("/map")
     public String showMap(){
         return "place/place-map";
     }
+
 
     @GetMapping("/{placeId}/detail")
     public String showPlaceDetail(Principal principal,@PathVariable("placeId") long placeId, Model model) {
