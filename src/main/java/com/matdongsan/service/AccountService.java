@@ -110,22 +110,19 @@ public class AccountService implements UserDetailsService {
             if(hasEmail){
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
                 idx = email.indexOf("@");
-            }
+                String username = email.substring(0, idx);
+                AccountSignUpDto newDto = new AccountSignUpDto();
+                newDto.setUsername(username);
+                newDto.setEmail(email);
+                newDto.setPassword(String.valueOf(UUID.randomUUID()));
 
-            AccountSignUpDto newDto = new AccountSignUpDto();
-            newDto.setUsername(email.substring(0, idx));
-            newDto.setEmail(email);
-            newDto.setPassword(String.valueOf(UUID.randomUUID()));
+                br.close();
 
-            br.close();
-
-            log.info("id = {}", id);
-            log.info("email = {}", email);
-
-            if (!existMemberCheck(newDto)) {
-                return saveNewAccount(newDto, LoginType.KAKAO);
-            } else {
-                return findAccountByUsername(email);
+                if (!existMemberCheck(newDto)) {
+                    return saveNewAccount(newDto, LoginType.KAKAO);
+                } else {
+                    return findAccountByUsername(username);
+                }
             }
 
         } catch (IOException e) {

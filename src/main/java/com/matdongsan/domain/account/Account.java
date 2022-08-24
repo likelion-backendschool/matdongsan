@@ -1,14 +1,9 @@
 package com.matdongsan.domain.account;
 
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Entity @Getter
 @Builder
