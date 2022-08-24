@@ -106,28 +106,13 @@ public class AccountService implements UserDetailsService {
             int id = element.getAsJsonObject().get("id").getAsInt();
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
             log.info("has_email={}", hasEmail);
-            boolean hasNickname = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_nickname").getAsBoolean();
-            log.info("has_nickname={}", hasNickname);
-            boolean hasBirthday = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_birthday").getAsBoolean();
-            log.info("has_birthday={}", hasBirthday);
-            boolean hasGender = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_gender").getAsBoolean();
-            log.info("has_gender={}", hasGender);
 
             String email = "";
-            String birthday = "";
-            String nickname = "";
-            String gender = "";
 
             int idx = 5;
             if(hasEmail){
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
                 idx = email.indexOf("@");
-            }
-            if (hasBirthday) {
-                birthday = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("birthday").getAsString();
-            }
-            if (hasGender) {
-                gender = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("gender").getAsString();
             }
 
             AccountSignUpDto newDto = new AccountSignUpDto();
@@ -139,22 +124,17 @@ public class AccountService implements UserDetailsService {
 
             log.info("id = {}", id);
             log.info("email = {}", email);
-            log.info("nickname = {}", nickname);
 
             if (!existMemberCheck(newDto)) {
-                Account newKakaoAccount = saveNewAccount(newDto, LoginType.KAKAO);
-                Member accountMember = newKakaoAccount.getMember();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                accountMember.addBasicInfo(formatter.parse(birthday), gender, null, null);
+                return saveNewAccount(newDto, LoginType.KAKAO);
             } else {
                 return findAccountByUsername(email);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
+
         return null;
     }
 
