@@ -85,11 +85,12 @@ public class AccountController {
     }
 
     @GetMapping("/info-init")
-    public String memberInformationInit(Principal principal, Model model) {
-        Account account = accountService.findAccountByUsername(principal.getName());
-        if (account == null) {
+    public String memberInformationInit(@AuthenticationPrincipal Account account, Principal principal, Model model) {
+        Account principalAccount = accountService.findAccountByUsername(principal.getName());
+        if (principalAccount == null) {
             return "redirect:/";
         }
+        model.addAttribute("account", account);
         model.addAttribute("ages", MemberAge.values());
         model.addAttribute("memberInfoDto", new MemberInfoDto());
         return "account/member-info-init";
