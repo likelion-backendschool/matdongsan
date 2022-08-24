@@ -32,6 +32,9 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole;
 
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
+
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;

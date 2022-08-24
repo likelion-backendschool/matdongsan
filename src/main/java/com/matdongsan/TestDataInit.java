@@ -3,6 +3,7 @@ package com.matdongsan;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
+import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberAge;
 import com.matdongsan.domain.member.MemberRepository;
@@ -36,6 +37,7 @@ public class TestDataInit {
                     .username("member1")
                     .password(passwordEncoder.encode("member1!"))
                     .accountRole(AccountRole.ROLE_USER)
+                    .loginType(LoginType.LOCAL)
                     .email("member1@gmail.com")
                     .build();
             Member member = memberRepository.save(Member.builder()
@@ -55,7 +57,8 @@ public class TestDataInit {
             Account newAccount = Account.builder()
                     .username("admin")
                     .password(passwordEncoder.encode("admin!"))
-                    .accountRole(AccountRole.ROLE_USER)
+                    .accountRole(AccountRole.ROLE_ADMIN)
+                    .loginType(LoginType.LOCAL)
                     .email("admin@gmail.com")
                     .build();
             Member member = memberRepository.save(Member.builder()
