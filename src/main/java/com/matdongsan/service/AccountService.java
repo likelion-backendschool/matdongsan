@@ -28,8 +28,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,7 +41,6 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -91,17 +88,17 @@ public class AccountService implements UserDetailsService {
             //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
-            String result = "";
+            StringBuilder result = new StringBuilder();
 
             while ((line = br.readLine()) != null) {
-                result += line;
+                result.append(line);
             }
-            log.info("response body = {}", result);
+            log.info("response body = {}", result.toString());
 
 
             //Gson 라이브러리로 JSON파싱
             JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
+            JsonElement element = parser.parse(result.toString());
 
             int id = element.getAsJsonObject().get("id").getAsInt();
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
