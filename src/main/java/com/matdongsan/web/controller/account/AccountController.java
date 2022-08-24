@@ -1,6 +1,7 @@
 package com.matdongsan.web.controller.account;
 
 import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberAge;
 import com.matdongsan.service.AccountService;
@@ -11,6 +12,7 @@ import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +45,9 @@ public class AccountController {
         log.info("access_Token={}", access_Token);
         Account currentAccount = accountService.createKakaoUser(access_Token);
         accountService.login(currentAccount);
+        if (currentAccount.getMember().getIntroduce() == null) {
+            return "redirect:/info-init";
+        }
         return "redirect:/";
     }
 
@@ -64,7 +69,7 @@ public class AccountController {
         }
         // 아무 이상 없다면 로그인을 진행하고, 유저 프로필 작성 폼으로 넘어간다.
         log.info("accountSignUpDto={}", accountSignUpDto);
-        Account account = accountService.saveNewAccount(accountSignUpDto);
+        Account account = accountService.saveNewAccount(accountSignUpDto, LoginType.LOCAL);
         accountService.login(account);
         return "redirect:/info-init";
     }

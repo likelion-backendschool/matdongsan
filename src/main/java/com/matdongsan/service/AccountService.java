@@ -3,6 +3,7 @@ package com.matdongsan.service;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
+import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.infra.SecurityUser;
@@ -48,7 +49,7 @@ public class AccountService implements UserDetailsService {
      * @param accountSignUpDto 회원가입 폼에서 받아온 DTO가 들어옴
      * @returns 들어온 DTO를 바탕으로 새로운 Account 객체를 생성하여 반환
      */
-    public Account saveNewAccount(AccountSignUpDto accountSignUpDto) {
+    public Account saveNewAccount(AccountSignUpDto accountSignUpDto, LoginType type) {
         // 회원가입한 Member를 저장하는 로직
         Account newAccount = Account.builder()
                 .username(accountSignUpDto.getUsername())
@@ -121,7 +122,7 @@ public class AccountService implements UserDetailsService {
             log.info("nickname = {}", nickname);
 
             if (!existMemberCheck(newDto)) {
-                return saveNewAccount(newDto);
+                return saveNewAccount(newDto, LoginType.KAKAO);
             } else {
                 return findAccountByUsername(email);
             }
