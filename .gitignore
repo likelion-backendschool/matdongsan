@@ -84,10 +84,15 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 **/resources/theme-template/
-**/resources/static/
+**/resources/static/assets/
+**/resources/static/dependencies/
+**/resources/static/media/
+**/resources/static/php/
+**/resources/static/sass/
 !**/resources/static/dist/
 !**/resources/static/style.css
 /node_modules/
+package-lock.json
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
