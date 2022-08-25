@@ -12,12 +12,10 @@ import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -85,12 +83,11 @@ public class AccountController {
     }
 
     @GetMapping("/info-init")
-    public String memberInformationInit(@AuthenticationPrincipal Account account, Principal principal, Model model) {
+    public String memberInformationInit(Principal principal, Model model) {
         Account principalAccount = accountService.findAccountByUsername(principal.getName());
         if (principalAccount == null) {
             return "redirect:/";
         }
-        model.addAttribute("account", account);
         model.addAttribute("ages", MemberAge.values());
         model.addAttribute("memberInfoDto", new MemberInfoDto());
         return "account/member-info-init";
