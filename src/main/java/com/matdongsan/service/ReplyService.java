@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class ReplyService {
+
     private final ReplyRepository replyRepository;
     private final PostsRepository postsRepository;
     private final MemberRepository memberRepository;
@@ -25,8 +26,9 @@ public class ReplyService {
         return replyRepository.findByPostsId(id);
     }
 
-
-    //댓글 저장
+    /**
+     * 댓글저장
+     */
     public void saveReply(Member member, Posts post, ReplyDto replyDto) {
         Reply reply = Reply.builder()
                 .comment(replyDto.getComment()).build();
@@ -35,7 +37,9 @@ public class ReplyService {
         member.addReply(savedReply);  //Member클래스에 reply추가 + member정보 Reply에 초기
     }
 
-    //댓글 업데이트
+    /**
+     * 댓글 수정
+     */
     public void updateReply(Long replyid, String comment) {
         Reply replyById = replyRepository.findById(replyid).orElseThrow(
                 ()-> new IllegalArgumentException("댓글이 존재하지 않습니다")
@@ -44,7 +48,9 @@ public class ReplyService {
 
     }
 
-    //댓글 삭제
+    /**
+     * 댓글 삭제
+     */
     public void deleteReply(Long replyId) {
         Reply deleteReply = replyRepository.findById(replyId).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
@@ -58,6 +64,7 @@ public class ReplyService {
 //        );
 
         replyRepository.deleteById(deleteReply.getId());
+
     }
 
 

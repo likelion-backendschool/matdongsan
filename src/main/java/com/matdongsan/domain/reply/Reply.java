@@ -29,11 +29,11 @@ public class Reply {
     private LocalDateTime modifyComment;
 
     @ManyToOne(fetch = FetchType.LAZY )
-//    @JoinColumn(name = "postId")
+//    @JoinColumn(name = "post_Id")
     private Posts posts;
 
     @ManyToOne(fetch = FetchType.LAZY ) //댓글 작성자
-//    @JoinColumn(name="writerId")
+//    @JoinColumn(name="member_Id")
     private Member writer;
 
     //데이터 필드를 가지고 있는 단에서 비즈니스 로직내기
