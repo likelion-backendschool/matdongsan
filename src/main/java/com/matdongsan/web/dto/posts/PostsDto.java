@@ -24,22 +24,27 @@ public class PostsDto {
 
     private LocalDateTime modifiedTime;
 
+    private Boolean privateStatus;
+
     public Posts toEntity() {
         return Posts.builder()
                 .id(id)
                 .author(author)
                 .title(title)
                 .content(content)
+                .privateStatus(privateStatus)
                 .build();
     }
 
     @Builder
-    public PostsDto(Long id, Member author, String title, String content, LocalDateTime createdTime, LocalDateTime modifiedTime) {
+    public PostsDto(Long id, Member author, String title, String content, LocalDateTime createdTime, LocalDateTime modifiedTime , Boolean privateStatus) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.content = content;
         this.createdTime = createdTime;
         this.modifiedTime = modifiedTime;
+        this.privateStatus = privateStatus;
     }
+
 }

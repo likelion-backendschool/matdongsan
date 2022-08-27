@@ -36,27 +36,18 @@ public class PostsService {
 
     }
 
-    public Posts update(Long id , PostsDto postsDto) {
-        Posts post= postsDto.toEntity();
-        Posts target = postsRepository.findById(id).orElse(null);
+    public Posts update(Posts posts , String title , String content , Member author , boolean status) {
 
-        if (target == null) {
-            return null;
-        }
+        posts.setTitle(title);
+        posts.setContent(content);
+        posts.setAuthor(author);
+        posts.setPrivateStatus(status);
 
-        target.update(post);
-        return postsRepository.save(target);
+        return postsRepository.save(posts);
 
     }
 
-    public Posts delete(Long id) {
-        Posts post = postsRepository.findById(id).orElse(null);
-
-        if (post == null) {
-            return null;
-        }
-
-        postsRepository.delete(post);
-        return post;
+    public void delete(Posts posts) {
+        postsRepository.delete(posts);
     }
 }

@@ -41,14 +41,14 @@ public class PostsController {
     }
 
     // 게시글 등록 폼 페이지
-    @GetMapping("/post/new")
+    @GetMapping("/posts/new")
     public String newPost(){
         return "/posts/posts-newForm";
     }
 
     // 게시글 등록 posts
 //    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/post/new")
+    @PostMapping("/posts/new")
     public String createPost(Posts posts , Model model ){
 
         Posts newPosts = postsService.savePost(posts.getTitle() , posts.getContent() , posts.isPrivateStatus() , posts.getAuthor() , posts);
@@ -59,20 +59,24 @@ public class PostsController {
     }
 
     // 게시글 수정 뷰 페이지
-    @GetMapping("/post/update/{id}")
+    @GetMapping("/posts/update/{id}")
     public String modifyPost(@PathVariable Long id ,Model model) {
 
-        Posts findPost = postsService.findById(id);
-        model.addAttribute("findPost", findPost);
+        Posts posts = postsService.findById(id);
 
-        return "posts/posts-update";
+        model.addAttribute("findPost", posts);
+
+        return "posts/posts-updateForm";
     }
 
 
-    @PatchMapping("/post/edit")
+    @PostMapping("/posts/update/{id}")
     public String editPost(@PathVariable Long id , PostsDto postsDto){
-        Posts post = postsService.update(id , postsDto);
-        return "redirect:posts/posts-details";
+
+        Posts postsUpdate = postsService.findById(id);
+
+        postsService.update(postsUpdate , postsDto.getTitle() , postsDto.getContent() , postsDto.getAuthor() , postsDto.getPrivateStatus());
+        return String.format("redirect:/posts/%s" , id);
     }
 
     //
