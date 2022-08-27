@@ -80,10 +80,13 @@ public class PostsController {
     }
 
     //
-    @GetMapping("/detail/delete/{id}")
+    @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable Long id){
-        postsService.delete(id);
-        return "redirect:posts/posts-details";
+
+        Posts posts = postsService.findById(id);
+        postsService.delete(posts);
+
+        return "redirect:/posts";
     }
 
 
