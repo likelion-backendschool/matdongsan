@@ -16,7 +16,7 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
     public Posts findById(Long id) {
-        return postsRepository.findById(id).orElse(null);
+        return postsRepository.findById(id).get();
     }
 
     public List<Posts> findAll() {

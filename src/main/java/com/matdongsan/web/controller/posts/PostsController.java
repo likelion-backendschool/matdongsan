@@ -19,13 +19,13 @@ public class PostsController {
 
     private final PostsService postsService;
 
-    // 게시글 상세 조회 페이지
-    @GetMapping("/post/{id}")
+    // 게시글 상세 조회
+    @GetMapping("/posts/{id}")
     public String showDetailPost(@PathVariable long id , Model model){
 
-        Posts postDetail = postsService.findById(id);
+        Posts posts = postsService.findById(id);
 
-        model.addAttribute("detail" , postDetail);
+        model.addAttribute("detail" , posts);
 
         return "/posts/posts-detail";
     }
@@ -33,11 +33,11 @@ public class PostsController {
     // 게시글 전체 조회
     @GetMapping("/posts")
     public String showAllPosts(Model model) {
-        List<Posts> postsList = postsService.findAll();
+        List<Posts> posts = postsService.findAll();
 
-        model.addAttribute("postList", postsList);
+        model.addAttribute("postList", posts);
 
-        return "posts-list";
+        return "/posts/posts-list";
     }
 
     // 게시글 등록 폼 페이지
