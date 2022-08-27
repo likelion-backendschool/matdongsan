@@ -3,7 +3,6 @@ package com.matdongsan.service;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.posts.PostsRepository;
-import com.matdongsan.web.dto.posts.PostsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

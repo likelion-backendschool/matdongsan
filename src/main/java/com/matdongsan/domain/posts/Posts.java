@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor // (access = AccessLevel.PROTECTED)
 public class Posts extends TimeEntity{
 
     @Id
