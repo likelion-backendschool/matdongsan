@@ -30,6 +30,8 @@ public class Posts extends TimeEntity{
     @Column(nullable = false)
     private boolean privateStatus; // 공개 / 비공개 여부  true => 비공개 , false => 공개
 
+    @OneToMany(mappedBy = "posts" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reply> replyList = new ArrayList<>();
 
     @Builder
     public Posts(Long id, Member author, String title, String content, boolean privateStatus) {
@@ -62,11 +64,6 @@ public class Posts extends TimeEntity{
         modify(post.getModifiedTime());
 
     }
-
-    //   2.post단에 추가할것
-
-    @OneToMany(mappedBy = "posts" , cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reply> replyList = new ArrayList<>();
 
     public void addReply(Reply reply) {
         this.replyList.add(reply);

@@ -19,7 +19,7 @@ public class PostsController {
 
     private final PostsService postsService;
 
-    // 게시글 상세 페이지
+    // 게시글 상세 조회 페이지
     @GetMapping("/post/{id}")
     public String showDetailPost(@PathVariable long id , Model model){
 
@@ -37,7 +37,7 @@ public class PostsController {
 
         model.addAttribute("postList", postsList);
 
-        return "posts/posts-details";
+        return "posts-list";
     }
 
     // 게시글 등록 폼 페이지
@@ -47,14 +47,15 @@ public class PostsController {
     }
 
     // 게시글 등록 posts
-    @PostMapping("/post/create")
-    public String createPost(PostsDto postsDto , Model model){
+//    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/post/new")
+    public String createPost(Posts posts , Model model ){
 
-        Long savePostId = postsService.savePost(postsDto);
-        model.addAttribute("savePost", savePostId);
+        Posts newPosts = postsService.savePost(posts.getTitle() , posts.getContent() , posts.isPrivateStatus() , posts.getAuthor() , posts);
+        model.addAttribute("savePost", newPosts);
 
-        // 생성된 게시글을 가지고 와서 보여준다.
-        return "redirect:posts/posts-details";
+        // 저장 완료 후 , 게시글 목록으로 간다.
+        return "redirect:posts/posts-list";
     }
 
     // 게시글 수정 뷰 페이지
