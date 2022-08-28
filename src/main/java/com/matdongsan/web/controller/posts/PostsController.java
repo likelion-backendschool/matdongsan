@@ -50,7 +50,7 @@ public class PostsController {
     @PostMapping("/posts/new")
     public String createPost(Posts posts , Model model ){
 
-        Posts newPosts = postsService.savePost(posts.getTitle() , posts.getContent() , posts.isPrivateStatus() , posts.getAuthor() , posts);
+        Posts newPosts = postsService.savePost(posts.getTitle() , posts.getContent() , posts.isPrivateStatus() , posts.getAuthor());
         model.addAttribute("savePost", newPosts);
 
         // 저장 완료 후 , 게시글 목록으로 간다.
