@@ -59,11 +59,15 @@
                         <li><a href="#"><i class="icofont-ui-music"></i>Music: <span>0</span></a></li>
                     </ul>
                 </div>
+                <h3 class="item-title my-2">최근 등록한 맛집</h3>
                 <div class="block-box forum-media-gallery">
+                    <hr>
                     <div th:each="favorite, loop : ${favorites}" class="media-upload">
-                        <h3 class="item-title">Media Gallery</h3>
-                        <div th:text="${favorite.place.addressName}"></div>
+                        <div>
+                            <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.addressName}"></a>
+                        </div>
                         <div th:text="${favorite.place.placeName}"></div>
+                        <button class="btn btn-primary">X</button>
                     </div>
                 </div>
             </div>
