@@ -3,9 +3,11 @@ package com.matdongsan.web.controller.posts;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.service.AccountService;
 import com.matdongsan.service.PostsService;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +16,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class PostsController {
 
     private final PostsService postsService;
+    private final AccountService accountService;
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
@@ -51,10 +56,9 @@ public class PostsController {
     }
 
     // 게시글 등록 posts
-//    @PreAuthorize("isAuthenticated()")
     @PostMapping("/posts/new")
-    public String createPost(@AuthenticationPrincipal Account account, PostCreateDto dto, RedirectAttributes redirectAttributes) {
-        Member currentMember = account.getMember();
+    public String createPost(Principal principal, PostCreateDto dto, RedirectAttributes redirectAttributes) {
+        Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
         Posts newPosts = postsService.savePost(currentMember, dto);
         Long id = newPosts.getId();
         redirectAttributes.addAttribute("id", id);
@@ -64,7 +68,7 @@ public class PostsController {
     }
 
     // 게시글 수정 뷰 페이지
-    @GetMapping("/posts/update/{id}")
+    /*@GetMapping("/posts/update/{id}")
     public String modifyPost(@PathVariable Long id ,Model model) {
 
         Posts posts = postsService.findById(id);
@@ -91,10 +95,6 @@ public class PostsController {
         postsService.delete(posts);
 
         return "redirect:/posts";
-    }
-
-
-
-
+    }*/
 
 }

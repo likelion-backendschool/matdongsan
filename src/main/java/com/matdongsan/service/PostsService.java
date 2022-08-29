@@ -49,7 +49,7 @@ public class PostsService {
 
     }*/
 
-    public void delete(Posts posts) {
+    /*public void delete(Posts posts) {
         postsRepository.delete(posts);
-    }
+    }*/
 }
