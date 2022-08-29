@@ -30,20 +30,21 @@
             <div class="my-4">
                 <h3 class="heading-title">게시글 등록 폼</h3>
                 <p class="fs-3">맛집 등록을 통해 다른 사람들과 공유하세요 !</p>
-                <form>
+                <form th:action="@{/posts/new}" method="post" th:object="${dto}">
                     <!-- 위치 -->
-                    <div class="form-floating mb-3">
-                        <label for="floatingInput">위치</label>
-                    </div>
+                    <!--<div class="form-floating mb-3">
+                        <label for="place">위치</label>
+                        <input type="text" class="form-control" th:field="*{title}" id="title" placeholder="제목을 입력하세요.">
+                    </div>-->
                     <!-- 제목 -->
                     <div class="form-floating mb-3">
-                        <label for="floatingInput">제목</label>
-                        <input type="text" class="form-control" id="floatingInput" placeholder="제목을 입력하세요.">
+                        <label for="title">제목</label>
+                        <input type="text" class="form-control" th:field="*{title}" id="title" placeholder="제목을 입력하세요.">
                     </div>
                     <!-- 내용 -->
                     <div class="form-floating mb-3">
-                        <label for="floatingInput">내용</label>
-                        <div id="summernote"></div>
+                        <label for="summernote">내용</label>
+                        <textarea id="summernote" th:field="*{content}"></textarea>
                         <script>
                             $(document).ready(function(){
                                 var toolbar = [
@@ -83,8 +84,12 @@
 
                     <!-- 공개 비공개 여부 -->
                     <div class="form-floating mb-3">
-                        <label for="floatingInput">공개 여부</label>
-                        <div class="form-check form-switch">
+                        <label for="privateStatus">공개 여부</label>
+                        <div class="form-check form-switch" id="privateStatus">
+                            <select th:field="*{privateStatus}" class="select2">
+                                <option value="true" selected>공개</option>
+                                <option value="false">비공개</option>
+                            </select>
                             <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                             <label class="form-check-label" for="flexSwitchCheckChecked">비밀글</label>
                         </div>
@@ -92,7 +97,7 @@
 
                     <!-- 저장 / 취소 버튼  -->
                     <div class="d-grid gap-2 d-md-block">
-                        <button class="btn btn-primary" type="button">저장</button>
+                        <button class="btn btn-primary" type="submit">저장</button>
                         <button class="btn btn-primary" type="button">취소</button>
                     </div>
 
