@@ -8,16 +8,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Getter @Setter
-@NoArgsConstructor // (access = AccessLevel.PROTECTED)
-public class Posts extends TimeEntity{
+@Entity @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Posts{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Member author;  // 작성자
 
@@ -33,42 +33,9 @@ public class Posts extends TimeEntity{
     @OneToMany(mappedBy = "posts" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
-    @Builder
-    public Posts(Long id, Member author, String title, String content, boolean privateStatus) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.content = content;
-        this.privateStatus = privateStatus;
-
-    }
-
-    public void update(Posts post) {
-        if (post.author != null) {
-            this.author = post.author;
-        }
-
-        if (post.title != null) {
-            this.title = post.title;
-        }
-
-        if (post.content != null) {
-            this.content = post.content;
-        }
-
-        if (!post.privateStatus) {
-            this.privateStatus = post.privateStatus;
-        }
-
-        // 수정 기간 변경
-        modify(post.getModifiedTime());
-
-    }
-
     public void addReply(Reply reply) {
         this.replyList.add(reply);
         reply.setPosts(this);
     }
-
 
 }
