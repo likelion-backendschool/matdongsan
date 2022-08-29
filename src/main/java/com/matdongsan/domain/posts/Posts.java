@@ -3,8 +3,11 @@ package com.matdongsan.domain.posts;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,12 @@ public class Posts{
 
     @Column(nullable = false , columnDefinition = "TEXT")
     private String content; // 내용
+
+    @Column(updatable = false) // 수정 불가
+    private LocalDateTime createdTime;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedTime;
 
     @Column(nullable = false)
     private boolean privateStatus; // 공개 / 비공개 여부  true => 비공개 , false => 공개
