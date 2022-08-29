@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class PostsDto {
+public class PostCreateDto {
 
     private Long id;
 
@@ -37,7 +37,7 @@ public class PostsDto {
     }
 
     @Builder
-    public PostsDto(Long id, Member author, String title, String content, LocalDateTime createdTime, LocalDateTime modifiedTime , Boolean privateStatus) {
+    public PostCreateDto(Long id, Member author, String title, String content, LocalDateTime createdTime, LocalDateTime modifiedTime , Boolean privateStatus) {
         this.id = id;
         this.author = author;
         this.title = title;

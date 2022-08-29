@@ -2,7 +2,7 @@ package com.matdongsan.web.controller.posts;
 
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.service.PostsService;
-import com.matdongsan.web.dto.posts.PostsDto;
+import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,11 +70,11 @@ public class PostsController {
 
 
     @PostMapping("/posts/update/{id}")
-    public String editPost(@PathVariable Long id , PostsDto postsDto){
+    public String editPost(@PathVariable Long id , PostCreateDto postCreateDto){
 
         Posts postsUpdate = postsService.findById(id);
 
-        postsService.update(postsUpdate , postsDto.getTitle() , postsDto.getContent() , postsDto.getAuthor() , postsDto.getPrivateStatus());
+        postsService.update(postsUpdate , postCreateDto.getTitle() , postCreateDto.getContent() , postCreateDto.getAuthor() , postCreateDto.getPrivateStatus());
         return String.format("redirect:/posts/%s" , id);
     }
 
