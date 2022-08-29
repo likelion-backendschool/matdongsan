@@ -1,11 +1,11 @@
 <!-- 게시글 상세 페이지 -->
 <!DOCTYPE html>
 <html class="no-js"
-       xmlns:th="http://www.thymeleaf.org"
-       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-       xmlns="http://www.w3.org/1999/html"
-       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorate="~{layouts/layout.html}">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout.html}">
 
 <head>
     <title>맛동산 | 메인</title>
@@ -25,7 +25,8 @@
                                 <img src="/media/figure/chat_8.jpg" alt="Aahat">
                             </div>
                             <div class="media-body">
-                                <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a> <i class="icofont-check"></i></div>
+                                <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
+                                    <i class="icofont-check"></i></div>
                                 <ul class="entry-meta">
                                     <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
                                     <li class="meta-time">8 minutes ago</li>
@@ -84,23 +85,41 @@
                                 <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
                                 <ul class="share-list">
                                     <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
-                                    <li><a href="#" class="color-messenger"><i class="icofont-facebook-messenger"></i></a></li>
+                                    <li><a href="#" class="color-messenger"><i
+                                            class="icofont-facebook-messenger"></i></a></li>
                                     <li><a href="#" class="color-instagram"><i class="icofont-instagram"></i></a></li>
-                                    <li><a href="#" class="color-whatsapp"><i class="icofont-brand-whatsapp"></i></a></li>
+                                    <li><a href="#" class="color-whatsapp"><i class="icofont-brand-whatsapp"></i></a>
+                                    </li>
                                     <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="post-comment">
-                        <div class="comment-reply">
-                            <div class="user-img">
-                                <img src="/media/figure/chat_15.jpg" alt="Aahat">
+                        <div class="comment-body">
+
+                            <div>
+                                <div class="card my-3" th:each="reply : ${post.replyList}">
+                                    <div class="post-body">
+                                        <div class="card-text" th:text="${reply.comment}"></div>
+                                    </div>
+                                    <div class="post-footer">
+                                        <ul>
+                                            <li class="post-react">
+                                                <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
+                                            </li>
+                                            <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="input-box">
-                                <input type="text" name="comment" class="form-control" placeholder="Your Reply....">
-                            </div>
-                            <button type="button" class="btn btn-primary mx-2">등록</button>
+                            <form th:action="@{|/posts/${post.id}|}" method="post">
+                                <div class="input-box">
+                                    <input type="text" name="content" class="form-control"
+                                           placeholder="댓글을 입력해 주세요.">
+                                </div>
+                                <button type="submit" class="btn btn-primary mx-2">등록</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -132,7 +151,7 @@
                             </div>
                             <div class="media-body">
                                 <h4 class="item-title"><a href="#">Julia Zessy</a></h4>
-                                <div class="item-username">@zessy </div>
+                                <div class="item-username">@zessy</div>
                                 <div class="member-status online"><i class="icofont-check"></i></div>
                             </div>
                         </div>
@@ -154,13 +173,16 @@
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#newest-member" role="tab" aria-selected="true">NEWEST</a>
+                            <a class="nav-link active" data-toggle="tab" href="#newest-member" role="tab"
+                               aria-selected="true">NEWEST</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#popular-member" role="tab" aria-selected="false">POPULAR</a>
+                            <a class="nav-link" data-toggle="tab" href="#popular-member" role="tab"
+                               aria-selected="false">POPULAR</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#active-member" role="tab" aria-selected="false">ACTIVE</a>
+                            <a class="nav-link" data-toggle="tab" href="#active-member" role="tab"
+                               aria-selected="false">ACTIVE</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -174,7 +196,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="item-title"><a href="#">Aahat Akter</a></h4>
-                                        <div class="item-username">@Aahat </div>
+                                        <div class="item-username">@Aahat</div>
                                         <div class="member-status online"><i class="icofont-check"></i></div>
                                     </div>
                                 </div>
@@ -226,7 +248,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="item-title"><a href="#">Aahat Akter</a></h4>
-                                        <div class="item-username">@Aahat </div>
+                                        <div class="item-username">@Aahat</div>
                                         <div class="member-status online"><i class="icofont-check"></i></div>
                                     </div>
                                 </div>
@@ -278,7 +300,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="item-title"><a href="#">Aahat Akter</a></h4>
-                                        <div class="item-username">@Aahat </div>
+                                        <div class="item-username">@Aahat</div>
                                         <div class="member-status online"><i class="icofont-check"></i></div>
                                     </div>
                                 </div>
@@ -392,8 +414,10 @@
                     <a href="#" class="item-btn">
                         <span class="btn-text">Register Now</span>
                         <span class="btn-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21px" height="10px">
-                                        <path fill-rule="evenodd" d="M16.671,9.998 L12.997,9.998 L16.462,6.000 L5.000,6.000 L5.000,4.000 L16.462,4.000 L12.997,0.002 L16.671,0.002 L21.003,5.000 L16.671,9.998 ZM17.000,5.379 L17.328,5.000 L17.000,4.621 L17.000,5.379 ZM-0.000,4.000 L3.000,4.000 L3.000,6.000 L-0.000,6.000 L-0.000,4.000 Z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="21px" height="10px">
+                                        <path fill-rule="evenodd"
+                                              d="M16.671,9.998 L12.997,9.998 L16.462,6.000 L5.000,6.000 L5.000,4.000 L16.462,4.000 L12.997,0.002 L16.671,0.002 L21.003,5.000 L16.671,9.998 ZM17.000,5.379 L17.328,5.000 L17.000,4.621 L17.000,5.379 ZM-0.000,4.000 L3.000,4.000 L3.000,6.000 L-0.000,6.000 L-0.000,4.000 Z"/>
                                     </svg>
                                 </span>
                     </a>
