@@ -33,9 +33,9 @@ public class PostsController {
 
         Posts posts = postsService.findById(id);
 
-        model.addAttribute("detail" , posts);
+        model.addAttribute("post" , posts);
 
-        return "/posts/posts-detail";
+        return "/posts/post-detail";
     }
 
     // 게시글 전체 조회
