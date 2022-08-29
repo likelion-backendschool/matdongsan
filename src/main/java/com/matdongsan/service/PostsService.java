@@ -38,7 +38,7 @@ public class PostsService {
 
     }
 
-    public Posts update(Posts posts , String title , String content , Member author , boolean status) {
+    /*public Posts update(Posts posts , String title , String content , Member author , boolean status) {
 
         posts.setTitle(title);
         posts.setContent(content);
@@ -47,7 +47,7 @@ public class PostsService {
 
         return postsRepository.save(posts);
 
-    }
+    }*/
 
     public void delete(Posts posts) {
         postsRepository.delete(posts);

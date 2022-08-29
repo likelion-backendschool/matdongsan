@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -52,12 +53,14 @@ public class PostsController {
     // 게시글 등록 posts
 //    @PreAuthorize("isAuthenticated()")
     @PostMapping("/posts/new")
-    public String createPost(@AuthenticationPrincipal Account account, PostCreateDto dto , Model model ){
+    public String createPost(@AuthenticationPrincipal Account account, PostCreateDto dto, RedirectAttributes redirectAttributes) {
         Member currentMember = account.getMember();
         Posts newPosts = postsService.savePost(currentMember, dto);
+        Long id = newPosts.getId();
+        redirectAttributes.addAttribute("id", id);
 
         // 저장 완료 후 , 게시글 목록으로 간다.
-        return "redirect:posts/posts-list";
+        return "redirect:/posts/{id}";
     }
 
     // 게시글 수정 뷰 페이지
@@ -77,7 +80,6 @@ public class PostsController {
 
         Posts postsUpdate = postsService.findById(id);
 
-        postsService.update(postsUpdate , postCreateDto.getTitle() , postCreateDto.getContent() , postCreateDto.getAuthor() , postCreateDto.getPrivateStatus());
         return String.format("redirect:/posts/%s" , id);
     }
 
