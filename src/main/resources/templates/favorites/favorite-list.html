@@ -67,7 +67,7 @@
                             <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.addressName}"></a>
                         </div>
                         <div th:text="${favorite.place.placeName}"></div>
-                        <button class="btn btn-primary">X</button>
+                        <a class="btn btn-primary" th:href="@{|/favorite/${favorite.place.id}/delete|}">X</a>
                     </div>
                 </div>
             </div>

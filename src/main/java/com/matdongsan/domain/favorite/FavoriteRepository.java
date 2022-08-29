@@ -16,4 +16,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     int countByPlace(Place place);
 
     List<Favorite> findAllByMember(Member member);
+
+    void deleteByMemberAndPlace(Member member, Place place);
 }

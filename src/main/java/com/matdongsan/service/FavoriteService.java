@@ -39,4 +39,5 @@ public class FavoriteService {
     public List<Favorite> findAllByMember(Member member) {
         return favoriteRepository.findAllByMember(member);
     }
+    
 }
