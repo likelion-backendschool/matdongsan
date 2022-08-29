@@ -1,6 +1,6 @@
 <!-- 게시글 상세 페이지 -->
 <!DOCTYPE html>
-<html  class="no-js"
+<html class="no-js"
        xmlns:th="http://www.thymeleaf.org"
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
        xmlns="http://www.w3.org/1999/html"
@@ -22,10 +22,10 @@
                     <div class="post-header">
                         <div class="media">
                             <div class="user-img">
-                                <img src="media/figure/chat_8.jpg" alt="Aahat">
+                                <img src="/media/figure/chat_8.jpg" alt="Aahat">
                             </div>
                             <div class="media-body">
-                                <div class="user-title"><a href="#" th:text="${}">닉네임</a> <i class="icofont-check"></i></div>
+                                <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a> <i class="icofont-check"></i></div>
                                 <ul class="entry-meta">
                                     <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
                                     <li class="meta-time">8 minutes ago</li>
@@ -45,16 +45,16 @@
                     </div>
                     <div class="post-body">
                         <div class="post-no-thumbnail">
-                            <p>I have great news to share with you all! I've been officially made a game streaming verified partner by Streamy http://radiustheme.com/ What does this mean? I'll be uploading new content every day, improving the quality and I'm gonna have access to games a month before the official release.</p>
-                            <p>This is a dream come true, thanks to all for the support!!!</p>
+                            <h3 th:text="${post.getTitle()}">제목</h3>
+                            <div th:utext="${post.getContent()}">내용</div>
                         </div>
                         <div class="post-meta-wrap">
                             <div class="post-meta">
                                 <div class="post-reaction">
                                     <div class="reaction-icon">
-                                        <img src="media/figure/reaction_1.png" alt="icon">
-                                        <img src="media/figure/reaction_2.png" alt="icon">
-                                        <img src="media/figure/reaction_3.png" alt="icon">
+                                        <img src="/media/figure/reaction_1.png" alt="icon">
+                                        <img src="/media/figure/reaction_2.png" alt="icon">
+                                        <img src="/media/figure/reaction_3.png" alt="icon">
                                     </div>
                                     <div class="meta-text">15</div>
                                 </div>
@@ -70,13 +70,13 @@
                             <li class="post-react">
                                 <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                 <ul class="react-list">
-                                    <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_1.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_4.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_7.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_6.png" alt="Like"></a></li>
+                                    <li><a href="#"><img src="/media/figure/reaction_5.png" alt="Like"></a></li>
                                 </ul>
                             </li>
                             <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
@@ -95,7 +95,7 @@
                     <div class="post-comment">
                         <div class="comment-reply">
                             <div class="user-img">
-                                <img src="media/figure/chat_15.jpg" alt="Aahat">
+                                <img src="/media/figure/chat_15.jpg" alt="Aahat">
                             </div>
                             <div class="input-box">
                                 <input type="text" name="comment" class="form-control" placeholder="Your Reply....">
@@ -127,7 +127,7 @@
                         <div class="media">
                             <div class="item-img">
                                 <a href="#">
-                                    <img src="media/figure/chat_1.jpg" alt="Chat">
+                                    <img src="/media/figure/chat_1.jpg" alt="Chat">
                                 </a>
                             </div>
                             <div class="media-body">
@@ -169,7 +169,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_1.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_1.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -181,7 +181,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_2.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_2.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -193,7 +193,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_3.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_3.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -205,7 +205,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_4.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_4.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -221,7 +221,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_1.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_1.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -233,7 +233,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_2.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_2.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -245,7 +245,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_3.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_3.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -257,7 +257,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_4.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_4.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -273,7 +273,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_1.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_1.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -285,7 +285,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_2.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_2.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -297,7 +297,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_3.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_3.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -309,7 +309,7 @@
                                 <div class="media">
                                     <div class="item-img">
                                         <a href="#">
-                                            <img src="media/figure/chat_4.jpg" alt="Chat">
+                                            <img src="/media/figure/chat_4.jpg" alt="Chat">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -340,7 +340,7 @@
                         <div class="media">
                             <div class="item-img">
                                 <a href="#">
-                                    <img src="media/groups/groups_9.jpg" alt="group">
+                                    <img src="/media/groups/groups_9.jpg" alt="group">
                                 </a>
                             </div>
                             <div class="media-body">
@@ -351,7 +351,7 @@
                         <div class="media">
                             <div class="item-img">
                                 <a href="#">
-                                    <img src="media/groups/groups_10.jpg" alt="group">
+                                    <img src="/media/groups/groups_10.jpg" alt="group">
                                 </a>
                             </div>
                             <div class="media-body">
@@ -362,7 +362,7 @@
                         <div class="media">
                             <div class="item-img">
                                 <a href="#">
-                                    <img src="media/groups/groups_11.jpg" alt="group">
+                                    <img src="/media/groups/groups_11.jpg" alt="group">
                                 </a>
                             </div>
                             <div class="media-body">
@@ -373,7 +373,7 @@
                         <div class="media">
                             <div class="item-img">
                                 <a href="#">
-                                    <img src="media/groups/groups_12.jpg" alt="group">
+                                    <img src="/media/groups/groups_12.jpg" alt="group">
                                 </a>
                             </div>
                             <div class="media-body">
@@ -398,7 +398,7 @@
                                 </span>
                     </a>
                     <div class="item-img">
-                        <img src="media/figure/widget_banner_1.png" alt="banner">
+                        <img src="/media/figure/widget_banner_1.png" alt="banner">
                     </div>
                 </div>
             </div>

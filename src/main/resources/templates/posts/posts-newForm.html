@@ -32,10 +32,10 @@
                 <p class="fs-3">맛집 등록을 통해 다른 사람들과 공유하세요 !</p>
                 <form th:action="@{/posts/new}" method="post" th:object="${dto}">
                     <!-- 위치 -->
-                    <!--<div class="form-floating mb-3">
+                    <div class="form-floating mb-3">
                         <label for="place">위치</label>
-                        <input type="text" class="form-control" th:field="*{title}" id="title" placeholder="제목을 입력하세요.">
-                    </div>-->
+                        <input type="text" class="form-control" id="place" placeholder="위치를 입력하세요.">
+                    </div>
                     <!-- 제목 -->
                     <div class="form-floating mb-3">
                         <label for="title">제목</label>
