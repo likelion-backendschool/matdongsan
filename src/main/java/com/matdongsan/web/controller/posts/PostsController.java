@@ -1,9 +1,12 @@
 package com.matdongsan.web.controller.posts;
 
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.service.PostsService;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,17 +44,17 @@ public class PostsController {
 
     // 게시글 등록 폼 페이지
     @GetMapping("/posts/new")
-    public String newPost(){
+    public String newPost(Model model) {
+        model.addAttribute("dto", new PostCreateDto());
         return "/posts/posts-newForm";
     }
 
     // 게시글 등록 posts
 //    @PreAuthorize("isAuthenticated()")
     @PostMapping("/posts/new")
-    public String createPost(Posts posts , Model model ){
-
-        Posts newPosts = postsService.savePost(posts.getTitle() , posts.getContent() , posts.isPrivateStatus() , posts.getAuthor());
-        model.addAttribute("savePost", newPosts);
+    public String createPost(@AuthenticationPrincipal Account account, PostCreateDto dto , Model model ){
+        Member currentMember = account.getMember();
+        Posts newPosts = postsService.savePost(currentMember, dto);
 
         // 저장 완료 후 , 게시글 목록으로 간다.
         return "redirect:posts/posts-list";

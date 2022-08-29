@@ -3,6 +3,7 @@ package com.matdongsan.service;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.posts.PostsRepository;
+import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +23,16 @@ public class PostsService {
         return postsRepository.findAll();
     }
 
-    public Posts savePost(String title , String content , boolean status , Member author) {
+    public Posts savePost(Member member, PostCreateDto dto) {
 
-        Posts posts = new Posts();
-        posts.setTitle(title);
-        posts.setContent(content);
-        posts.setPrivateStatus(status);
-        posts.setAuthor(author);
-        posts.setCreatedTime(LocalDateTime.now());
+        Posts posts = Posts.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .privateStatus(dto.getPrivateStatus())
+                .author(member)
+                .createdTime(LocalDateTime.now())
+                .modifiedTime(null)
+                .build();
 
         return postsRepository.save(posts);
 
