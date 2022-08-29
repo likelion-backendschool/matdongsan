@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,12 +30,16 @@ public class ReplyService {
     /**
      * 댓글저장
      */
-    public void saveReply(Member member, Posts post, ReplyDto replyDto) {
+    //member 삭제
+    public void saveReply(Posts post, ReplyDto replyDto) {
         Reply reply = Reply.builder()
-                .comment(replyDto.getComment()).build();
+                .comment(replyDto.getComment())
+                .createComment(LocalDateTime.now())
+                .posts(post)
+                .build();
         Reply savedReply = replyRepository.save(reply);     //id와 comment만 등록되어 있는 상태.
         post.addReply(savedReply);                 //Reply에 Post객체 초기화
-        member.addReply(savedReply);  //Member클래스에 reply추가 + member정보 Reply에 초기
+//        member.addReply(savedReply);  //Member클래스에 reply추가 + member정보 Reply에 초기
     }
 
     /**
