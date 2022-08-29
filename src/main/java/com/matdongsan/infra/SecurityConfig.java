@@ -20,8 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf().ignoringAntMatchers("/api/**")
-                .and()
+                .csrf().disable()
                 .authorizeRequests()
                 .mvcMatchers("/login", "/signup", "/account/idCheck", "/account/kakao/**").permitAll() // 누구나 접근 가능
                 .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능

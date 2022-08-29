@@ -54,8 +54,21 @@
             let y_pos = 37.514322572335935;
             let x_pos = 127.06283102249932;
 
-            $(document).ready(function(){
+            function sendSaveRequest(jsonStr,placeId){
+                return fetch("/api/place",{
+                    method:"POST",
+                    body: JSON.stringify(jsonStr),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                }).then((res)=>{
+                    if(res.status===200){
+                        location.href="/place/"+placeId+"/detail";
+                    }
+                })
+            }
 
+            $(document).ready(function(){
                 function getLocation() {
                     if (navigator.geolocation) { // GPS를 지원하면
                         navigator.geolocation.getCurrentPosition(function(position) {
@@ -138,19 +151,6 @@
                     document.querySelector("#card-list").innerHTML = result;
                 }
 
-                function sendSaveRequest(jsonStr,placeId){
-                    return fetch("/api/place",{
-                        method:"POST",
-                        body: JSON.stringify(jsonStr),
-                        headers:{
-                            'Content-Type': 'application/json'
-                        }
-                    }).then((res)=>{
-                        if(res.status===200){
-                            location.href="/place/"+placeId+"/detail";
-                        }
-                    })
-                }
             }, 3500);
 
 

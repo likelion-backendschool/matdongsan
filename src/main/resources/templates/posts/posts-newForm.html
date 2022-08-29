@@ -25,6 +25,29 @@
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
     <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="placeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">맛집 찾기</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="place-modal">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-4" type="search" id="search-input" placeholder="키워드를 입력해주세요!" aria-label="Search">
+                            <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="sendKakaoApi();return false;">Search</button>
+                        </form>
+                        <ul class="list-group list-group-flush" id="search-result-list"></ul>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="forum-topic-add">
 
             <div class="my-4">
@@ -34,7 +57,8 @@
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
                         <label for="place">위치</label>
-                        <input type="text" class="form-control" id="place" placeholder="위치를 입력하세요.">
+                        <input type="text" class="form-control" id="place"
+                               placeholder="위치를 입력하세요." readonly data-toggle="modal" data-target="#placeModal">
                     </div>
                     <!-- 제목 -->
                     <div class="form-floating mb-3">
@@ -100,9 +124,6 @@
                         <button class="btn btn-primary" type="submit">저장</button>
                         <button class="btn btn-primary" type="button">취소</button>
                     </div>
-
-
-
                 </form>
             </div>
 
@@ -111,6 +132,68 @@
         </div>
         <div class="row">
         </div>
+
+        <script>
+            let currentPlace;
+            const readOnlyPlaceInput = document.querySelector("#place")
+            const searchInput = document.querySelector('#search-input');
+            const searchResultList = document.querySelector('#search-result-list');
+
+            const sendPlaceSaveApi = (jsonStr)=>{
+                fetch("/api/place",{
+                    method:"POST",
+                    body: JSON.stringify(jsonStr),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }}
+                ).then(async res=>{
+                    console.log(res);
+                })
+            }
+
+            const removeChildren = (el)=>{
+                while(el.hasChildNodes())
+                    el.removeChild(el.firstChild);
+            }
+
+            const drawResult= (places)=>{
+                removeChildren(searchResultList);
+                for(const place of places){
+                    const el = document.createElement('li');
+                    el.className = 'list-group-item';
+                    el.textContent = place['place_name'];
+                    el.setAttribute("data-toggle",'modal');
+                    el.setAttribute("data-target",'#placeModal');
+
+                    el.onclick = ()=>{
+                        currentPlace = place;
+                        removeChildren(searchResultList);
+                        readOnlyPlaceInput.value = currentPlace['place_name'];
+                        searchInput.value = '';
+                        sendPlaceSaveApi(place);
+
+
+                    }
+                    searchResultList.append(el);
+                }
+            }
+            const sendKakaoApi= ()=>{
+                let url = "https://dapi.kakao.com/v2/local/search/keyword.json?"+
+                            "category_group_code=CE7,FD6&"+
+                            "y=37.514322572335935&x=127.06283102249932&sort=distance&query="
+                const searchKeyword = searchInput.value;
+                if(!searchKeyword.trim()) return;
+                url+= searchKeyword.trim()
+                fetch(url,{
+                    method: "GET",
+                    headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
+                }).
+                    then(async res =>{
+                        const json = await res.json();
+                        drawResult(json['documents'])
+                })
+            }
+        </script>
     </div>
 </div>
 </body>
