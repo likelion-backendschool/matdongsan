@@ -28,6 +28,7 @@ class AccountServiceTest {
     @Test
     @Transactional
     public void helloTest() {
+        // test
         Account newAccount = Account.builder()
                 .id(null)
                 .username("abc123")
