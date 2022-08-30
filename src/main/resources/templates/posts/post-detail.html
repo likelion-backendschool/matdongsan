@@ -95,9 +95,10 @@
                             </li>
                         </ul>
                     </div>
+
+                    <!--댓글 부분-->
                     <div class="post-comment">
                         <div class="comment-body">
-
                             <div>
                                 <div class="card my-3" th:each="reply : ${post.replyList}">
                                     <div class="post-body">
@@ -108,7 +109,7 @@
                                             <li class="post-react">
                                                 <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                             </li>
-                                            <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
+                                            <li><a href="#"><i class="icofont-delete-alt"></i>Delete</a></li>
                                         </ul>
                                     </div>
                                 </div>
