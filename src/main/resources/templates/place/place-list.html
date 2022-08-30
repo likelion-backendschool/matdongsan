@@ -15,45 +15,73 @@
         <nav class="navbar">
             <div class="container-fluid d-inline">
                 <form id="search-form" class="d-flex justify-content-center" role="search">
-                    <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input id="search-input" class="form-control me-2" type="search" placeholder="키워드를 입력해주세요!" aria-label="Search">
                     <div style="width: 10px"></div>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-primary" type="button">Search</button>
                 </form>
             </div>
         </nav>
 
         <div style="height: 50px"></div>
         <!-- Banner Area Start -->
-        <div id="card-list" class="row gutters-20" onload="getLocation()">
-            <div class="col-lg-4 col-md-6" >
-                <div class="block-box user-blog">
-                    <div class="blog-content">
-                        <div class="blog-category">
-                            <p>가정,생활 > 문구,사무용품 > 디자인문구 > 카카오프렌즈</p>
-                        </div>
-                        <h3 class="blog-title"><a href="#">카카오프렌즈 코엑스점 </a></h3>
-                        <div class="blog-date"><i class="icofont-ui-call"></i><span>0100000000</span></div>
-                        <div>서울 강남구 영동대로 513</div>
-                        <div>서울 강남구 삼성동 159</div>
-                    </div>
-                    <div class="blog-meta">
-                        <ul>
-                            <li class="blog-reaction">
-                                <div class="meta-text"><a>웹페이지로 이동</a></div>
-                            </li>
-                            <li>
-                                <span>200m</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div id="card-list" class="row gutters-20 justify-content-center" >
+            <h1>로딩중 ...</h1>
         </div>
+        <div class="row  justify-content-center">
+            <button id="more-button" type="button" class="btn btn-primary d-none">Load More</button>
+        </div>
+
         <script th:inline="javascript">
 
             let y_pos = 37.514322572335935;
             let x_pos = 127.06283102249932;
+            let pageIdx = 1;
+            const searchForm = document.getElementById("search-form");
+            const cardList = document.querySelector("#card-list");
+            const moreBtn = document.querySelector("#more-button");
+            moreBtn.onclick=()=>{
+                moreBtn.setAttribute("disabled","disabled");
 
+                let sc = document.getElementById("search-input").value;
+                pageIdx++;
+                keywordApi(sc);
+
+                moreBtn.removeAttribute("disabled");
+            }
+            searchForm.onsubmit = ()=>{
+                moreBtn.classList.remove("d-none")
+                let sc = document.getElementById("search-input").value;
+                removeChildAll(cardList);
+                keywordApi(sc);
+                return false;
+            }
+            const removeChildAll = (el)=>{
+                while(el.hasChildNodes()){
+                    el.removeChild(el.firstChild);
+                }
+            };
+            getLocation(categoryApi);
+
+
+            function getLocation(cb) {
+                if (navigator.geolocation) { // GPS를 지원하면
+                     navigator.geolocation.getCurrentPosition((position) =>{
+                        y_pos = position.coords.latitude;
+                        x_pos = position.coords.longitude;
+                        console.log("YES : " + y_pos, x_pos)
+                        cb();
+                        // alert(position.coords.latitude + ' ' + position.coords.longitude);
+                    }, function(error) {
+                        console.error(error);
+                    }, {
+                        enableHighAccuracy: false,
+                        maximumAge: 0,
+                        timeout: Infinity
+                    });
+                } else {
+                    alert('GPS를 지원하지 않습니다');
+                }
+            }
             function sendSaveRequest(jsonStr,placeId){
                 return fetch("/api/place",{
                     method:"POST",
@@ -67,95 +95,53 @@
                     }
                 })
             }
-
-            $(document).ready(function(){
-                function getLocation() {
-                    if (navigator.geolocation) { // GPS를 지원하면
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            console.log("getCurrentPosition() run")
-                            y_pos = position.coords.latitude;
-                            x_pos = position.coords.longitude;
-                            console.log("YES : " + y_pos, x_pos)
-                            // alert(position.coords.latitude + ' ' + position.coords.longitude);
-                        }, function(error) {
-                            console.error(error);
-                        }, {
-                            enableHighAccuracy: false,
-                            maximumAge: 0,
-                            timeout: Infinity
-                        });
-                    } else {
-                        alert('GPS를 지원하지 않습니다');
+            function writeHtml(tmp){
+                let html = document.querySelector("#template-item").innerHTML;
+                let result = "";
+                tmp["documents"].forEach((list)=>{
+                    result += html.replace("{category_name}", list["category_name"])
+                        .replace("{place_name}", list["place_name"])
+                        .replace("{phone}", list["phone"])
+                        .replace("{address_name}", list["address_name"])
+                        .replace("{road_address_name}", list["road_address_name"])
+                        .replace("{place_url}", list["place_url"])
+                        .replace("{distance}", list["distance"])
+                        .replace("{id}", list["id"])
+                        .replace("{jsonStr}", JSON.stringify(list));
+                })
+                document.querySelector("#card-list").innerHTML += result;
+            }
+            function categoryApi(){
+                console.log("search api");
+                return fetch("https://dapi.kakao.com/v2/local/search/category.json?y="+
+                    y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&radius=500&size=12",
+                    {
+                        method: "GET",
+                        headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
+                    }).then( async res => {
+                    removeChildAll(cardList);
+                    let tmp = await res.json();
+                    writeHtml(tmp);
+                })
+            }
+            function keywordApi(keyword) {
+                return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?y="+
+                    y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&query="+keyword+
+                    "&size=12&page="+pageIdx,
+                    {
+                        method: "GET",
+                        headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
                     }
-                }
-
-                getLocation();
-
-
-                // getLocation();
-
-            });
-
-            setTimeout(function () {
-                console.log("NO : " + y_pos, x_pos);
-
-                document.getElementById("search-form").onsubmit = function(){
-                    let sc = document.getElementById("search-input").value;
-                    keywordApi(sc);
-                    return false;
-                }
-
-                categoryApi();
-
-
-
-
-                function categoryApi(){
-                    return fetch("https://dapi.kakao.com/v2/local/search/category.json?y="+y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&radius=500",
-                        {
-                            method: "GET",
-                            headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
-                        }).then( async res => {
-                        let tmp = await res.json();
-                        writeHtml(tmp);
-                    })
-                }
-
-                function keywordApi(keyword) {
-                    return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?y="+y_pos+"&x="+x_pos+"&sort=distance&category_group_code=FD6,CE7&query="+keyword,
-                        {
-                            method: "GET",
-                            headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
-                        }
-                    ).then( async res =>{
-                        let tmp = await res.json();
-                        console.log(tmp);
-                        writeHtml(tmp);
-                    })
-                }
-
-                function writeHtml(tmp){
-                    let html = document.querySelector("#template-item").innerHTML;
-                    let result = "";
-                    tmp["documents"].forEach((list)=>{
-                        result += html.replace("{category_name}", list["category_name"])
-                            .replace("{place_name}", list["place_name"])
-                            .replace("{phone}", list["phone"])
-                            .replace("{address_name}", list["address_name"])
-                            .replace("{road_address_name}", list["road_address_name"])
-                            .replace("{place_url}", list["place_url"])
-                            .replace("{distance}", list["distance"])
-                            .replace("{id}", list["id"])
-                            .replace("{jsonStr}", JSON.stringify(list));
-                    })
-                    document.querySelector("#card-list").innerHTML = result;
-                }
-
-            }, 3500);
-
-
+                ).then( async res =>{
+                    let tmp = await res.json();
+                    pageIdx = 1;
+                    if(tmp['meta']['is_end']){
+                        moreBtn.classList.add("d-none");
+                    }
+                    writeHtml(tmp);
+                })
+            }
         </script>
-
         <script id="template-item" type="text/template">
             <div class="col-lg-4 col-md-6" >
                 <div class="block-box user-blog">

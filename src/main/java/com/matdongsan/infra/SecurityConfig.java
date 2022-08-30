@@ -20,7 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable()
+//                .cors().disable()
+                 // 카카오 맵 외부 요청을 받
+                .csrf().disable() // /api/place 로 보내지지가 않아서 설정
                 .authorizeRequests()
                 .mvcMatchers("/login", "/signup", "/account/idCheck", "/account/kakao/**").permitAll() // 누구나 접근 가능
                 .antMatchers("/manager/*").hasAnyRole("ADMIN") // ADMIN만 접근 가능
@@ -51,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .mvcMatchers("/dependencies/**", "/assets/**", "/media/**", "/php/**", "/sass/**")
+
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }
