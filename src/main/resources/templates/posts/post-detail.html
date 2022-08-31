@@ -109,7 +109,12 @@
                                             <li class="post-react">
                                                 <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                             </li>
-                                            <li><a href="#"><i class="icofont-fix-tools"></i>Edit</a></li>
+
+                                            <li><a th:href="@{|/reply/update/${reply.id}|}" class="btn btn-sm btn-outline-secondary"
+                                                   sec:authorize="isAuthenticated()"
+                                                   th:if="${reply.writer != null and #authentication.principal.username == reply.writer.account.username}"
+                                                   ><i class="icofont-fix-tools"></i>Edit </a></li>
+
                                             <li><a href="#"><i class="icofont-delete-alt"></i>Delete</a></li>
                                         </ul>
                                     </div>
