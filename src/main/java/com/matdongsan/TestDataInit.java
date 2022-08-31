@@ -38,7 +38,7 @@ public class TestDataInit {
                     .password(passwordEncoder.encode("member1!"))
                     .accountRole(AccountRole.ROLE_USER)
                     .loginType(LoginType.LOCAL)
-                    .email("member1@gmail.com")
+                    .email("member1@test.com")
                     .build();
             Member member = memberRepository.save(Member.builder()
                     .introduce("hello world")
@@ -59,7 +59,28 @@ public class TestDataInit {
                     .password(passwordEncoder.encode("admin!"))
                     .accountRole(AccountRole.ROLE_ADMIN)
                     .loginType(LoginType.LOCAL)
-                    .email("admin@gmail.com")
+                    .email("admin@test.com")
+                    .build();
+            Member member = memberRepository.save(Member.builder()
+                    .introduce("hello world")
+                    .gender("male")
+                    .birth(Date.from(LocalDateTime.now().minusDays(10).atZone(ZoneId.systemDefault()).toInstant()))
+                    .signUpDate(LocalDateTime.now())
+                    .memberAge(MemberAge.MEMBER_AGE_20S)
+                    .build());
+            newAccount.addMember(member);
+            accountRepository.save(newAccount);
+        }
+        if (accountRepository.findByUsername("1").isEmpty()) {
+            // 등록된 username 중 member1이 없다면 새로운 member 등록
+            // 빌드 이용
+
+            Account newAccount = Account.builder()
+                    .username("1")
+                    .password(passwordEncoder.encode("1"))
+                    .accountRole(AccountRole.ROLE_ADMIN)
+                    .loginType(LoginType.LOCAL)
+                    .email("1@test.com")
                     .build();
             Member member = memberRepository.save(Member.builder()
                     .introduce("hello world")
