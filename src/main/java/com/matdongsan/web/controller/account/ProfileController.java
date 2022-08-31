@@ -1,5 +1,7 @@
 package com.matdongsan.web.controller.account;
 
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.ProfileService;
 import com.matdongsan.web.vo.MemberVo;
