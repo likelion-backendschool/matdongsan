@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +32,12 @@ public class ReplyService {
      * 댓글저장
      */
     //member 삭제
-    public void saveReply(Posts post, ReplyDto replyDto) {
+    public void saveReply(Posts post, ReplyDto replyDto, Long id) {
+        Optional<Member> byId = memberRepository.findById(id);
         Reply reply = Reply.builder()
                 .comment(replyDto.getComment())
                 .createComment(LocalDateTime.now())
+                .writer(byId.get())////
                 .posts(post)
                 .build();
         Reply savedReply = replyRepository.save(reply);     //id와 comment만 등록되어 있는 상태.
@@ -43,15 +46,29 @@ public class ReplyService {
     }
 
     /**
+     * id로 댓글받기
+     */
+    public Reply getReply(Long replyId) {
+        Optional<Reply> reply = replyRepository.findById(replyId);
+        return reply.get();
+    }
+
+    /**
      * 댓글 수정
      */
-    public void updateReply(Long replyid, String comment) {
-        Reply replyById = replyRepository.findById(replyid).orElseThrow(
-                ()-> new IllegalArgumentException("댓글이 존재하지 않습니다")
-        );
-        replyById.updateComment(comment);
-
+    public void update(Reply reply, String content) {
+        reply.updateComment(content);
+        replyRepository.save(reply);
     }
+
+//      PutMapping방식
+//    public void updateReply(Long replyid, String comment) {
+//        Reply replyById = replyRepository.findById(replyid).orElseThrow(
+//                ()-> new IllegalArgumentException("댓글이 존재하지 않습니다")
+//        );
+//        replyById.updateComment(comment);
+//    }
+
 
     /**
      * 댓글 삭제
