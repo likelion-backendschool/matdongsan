@@ -1,5 +1,7 @@
 package com.matdongsan.web.controller.account;
 
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.ProfileService;
 import com.matdongsan.web.vo.MemberVo;
@@ -38,10 +40,10 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/setting")
-    public String showProfilePage(Principal principal, Model model) {
-        log.info("principal.getName()={}", principal.getName());
+    public String showProfilePage(@AuthUser Account account, Model model) {
+        log.info("account.getUsername()={}", account.getUsername());
 
-        MemberVo member = accountService.getReadOnlyMember(principal.getName());
+        MemberVo member = accountService.getReadOnlyMember(account.getUsername());
         model.addAttribute("member", member);
 
         return "profile/profile-setting";
