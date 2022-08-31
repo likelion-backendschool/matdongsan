@@ -28,8 +28,12 @@ public class Favorite {
     private Place place;
 
     @Nullable
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY )
     private Bookmark bookMark;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bookmark_id")
+    private Bookmark bookmark;
 
     public Favorite(Member member, Place place) {
         this.member = member;

@@ -21,5 +21,4 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
     List<Favorite> findAllByMember(Member member);
 
-    void deleteByMemberAndPlace(Member member, Place place);
 }

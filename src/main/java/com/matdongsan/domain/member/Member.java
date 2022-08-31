@@ -2,6 +2,8 @@ package com.matdongsan.domain.member;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRole;
+import com.matdongsan.domain.bookmark.Bookmark;
+import com.matdongsan.domain.favorite.Favorite;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
@@ -42,6 +44,12 @@ public class Member {
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favoriteList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bookmark> bookmarkList = new ArrayList<>();
 
     public void addReply(Reply reply) {
         this.replyList.add(reply);
