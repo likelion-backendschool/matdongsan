@@ -59,7 +59,27 @@
                         <li><a href="#"><i class="icofont-ui-music"></i>Music: <span>0</span></a></li>
                     </ul>
                 </div>
-                <h3 class="item-title my-2">최근 등록한 맛집</h3>
+                <div class="item-title d-flex justify-content-between">
+                    <h3 class="d-flex">최근 등록한 맛집</h3>
+                    <a class="mt-2" th:href="@{/bookmark/create}">새로운 북마크 추가하기</a>
+                </div>
+                <div class="modal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="block-box forum-media-gallery">
                     <hr>
                     <div th:each="favorite, loop : ${favorites}" class="media-upload">
