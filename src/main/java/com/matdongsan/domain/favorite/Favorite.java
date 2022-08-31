@@ -1,15 +1,15 @@
 package com.matdongsan.domain.favorite;
 
+import com.matdongsan.domain.bookmark.Bookmark;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @Entity
@@ -27,6 +27,9 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Place place;
 
+    @Nullable
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Bookmark bookMark;
 
     public Favorite(Member member, Place place) {
         this.member = member;
