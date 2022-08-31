@@ -53,7 +53,7 @@
             <div class="my-4">
                 <h3 class="heading-title">게시글 등록 폼</h3>
                 <p class="fs-3">맛집 등록을 통해 다른 사람들과 공유하세요 !</p>
-                <form th:action="@{/posts/new}" method="post" th:object="${dto}">
+                <form th:action="@{/posts/new}" method="post" th:object="${postCreateDto}">
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
                         <label for="place">위치</label>
@@ -63,7 +63,8 @@
                     <!-- 제목 -->
                     <div class="form-floating mb-3">
                         <label for="title">제목</label>
-                        <input type="text" class="form-control" th:field="*{title}" id="title" placeholder="제목을 입력하세요.">
+                        <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="제목을 입력하세요.">
+                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title Error</small>
                     </div>
                     <!-- 내용 -->
                     <div class="form-floating mb-3">
@@ -96,6 +97,7 @@
                                 $('#summernote').summernote(setting);
                             });
                         </script>
+                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">content Error</small>
                     </div>
 
                     <!-- 사진 등록 부분-->
