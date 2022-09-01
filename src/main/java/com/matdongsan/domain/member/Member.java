@@ -33,6 +33,8 @@ public class Member {
 
     private LocalDateTime signUpDate;
 
+    private String nickname;
+
     @Enumerated(EnumType.STRING)
     private MemberAge memberAge;
 

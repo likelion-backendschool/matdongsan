@@ -21,11 +21,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     public Member createNewMember(Account account, MemberInfoDto memberInfoDto) {
         Member newMember = Member.builder()
-                        .account(account)
-                        .signUpDate(LocalDateTime.now())
-                        .introduce(memberInfoDto.getIntroduce())
-                        .gender(memberInfoDto.getGender())
-                        .birth(memberInfoDto.getBirth())
+                .account(account)
+                .nickname(account.getUsername())
+                .signUpDate(LocalDateTime.now())
+                .introduce(memberInfoDto.getIntroduce())
+                .gender(memberInfoDto.getGender())
+                .birth(memberInfoDto.getBirth())
                 .build();
         account.addMember(newMember);
         log.info("newMember={}", newMember);
