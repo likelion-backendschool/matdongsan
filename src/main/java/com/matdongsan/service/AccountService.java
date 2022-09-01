@@ -181,6 +181,7 @@ public class AccountService implements UserDetailsService {
         Member currentMember = findAccountByUsername(username).getMember();
         log.info("currentUser.introduce={}", currentMember.getIntroduce());
         return MemberVo.builder()
+                .nickname(currentMember.getNickname())
                 .introduce(currentMember.getIntroduce())
                 .birth(currentMember.getBirth())
                 .gender(currentMember.getGender())

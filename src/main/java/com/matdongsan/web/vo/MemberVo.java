@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MemberVo {
     private final String introduce;
+    private final String nickname;
     private final Date birth;
     private final LocalDateTime signUpDate;
     private final String gender;
