@@ -42,13 +42,13 @@ public class ReplyController {
     @PostMapping("/posts/{postId}")
     public String createReply(@PathVariable("postId") Long id,
                               @Valid ReplyDto replyDto, BindingResult bindingResult,
-                              @AuthenticationPrincipal SecurityUser securityUser) {
+                              @AuthUser Account account) {
         if (bindingResult.hasErrors()) {
             log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
             return "redirect:/posts/{postId}";
         }
         Posts post = postsService.findById(id);
-        Long memberId = securityUser.getAccount().getMember().getId(); //securityuser . account . member . id가져오기
+        Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
         replyService.saveReply(post, replyDto, memberId);
         return "redirect:/posts/{postId}";
 
