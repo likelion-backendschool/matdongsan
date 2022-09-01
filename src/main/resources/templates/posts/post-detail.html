@@ -112,17 +112,20 @@
 
                                             <li><a th:href="@{|/reply/update/${reply.id}|}" class="btn btn-sm btn-outline-secondary"
                                                    sec:authorize="isAuthenticated()"
-                                                   th:if="${reply.writer != null and #authentication.principal.username == reply.writer.account.username}"
+                                                   th:if="${#authentication.principal.username == reply.writer.account.username}"
                                                    ><i class="icofont-fix-tools"></i>Edit </a></li>
 
-                                            <li><a href="#"><i class="icofont-delete-alt"></i>Delete</a></li>
+                                            <li><a th:href="@{|/reply/delete/${reply.id}|}" class="btn btn-sm btn-outline-secondary"
+                                                   sec:authorize="isAuthenticated()"
+                                                   th:if="${#authentication.principal.username == reply.writer.account.username}"
+                                            ><i class="icofont-delete-alt"></i>Delete</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <form th:action="@{|/posts/${post.id}|}" method="post">
+                            <form th:action="@{|/posts/${post.id}|}" th:object="${replyDto}" method="post">
                                 <div class="input-box">
-                                    <input type="text" name="content" class="form-control"
+                                    <input type="text" th:field="*{comment}" class="form-control"
                                            placeholder="댓글을 입력해 주세요.">
                                 </div>
                                 <button type="submit" class="btn btn-primary mx-2">등록</button>
