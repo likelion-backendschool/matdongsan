@@ -2,6 +2,7 @@ package com.matdongsan.web.controller;
 
 
 import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.posts.PostsRepository;
 import com.matdongsan.domain.reply.Reply;
@@ -33,28 +34,22 @@ public class ReplyController {
 
     private final PostsService postsService;
     private final ReplyService replyService;
-    private final PostsRepository postsRepository;
-    private final ReplyRepository replyRepository;
-    ReplyDto replyDto = new ReplyDto();
 
-    /**댓글등록 (버튼)
-     *
+    /**
+     * 댓글등록 (버튼)
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/posts/{postId}")
-    public String createReply(Model model,
-                              @PathVariable("postId") Long id,
-                              @RequestParam String content,
+    public String createReply(@PathVariable("postId") Long id,
                               @Valid ReplyDto replyDto, BindingResult bindingResult,
                               @AuthenticationPrincipal SecurityUser securityUser) {
-        Posts post = postsService.findById(id);
-        ReplyDto replyDto2 = replyDto.builder().comment(content).build();
-        Long memberId = securityUser.getAccount().getMember().getId(); //securityuser . account . member . id가져오기
-        replyService.saveReply(post, replyDto2, memberId);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("post", post);
-            return "/posts/post-detail";
+            log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
+            return "redirect:/posts/{postId}";
         }
+        Posts post = postsService.findById(id);
+        Long memberId = securityUser.getAccount().getMember().getId(); //securityuser . account . member . id가져오기
+        replyService.saveReply(post, replyDto, memberId);
         return "redirect:/posts/{postId}";
 
     }
@@ -67,11 +62,10 @@ public class ReplyController {
     public String updateReply(@ModelAttribute("replyDto") ReplyDto replyDto,
                               @PathVariable("replyId") Long id, Principal principal) {
         Reply reply = replyService.getReply(id);
-        if (!reply.getWriter().getAccount().getUsername().equals(principal.getName())) {    //??name?
+        if (!reply.getWriter().getAccount().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "권한이 없습니다.");
         }
-//        replyDto.builder().comment(reply.getComment());
-//        replyDto.setComment(reply.getComment());    //builder로 하니까 값이 안넘어가지는 이유???
+
         replyDto.editComment(reply.getComment());
         return "/reply/reply-editForm";
     }
@@ -79,31 +73,23 @@ public class ReplyController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reply/update/{replyId}")
     public String updateReply(@PathVariable("replyId") Long id, @Valid ReplyDto replyDto) {
-//파라미터로
-//        Principal principal,
-//        BindingResult bindingResult,
 
-//        if (bindingResult.hasErrors()) {
-//            return "/reply/reply-editForm";
-//        }
         Reply reply = replyService.getReply(id);
         replyService.update(reply, replyDto.getComment());
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());}
-
-
-//    @PutMapping("/update/{replyId}")
-//    public void updateReply(@PathVariable Long replyId,
-//                            @RequestBody String comment) throws Exception {
-//        replyService.updateReply(replyId, comment);
-//    }
-
-
-    @GetMapping()
-    @DeleteMapping("/post/{postId}/reply/{replyId}")
-    public void deleteReply(@PathVariable Long postId,
-                            @PathVariable Long replyId,
-                            @RequestBody ReplyDto replyDto) {
-        replyService.deleteReply(replyId);
+        return String.format("redirect:/posts/%s", reply.getPosts().getId());
     }
 
+    /**
+     * 댓글 삭제
+     * @param id
+     * @return
+     */
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/reply/delete/{replyId}")
+    public String deleteReply(@PathVariable("replyId") Long id) {
+        Reply reply = replyService.getReply(id);
+        replyService.deleteReply(reply);
+        return String.format("redirect:/posts/%s", reply.getPosts().getId());
+    }
 }
