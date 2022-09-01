@@ -11,11 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -51,15 +54,22 @@ public class PostsController {
     // 게시글 등록 폼 페이지
     @GetMapping("/posts/new")
     public String newPost(Model model) {
-        model.addAttribute("dto", new PostCreateDto());
+        model.addAttribute("postCreateDto", new PostCreateDto());
         return "/posts/posts-newForm";
     }
 
     // 게시글 등록 posts
     @PostMapping("/posts/new")
-    public String createPost(Principal principal, PostCreateDto dto, RedirectAttributes redirectAttributes) {
+    public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            log.info("error 발생");
+            model.addAttribute("postCreateDto", postCreateDto);
+            return "posts/posts-newForm";
+        }
+
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
-        Posts newPosts = postsService.savePost(currentMember, dto);
+        Posts newPosts = postsService.savePost(currentMember, postCreateDto);
         Long id = newPosts.getId();
         redirectAttributes.addAttribute("id", id);
 
