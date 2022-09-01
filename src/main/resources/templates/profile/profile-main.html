@@ -87,16 +87,15 @@
                 </div>
             </th:block>
             <th:block th:if="${member.getPostsList().size() != 0}">
-                <div class="block-box post-view">
+                <div class="block-box post-view" th:each="post : ${member.getPostsList()}">
                     <div class="post-header">
                         <div class="media">
                             <div class="user-img">
                                 <img src="media/figure/chat_5.jpg" alt="Aahat">
                             </div>
                             <div class="media-body">
-                                <div class="user-title"><a href="user-timeline.html">Rebeca Powel</a></div>
+                                <div class="user-title"><a th:text="${post.getAuthor().getAccount().getUsername()}">닉네임</a></div>
                                 <ul class="entry-meta">
-                                    <li class="meta-privacy"><i class="icofont-users-alt-4"></i>Friends</li>
                                     <li class="meta-time">2 mins ago</li>
                                 </ul>
                             </div>
@@ -114,8 +113,8 @@
                     </div>
                     <div class="post-body">
                         <div class="post-no-thumbnail">
-                            <p>I have great news to share with you all! I've been officially made a game streaming verified partner by Streamy http://radiustheme.com/ What does this mean? I'll be uploading new content every day, improving the quality and I'm gonna have access to games a month before the official release.</p>
-                            <p>This is a dream come true, thanks to all for the support!!!</p>
+                            <h4 th:text="${post.getTitle()}">제목</h4>
+                            <p th:utext="${post.getContent()}">내용</p>
                         </div>
                         <div class="post-meta-wrap">
                             <div class="post-meta">
@@ -129,8 +128,7 @@
                                 </div>
                             </div>
                             <div class="post-meta">
-                                <div class="meta-text">2 Comments</div>
-                                <div class="meta-text">05 Share</div>
+                                <div class="meta-text"><span th:text="${post.getReplyList().size()}">댓글 수</span> Comments</div>
                             </div>
                         </div>
                     </div>
@@ -149,232 +147,68 @@
                                 </ul>
                             </li>
                             <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
-                            <li class="post-share">
-                                <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
-                                <ul class="share-list">
-                                    <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
-                                    <li><a href="#" class="color-messenger"><i class="icofont-facebook-messenger"></i></a></li>
-                                    <li><a href="#" class="color-instagram"><i class="icofont-instagram"></i></a></li>
-                                    <li><a href="#" class="color-whatsapp"><i class="icofont-brand-whatsapp"></i></a></li>
-                                    <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                     <div class="post-comment">
                         <ul class="comment-list">
-                            <li class="main-comments">
-                                <div class="each-comment">
-                                    <div class="post-header">
-                                        <div class="media">
-                                            <div class="user-img">
-                                                <img src="media/figure/chat_14.jpg" alt="Aahat">
+                            <th:block th:if="${post.getReplyList().size() != 0}">
+                                <li class="main-comments">
+                                    <div class="each-comment">
+                                        <div class="post-header">
+                                            <div class="media">
+                                                <div class="user-img">
+                                                    <img src="media/figure/chat_14.jpg" alt="Aahat">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="user-title"><a href="user-timeline.html">Aahat Akter</a></div>
+                                                    <ul class="entry-meta">
+                                                        <li class="meta-privacy"><i class="icofont-world"></i>Friends</li>
+                                                        <li class="meta-time">5 mins ago</li>
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <div class="media-body">
-                                                <div class="user-title"><a href="user-timeline.html">Aahat Akter</a></div>
-                                                <ul class="entry-meta">
-                                                    <li class="meta-privacy"><i class="icofont-world"></i>Friends</li>
-                                                    <li class="meta-time">5 mins ago</li>
-                                                </ul>
+                                            <div class="dropdown">
+                                                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                    ...
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#">Close</a>
+                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="dropdown">
-                                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                                ...
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#">Close</a>
-                                                <a class="dropdown-item" href="#">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
+                                        <div class="post-body">
+                                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium der doloremque laudantiumSed ut perspicia tisery..</p>
+                                        </div>
+                                        <div class="post-footer">
+                                            <ul>
+                                                <li class="react-icon">
+                                                    <img src="media/figure/reaction_1.png" alt="icon">
+                                                    <img src="media/figure/reaction_2.png" alt="icon">
+                                                </li>
+                                                <li class="post-react">
+                                                    <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
+                                                    <ul class="react-list">
+                                                        <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="post-body">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium der doloremque laudantiumSed ut perspicia tisery..</p>
-                                    </div>
-                                    <div class="post-footer">
-                                        <ul>
-                                            <li class="react-icon">
-                                                <img src="media/figure/reaction_1.png" alt="icon">
-                                                <img src="media/figure/reaction_2.png" alt="icon">
-                                            </li>
-                                            <li class="post-react">
-                                                <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                                <ul class="react-list">
-                                                    <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
-                                        </ul>
-                                    </div>
+                                </li>
+                                <div class="load-more-btn">
+                                    <a href="#" class="item-btn">Load More Comments <span>4+</span></a>
                                 </div>
-                                <ul class="children">
-                                    <li class="main-comments">
-                                        <div class="each-comment">
-                                            <div class="post-header">
-                                                <div class="media">
-                                                    <div class="user-img">
-                                                        <img src="media/figure/notifiy_1.png" alt="Aahat">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="user-title"><a href="user-timeline.html">Neko Bebo</a></div>
-                                                        <ul class="entry-meta">
-                                                            <li class="meta-time">5 mins ago</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown">
-                                                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                                        ...
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#">Close</a>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="post-body">
-                                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem..</p>
-                                            </div>
-                                            <div class="post-footer">
-                                                <ul>
-                                                    <li class="react-icon">
-                                                        <img src="media/figure/reaction_1.png" alt="icon">
-                                                        <img src="media/figure/reaction_3.png" alt="icon">
-                                                    </li>
-                                                    <li class="post-react">
-                                                        <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                                        <ul class="react-list">
-                                                            <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="main-comments">
-                                        <div class="each-comment">
-                                            <div class="post-header">
-                                                <div class="media">
-                                                    <div class="user-img">
-                                                        <img src="media/figure/notifiy_1.png" alt="Aahat">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <div class="user-title"><a href="user-timeline.html">Neko Bebo</a></div>
-                                                        <ul class="entry-meta">
-                                                            <li class="meta-time">5 mins ago</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown">
-                                                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                                        ...
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#">Close</a>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="post-body">
-                                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium der doloremque..</p>
-                                            </div>
-                                            <div class="post-footer">
-                                                <ul>
-                                                    <li class="react-icon">
-                                                        <img src="media/figure/reaction_1.png" alt="icon">
-                                                        <img src="media/figure/reaction_2.png" alt="icon">
-                                                    </li>
-                                                    <li class="post-react">
-                                                        <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                                        <ul class="react-list">
-                                                            <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                                            <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="main-comments">
-                                <div class="each-comment">
-                                    <div class="post-header">
-                                        <div class="media">
-                                            <div class="user-img">
-                                                <img src="media/figure/chat_14.jpg" alt="Aahat">
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="user-title"><a href="#">Rebeca Powel</a></div>
-                                                <ul class="entry-meta">
-                                                    <li class="meta-privacy"><i class="icofont-world"></i>Friends</li>
-                                                    <li class="meta-time">5 minutes ago</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="dropdown">
-                                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                                ...
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#">Close</a>
-                                                <a class="dropdown-item" href="#">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="post-body">
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium der doloremque laudantiumSed ..</p>
-                                    </div>
-                                    <div class="post-footer">
-                                        <ul>
-                                            <li class="react-icon">
-                                                <img src="media/figure/reaction_1.png" alt="icon">
-                                                <img src="media/figure/reaction_2.png" alt="icon">
-                                            </li>
-                                            <li class="post-react">
-                                                <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                                <ul class="react-list">
-                                                    <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                                    <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
+                            </th:block>
                         </ul>
-                        <div class="load-more-btn">
-                            <a href="#" class="item-btn">Load More Comments <span>4+</span></a>
-                        </div>
                         <div class="comment-reply">
                             <div class="user-img">
                                 <img src="media/figure/chat_15.jpg" alt="Aahat">
