@@ -5,6 +5,7 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.PostsService;
+import com.matdongsan.web.dto.ReplyDto;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class PostsController {
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
-    public String showDetailPost(@PathVariable long id , Model model){
+    public String showDetailPost(@PathVariable long id , Model model, ReplyDto replyDto){
 
         Posts posts = postsService.findById(id);
 
