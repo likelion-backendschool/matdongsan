@@ -22,14 +22,6 @@
   left: 1.25rem
 }
 
-.tw-top-1\/2 {
-  top: 50%
-}
-
-.tw-left-1\/2 {
-  left: 50%
-}
-
 .tw-top-1 {
   top: 0.25rem
 }
@@ -64,10 +56,6 @@
 
 .tw-w-full {
   width: 100%
-}
-
-.tw-w-1\/2 {
-  width: 50%
 }
 
 .tw-w-1 {
@@ -105,8 +93,9 @@
   background-color: rgb(0 0 0 / var(--tw-bg-opacity))
 }
 
-.tw-bg-\[url\(\'media\/figure\/user_photo2\.jpg\'\)\] {
-  background-image: url('media/figure/user_photo2.jpg')
+.tw-bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity))
 }
 
 .tw-object-cover {

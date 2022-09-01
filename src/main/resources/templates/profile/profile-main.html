@@ -15,7 +15,7 @@
     <!--=====================================-->
     <div class="container">
         <!-- Banner Area Start -->
-        <div class="banner-user tw-bg-black">
+        <div class="banner-user">
             <div class="banner-content">
                 <div class="media">
                     <div class="item-img">
@@ -25,12 +25,11 @@
                         <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
                         <div class="item-subtitle" th:text="${member.getIntroduce()}">소개</div>
                         <ul class="item-social">
-                            <li><a href="#" class="bg-fb"><i class="icofont-facebook"></i></a></li>
+                            <li><a th:href="@{/profile/setting}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
                         </ul>
                         <ul class="user-meta">
-                            <li>Posts: <span>30</span></li>
+                            <li>Posts: <span th:text="${member.getPostsList().size()}">게시글 수</span></li>
                             <li>Comments: <span>12</span></li>
-                            <li>Views: <span>1.2k</span></li>
                         </ul>
                     </div>
                 </div>
@@ -38,17 +37,10 @@
         </div>
         <div class="block-box user-top-header">
             <ul class="menu-list">
-                <li class="active"><a href="#">나의 게시물</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Friends</a></li>
-                <li><a href="#">Groups</a></li>
-                <li><a href="#">Photos</a></li>
-                <li><a href="#">Videos</a></li>
-                <li><a href="#">Badges</a></li>
-                <li><a href="#">Blogs</a></li>
-                <li><a href="#">Forums</a></li>
+                <li class="active"><a th:href="@{/profile}">나의 게시물</a></li>
+                <li class=""><a th:href="@{/profile/bookmark}">북마크 관리</a></li>
                 <li>
-                    <div class="dropdown">
+                    <!--<div class="dropdown">
                         <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                             ...
                         </button>
@@ -57,7 +49,7 @@
                             <a class="dropdown-item" href="#">Blog</a>
                             <a class="dropdown-item" href="#">Others</a>
                         </div>
-                    </div>
+                    </div>-->
                 </li>
             </ul>
         </div>
