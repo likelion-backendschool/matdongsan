@@ -110,15 +110,29 @@
                                                 <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                             </li>
 
-                                            <li><a th:href="@{|/reply/update/${reply.id}|}" class="btn btn-sm btn-outline-secondary"
+                                            <li><a th:href="@{|/reply/update/${reply.id}|}"
+                                                   class="btn btn-sm btn-outline-secondary"
                                                    sec:authorize="isAuthenticated()"
                                                    th:if="${#authentication.principal.username == reply.writer.account.username}"
-                                                   ><i class="icofont-fix-tools"></i>Edit </a></li>
+                                            ><i class="icofont-fix-tools"></i>Edit </a></li>
 
-                                            <li><a th:href="@{|/reply/delete/${reply.id}|}" class="btn btn-sm btn-outline-secondary"
+                                            <li><a th:href="@{|/reply/delete/${reply.id}|}"
+                                                   class="btn btn-sm btn-outline-secondary"
                                                    sec:authorize="isAuthenticated()"
                                                    th:if="${#authentication.principal.username == reply.writer.account.username}"
                                             ><i class="icofont-delete-alt"></i>Delete</a></li>
+                                            <!--댓글등록시간-->
+                                            <div class="d-flex justify-content-end">
+                                                <div th:if="${reply.modifyComment != null}"
+                                                     class="badge bg-light text-dark p-2 text-start mx-3">
+                                                    <div class="mb-2">수정 시간</div>
+                                                    <div th:text="${#temporals.format(reply.modifyComment, 'yyyy-MM-dd HH:mm')}"></div>
+                                                </div>
+                                                <div class="badge bg-light text-dark p-2 text-start">
+                                                    <div class="mb-2">등록 시간</div>
+                                                    <div th:text="${#temporals.format(reply.createComment, 'yyyy-MM-dd HH:mm')}"></div>
+                                                </div>
+                                            </div>
                                         </ul>
                                     </div>
                                 </div>
