@@ -89,13 +89,28 @@
                     </div>
                 </form>
                 <div class="block-box forum-media-gallery">
-                    <hr>
                     <div th:each="favorite, loop : ${favorites}" class="media-upload">
                         <div>
-                            <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.addressName}"></a>
+                            <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.placeName}"></a>
                         </div>
-                        <div th:text="${favorite.place.placeName}"></div>
-                        <a class="btn btn-primary" th:href="@{|/favorite/${favorite.place.id}/delete|}">X</a>
+                        <div th:text="|주소 : ${favorite.place.addressName}|"></div>
+                        <a class="small" th:href="@{|/favorite/${favorite.place.id}/delete|}">삭제</a>
+                    </div>
+                </div>
+                <div th:if="${!bookmarks.isEmpty()}">
+                    <h3>맛집 북마크</h3>
+                    <div th:each="bookmark, loop : ${bookmarks}">
+                        <h6 th:text="${bookmark.subject}"></h6>
+                        <div class="block-box forum-media-gallery">
+                            <div th:if="${bookmark.favoriteList.isEmpty()}" class="small">등록된 맛집이 없습니다.</div>
+                            <div th:each="favorite, loop : ${bookmark.favoriteList}" class="media-upload">
+                                <div>
+                                    <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.placeName}"></a>
+                                </div>
+                                <div th:text="|주소 : ${favorite.place.addressName}|"></div>
+                                <a class="small" th:href="@{|/favorite/${favorite.place.id}/delete|}">삭제</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
