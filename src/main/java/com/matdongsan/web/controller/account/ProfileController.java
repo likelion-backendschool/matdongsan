@@ -32,29 +32,12 @@ public class ProfileController {
         return "profile/profile-main";
     }
 
-    @GetMapping("/profile/{nickname}")
-    public String showOtherMemberProfile(@PathVariable String nickname, Model model) {
-        MemberVo member = accountService.getReadOnlyMember(nickname);
-        model.addAttribute("member", member);
-        return "profile/profile-main";
-    }
-
     @GetMapping("/profile/setting")
     public String showProfilePage(@AuthUser Account account, Model model) {
         log.info("account.getUsername()={}", account.getUsername());
 
         MemberVo member = accountService.getReadOnlyMember(account.getUsername());
         model.addAttribute("member", member);
-
-        return "profile/profile-setting";
-    }
-
-    @PostMapping("/profile/setting")
-    public String changeMemberProfile(Model model) {
-
-
-//        MemberVo member = memberService.getReadOnlyMember(principal.getName());
-//        model.addAttribute("member", member);
 
         return "profile/profile-setting";
     }
