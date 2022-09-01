@@ -51,16 +51,17 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form>
+                                                    <form id="changeNickname">
                                                         <div class="form-group">
                                                             <label for="recipient-name" class="col-form-label">닉네임</label>
-                                                            <input type="text" class="form-control" id="recipient-name" th:value="${member.getNickname()}">
+                                                            <input type="text" class="form-control" name="nickname" id="recipient-name" th:value="${member.getNickname()}">
+                                                            <span id="dupplicateMsg"></span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                                            <button type="button" class="btn btn-primary">변경하기</button>
                                                         </div>
                                                     </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn btn-primary">변경하기</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,6 +102,33 @@
         </div>
     </div>
 </div>
+<script>
+    $("#duplicateId").click(function(){
+        $.ajax({
+            type: "get",
+            url: "/profile/nicknameCheck",
+            data : $('#changeNickname').serialize(),
+            async: true ,
+            success : function(flag){
+                console.log(flag);
+                if(flag) {
+                    $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
+                        .addClass("text-danger")
+                        .removeClass("text-primary");
+                    $("#signup").attr("type", "button");
+                } else {
+                    idChk = true;
+                    console.log("idChk : " + idChk);
+                    $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
+                        .addClass("text-primary")
+                        .removeClass("text-danger");
+                    $("#username").attr("readonly", "true")
+                        .addClass("bg-light");
+                }
+            },
+        });
+    });
+</script>
 </body>
 
 </html>
