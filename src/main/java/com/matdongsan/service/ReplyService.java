@@ -31,7 +31,6 @@ public class ReplyService {
     /**
      * 댓글저장
      */
-    //member 삭제
     public void saveReply(Posts post, ReplyDto replyDto, Long id) {
         Optional<Member> byId = memberRepository.findById(id);
         Reply reply = Reply.builder()
@@ -42,11 +41,10 @@ public class ReplyService {
                 .build();
         Reply savedReply = replyRepository.save(reply);     //id와 comment만 등록되어 있는 상태.
         post.addReply(savedReply);                 //Reply에 Post객체 초기화
-//        member.addReply(savedReply);  //Member클래스에 reply추가 + member정보 Reply에 초기
     }
 
     /**
-     * id로 댓글받기
+     * id로 댓글 객체 리턴
      */
     public Reply getReply(Long replyId) {
         Optional<Reply> reply = replyRepository.findById(replyId);
@@ -61,32 +59,13 @@ public class ReplyService {
         replyRepository.save(reply);
     }
 
-//      PutMapping방식
-//    public void updateReply(Long replyid, String comment) {
-//        Reply replyById = replyRepository.findById(replyid).orElseThrow(
-//                ()-> new IllegalArgumentException("댓글이 존재하지 않습니다")
-//        );
-//        replyById.updateComment(comment);
-//    }
-
 
     /**
      * 댓글 삭제
      */
-    public void deleteReply(Long replyId) {
-        Reply deleteReply = replyRepository.findById(replyId).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
 
-//        Posts post = postsRepository.findById(postId).orElseThrow(
-//                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
-//        );
-//
-//        Member member = memberRepository.findById(userId).orElseThrow(
-//                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
-//        );
-
-        replyRepository.deleteById(deleteReply.getId());
-
+    public void deleteReply(Reply reply) {
+        replyRepository.delete(reply);
     }
 
 
