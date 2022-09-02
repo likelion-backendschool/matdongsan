@@ -48,6 +48,10 @@ public class MemberService {
         return memberInfoDto;
     }
 
+    public boolean existMemberNickname(String nickname) {
+        return memberRepository.existsByNickname(nickname);
+    }
+
     public Member findMember(long memberId) {
         return memberRepository.findById(memberId).orElseThrow();
     }

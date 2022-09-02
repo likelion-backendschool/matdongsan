@@ -3,15 +3,14 @@ package com.matdongsan.web.controller.account;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.service.AccountService;
+import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
 import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -22,6 +21,7 @@ public class ProfileController {
 
     private final ProfileService profileService;
     private final AccountService accountService;
+    private final MemberService memberService;
 
     @GetMapping("/profile")
     public String showMyProfile(Principal principal, Model model) {
@@ -40,6 +40,18 @@ public class ProfileController {
         model.addAttribute("member", member);
 
         return "profile/profile-setting";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/profile/nicknameCheck")
+    public boolean overlappedID(@RequestParam(value = "nickname") String nickname){
+        boolean flag = false;
+
+        if (accountService.checkDuplicatedAccount(nickname) && memberService.existMemberNickname(nickname)) {
+            flag = true;
+        }
+
+        return flag;
     }
 
 }
