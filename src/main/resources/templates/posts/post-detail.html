@@ -128,7 +128,8 @@
                                                     <div class="mb-2">수정 시간</div>
                                                     <div th:text="${#temporals.format(reply.modifyComment, 'yyyy-MM-dd HH:mm')}"></div>
                                                 </div>
-                                                <div class="badge bg-light text-dark p-2 text-start">
+                                                <div th:if="${reply.modifyComment == null}"
+                                                     class="badge bg-light text-dark p-2 text-start">
                                                     <div class="mb-2">등록 시간</div>
                                                     <div th:text="${#temporals.format(reply.createComment, 'yyyy-MM-dd HH:mm')}"></div>
                                                 </div>
