@@ -53,7 +53,7 @@
             <div class="my-4">
                 <h3 class="heading-title">게시글 등록 폼</h3>
                 <p class="fs-3">맛집 등록을 통해 다른 사람들과 공유하세요 !</p>
-                <form th:action="@{/posts/new}" method="post" th:object="${postCreateDto}">
+                <form th:action="@{/posts/new}" method="post" enctype="multipart/form-data" th:object="${postCreateDto}">
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
                         <label for="place">위치</label>
@@ -123,7 +123,7 @@
                         <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">content Error</small>
                     </div>
 
-                    <input id="img-form" multiple type="file" name="imageFiles" onchange="setThumbnail(event)" >
+                    <input id="img-form" th:field="*{imgFiles}" multiple type="file" onchange="setThumbnail(event)" >
                     <!-- 사진 등록 부분-->
                     <div id="image_container" class="form-floating mb-3 row">
                     </div>

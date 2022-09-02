@@ -30,6 +30,8 @@ public class Posts{
     @Column(nullable = false , columnDefinition = "TEXT")
     private String content; // 내용
 
+    private String imageUrls;
+
     @Column(updatable = false) // 수정 불가
     private LocalDateTime createdTime;
 
