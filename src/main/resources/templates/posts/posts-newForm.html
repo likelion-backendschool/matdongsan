@@ -53,7 +53,7 @@
             <div class="my-4">
                 <h3 class="heading-title">게시글 등록 폼</h3>
                 <p class="fs-3">맛집 등록을 통해 다른 사람들과 공유하세요 !</p>
-                <form th:action="@{/posts/new}" method="post" th:object="${postCreateDto}">
+                <form th:action="@{/posts/new}" method="post" enctype="multipart/form-data" th:object="${postCreateDto}">
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
                         <label for="place">위치</label>
@@ -71,6 +71,7 @@
                         <label for="summernote">내용</label>
                         <textarea id="summernote" th:field="*{content}"></textarea>
                         <script>
+                            const imgForm = document.querySelector("#img-form");
                             $(document).ready(function(){
                                 var toolbar = [
                                     ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -80,7 +81,7 @@
                                     ['para', ['ul', 'ol', 'paragraph']],
                                     ['height', ['height']],
                                     ['table', ['table']],
-                                    ['insert', ['link', 'picture', 'hr']],
+                                    ['insert', ['link', 'hr']],
                                     ['view', ['fullscreen', 'codeview']],
                                     ['help', ['help']]
                                 ];
@@ -91,21 +92,40 @@
                                     maxHeight: null,
                                     focus : true,
                                     lang : 'ko-KR',
-                                    toolbar : toolbar
+                                    toolbar : toolbar,
                                 };
 
                                 $('#summernote').summernote(setting);
                             });
+
+                            function setThumbnail(event) {
+                                const imgContainer = document.querySelector("div#image_container");
+                                while (imgContainer.hasChildNodes()) {
+                                    imgContainer.removeChild(imgContainer.firstChild);
+                                }
+                                $.each(event.target.files,function(i,j){
+                                    let reader = new FileReader();
+
+                                    reader.onload = function(event) {
+                                        let img = document.createElement("img");
+                                        img.classList.add("img-thumbnail");
+                                        img.setAttribute("title", j.name);
+                                        img.setAttribute("src", event.target.result);
+                                        img.style.width = "200px";
+                                        img.style.height = "200px";
+                                        img.style.objectFit = "cover";
+                                        imgContainer.appendChild(img);
+                                    };
+                                    reader.readAsDataURL(j);
+                                });
+                            }
                         </script>
                         <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">content Error</small>
                     </div>
 
+                    <input id="img-form" th:field="*{imgFiles}" multiple type="file" onchange="setThumbnail(event)" >
                     <!-- 사진 등록 부분-->
-                    <div class="form-floating mb-3">
-                        <picture>
-                            <source srcset="..." type="image/svg+xml">
-                            <img src="..." class="img-fluid img-thumbnail" alt="...">
-                        </picture>
+                    <div id="image_container" class="form-floating mb-3 row">
                     </div>
 
                     <!-- 공개 비공개 여부 -->

@@ -3,10 +3,12 @@ package com.matdongsan.web.dto.posts;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.posts.Posts;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 public class PostCreateDto {
@@ -17,6 +19,8 @@ public class PostCreateDto {
 
     @NotBlank(message = "내용을 입력하세요")
     private String content; // 내용
+
+    private List<MultipartFile> imgFiles;
 
     private LocalDateTime modifiedTime;
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -68,6 +69,9 @@ public class PostsController {
             model.addAttribute("postCreateDto", postCreateDto);
             return "posts/posts-newForm";
         }
+        List<MultipartFile> imgFiles = postCreateDto.getImgFiles();
+
+        log.info("imageFiles = {}", imgFiles);
 
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
         Posts newPosts = postsService.savePost(currentMember, postCreateDto);
