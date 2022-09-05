@@ -11,7 +11,6 @@ import java.util.Optional;
 @Entity
 @Builder
 @Getter
-@Setter
 @RequiredArgsConstructor
 public class ReplyLike {
 
