@@ -1,13 +1,11 @@
 package com.matdongsan.domain.favorite;
 
-import com.matdongsan.domain.bookmark.Bookmark;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -21,15 +19,12 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Place place;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bookmark_id")
-    private Bookmark bookmark;
 
     public Favorite(Member member, Place place) {
         this.member = member;
@@ -39,9 +34,5 @@ public class Favorite {
     private void setPlace(Place place) {
         place.getFavorites().add(this);
         this.place = place;
-    }
-
-    public void setBookMark(Bookmark bookmark) {
-        this.bookmark = bookmark;
     }
 }
