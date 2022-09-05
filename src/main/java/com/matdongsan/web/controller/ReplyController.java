@@ -91,9 +91,10 @@ public class ReplyController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/like/{id}")
-    public String replyLike(Principal principal, @PathVariable("id") Long id) {
+    public String replyLike(@AuthUser Account account, Principal principal, @PathVariable("id") Long id) {
         Reply reply = replyService.getReply(id);
-        Member member = memberService.getMember(principal.getName());
+        Member member = account.getMember();
+
         replyService.plusReplyLike(reply,member);
 
         return String.format("redirect:/posts/%s", reply.getPosts().getId());
