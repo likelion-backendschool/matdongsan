@@ -1,6 +1,7 @@
 package com.matdongsan.web.controller.bookmark;
 
 import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.bookmark.Bookmark;
 import com.matdongsan.domain.favorite.Favorite;
 import com.matdongsan.domain.member.Member;
@@ -16,25 +17,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.websocket.server.PathParam;
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class BookmarkController {
-
-    private final AccountService accountService;
-
     private final BookmarkService bookmarkService;
-
     private final FavoriteService favoriteService;
 
+    /**
+     *
+     * @param account
+     * @param subject
+     * @return
+     */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/bookmark/create")
-    public String createBookmark(Principal principal, @PathParam("subject") String subject) {
-        Account account = accountService.findAccountByUsername(principal.getName());
+    public String createBookmark(@AuthUser Account account, @PathParam("subject") String subject) {
         Member member = account.getMember();
 
         bookmarkService.createBookmark(subject,member);
@@ -42,10 +41,16 @@ public class BookmarkController {
         return "redirect:/favorite/list";
     }
 
+    /**
+     *
+     * @param account
+     * @param bookmarkId
+     * @param favoriteId
+     * @return
+     */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/bookmark/addFavorite/{bookmarkId}/{favoriteId}")
-    public String addFavoriteInBookmark(Principal principal, @PathVariable("bookmarkId")Long bookmarkId, @PathVariable("favoriteId") Long favoriteId) {
-        Account account = accountService.findAccountByUsername(principal.getName());
+    public String addFavoriteInBookmark(@AuthUser Account account, @PathVariable("bookmarkId")Long bookmarkId, @PathVariable("favoriteId") Long favoriteId) {
         Member member = account.getMember();
 
         Bookmark bookmark = bookmarkService.findByMemberAndId(member, bookmarkId);
