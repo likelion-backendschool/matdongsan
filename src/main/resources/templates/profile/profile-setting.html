@@ -18,7 +18,12 @@
         <h4 class="font-weight-bold py-3 mb-4">
             Account settings
         </h4>
-
+        <div th:if="${settingMessageSuccess}">
+            <div th:replace="fragments/message-fragments :: success-notice (message = ${settingMessageSuccess})"></div>
+        </div>
+        <div th:if="${settingMessageError}">
+            <div th:replace="fragments/message-fragments :: danger-notice (message = ${settingMessageError})"></div>
+        </div>
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -59,18 +60,19 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/change/nickname")
-    public String changeNickname(@ModelAttribute(value = "nickname") String nickname, @AuthUser Account account) {
+    public String changeNickname(@ModelAttribute(value = "nickname") String nickname, @AuthUser Account account, RedirectAttributes redirectAttributes) {
         memberService.changeMemberNickname(nickname, account);
+        redirectAttributes.addFlashAttribute("settingMessageSuccess", "닉네임이 변경되었습니다.");
         return "redirect:/profile/setting";
     }
 
     @PostMapping("/profile/change/password")
-    public String changePassword(@Valid ProfilePasswordDto profilePasswordDto, BindingResult bindingResult, @AuthUser Account account) {
-
+    public String changePassword(@Valid ProfilePasswordDto profilePasswordDto, BindingResult bindingResult, @AuthUser Account account, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || !accountService.checkAccountPassword(profilePasswordDto.getOriginalPassword(), account)) {
+            redirectAttributes.addFlashAttribute("settingMessageError", "비밀번호를 확인해주세요.");
             return "redirect:/profile/setting";
         }
-
+        redirectAttributes.addFlashAttribute("settingMessageSuccess", "비밀번호가 변경되었습니다.");
         accountService.changeAccountPassword(profilePasswordDto.getNewPassword(), account);
 
         return "redirect:/profile/setting";
