@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Slf4j
@@ -43,12 +45,28 @@ public class FavoriteController {
     /**
      *
      * @param account
+     * @param subject
+     * @return
+     */
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/favorite/addFavorite")
+    public String addFavorite(@AuthUser Account account, @PathParam("subject") String subject) {
+        Member member = account.getMember();
+
+        Favorite favorite = new Favorite(member, subject);
+        favoriteService.save(favorite);
+        return "redirect:/favorite/list";
+    }
+
+    /**
+     *
+     * @param account
      * @param placeId
      * @return
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/favorite/{placeId}/delete")
-    public String deleteFavorite(@AuthUser Account account, @PathVariable("placeId") Long placeId) {
+    public String deletePlace(@AuthUser Account account, @PathVariable("placeId") Long placeId) {
         Member member = account.getMember();
 
         Place place = placeService.findPlace(placeId);

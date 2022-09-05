@@ -66,19 +66,19 @@
                 </div>
                 <div class="item-title d-flex justify-content-between">
                     <h3 class="d-flex">최근 등록한 맛집</h3>
-                    <a class="mt-2" id="startModal"data-bs-toggle="modal" data-bs-target="#exampleModal">새로운 북마크 추가하기</a>
+                    <a class="mt-2" id="startModal"data-bs-toggle="modal" data-bs-target="#exampleModal">맛집 리스트 추가하기</a>
                 </div>
                 <!-- Modal -->
-                <form th:action="@{/bookmark/create}" th:method="post">
+                <form th:action="@{/favorite/addFavorite}" th:method="post">
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">새로운 북마크 추가</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">맛집 리스트 추가</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
+                                    <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="맛집 리스트 이름을 입력해주세요." required>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -89,8 +89,8 @@
                     </div>
                 </form>
                 <!-- 최근 등록된 맛집 -->
-                <div class="block-box forum-media-gallery">
-                    <div th:if="${favorites.isEmpty()}" class="small">최근 등록한 맛집이 없습니다.</div>
+                <!--<div class="block-box forum-media-gallery">
+                    <div th:if="${favorites.size() == 0}" class="small">최근 등록한 맛집이 없습니다.</div>
                     <div th:each="favorite, loop : ${favorites}" class="media-upload">
                         <div>
                             <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.placeName}"></a>
@@ -102,20 +102,20 @@
                                 <a class="btn btn-primary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     북마크 이동하기
                                 </a>
-                                <ul th:if="${bookmarks.isEmpty()}">
-                                    <li class="dropdown-item">북마크를 먼저 등록해주세요</li>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><p class="dropdown-item">맛집리스트를 먼저 등록해주세요</p></li>
                                 </ul>
 
-                                <ul th:if="${!bookmarks.isEmpty()}"  class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li th:each="bookmark, loop : ${bookmarks}">
-                                        <a th:text="${bookmark.subject}" class="dropdown-item" th:href="@{|/bookmark/addFavorite/${bookmark.id}/${favorite.id}|}"></a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li th:each="favorite, loop : ${favorites}">
+                                        <a th:text="${favorite.subject}" class="dropdown-item" th:href="@{|/favorite/changeFavorite/${favorite.id}|}"></a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div th:if="${!bookmarks.isEmpty()}">
+                </div>-->
+                <!--<div th:if="${!bookmarks.isEmpty()}">
                     <h3>맛집 북마크</h3>
                     <div th:each="bookmark, loop : ${bookmarks}">
                         <h6 th:text="${bookmark.subject}"></h6>
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="col-lg-4 widget-block widget-break-lg">
                 <div class="widget widget-memebers">

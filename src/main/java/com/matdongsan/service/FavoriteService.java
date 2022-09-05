@@ -40,8 +40,7 @@ public class FavoriteService {
         return favoriteRepository.findAllByMember(member);
     }
 
-
-    public Favorite findByMemberAndId(Member member, Long id) {
-        return favoriteRepository.findByMemberAndId(member, id);
+    public void save(Favorite favorite) {
+        favoriteRepository.save(favorite);
     }
 }

@@ -2,10 +2,7 @@ package com.matdongsan.domain.favorite;
 
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,12 +10,14 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Favorite {
     // 고유 Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
@@ -29,6 +28,11 @@ public class Favorite {
     public Favorite(Member member, Place place) {
         this.member = member;
         setPlace(place);
+    }
+
+    public Favorite(Member member, String subject) {
+        this.member = member;
+        setSubject(subject);
     }
 
     private void setPlace(Place place) {
