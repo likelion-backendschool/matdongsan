@@ -11,6 +11,7 @@
     <title>맛동산 | 메인</title>
 </head>
 <body>
+
 <div layout:fragment="content">
     <!--=====================================-->
     <!--=       Container  Area Start       =-->
@@ -71,31 +72,37 @@
                             <li class="post-react">
                                 <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                 <ul class="react-list">
-                                    <li><a href="#"><img src="/media/figure/reaction_1.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="/media/figure/reaction_4.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="/media/figure/reaction_7.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="/media/figure/reaction_6.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="/media/figure/reaction_5.png" alt="Like"></a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
-                            <li class="post-share">
-                                <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
-                                <ul class="share-list">
-                                    <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
-                                    <li><a href="#" class="color-messenger"><i
-                                            class="icofont-facebook-messenger"></i></a></li>
-                                    <li><a href="#" class="color-instagram"><i class="icofont-instagram"></i></a></li>
-                                    <li><a href="#" class="color-whatsapp"><i class="icofont-brand-whatsapp"></i></a>
+
+                                    <ul class="react-list">
+                                        <li><a href="#"><img src="/media/figure/reaction_1.png" alt="Like"></a></li>
+                                        <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
+                                        <li><a href="#"><img src="/media/figure/reaction_4.png" alt="Like"></a></li>
+                                        <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
+                                        <li><a href="#"><img src="/media/figure/reaction_7.png" alt="Like"></a></li>
+                                        <li><a href="#"><img src="/media/figure/reaction_6.png" alt="Like"></a></li>
+                                        <li><a href="#"><img src="/media/figure/reaction_5.png" alt="Like"></a></li>
+                                    </ul>
                                     </li>
-                                    <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a></li>
+                                    <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
+                                    <li class="post-share">
+                                        <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
+                                        <ul class="share-list">
+                                            <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
+                                            <li><a href="#" class="color-messenger"><i
+                                                    class="icofont-facebook-messenger"></i></a></li>
+                                            <li><a href="#" class="color-instagram"><i
+                                                    class="icofont-instagram"></i></a></li>
+                                            <li><a href="#" class="color-whatsapp"><i
+                                                    class="icofont-brand-whatsapp"></i></a>
+                                            </li>
+                                            <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
-
                     <!--댓글 부분-->
                     <div class="post-comment">
                         <div class="comment-body">
@@ -107,17 +114,19 @@
                                     <div class="post-footer">
                                         <ul>
                                             <li class="post-react">
-                                                <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
+                                                <a href="javascript:void(0);" class="icofont-love"
+                                                   th:href="@{|/reply/like/${reply.id}|}">React!
+                                                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(reply.replyLike)}"></span>
+                                                </a>
                                             </li>
 
                                             <li><a th:href="@{|/reply/update/${reply.id}|}"
-                                                   class="btn btn-sm btn-outline-secondary"
+                                                   class="icofont-comment"
                                                    sec:authorize="isAuthenticated()"
                                                    th:if="${#authentication.principal.username == reply.writer.account.username}"
                                             ><i class="icofont-fix-tools"></i>Edit </a></li>
 
                                             <li><a th:href="@{|/reply/delete/${reply.id}|}"
-                                                   class="btn btn-sm btn-outline-secondary"
                                                    sec:authorize="isAuthenticated()"
                                                    th:if="${#authentication.principal.username == reply.writer.account.username}"
                                             ><i class="icofont-delete-alt"></i>Delete</a></li>
@@ -455,5 +464,16 @@
     </div>
 </div>
 </body>
+
+<script layout:fragment="script" type='text/javascript'>
+    const recommend_elements = document.getElementsByClassName("recommend");
+    Array.from(recommend_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 추천하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
 
 </html>
