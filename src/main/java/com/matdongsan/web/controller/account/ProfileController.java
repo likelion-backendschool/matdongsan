@@ -5,13 +5,16 @@ import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
+import com.matdongsan.web.dto.profile.ProfilePasswordDto;
 import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -38,6 +41,7 @@ public class ProfileController {
 
         MemberVo member = accountService.getReadOnlyMember(account.getUsername());
         model.addAttribute("member", member);
+        model.addAttribute("profilePasswordDto", new ProfilePasswordDto());
 
         return "profile/profile-setting";
     }
@@ -57,6 +61,18 @@ public class ProfileController {
     @PostMapping("/profile/change/nickname")
     public String changeNickname(@ModelAttribute(value = "nickname") String nickname, @AuthUser Account account) {
         memberService.changeMemberNickname(nickname, account);
+        return "redirect:/profile/setting";
+    }
+
+    @PostMapping("/profile/change/password")
+    public String changePassword(@Valid ProfilePasswordDto profilePasswordDto, BindingResult bindingResult, @AuthUser Account account) {
+
+        if (bindingResult.hasErrors() || !accountService.checkAccountPassword(profilePasswordDto.getOriginalPassword(), account)) {
+            return "redirect:/profile/setting";
+        }
+
+        accountService.changeAccountPassword(profilePasswordDto.getNewPassword(), account);
+
         return "redirect:/profile/setting";
     }
 

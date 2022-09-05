@@ -37,4 +37,8 @@ public class Account {
     public void addMember(Member member) {
         this.member = member;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
