@@ -69,4 +69,7 @@ public class Member {
     public void changeBasicInfo(String introduce) {
         this.introduce = introduce;
     }
+
+    /*@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReplyLike> replyLike;*/
 }
