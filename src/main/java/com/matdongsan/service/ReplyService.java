@@ -1,5 +1,6 @@
 package com.matdongsan.service;
 
+import com.matdongsan.domain.likeuser.ReplyLike;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.domain.posts.Posts;
@@ -66,6 +67,21 @@ public class ReplyService {
 
     public void deleteReply(Reply reply) {
         replyRepository.delete(reply);
+    }
+
+
+    /**
+     * 댓글 좋아요 추가
+     */
+    public void plusReplyLike(Reply reply, Member member) {
+
+        ReplyLike replyLike = ReplyLike.builder()
+                .reply(reply)
+                .member(member)
+                .build();
+        reply.getReplyLike().add(replyLike);
+        replyRepository.save(reply);
+
     }
 
 
