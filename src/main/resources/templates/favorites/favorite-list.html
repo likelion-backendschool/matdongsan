@@ -88,13 +88,31 @@
                         </div>
                     </div>
                 </form>
+                <!-- 최근 등록된 맛집 -->
                 <div class="block-box forum-media-gallery">
+                    <div th:if="${favorites.isEmpty()}" class="small">최근 등록한 맛집이 없습니다.</div>
                     <div th:each="favorite, loop : ${favorites}" class="media-upload">
                         <div>
                             <a th:href="@{|/place/${favorite.place.id}/detail|}" th:text="${favorite.place.placeName}"></a>
                         </div>
                         <div th:text="|주소 : ${favorite.place.addressName}|"></div>
-                        <a class="small" th:href="@{|/favorite/${favorite.place.id}/delete|}">삭제</a>
+                        <div class="d-flex justify-content">
+                            <a class="btn btn-primary btn-sm mr-1" th:href="@{|/favorite/${favorite.place.id}/delete|}">삭제</a>
+                            <div class="dropdown">
+                                <a class="btn btn-primary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    북마크 이동하기
+                                </a>
+                                <ul th:if="${bookmarks.isEmpty()}">
+                                    <li class="dropdown-item">북마크를 먼저 등록해주세요</li>
+                                </ul>
+
+                                <ul th:if="${!bookmarks.isEmpty()}"  class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li th:each="bookmark, loop : ${bookmarks}">
+                                        <a th:text="${bookmark.subject}" class="dropdown-item" th:href="@{|/bookmark/addFavorite/${bookmark.id}/${favorite.id}|}"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div th:if="${!bookmarks.isEmpty()}">

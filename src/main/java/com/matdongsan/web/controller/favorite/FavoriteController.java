@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class FavoriteController {
@@ -41,6 +42,7 @@ public class FavoriteController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/favorite/list")
     public String showFavorite(Model model, Principal principal) {
+        log.info("로그");
         Account account = accountService.findAccountByUsername(principal.getName());
         Member member = account.getMember();
 
@@ -48,6 +50,13 @@ public class FavoriteController {
         List<Bookmark> bookmarks = bookmarkService.findAllByMember(member);
         model.addAttribute("favorites", favorites);
         model.addAttribute("bookmarks", bookmarks);
+
+        for (Bookmark bookmark : bookmarks) {
+            log.info("bookmark_name -> {}", bookmark.getId());
+            log.info("bookmark -> {}", bookmark.getFavoriteList().size());
+            for (Favorite favorite : bookmark.getFavoriteList()) {
+            }
+        }
         return "favorites/favorite-list";
     }
 

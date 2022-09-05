@@ -25,4 +25,12 @@ public class BookmarkService {
     public List<Bookmark> findAllByMember(Member member) {
         return bookmarkRepository.findAllByMember(member);
     }
+
+    public Bookmark findByMemberAndId(Member member, Long id) {
+        return bookmarkRepository.findByMemberAndId(member, id);
+    }
+
+    public void save(Bookmark bookmark) {
+        bookmarkRepository.save(bookmark);
+    }
 }
