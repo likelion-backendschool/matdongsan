@@ -69,6 +69,7 @@ public class ProfileController {
     @PostMapping("/profile/change/password")
     public String changePassword(@Valid ProfilePasswordDto profilePasswordDto, BindingResult bindingResult, @AuthUser Account account, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || !accountService.checkAccountPassword(profilePasswordDto.getOriginalPassword(), account)) {
+            redirectAttributes.addFlashAttribute("profilePasswordDto", profilePasswordDto);
             redirectAttributes.addFlashAttribute("settingMessageError", "비밀번호를 확인해주세요.");
             return "redirect:/profile/setting";
         }
