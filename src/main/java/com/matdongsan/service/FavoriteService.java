@@ -39,5 +39,9 @@ public class FavoriteService {
     public List<Favorite> findAllByMember(Member member) {
         return favoriteRepository.findAllByMember(member);
     }
-    
+
+
+    public Favorite findByMemberAndId(Member member, Long id) {
+        return favoriteRepository.findByMemberAndId(member, id);
+    }
 }
