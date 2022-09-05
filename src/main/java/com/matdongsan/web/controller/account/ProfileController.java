@@ -54,4 +54,10 @@ public class ProfileController {
         return flag;
     }
 
+    @PostMapping("/profile/change/nickname")
+    public String changeNickname(@ModelAttribute(value = "nickname") String nickname, @AuthUser Account account) {
+        memberService.changeMemberNickname(nickname, account);
+        return "redirect:/profile/setting";
+    }
+
 }

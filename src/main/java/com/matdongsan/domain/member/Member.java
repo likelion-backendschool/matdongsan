@@ -33,6 +33,7 @@ public class Member {
 
     private LocalDateTime signUpDate;
 
+    @Setter
     private String nickname;
 
     @Enumerated(EnumType.STRING)

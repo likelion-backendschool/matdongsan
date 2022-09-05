@@ -51,7 +51,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id="changeNickname">
+                                                    <form id="changeNickname" th:action="@{/profile/change/nickname}" method="post">
                                                         <div class="form-group">
                                                             <label for="nickname" class="col-form-label">닉네임</label>
                                                             <input type="text" class="form-control" name="nickname" id="nickname" th:value="${member.getNickname()}">
@@ -102,35 +102,36 @@
             </div>
         </div>
     </div>
-</div>
-<script>
-    $("#duplicateId").click(function(){
-        console.log("버튼 클릭")
-        $.ajax({
-            type: "get",
-            url: "/profile/nicknameCheck",
-            data : $('#changeNickname').serialize(),
-            async: true ,
-            success : function(flag){
-                console.log(flag);
-                if(flag) {
-                    $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
-                        .addClass("text-danger")
-                        .removeClass("text-primary");
-                    $("#nicknameSubmitBtn").attr("type", "button");
-                } else {
-                    idChk = true;
-                    console.log("idChk : " + idChk);
-                    $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
-                        .addClass("text-primary")
-                        .removeClass("text-danger");
-                    $("#nickname").attr("readonly", "true")
-                        .addClass("bg-light");
-                }
-            },
+    <script>
+        $("#duplicateId").click(function(){
+            console.log("버튼 클릭")
+            $.ajax({
+                type: "get",
+                url: "/profile/nicknameCheck",
+                data : $('#changeNickname').serialize(),
+                async: true ,
+                success : function(flag){
+                    console.log(flag);
+                    if(flag) {
+                        $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
+                            .addClass("text-danger")
+                            .removeClass("text-primary");
+                        $("#nicknameSubmitBtn").attr("type", "button");
+                    } else {
+                        idChk = true;
+                        console.log("idChk : " + idChk);
+                        $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
+                            .addClass("text-primary")
+                            .removeClass("text-danger");
+                        $("#nickname").attr("readonly", "true")
+                            .addClass("bg-light");
+                        $("#nicknameSubmitBtn").attr("type", "submit");
+                    }
+                },
+            });
         });
-    });
-</script>
+    </script>
+</div>
 </body>
 
 </html>

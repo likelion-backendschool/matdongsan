@@ -55,4 +55,10 @@ public class MemberService {
     public Member findMember(long memberId) {
         return memberRepository.findById(memberId).orElseThrow();
     }
+
+    public void changeMemberNickname(String nickname, Account account) {
+        Member currentMember = account.getMember();
+        currentMember.setNickname(nickname);
+        memberRepository.save(currentMember);
+    }
 }
