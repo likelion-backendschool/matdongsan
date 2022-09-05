@@ -5,6 +5,7 @@ import com.matdongsan.domain.place.Place;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Entity
@@ -22,21 +23,19 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Place place;
-
-    public Favorite(Member member, Place place) {
-        this.member = member;
-        setPlace(place);
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "favorite")
+    private List<Place> placeList;
 
     public Favorite(Member member, String subject) {
         this.member = member;
         setSubject(subject);
     }
 
+    public Favorite(Member member, Place place) {
+        this.member = member;
+        setPlace(place);
+    }
     private void setPlace(Place place) {
-        place.getFavorites().add(this);
-        this.place = place;
+        placeList.add(place);
     }
 }

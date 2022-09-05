@@ -49,12 +49,12 @@ public class PlaceService {
         return place.orElseThrow(() -> new EntityNotFoundException("해당 음식점이 없음"));
     }
 
-    public boolean doFavorite(long memberId,long placeId) {
+    /*public boolean doFavorite(long memberId,long placeId) {
         Place findPlace = findPlace(placeId);
         Member findMember = memberService.findMember(memberId);
 
         return favoriteService.doFavorite(findMember, findPlace);
-    }
+    }*/
 
 
 

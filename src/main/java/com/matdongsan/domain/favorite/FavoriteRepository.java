@@ -13,13 +13,9 @@ import java.util.Optional;
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
-    Optional<Favorite> findByMemberAndPlace(Member member, Place place);
-
-    boolean existsByMemberAndPlace(Member member, Place place);
-
-    int countByPlace(Place place);
-
     List<Favorite> findAllByMember(Member member);
 
-    Favorite findByMemberAndId(Member member, Long id);
+    Favorite findByMember(Member member);
+
+    Favorite findTopByMember(Member member);
 }

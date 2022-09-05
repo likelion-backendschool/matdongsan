@@ -17,7 +17,7 @@ import java.util.Optional;
 public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
 
-    public boolean doFavorite(Member member, Place place) {
+/*    public boolean doFavorite(Member member, Place place) {
         Optional<Favorite> findFavorite = favoriteRepository.findByMemberAndPlace(member, place);
         if (findFavorite.isPresent()) { //이미 좋아요가 존재한다면 좋아요 삭제
             favoriteRepository.delete(findFavorite.get());
@@ -26,15 +26,7 @@ public class FavoriteService {
             Favorite favorite = new Favorite(member, place);
             return true;
         }
-    }
-
-    public boolean existFavorite(Member member, Place place) {
-        return favoriteRepository.existsByMemberAndPlace(member, place);
-    }
-
-    public int countByPlace(Place place) {
-        return favoriteRepository.countByPlace(place);
-    }
+    }*/
 
     public List<Favorite> findAllByMember(Member member) {
         return favoriteRepository.findAllByMember(member);
@@ -42,5 +34,9 @@ public class FavoriteService {
 
     public void save(Favorite favorite) {
         favoriteRepository.save(favorite);
+    }
+
+    public Favorite findTopByMember(Member member) {
+        return favoriteRepository.findTopByMember(member);
     }
 }

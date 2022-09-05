@@ -23,8 +23,8 @@ public class Place {
     private String x;
     private String y;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
-    private List<Favorite> favorites = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Favorite favorite;
 
     @Column(columnDefinition = "TEXT")
     private String menus;

@@ -64,7 +64,7 @@ public class FavoriteController {
      * @param placeId
      * @return
      */
-    @PreAuthorize("isAuthenticated()")
+   /* @PreAuthorize("isAuthenticated()")
     @GetMapping("/favorite/{placeId}/delete")
     public String deletePlace(@AuthUser Account account, @PathVariable("placeId") Long placeId) {
         Member member = account.getMember();
@@ -74,5 +74,5 @@ public class FavoriteController {
         favoriteService.doFavorite(member,place);
 
         return "redirect:/favorite/list";
-    }
+    }*/
 }
