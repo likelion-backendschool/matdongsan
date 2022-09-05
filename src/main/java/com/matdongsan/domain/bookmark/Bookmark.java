@@ -37,8 +37,5 @@ public class Bookmark {
     public void addFavorite(Favorite favorite) {
         favorite.setBookMark(this);
         getFavoriteList().add(favorite);
-        for (Favorite favorite1 : favoriteList) {
-            log.info("favoriteList = {}",favorite1.getPlace().getAddressName());
-        }
     }
 }

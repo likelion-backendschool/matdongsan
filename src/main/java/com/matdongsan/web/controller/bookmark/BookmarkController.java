@@ -50,11 +50,8 @@ public class BookmarkController {
 
         Bookmark bookmark = bookmarkService.findByMemberAndId(member, bookmarkId);
         Favorite favorite = favoriteService.findByMemberAndId(member, favoriteId);
-        log.info("bookmark name -> {}", bookmark.getId());
         bookmark.addFavorite(favorite);
         bookmarkService.save(bookmark);
-        log.info("bookmark save (first) -> {}", bookmark.getFavoriteList().stream().findFirst().get().getId());
-
 
         return "redirect:/favorite/list";
     }

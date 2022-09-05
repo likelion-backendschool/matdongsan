@@ -42,7 +42,6 @@ public class FavoriteController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/favorite/list")
     public String showFavorite(Model model, Principal principal) {
-        log.info("로그");
         Account account = accountService.findAccountByUsername(principal.getName());
         Member member = account.getMember();
 
@@ -51,12 +50,6 @@ public class FavoriteController {
         model.addAttribute("favorites", favorites);
         model.addAttribute("bookmarks", bookmarks);
 
-        for (Bookmark bookmark : bookmarks) {
-            log.info("bookmark_name -> {}", bookmark.getId());
-            log.info("bookmark -> {}", bookmark.getFavoriteList().size());
-            for (Favorite favorite : bookmark.getFavoriteList()) {
-            }
-        }
         return "favorites/favorite-list";
     }
 
