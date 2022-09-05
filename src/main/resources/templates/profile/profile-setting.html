@@ -13,259 +13,153 @@
     <!--=====================================-->
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
-    <div class="container light-style flex-grow-1 container-p-y">
+    <div class="container light-style flex-grow-1">
 
         <h4 class="font-weight-bold py-3 mb-4">
             Account settings
         </h4>
-
+        <div th:if="${settingMessageSuccess}">
+            <div th:replace="fragments/message-fragments :: success-notice (message = ${settingMessageSuccess})"></div>
+        </div>
+        <div th:if="${settingMessageError}">
+            <div th:replace="fragments/message-fragments :: danger-notice (message = ${settingMessageError})"></div>
+        </div>
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">Connections</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-notifications">Notifications</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Password</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">Withdraw</a>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
+                            <div class="d-flex justify-content-start">
 
-                            <div class="card-body media align-items-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-80">
-                                <div class="media-body ml-4">
-                                    <label class="btn btn-outline-primary">
-                                        Upload new photo
-                                        <input type="file" class="account-settings-fileinput">
-                                    </label> &nbsp;
-                                    <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-
-                                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                                </div>
                             </div>
-                            <hr class="border-light m-0">
-
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell">
+                            <div class="card-body media align-items-center justify-content-start bd-highlight">
+                                <div class="ml-4">
+                                    <img src="/media/banner/user_1.jpg" alt="" class="rounded-circle">
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" value="Nelle Maxwell">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
-                                    <div class="alert alert-warning mt-3">
-                                        Your email is not confirmed. Please check your inbox.<br>
-                                        <a href="javascript:void(0)">Resend confirmation</a>
+                                <div class="form-group ml-4">
+                                    <label class="form-label">닉네임</label>
+                                    <input type="text" class="form-control mb-1" th:value="${member.getNickname()}" data-toggle="modal" data-target="#nicknameChange" data-whatever="@mdo" autocomplete="off" readonly>
+                                    <div class="modal fade" id="nicknameChange" tabindex="-1" role="dialog" aria-labelledby="nicknameChangeLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="nicknameChangeLabel">닉네임 변경</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="changeNickname" th:action="@{/profile/change/nickname}" method="post">
+                                                        <div class="form-group">
+                                                            <label for="nickname" class="col-form-label">닉네임</label>
+                                                            <input type="text" class="form-control" name="nickname" id="nickname" th:value="${member.getNickname()}">
+                                                            <button type="button" class="btn btn-secondary" id="duplicateId">중복 확인</button>
+                                                            <span id="dupplicateMsg"></span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                                            <button type="button" id="nicknameSubmitBtn" class="btn btn-primary">변경하기</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label">Company</label>
-                                    <input type="text" class="form-control" value="Company Ltd.">
-                                </div>
                             </div>
-
                         </div>
                         <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body pb-2">
+                                <form th:action="@{/profile/change/password}" method="post" th:object="${profilePasswordDto}">
+                                    <div class="form-group">
+                                        <label class="form-label">현재 비밀번호</label>
+                                        <input type="password" class="form-control" th:field="*{originalPassword}">
+                                    </div>
 
-                                <div class="form-group">
-                                    <label class="form-label">Current password</label>
-                                    <input type="password" class="form-control">
-                                </div>
+                                    <div class="form-group">
+                                        <label class="form-label">새로운 비밀번호</label>
+                                        <input type="password" class="form-control" id="original-password">
+                                        <small>특수문자(.,!@#$%^)를 사용해서 비밀번호를 입력해주세요.</small>
+                                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}">Password Error</small>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label class="form-label">New password</label>
-                                    <input type="password" class="form-control">
-                                </div>
+                                    <div class="form-group">
+                                        <label class="form-label">비밀번호 확인</label>
+                                        <input type="password" th:field="*{newPassword}" class="form-control" id="new-password">
+                                        <span id="passwordChkMsg"></span>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label class="form-label">Repeat new password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="account-info">
-                            <div class="card-body pb-2">
-
-                                <div class="form-group">
-                                    <label class="form-label">Bio</label>
-                                    <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Birthday</label>
-                                    <input type="text" class="form-control" value="May 3, 1995">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Country</label>
-                                    <select class="custom-select">
-                                        <option>USA</option>
-                                        <option selected="">Canada</option>
-                                        <option>UK</option>
-                                        <option>Germany</option>
-                                        <option>France</option>
-                                    </select>
-                                </div>
-
-
-                            </div>
-                            <hr class="border-light m-0">
-                            <div class="card-body pb-2">
-
-                                <h6 class="mb-4">Contacts</h6>
-                                <div class="form-group">
-                                    <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control" value="+0 (123) 456 7891">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Website</label>
-                                    <input type="text" class="form-control" value="">
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="account-social-links">
-                            <div class="card-body pb-2">
-
-                                <div class="form-group">
-                                    <label class="form-label">Twitter</label>
-                                    <input type="text" class="form-control" value="https://twitter.com/user">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Facebook</label>
-                                    <input type="text" class="form-control" value="https://www.facebook.com/user">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Google+</label>
-                                    <input type="text" class="form-control" value="">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">LinkedIn</label>
-                                    <input type="text" class="form-control" value="">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Instagram</label>
-                                    <input type="text" class="form-control" value="https://www.instagram.com/user">
-                                </div>
-
+                                    <div class="text-right mt-3">
+                                        <button type="button" class="btn btn-primary" id="passwordSubmitBtn">변경</button>&nbsp;
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="account-connections">
-                            <div class="card-body">
-                                <button type="button" class="btn btn-twitter">Connect to <strong>Twitter</strong></button>
-                            </div>
-                            <hr class="border-light m-0">
-                            <div class="card-body">
-                                <h5 class="mb-2">
-                                    <a href="javascript:void(0)" class="float-right text-muted text-tiny"><i class="ion ion-md-close"></i> Remove</a>
-                                    <i class="ion ion-logo-google text-google"></i>
-                                    You are connected to Google:
-                                </h5>
-                                nmaxwell@mail.com
-                            </div>
-                            <hr class="border-light m-0">
-                            <div class="card-body">
-                                <button type="button" class="btn btn-facebook">Connect to <strong>Facebook</strong></button>
-                            </div>
-                            <hr class="border-light m-0">
-                            <div class="card-body">
-                                <button type="button" class="btn btn-instagram">Connect to <strong>Instagram</strong></button>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="account-notifications">
-                            <div class="card-body pb-2">
-
-                                <h6 class="mb-4">Activity</h6>
-
-                                <div class="form-group">
-                                    <label class="switcher">
-                                        <input type="checkbox" class="switcher-input" checked="">
-                                        <span class="switcher-indicator">
-                      <span class="switcher-yes"></span>
-                      <span class="switcher-no"></span>
-                    </span>
-                                        <span class="switcher-label">Email me when someone comments on my article</span>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="switcher">
-                                        <input type="checkbox" class="switcher-input" checked="">
-                                        <span class="switcher-indicator">
-                      <span class="switcher-yes"></span>
-                      <span class="switcher-no"></span>
-                    </span>
-                                        <span class="switcher-label">Email me when someone answers on my forum thread</span>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="switcher">
-                                        <input type="checkbox" class="switcher-input">
-                                        <span class="switcher-indicator">
-                      <span class="switcher-yes"></span>
-                      <span class="switcher-no"></span>
-                    </span>
-                                        <span class="switcher-label">Email me when someone follows me</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <hr class="border-light m-0">
-                            <div class="card-body pb-2">
-
-                                <h6 class="mb-4">Application</h6>
-
-                                <div class="form-group">
-                                    <label class="switcher">
-                                        <input type="checkbox" class="switcher-input" checked="">
-                                        <span class="switcher-indicator">
-                      <span class="switcher-yes"></span>
-                      <span class="switcher-no"></span>
-                    </span>
-                                        <span class="switcher-label">News and announcements</span>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="switcher">
-                                        <input type="checkbox" class="switcher-input">
-                                        <span class="switcher-indicator">
-                      <span class="switcher-yes"></span>
-                      <span class="switcher-no"></span>
-                    </span>
-                                        <span class="switcher-label">Weekly product updates</span>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="switcher">
-                                        <input type="checkbox" class="switcher-input" checked="">
-                                        <span class="switcher-indicator">
-                      <span class="switcher-yes"></span>
-                      <span class="switcher-no"></span>
-                    </span>
-                                        <span class="switcher-label">Weekly blog digest</span>
-                                    </label>
-                                </div>
-
-                            </div>
+                            <button class="btn btn-danger">회원 탈퇴</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="text-right mt-3">
-            <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
-            <button type="button" class="btn btn-default">Cancel</button>
-        </div>
-
     </div>
+    <script>
+        $("#duplicateId").click(function(){
+            console.log("버튼 클릭")
+            $.ajax({
+                type: "get",
+                url: "/profile/nicknameCheck",
+                data : $('#changeNickname').serialize(),
+                async: true ,
+                success : function(flag){
+                    console.log(flag);
+                    if(flag) {
+                        $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
+                            .addClass("text-danger")
+                            .removeClass("text-primary");
+                        $("#nicknameSubmitBtn").attr("type", "button");
+                    } else {
+                        idChk = true;
+                        console.log("idChk : " + idChk);
+                        $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
+                            .addClass("text-primary")
+                            .removeClass("text-danger");
+                        $("#nickname").attr("readonly", "true")
+                            .addClass("bg-light");
+                        $("#nicknameSubmitBtn").attr("type", "submit");
+                    }
+                },
+            });
+        });
+        $(function(){
+            $('#original-password').on("propertychange change keyup paste input", function(){
+                $('#passwordChkMsg').html('');
+            });
+
+            $('#original-password, #new-password').keyup(function(){
+
+                if($('#original-password').val() !== $('#new-password').val()){
+                    $("#passwordChkMsg").text("비밀번호가 일치하지 않습니다.")
+                        .addClass("text-danger")
+                        .removeClass("text-primary");
+                    $("#passwordSubmitBtn").attr("type", "button");
+                } else{
+                    $("#passwordChkMsg").text("비밀번호가 일치합니다.")
+                        .addClass("text-primary")
+                        .removeClass("text-danger");
+                    $("#passwordSubmitBtn").attr("type", "submit");
+                }
+
+            });
+        });
+    </script>
 </div>
 </body>
 

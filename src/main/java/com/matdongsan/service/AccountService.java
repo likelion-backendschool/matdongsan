@@ -189,6 +189,15 @@ public class AccountService implements UserDetailsService {
                 .build();
     }
 
+    public boolean checkAccountPassword(String password, Account currentUser) {
+        return passwordEncoder.matches(password, currentUser.getPassword());
+    }
+
+    public void changeAccountPassword(String password, Account currentUser) {
+        currentUser.setPassword(passwordEncoder.encode(password));
+        accountRepository.save(currentUser);
+    }
+
     /**
      * Spring Security에서만 사용하는 메소드
      * @param username 로그인 id가 들어옴
