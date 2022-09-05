@@ -2,14 +2,18 @@ package com.matdongsan.domain.bookmark;
 
 import com.matdongsan.domain.favorite.Favorite;
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.web.dto.FavoriteListDto;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Entity
 @Getter
 @Setter
@@ -27,7 +31,6 @@ public class Bookmark {
     private String subject;
 
     // 북마크 장소 1대다 매치
-    @Nullable
     @OneToMany(mappedBy = "bookmark", cascade = CascadeType.ALL)
     private List<Favorite> favoriteList = new ArrayList<>();
 

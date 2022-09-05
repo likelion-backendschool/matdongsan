@@ -4,6 +4,7 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.bookmark.Bookmark;
 import com.matdongsan.domain.favorite.Favorite;
+import com.matdongsan.domain.likeuser.ReplyLike;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -70,6 +72,6 @@ public class Member {
         this.introduce = introduce;
     }
 
-    /*@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ReplyLike> replyLike;*/
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReplyLike> replyLike;
 }
