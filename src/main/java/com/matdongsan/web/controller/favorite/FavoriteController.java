@@ -26,34 +26,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FavoriteController {
     private final FavoriteService favoriteService;
-    private final PlaceService placeService;
-    private final AccountService accountService;
-
-    /**
-     *
-     * @param model
-     * @param account
-     * @return
-     */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/favorite/list")
-    public String showFavorite(Model model, @AuthUser Account account, Principal principal) {
-        Member member = account.getMember();
-
-        Optional<Favorite> optionalFavorite = Optional.ofNullable(favoriteService.findTopByMember(member));
-        if (optionalFavorite.isPresent()) {
-            List<Favorite> favoriteList = favoriteService.findAllByMember(member);
-            model.addAttribute("favorites", favoriteList);
-        } else {
-            Favorite favorite = new Favorite(member, "나의 맛집 리스트");
-            favoriteService.save(favorite);
-            model.addAttribute("favorites", favorite);
-        }
-        MemberVo memberVo = accountService.getReadOnlyMember(principal.getName());
-        model.addAttribute("member", memberVo);
-
-        return "favorites/favorite-list";
-    }
 
     /**
      *
@@ -68,7 +40,7 @@ public class FavoriteController {
 
         Favorite favorite = new Favorite(member, subject);
         favoriteService.save(favorite);
-        return "redirect:/favorite/list";
+        return "redirect:/profile/bookmark";
     }
 
     /**

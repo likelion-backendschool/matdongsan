@@ -19,7 +19,7 @@
       <div class="banner-content">
         <div class="media">
           <div class="item-img">
-            <img src="media/banner/user_1.jpg" alt="User">
+            <img th:src="@{/media/banner/user_1.jpg}" alt="User">
           </div>
           <div class="media-body">
             <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
@@ -77,20 +77,24 @@
         </div>
     </div>-->
 
-    <div class="item-title d-flex justify-content-between">
-      <a class="mt-2" id="startModal"data-bs-toggle="modal" data-bs-target="#exampleModal">맛집 리스트 추가하기</a>
-    </div>
+    <!-- 북마크 추가 버튼 -->
+    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가하기</button>
+
     <!-- Modal -->
     <form th:action="@{/favorite/addFavorite}" th:method="post">
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">북마크 추가</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="staticBackdropLabel">북마크 추가</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div class="modal-body">
-              <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="맛집 리스트 이름을 입력해주세요." required>
+              <div class="modal-body">
+                <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

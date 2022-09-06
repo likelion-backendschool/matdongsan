@@ -52,7 +52,7 @@ public class PlaceController {
             List<Favorite> favoriteList = favoriteService.findAllByMember(member);
             model.addAttribute("favorites", favoriteList);
         } else {
-            Favorite favorite = new Favorite(member, "나의 맛집 리스트");
+            Favorite favorite = new Favorite(member, "나만의 맛집");
             favoriteService.save(favorite);
             model.addAttribute("favorites", favorite);
         }
