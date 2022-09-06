@@ -9,10 +9,15 @@ import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.domain.reply.ReplyRepository;
 import com.matdongsan.web.dto.ReplyDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +30,6 @@ public class ReplyService {
     private final PostsRepository postsRepository;
     private final MemberRepository memberRepository;
 
-    public List<Reply> getReplyList(Long id) {
-        return replyRepository.findByPostsId(id);
-    }
 
     /**
      * 댓글저장
@@ -45,13 +47,23 @@ public class ReplyService {
     }
 
     /**
-     * id로 댓글 객체 리턴
+     * reply id로 댓글 객체 리턴
      */
     public Reply getReply(Long replyId) {
         Optional<Reply> reply = replyRepository.findById(replyId);
         return reply.get();
     }
 
+    /**
+     *post id로 페이징 댓글 가져오기
+     */
+
+    public Page<Reply> getReplyList(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createComment")); //수정 댓글 리팩토링 필요
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
+        return replyRepository.findAll(pageable);
+    }
     /**
      * 댓글 수정
      */
@@ -83,6 +95,8 @@ public class ReplyService {
         replyRepository.save(reply);
 
     }
+
+
 
 
 }
