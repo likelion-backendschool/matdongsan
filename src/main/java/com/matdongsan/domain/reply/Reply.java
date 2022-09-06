@@ -25,9 +25,9 @@ public class Reply {
     @Column(nullable = false, length = 500)
     private String comment;
     @CreatedDate
-    private LocalDateTime createComment;
+    private LocalDateTime createDate;
     @LastModifiedDate
-    private LocalDateTime modifyComment;
+    private LocalDateTime modifyDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Posts posts;
@@ -42,7 +42,7 @@ public class Reply {
     //데이터 필드를 가지고 있는 단에서 비즈니스 로직내기
     public void updateComment(String comment) {
         this.comment = comment;
-        this.modifyComment = LocalDateTime.now();
+        this.modifyDate = LocalDateTime.now();
     }
 
 
