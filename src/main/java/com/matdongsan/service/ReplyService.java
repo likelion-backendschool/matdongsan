@@ -38,7 +38,7 @@ public class ReplyService {
         Optional<Member> byId = memberRepository.findById(id);
         Reply reply = Reply.builder()
                 .comment(replyDto.getComment())
-                .createComment(LocalDateTime.now())
+                .createDate(LocalDateTime.now())
                 .writer(byId.get())////
                 .posts(post)
                 .build();
@@ -60,7 +60,7 @@ public class ReplyService {
 
     public Page<Reply> getReplyList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createComment")); //수정 댓글 리팩토링 필요
+        sorts.add(Sort.Order.desc("createDate")); //수정 댓글 리팩토링 필요
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
         return replyRepository.findAll(pageable);
     }
