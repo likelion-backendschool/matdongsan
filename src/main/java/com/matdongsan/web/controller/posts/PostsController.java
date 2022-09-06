@@ -2,8 +2,10 @@ package com.matdongsan.web.controller.posts;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.service.AccountService;
+import com.matdongsan.service.PlaceService;
 import com.matdongsan.service.PostsService;
 import com.matdongsan.web.dto.ReplyDto;
 import com.matdongsan.web.dto.posts.PostCreateDto;
@@ -37,6 +39,7 @@ public class PostsController {
     public String showDetailPost(@PathVariable long id , Model model, ReplyDto replyDto){
 
         Posts posts = postsService.findById(id);
+        posts.getPlace(); //수동 초기화
 
         model.addAttribute("post" , posts);
 
@@ -63,16 +66,11 @@ public class PostsController {
     // 게시글 등록 posts
     @PostMapping("/posts/new")
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
-
         if (bindingResult.hasErrors()) {
             log.info("error 발생");
             model.addAttribute("postCreateDto", postCreateDto);
             return "posts/posts-newForm";
         }
-        List<MultipartFile> imgFiles = postCreateDto.getImgFiles();
-
-        log.info("imageFiles = {}", imgFiles);
-
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
         Posts newPosts = postsService.savePost(currentMember, postCreateDto);
         Long id = newPosts.getId();

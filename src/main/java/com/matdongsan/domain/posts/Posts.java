@@ -1,6 +1,7 @@
 package com.matdongsan.domain.posts;
 
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -44,9 +45,18 @@ public class Posts{
     @OneToMany(mappedBy = "posts" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Place place;
+
+    public void addPlace(Place place) {
+        this.place = place;
+        place.getPosts().add(this);
+    }
+
     public void addReply(Reply reply) {
         this.replyList.add(reply);
         reply.setPosts(this);
     }
+
 
 }

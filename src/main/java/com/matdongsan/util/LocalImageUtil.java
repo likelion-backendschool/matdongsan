@@ -21,7 +21,10 @@ public class LocalImageUtil implements ImageUtil {
     public String saveFiles(List<MultipartFile> files) {
         if(files == null) return null;
         List<String> urls = new ArrayList<>();
-        for (MultipartFile file : files) urls.add(saveFile(file));
+        for (MultipartFile file : files) {
+            String s = saveFile(file);
+            if(s!=null) urls.add(s);
+        }
         return String.join(",", urls);
     }
 
@@ -31,6 +34,7 @@ public class LocalImageUtil implements ImageUtil {
     }
 
     private String saveFile(MultipartFile file) {
+        if(file.isEmpty()) return null;
         try {
             String origin = file.getOriginalFilename();
             String storeFileName = createStoreFileName(origin);

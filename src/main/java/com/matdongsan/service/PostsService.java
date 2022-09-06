@@ -1,6 +1,7 @@
 package com.matdongsan.service;
 
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.posts.PostsRepository;
 import com.matdongsan.util.ImageUtil;
@@ -15,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostsService {
 
+    private final PlaceService placeService;
+
     private final ImageUtil imageUtil;
     private final PostsRepository postsRepository;
     public Posts findById(Long id) {
@@ -27,6 +30,7 @@ public class PostsService {
 
     public Posts savePost(Member member, PostCreateDto dto) {
         String imageUrls = imageUtil.saveFiles(dto.getImgFiles());
+        Place place = placeService.findPlace(dto.getPlaceId());
 
         Posts posts = Posts.builder()
                 .title(dto.getTitle())
@@ -37,6 +41,7 @@ public class PostsService {
                 .createdTime(LocalDateTime.now())
                 .modifiedTime(null)
                 .build();
+        posts.addPlace(place);
 
         return postsRepository.save(posts);
     }
