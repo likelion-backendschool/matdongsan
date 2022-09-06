@@ -113,7 +113,7 @@
                     <div class="post-comment">
                         <div class="comment-body">
                             <div>
-                                <div class="card my-3" th:each="reply : ${post.replyList}">
+                                <div class="card my-3" th:each="reply : ${paging}">
                                     <div class="post-body">
                                         <div class="card-text" th:text="${reply.comment}"></div>
                                     </div>
@@ -138,15 +138,15 @@
                                             ><i class="icofont-delete-alt"></i>Delete</a></li>
                                             <!--댓글등록시간-->
                                             <div class="d-flex justify-content-end">
-                                                <div th:if="${reply.modifyComment != null}"
+                                                <div th:if="${reply.modifyDate != null}"
                                                      class="badge bg-light text-dark p-2 text-start mx-3">
                                                     <div class="mb-2">수정 시간</div>
-                                                    <div th:text="${#temporals.format(reply.modifyComment, 'yyyy-MM-dd HH:mm')}"></div>
+                                                    <div th:text="${#temporals.format(reply.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
                                                 </div>
-                                                <div th:if="${reply.modifyComment == null}"
+                                                <div th:if="${reply.modifyDate == null}"
                                                      class="badge bg-light text-dark p-2 text-start">
                                                     <div class="mb-2">등록 시간</div>
-                                                    <div th:text="${#temporals.format(reply.createComment, 'yyyy-MM-dd HH:mm')}"></div>
+                                                    <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                                                 </div>
                                             </div>
                                         </ul>
@@ -160,6 +160,29 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary mx-2">등록</button>
                             </form>
+                            <!-- 페이징처리 시작 -->
+                            <div th:if="${page!=null && !paging.isEmpty()}">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{|?page=${paging.number-1}|}">
+                                            <span>이전</span>
+                                        </a>
+                                    </li>
+                                    <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                                        th:classappend="${page == paging.number} ? 'active'"
+                                        class="page-item">
+                                        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                                    </li>
+                                    <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                                        <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                                            <span>다음</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 페이징처리 끝 -->
                         </div>
                     </div>
                 </div>
