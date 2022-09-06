@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
-    List<Reply> findByPostsId(Long id);
     Page<Reply> findAll(Pageable pageable);
 
 
