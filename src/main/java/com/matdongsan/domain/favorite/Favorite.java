@@ -7,7 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Setter
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,19 +22,16 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "favorite")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Place> placeList;
 
     public Favorite(Member member, String subject) {
         this.member = member;
-        setSubject(subject);
+        this.subject = subject;
     }
 
-    public Favorite(Member member, Place place) {
-        this.member = member;
-        setPlace(place);
-    }
-    private void setPlace(Place place) {
-        placeList.add(place);
+    public void addPlace(Place place) {
+        this.placeList.add(place);
+        place.setFavorite(this);
     }
 }
