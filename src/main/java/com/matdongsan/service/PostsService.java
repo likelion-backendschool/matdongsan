@@ -46,17 +46,6 @@ public class PostsService {
         return postsRepository.save(posts);
     }
 
-    /*public Posts update(Posts posts , String title , String content , Member author , boolean status) {
-
-        posts.setTitle(title);
-        posts.setContent(content);
-        posts.setAuthor(author);
-        posts.setPrivateStatus(status);
-
-        return postsRepository.save(posts);
-
-    }*/
-
     /*public void delete(Posts posts) {
         postsRepository.delete(posts);
     }*/

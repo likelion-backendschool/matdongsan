@@ -3,6 +3,7 @@ package com.matdongsan.domain.posts;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.reply.Reply;
+import com.matdongsan.util.ImageUtil;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -58,5 +59,12 @@ public class Posts{
         reply.setPosts(this);
     }
 
-
+    // 수정 메소드
+    public void change(String title, String content, Place place, String imageUrls , boolean privateStatus) {
+        this.title = title;
+        this.content = content;
+        this.place = place;
+        this.imageUrls = imageUrls;
+        this.privateStatus = privateStatus;
+    }
 }

@@ -81,26 +81,27 @@ public class PostsController {
     }
 
     // 게시글 수정 뷰 페이지
-    @GetMapping("/posts/update/{id}")
-    public String updatePost(@PathVariable Long id ,Model model) {
+    @GetMapping("/posts/modify/{id}")
+    public String modifyPost(@PathVariable Long id ,Model model) {
 
         Posts posts = postsService.findById(id);
-
         model.addAttribute("findPost", posts);
 
         return "posts/posts-updateForm";
     }
 
 
-    /*
+
     @PostMapping("/posts/update/{id}")
-    public String editPost(@PathVariable Long id , PostCreateDto postCreateDto){
+    public String updatePost(@PathVariable Long id , Posts posts){
 
-        Posts postsUpdate = postsService.findById(id);
+        Posts updatePost = postsService.findById(id);
+        updatePost.change(posts.getTitle() , posts.getContent() , posts.getPlace() , posts.getImageUrls() , posts.isPrivateStatus());
 
-        return String.format("redirect:/posts/%s" , id);
+//        return String.format("redirect:/posts/%s" , id);
+        return "redirect:/posts/{id}";
     }
-
+/*
     //
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable Long id){
