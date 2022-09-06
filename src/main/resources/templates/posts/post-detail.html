@@ -48,13 +48,18 @@
                     <div class="post-body">
                         <div class="post-no-thumbnail">
                             <h3 th:text="${post.getTitle()}">제목</h3>
-                            <div class="container" th:if="${not #strings.isEmpty(post.getImageUrls())}">
+                            <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">
                                 <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">
                                     <img th:src="|/images/${url}|" class="img-thumbnail"
                                          width="150px" height="150px" style="object-fit: cover">
                                 </div>
                             </div>
                             <div th:utext="${post.getContent()}">내용</div>
+                            <div style="font-weight: bold;font-size: 16px;text-align: end">
+                                <a th:text="${post.getPlace().getPlaceName()}" th:href="@{/place/{id}/detail(id = ${post.getPlace().getId()})}">
+                                    음식점 이름
+                                </a>
+                            </div>
                         </div>
                         <div class="post-meta-wrap">
                             <div class="post-meta">

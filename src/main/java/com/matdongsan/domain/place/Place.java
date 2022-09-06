@@ -1,6 +1,7 @@
 package com.matdongsan.domain.place;
 
 import com.matdongsan.domain.favorite.Favorite;
+import com.matdongsan.domain.posts.Posts;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,9 @@ public class Place {
     private String phone;
     private String x;
     private String y;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
+    private List<Posts> posts = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
     private List<Favorite> favorites = new ArrayList<>();
