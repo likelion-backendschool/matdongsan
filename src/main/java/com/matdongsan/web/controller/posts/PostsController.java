@@ -63,11 +63,11 @@ public class PostsController {
         return "/posts/posts-newForm";
     }
 
+
     // 게시글 등록 posts
     @PostMapping("/posts/new")
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            log.info("error 발생");
             model.addAttribute("postCreateDto", postCreateDto);
             return "posts/posts-newForm";
         }
@@ -81,8 +81,8 @@ public class PostsController {
     }
 
     // 게시글 수정 뷰 페이지
-    /*@GetMapping("/posts/update/{id}")
-    public String modifyPost(@PathVariable Long id ,Model model) {
+    @GetMapping("/posts/update/{id}")
+    public String updatePost(@PathVariable Long id ,Model model) {
 
         Posts posts = postsService.findById(id);
 
@@ -92,6 +92,7 @@ public class PostsController {
     }
 
 
+    /*
     @PostMapping("/posts/update/{id}")
     public String editPost(@PathVariable Long id , PostCreateDto postCreateDto){
 
