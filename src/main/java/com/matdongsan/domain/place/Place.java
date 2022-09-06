@@ -4,7 +4,6 @@ import com.matdongsan.domain.favorite.Favorite;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,8 +22,8 @@ public class Place {
     private String x;
     private String y;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Favorite favorite;
+    @ManyToMany
+    private List<Favorite> favoriteList;
 
     @Column(columnDefinition = "TEXT")
     private String menus;
@@ -48,5 +47,8 @@ public class Place {
         this.mainPhotoUrl = mainPhotoUrl;
     }
 
+    public void setFavorite(Favorite favorite) {
+        getFavoriteList().add(favorite);
+    }
 
 }
