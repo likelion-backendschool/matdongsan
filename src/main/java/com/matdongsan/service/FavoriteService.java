@@ -5,28 +5,18 @@ import com.matdongsan.domain.favorite.FavoriteRepository;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
-
-/*    public boolean doFavorite(Member member, Place place) {
-        Optional<Favorite> findFavorite = favoriteRepository.findByMemberAndPlace(member, place);
-        if (findFavorite.isPresent()) { //이미 좋아요가 존재한다면 좋아요 삭제
-            favoriteRepository.delete(findFavorite.get());
-            return false;
-        }else{ // 좋아요가 없다면 새로운 좋아요 저장
-            Favorite favorite = new Favorite(member, place);
-            return true;
-        }
-    }*/
 
     public List<Favorite> findAllByMember(Member member) {
         return favoriteRepository.findAllByMember(member);
@@ -34,9 +24,35 @@ public class FavoriteService {
 
     public void save(Favorite favorite) {
         favoriteRepository.save(favorite);
+        log.info("save 실행");
     }
 
     public Favorite findTopByMember(Member member) {
         return favoriteRepository.findTopByMember(member);
+    }
+
+    public Favorite findById(Long favoriteId) {
+        return favoriteRepository.findById(favoriteId).get();
+    }
+    public void replaceExistPlace(Member member, Place place, Favorite currentFavorite) {
+        // Member -> FavoriteList 속에서 해당 Place가 있는지 확인
+        List<Favorite> favoriteList = findAllByMember(member);
+        log.info("favoriteList={}", favoriteList.size());
+        for (Favorite favorite : favoriteList) {
+            if (favorite.getPlaceList().contains(place)){
+                log.info("favoriteInnerIter={}", favorite.getPlaceList().size());
+                deletePlace(favorite, place);
+            }
+        }
+        log.info("FirstCurrentFavorite={}", currentFavorite.getPlaceList().size());
+        currentFavorite.addPlace(place);
+        save(currentFavorite);
+        for (Place place1 : currentFavorite.getPlaceList()) {
+            log.info("showPlaceName={}", place1.getPlaceName());
+        }
+    }
+
+    public void deletePlace(Favorite currentFavorite, Place place) {
+        currentFavorite.getPlaceList().remove(place);
     }
 }
