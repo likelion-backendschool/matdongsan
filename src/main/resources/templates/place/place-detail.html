@@ -107,9 +107,29 @@
                         <ul class="action-area">
                             <li id="quantity-holder">
                                 <div class="input-group quantity-holder">
+
+                                    <!-- modal 형식의 맛집 리스트 이동하기 -->
+                                    <button class="btn btn-primary btn-sm" id="startModal"data-bs-toggle="modal" data-bs-target="#exampleModal">맛집 리스트 이동하기</button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">맛집 리스트 이동하기</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div th:each="favorite, loop : ${favorites}">
+                                                        <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{|/favorite/changeFavorite/${place.id}|}"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- toggle 형식의 맛집 리스트 이동하기 -->
                                     <div class="dropdown">
                                         <a class="btn btn-primary dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            북마크 이동하기
+                                            맛집 리스트 이동하기
                                         </a>
 
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
