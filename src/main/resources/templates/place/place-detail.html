@@ -117,7 +117,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div th:each="favorite, loop : ${favorites}">
-                                                        <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{|/favorite/changeFavorite/${place.id}|}"></a>
+                                                        <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{/favorite/changeFavorite/{favoriteId}/{placeId}(favoriteId = ${favorite.id}, placeId = ${place.id})}"></a>
                                                     </div>
                                                 </div>
                                             </div>

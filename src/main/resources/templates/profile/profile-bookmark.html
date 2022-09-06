@@ -78,7 +78,9 @@
     </div>-->
 
     <!-- 북마크 추가 버튼 -->
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가하기</button>
+    <div class="">
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가하기</button>
+    </div>
 
     <!-- Modal -->
     <form th:action="@{/favorite/addFavorite}" th:method="post">
@@ -104,6 +106,27 @@
         </div>
       </div>
     </form>
+
+    <!-- 북마크 리스트 -->
+    <div th:each="favorite, loop : ${favorites}">
+      <h3 th:text="${favorite.subject}"></h3>
+      <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4" th:each="place, loop : ${favorite.placeList}">
+          <div class="card">
+            <img th:src="${place.mainPhotoUrl}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${place.placeName}">Card title</h5>
+              <p class="card-text" th:text="${place.categoryName}"></p>
+              <p class="card-text" th:text="${place.addressName}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text" th:text="${place.facilityInfo}"></p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
