@@ -23,10 +23,10 @@
     <link rel="stylesheet" th:href="@{/dependencies/sal.js/sal.css}">
     <link rel="stylesheet" th:href="@{/dependencies/mcustomscrollbar/jquery.mCustomScrollbar.min.css}">
     <link rel="stylesheet" th:href="@{/dependencies/select2/css/select2.min.css}">
-    <link rel="stylesheet" href="/dist/output.css">
+    <link rel="stylesheet" th:href="@{/dist/output.css}">
 
     <!-- Site Stylesheet -->
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" th:href="@{/assets/css/app.css}">
 
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Chat Modal Here -->
-    <div class="chat-conversion-box" id="chat-box-modal" tabindex="-1" aria-labelledby="chat-modal-label" aria-hidden="true">
+    <!--<div class="chat-conversion-box" id="chat-box-modal" tabindex="-1" aria-labelledby="chat-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- Site Scripts -->
     <script th:src="@{/assets/js/app.js}"></script>
 </body>

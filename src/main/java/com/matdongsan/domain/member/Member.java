@@ -1,7 +1,6 @@
 package com.matdongsan.domain.member;
 
 import com.matdongsan.domain.account.Account;
-import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.favorite.Favorite;
 import com.matdongsan.domain.likeuser.ReplyLike;
 import com.matdongsan.domain.posts.Posts;

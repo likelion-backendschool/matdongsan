@@ -56,9 +56,11 @@
                 <form th:action="@{/posts/new}" method="post" enctype="multipart/form-data" th:object="${postCreateDto}">
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
+                        <input hidden id="hiddenPlace" type="text" th:field="*{placeId}" readonly>
                         <label for="place">위치</label>
                         <input type="text" class="form-control" id="place"
                                placeholder="위치를 입력하세요." readonly data-toggle="modal" data-target="#placeModal">
+                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('placeId')}" th:errors="*{placeId}">place Error</small>
                     </div>
                     <!-- 제목 -->
                     <div class="form-floating mb-3">
@@ -136,8 +138,6 @@
                                 <option value="true" selected>공개</option>
                                 <option value="false">비공개</option>
                             </select>
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                            <label class="form-check-label" for="flexSwitchCheckChecked">비밀글</label>
                         </div>
                     </div>
 
@@ -157,7 +157,8 @@
 
         <script>
             let currentPlace;
-            const readOnlyPlaceInput = document.querySelector("#place")
+            const readOnlyPlaceInput = document.querySelector("#place");
+            const hiddenPlaceInput = document.querySelector("#hiddenPlace");
             const searchInput = document.querySelector('#search-input');
             const searchResultList = document.querySelector('#search-result-list');
 
@@ -190,11 +191,10 @@
                     el.onclick = ()=>{
                         currentPlace = place;
                         removeChildren(searchResultList);
+                        hiddenPlaceInput.value = currentPlace['id']
                         readOnlyPlaceInput.value = currentPlace['place_name'];
                         searchInput.value = '';
                         sendPlaceSaveApi(place);
-
-
                     }
                     searchResultList.append(el);
                 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 @Builder
 @Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ReplyLike {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +22,7 @@ public class ReplyLike {
     private Reply reply;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Include
     private Member member;
 
     

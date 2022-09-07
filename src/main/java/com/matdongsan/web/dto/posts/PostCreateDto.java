@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,5 +26,8 @@ public class PostCreateDto {
     private LocalDateTime modifiedTime;
 
     private Boolean privateStatus;
+
+    @NotNull(message = "음식점을 골라주세요")
+    private Long placeId;
 
 }

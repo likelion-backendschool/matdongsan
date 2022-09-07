@@ -16,7 +16,7 @@
     <div class="container light-style flex-grow-1">
 
         <h4 class="font-weight-bold py-3 mb-4">
-            Account settings
+            계정 설정
         </h4>
         <div th:if="${settingMessageSuccess}">
             <div th:replace="fragments/message-fragments :: success-notice (message = ${settingMessageSuccess})"></div>
@@ -28,9 +28,9 @@
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Password</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">Withdraw</a>
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">프로필</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">보안</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">계정</a>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -59,13 +59,15 @@
                                                     <form id="changeNickname" th:action="@{/profile/change/nickname}" method="post">
                                                         <div class="form-group">
                                                             <label for="nickname" class="col-form-label">닉네임</label>
-                                                            <input type="text" class="form-control" name="nickname" id="nickname" th:value="${member.getNickname()}">
-                                                            <button type="button" class="btn btn-secondary" id="duplicateId">중복 확인</button>
-                                                            <span id="dupplicateMsg"></span>
+                                                            <div class="d-flex flex-row">
+                                                                <input type="text" class="form-control w-75" name="nickname" id="nickname" th:value="${member.getNickname()}">
+                                                                <button type="button" class="btn btn-primary w-25 mx-3" id="duplicateId">중복 확인</button>
+                                                            </div>
+                                                            <p id="dupplicateMsg">변경할 닉네임을 입력해주세요.</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                                                            <button type="button" id="nicknameSubmitBtn" class="btn btn-primary">변경하기</button>
+                                                            <button type="button" id="nicknameSubmitBtn" class="btn btn-secondary">변경하기</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -124,7 +126,9 @@
                         $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
                             .addClass("text-danger")
                             .removeClass("text-primary");
-                        $("#nicknameSubmitBtn").attr("type", "button");
+                        $("#nicknameSubmitBtn").attr("type", "button")
+                            .addClass("btn-secondary")
+                            .removeClass("btn-primary");
                     } else {
                         idChk = true;
                         console.log("idChk : " + idChk);
@@ -133,7 +137,9 @@
                             .removeClass("text-danger");
                         $("#nickname").attr("readonly", "true")
                             .addClass("bg-light");
-                        $("#nicknameSubmitBtn").attr("type", "submit");
+                        $("#nicknameSubmitBtn").attr("type", "submit")
+                            .addClass("btn-primary")
+                            .removeClass("btn-secondary");
                     }
                 },
             });
