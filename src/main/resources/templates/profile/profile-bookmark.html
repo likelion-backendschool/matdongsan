@@ -94,12 +94,10 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="modal-body">
-                <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
-              </div>
+              <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
               <button type="submit" class="btn btn-primary">추가하기</button>
             </div>
           </div>
@@ -108,26 +106,71 @@
     </form>
 
     <!-- 북마크 리스트 -->
-    <div th:each="favorite, loop : ${favorites}">
-      <h3 th:text="${favorite.subject}"></h3>
-      <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-4" th:each="place, loop : ${favorite.placeList}">
-          <div class="card">
-            <img th:src="${place.mainPhotoUrl}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" th:text="${place.placeName}">Card title</h5>
-              <p class="card-text" th:text="${place.categoryName}"></p>
-              <p class="card-text" th:text="${place.addressName}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text" th:text="${place.facilityInfo}"></p>
+    <div class="block-box post-view" th:each="favorite, loop : ${favorites}">
+      <div class="post-header d-flex justify-content-between">
+        <h3 th:text="${favorite.subject}"></h3>
+
+        <!-- 북마크 관리 버튼 -->
+        <a data-toggle="modal" data-target="#staticBackdrop2">
+          <i class="icofont-settings-alt text-dark"></i>
+        </a>
+
+        <!-- 북마크 관리 nodal -->
+        <div class="modal fade" id="staticBackdrop2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel2">북마크 관리</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h6 class="modal-title">북마크 수정</h6>
+                <form th:action="@{|/favorite/modifyFavorite/${favorite.id}|}" th:method="post">
+                  <input tpye="text" class="form-control" name="subject" id="floatingInput2" placeholder="북마크 이름을 입력해주세요." required>
+                  <button type="submit" class="dropdown-item">북마크 수정하기</button>
+                </form>
+              </div>
+              <hr>
+              <div class="modal-body">
+                <h6 class="modal-title">북마크 삭제<p class="small">저장된 음식점들이 모두 삭제됩니다!</p></h6>
+                <a class="dropdown-item" th:href="@{|/favorite/deleteFavorite/${favorite.id}|}">북마크 삭제하기</a>
+              </div>
             </div>
-            <div class="card-footer">
-              <small class="text-muted">Last updated 3 mins ago</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- PlaceList 시작 -->
+      <div class="post-body">
+        <div class="row row-cols-1 row-cols-md-3">
+          <div class="col mb-4" th:each="place, loop : ${favorite.placeList}">
+            <div class="card">
+              <img th:src="${place.mainPhotoUrl}" class="card-img-top" alt="..." style="height:180px;">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between"><a th:href="@{|/place/${place.id}/detail|}" th:text="${place.placeName}"></a>
+                  <div class="dropdown">
+                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">북마크 이동</a>
+                      <a class="dropdown-item" href="#">음식점 삭제</a>
+                    </div>
+                  </div>
+                </h5>
+                <h6 class="card-text" th:text="${place.categoryName}"></h6>
+                <h6 class="card-text" th:text="${place.phone}"></h6>
+                <h6 class="card-text" th:text="${place.addressName}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</h6>
+                <h6 class="card-text" th:text="${place.roadAddressName}"></h6>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 </body>
