@@ -4,6 +4,7 @@ import com.matdongsan.domain.favorite.Favorite;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +23,8 @@ public class Place {
     private String x;
     private String y;
 
-    @ManyToMany
-    private List<Favorite> favoriteList;
+    /*@ManyToMany
+    private List<Favorite> favoriteList = new ArrayList<>();*/
 
     @Column(columnDefinition = "TEXT")
     private String menus;
