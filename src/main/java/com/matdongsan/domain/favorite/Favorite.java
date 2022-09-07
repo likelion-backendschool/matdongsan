@@ -22,7 +22,7 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Place> placeList;
 
     public Favorite(Member member, String subject) {
@@ -32,7 +32,6 @@ public class Favorite {
 
     public void addPlace(Place place) {
         this.placeList.add(place);
-        place.setFavorite(this);
     }
 
     public void setSubject(String subject) {
