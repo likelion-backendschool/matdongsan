@@ -24,9 +24,6 @@ public class Place {
     private String x;
     private String y;
 
-    @ManyToMany
-    private List<Favorite> favoriteList = new ArrayList<>();
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
     private List<Posts> posts = new ArrayList<>();
 
@@ -50,10 +47,6 @@ public class Place {
         this.menus = menu;
         this.facilityInfo = facility;
         this.mainPhotoUrl = mainPhotoUrl;
-    }
-
-    public void setFavorite(Favorite favorite) {
-        getFavoriteList().add(favorite);
     }
 
 }
