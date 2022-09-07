@@ -15,10 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,7 +33,9 @@ public class PostsController {
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
-    public String showDetailPost(@PathVariable long id , Model model, ReplyDto replyDto){
+    public String showDetailPost(@PathVariable long id,
+                                 @RequestParam(value = "page", defaultValue = "0") int page,
+                                 Model model, @ModelAttribute("replyDto") ReplyDto replyDto){
 
         Posts posts = postsService.findById(id);
         posts.getPlace(); //수동 초기화
