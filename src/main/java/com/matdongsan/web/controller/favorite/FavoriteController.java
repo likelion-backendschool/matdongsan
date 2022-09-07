@@ -78,10 +78,19 @@ public class FavoriteController {
      * @return
      */
     @GetMapping("/favorite/deleteFavorite/{favoriteId}")
-    public String delectFavorite(@AuthUser Account account, @PathVariable Long favoriteId) {
+    public String deleteFavorite(@AuthUser Account account, @PathVariable Long favoriteId) {
         Member member = account.getMember();
         Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
         favoriteService.delete(favorite);
+        return "redirect:/profile/bookmark";
+    }
+
+    @GetMapping("/favorite/{favoriteId}/deletePlace/{placeId}")
+    public String deletePlace(@AuthUser Account account, @PathVariable Long favoriteId, @PathVariable Long placeId) {
+        Member member = account.getMember();
+        Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        favorite.getPlaceList().remove(placeService.findPlace(placeId));
+        favoriteService.save(favorite);
         return "redirect:/profile/bookmark";
     }
 }
