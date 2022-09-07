@@ -2,7 +2,10 @@ package com.matdongsan.web.controller.account;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
+import com.matdongsan.domain.favorite.Favorite;
+import com.matdongsan.domain.member.Member;
 import com.matdongsan.service.AccountService;
+import com.matdongsan.service.FavoriteService;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
 import com.matdongsan.web.dto.profile.ProfilePasswordDto;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +31,7 @@ public class ProfileController {
     private final ProfileService profileService;
     private final AccountService accountService;
     private final MemberService memberService;
+    private final FavoriteService favoriteService;
 
     @GetMapping("/profile")
     public String showMyProfile(Principal principal, Model model) {
@@ -77,6 +83,30 @@ public class ProfileController {
         accountService.changeAccountPassword(profilePasswordDto.getNewPassword(), account);
 
         return "redirect:/profile/setting";
+    }
+
+    /**
+     * 프로필의 북마크 관리 페이지
+     * @param model
+     * @param account
+     * @param principal
+     * @return
+     */
+    @GetMapping("/profile/bookmark")
+    public String showBookmark(Model model, @AuthUser Account account, Principal principal) {
+        Optional<Favorite> optionalFavorite = Optional.ofNullable(favoriteService.findTopByMember(account.getMember()));
+        if (optionalFavorite.isPresent()) {
+            List<Favorite> favoriteList = favoriteService.findAllByMember(account.getMember());
+            model.addAttribute("favorites", favoriteList);
+        } else {
+            Favorite favorite = new Favorite(account.getMember(), "나만의 맛집");
+            favoriteService.save(favorite);
+            model.addAttribute("favorites", favorite);
+        }
+        MemberVo memberVo = accountService.getReadOnlyMember(principal.getName());
+        model.addAttribute("member", memberVo);
+
+        return "/profile/profile-bookmark";
     }
 
 }

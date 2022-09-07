@@ -1,47 +1,41 @@
 package com.matdongsan.domain.favorite;
 
-import com.matdongsan.domain.bookmark.Bookmark;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.lang.Nullable;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Setter
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Favorite {
     // 고유 Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String subject;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Place place;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Place> placeList;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bookmark_id")
-    private Bookmark bookmark;
-
-    public Favorite(Member member, Place place) {
+    public Favorite(Member member, String subject) {
         this.member = member;
-        setPlace(place);
+        this.subject = subject;
     }
 
-    private void setPlace(Place place) {
-        place.getFavorites().add(this);
-        this.place = place;
+    public void addPlace(Place place) {
+        this.placeList.add(place);
+        place.setFavorite(this);
     }
 
-    public void setBookMark(Bookmark bookmark) {
-        this.bookmark = bookmark;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }
