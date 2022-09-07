@@ -116,7 +116,7 @@
         </a>
 
         <!-- 북마크 관리 nodal -->
-        <div class="modal fade" id="staticBackdrop2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -153,10 +153,30 @@
                   <div class="dropdown">
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">북마크 이동</a>
+                      <!-- modal 버튼 -->
+                      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop3">북마크 이동</button>
                       <a class="dropdown-item" href="#">음식점 삭제</a>
                     </div>
                   </div>
+                  <!-- modal 북마크 음식점 이동하기 -->
+                  <div class="modal fade" id="staticBackdrop3" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel3" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="staticBackdropLabel3">북마크 이동하기</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div th:each="favorite, loop : ${favorites}">
+                            <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{|/favorite/changeFavorite/${favorite.id}/${place.id}|}"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </h5>
                 <h6 class="card-text" th:text="${place.categoryName}"></h6>
                 <h6 class="card-text" th:text="${place.phone}"></h6>
@@ -170,6 +190,8 @@
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 </div>
