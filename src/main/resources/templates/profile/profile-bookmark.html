@@ -79,7 +79,7 @@
 
     <!-- 북마크 추가 버튼 -->
     <div class="">
-      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가하기</button>
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가</button>
     </div>
 
     <!-- Modal -->
@@ -88,7 +88,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">북마크 추가</h5>
+              <h5 class="modal-title" id="staticBackdropLabel">북마크 추가하기</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -98,7 +98,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-              <button type="submit" class="btn btn-primary">추가하기</button>
+              <button type="submit" class="btn btn-primary">추가</button>
             </div>
           </div>
         </div>
@@ -126,16 +126,16 @@
                 </button>
               </div>
               <div class="modal-body">
-                <h6 class="modal-title">북마크 수정</h6>
+                <h6 class="modal-title">북마크 수정하기</h6>
                 <form th:action="@{|/favorite/modifyFavorite/${favorite.id}|}" th:method="post">
                   <input tpye="text" class="form-control" name="subject" id="floatingInput2" placeholder="북마크 이름을 입력해주세요." required>
-                  <button type="submit" class="dropdown-item">북마크 수정하기</button>
+                  <button type="submit" class="dropdown-item">수정</button>
                 </form>
               </div>
               <hr>
               <div class="modal-body">
-                <h6 class="modal-title">북마크 삭제<p class="small">저장된 음식점들이 모두 삭제됩니다!</p></h6>
-                <a class="dropdown-item" th:href="@{|/favorite/deleteFavorite/${favorite.id}|}">북마크 삭제하기</a>
+                <h6 class="modal-title">북마크 삭제하기<p class="small">저장된 음식점들이 모두 삭제됩니다!</p></h6>
+                <a class="dropdown-item" th:href="@{|/favorite/deleteFavorite/${favorite.id}|}">삭제</a>
               </div>
             </div>
           </div>
@@ -154,8 +154,8 @@
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <!-- modal 버튼 -->
-                      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop3">북마크 이동</button>
-                      <a class="dropdown-item" href="#">음식점 삭제</a>
+                      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop3">이동</button>
+                      <a class="dropdown-item" th:href="@{|/favorite/${favorite.id}/deletePlace/${place.id}|}">삭제</a>
                     </div>
                   </div>
                   <!-- modal 북마크 음식점 이동하기 -->
