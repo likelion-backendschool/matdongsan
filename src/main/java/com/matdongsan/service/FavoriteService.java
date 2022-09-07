@@ -24,7 +24,6 @@ public class FavoriteService {
 
     public void save(Favorite favorite) {
         favoriteRepository.save(favorite);
-        log.info("save 실행");
     }
 
     public Favorite findTopByMember(Member member) {
@@ -37,22 +36,24 @@ public class FavoriteService {
     public void replaceExistPlace(Member member, Place place, Favorite currentFavorite) {
         // Member -> FavoriteList 속에서 해당 Place가 있는지 확인
         List<Favorite> favoriteList = findAllByMember(member);
-        log.info("favoriteList={}", favoriteList.size());
         for (Favorite favorite : favoriteList) {
             if (favorite.getPlaceList().contains(place)){
-                log.info("favoriteInnerIter={}", favorite.getPlaceList().size());
                 deletePlace(favorite, place);
             }
         }
-        log.info("FirstCurrentFavorite={}", currentFavorite.getPlaceList().size());
         currentFavorite.addPlace(place);
         save(currentFavorite);
-        for (Place place1 : currentFavorite.getPlaceList()) {
-            log.info("showPlaceName={}", place1.getPlaceName());
-        }
     }
 
     public void deletePlace(Favorite currentFavorite, Place place) {
         currentFavorite.getPlaceList().remove(place);
+    }
+
+    public Favorite findByIdAndMember(Long favoriteId, Member member) {
+        return favoriteRepository.findByIdAndMember(favoriteId, member);
+    }
+
+    public void delete(Favorite favorite) {
+        favoriteRepository.delete(favorite);
     }
 }

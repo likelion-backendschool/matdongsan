@@ -34,4 +34,8 @@ public class Favorite {
         this.placeList.add(place);
         place.setFavorite(this);
     }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 }

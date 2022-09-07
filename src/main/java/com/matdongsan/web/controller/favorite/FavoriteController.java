@@ -47,18 +47,41 @@ public class FavoriteController {
      */
     @GetMapping("/favorite/changeFavorite/{favoriteId}/{placeId}")
     public String changeFavorite(@AuthUser Account account,@PathVariable("favoriteId") Long favoriteId, @PathVariable("placeId") long placeId) {
-        log.info("favoriteId={}", favoriteId);
-        log.info("placeId={}", placeId);
-
         Member member = account.getMember();
-        /* 동일한 멤버에 favorite들 중에서 place가 있는지*/
-//        favoriteService.findAllByMember(member);
         Place place = placeService.findPlace(placeId);
-        log.info("placeName={}", place.getPlaceName());
         Favorite favorite = favoriteService.findById(favoriteId);
-        log.info("favoriteSubject={}", favorite.getSubject());
         favoriteService.replaceExistPlace(member, place, favorite);
 
+        return "redirect:/profile/bookmark";
+    }
+
+    /**
+     *
+     * @param account
+     * @param favoriteId
+     * @param subject
+     * @return
+     */
+    @PostMapping("/favorite/modifyFavorite/{favoriteId}")
+    public String modifyFavorite(@AuthUser Account account, @PathVariable Long favoriteId, @PathParam("subject") String subject) {
+        Member member = account.getMember();
+        Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        favorite.setSubject(subject);
+        favoriteService.save(favorite);
+        return "redirect:/profile/bookmark";
+    }
+
+    /**
+     *
+     * @param account
+     * @param favoriteId
+     * @return
+     */
+    @GetMapping("/favorite/deleteFavorite/{favoriteId}")
+    public String delectFavorite(@AuthUser Account account, @PathVariable Long favoriteId) {
+        Member member = account.getMember();
+        Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        favoriteService.delete(favorite);
         return "redirect:/profile/bookmark";
     }
 }
