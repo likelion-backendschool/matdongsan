@@ -9,8 +9,12 @@
             <div class="post-body">
                 <div class="card-text" th:text="${reply.comment}"></div>
             </div>
+
             <div class="post-footer">
                 <ul>
+                    <li>
+                        <a href="#!" th:text="${reply.writer.account.username}" ></a>
+                    </li>
                     <li class="post-react">
                         <a href="javascript:void(0);" class="icofont-love"
                            th:href="@{|/reply/like/${reply.id}|}">React!
