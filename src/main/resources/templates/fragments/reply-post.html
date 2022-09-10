@@ -9,12 +9,8 @@
             <div class="post-body">
                 <div class="card-text" th:text="${reply.comment}"></div>
             </div>
-
             <div class="post-footer">
                 <ul>
-                    <li>
-                        <a href="#!" th:text="${reply.writer.account.username}" ></a>
-                    </li>
                     <li class="post-react">
                         <a href="javascript:void(0);" class="icofont-love"
                            th:href="@{|/reply/like/${reply.id}|}">React!
@@ -57,7 +53,7 @@
         <button type="submit" class="btn btn-primary mx-2">등록</button>
     </form>
     <!-- 페이징처리 시작 -->
-    <div th:if="${page!=null && !paging.isEmpty()}">
+    <div th:if="${!paging.isEmpty()}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
