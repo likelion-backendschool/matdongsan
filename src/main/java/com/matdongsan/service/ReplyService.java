@@ -66,11 +66,13 @@ public class ReplyService {
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
         return replyRepository.findRepliesByPostsId(id, pageable);
     }
+
     /**
      * 댓글 수정
      */
     public void update(Reply reply, String content) {
         reply.updateComment(content);
+        reply.insertReplyTime(convertDateTime(LocalDateTime.now()));
         replyRepository.save(reply);
     }
 
@@ -96,8 +98,19 @@ public class ReplyService {
     }
 
     /**
-     * 댓글 시간 변경
+     * 댓글 시간 변경(~전)
      */
+
+    public void refreshTime(List<Reply> replyList) {
+        for (Reply reply : replyList) {
+            if (reply.getModifyDate() == null){
+                reply.insertReplyTime(convertDateTime(reply.getCreateDate()));
+            }else{
+                reply.insertReplyTime(convertDateTime(reply.getModifyDate()));
+            }
+        }
+    }
+
     public static String convertDateTime(LocalDateTime localDateTime) {
         LocalDateTime now = LocalDateTime.now();
 

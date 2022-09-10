@@ -33,15 +33,15 @@
                     ><i class="icofont-delete-alt"></i>Delete</a></li>
                     <!--댓글등록시간-->
                     <div class="d-flex justify-content-end">
-                        <div th:if="${reply.modifyDate != null}"
-                             class="badge bg-light text-dark p-2 text-start mx-3">
-                            <div class="mb-2">수정 시간</div>
-                            <div th:text="${#temporals.format(reply.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
-                        </div>
                         <div th:if="${reply.modifyDate == null}"
                              class="badge bg-light text-dark p-2 text-start">
                             <div class="mb-2">등록 시간</div>
-                            <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div th:text="${reply.replyTime}"></div>
+                        </div>
+                        <div th:if="${reply.modifyDate != null}"
+                             class="badge bg-light text-dark p-2 text-start mx-3">
+                            <div class="mb-2">수정 시간</div>
+                            <div th:text="${reply.replyTime}"></div>
                         </div>
                     </div>
                 </ul>

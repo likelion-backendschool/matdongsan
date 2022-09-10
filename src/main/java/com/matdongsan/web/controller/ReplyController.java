@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -51,7 +52,7 @@ public class ReplyController {
     }
 
     /**
-     * 댓글 수정 컨트롤러 get, post
+     * 댓글 수정
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/update/{replyId}")

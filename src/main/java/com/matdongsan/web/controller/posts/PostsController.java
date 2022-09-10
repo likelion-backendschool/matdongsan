@@ -4,21 +4,21 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.PlaceService;
 import com.matdongsan.service.PostsService;
+import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,15 +33,23 @@ public class PostsController {
 
     private final PostsService postsService;
     private final AccountService accountService;
+    private final ReplyService replyService;
+
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
-    public String showDetailPost(@PathVariable long id , Model model, ReplyDto replyDto){
+    public String showDetailPost(@PathVariable long id,
+                                 @RequestParam(value = "page", defaultValue = "0") int page,
+                                 Model model, @ModelAttribute("replyDto") ReplyDto replyDto) {
+        Posts post = postsService.findById(id);
+        model.addAttribute("post", post);
 
-        Posts posts = postsService.findById(id);
-        posts.getPlace(); //수동 초기화
+        List<Reply> replyList = post.getReplyList();
+        replyService.refreshTime(replyList);
 
-        model.addAttribute("post" , posts);
+        Page<Reply> paging = replyService.getReplyList(page, id);
+        model.addAttribute("paging", paging);
+
 
         return "/posts/post-detail";
     }
