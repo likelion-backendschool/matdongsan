@@ -7,6 +7,7 @@ import com.matdongsan.domain.posts.Posts;
 import com.matdongsan.domain.posts.PostsRepository;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.domain.reply.ReplyRepository;
+import com.matdongsan.domain.reply.ReplyTime;
 import com.matdongsan.web.dto.ReplyDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,17 +60,19 @@ public class ReplyService {
      *post id로 페이징 댓글 가져오기
      */
 
-    public Page<Reply> getReplyList(int page) {
+    public Page<Reply> getReplyList(int page,Long id) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate")); //수정 댓글 리팩토링 필요
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
-        return replyRepository.findAll(pageable);
+        return replyRepository.findRepliesByPostsId(id, pageable);
     }
+
     /**
      * 댓글 수정
      */
     public void update(Reply reply, String content) {
         reply.updateComment(content);
+        reply.insertReplyTime(convertDateTime(LocalDateTime.now()));
         replyRepository.save(reply);
     }
 
@@ -76,11 +80,9 @@ public class ReplyService {
     /**
      * 댓글 삭제
      */
-
     public void deleteReply(Reply reply) {
         replyRepository.delete(reply);
     }
-
 
     /**
      * 댓글 좋아요 추가
@@ -93,7 +95,49 @@ public class ReplyService {
                 .build();
         reply.getReplyLike().add(replyLike);
         replyRepository.save(reply);
+    }
 
+    /**
+     * 댓글 시간 변경(~전)
+     */
+
+    public void refreshTime(List<Reply> replyList) {
+        for (Reply reply : replyList) {
+            if (reply.getModifyDate() == null){
+                reply.insertReplyTime(convertDateTime(reply.getCreateDate()));
+            }else{
+                reply.insertReplyTime(convertDateTime(reply.getModifyDate()));
+            }
+        }
+    }
+
+    public static String convertDateTime(LocalDateTime localDateTime) {
+        LocalDateTime now = LocalDateTime.now();
+
+        long diffTime = localDateTime.until(now, ChronoUnit.SECONDS); // now보다 이후면 +, 전이면 -
+
+        if (diffTime < ReplyTime.SEC){
+            return diffTime + "초전";
+        }
+        diffTime = diffTime / ReplyTime.SEC;
+        if (diffTime < ReplyTime.MIN) {
+            return diffTime + "분 전";
+        }
+        diffTime = diffTime / ReplyTime.MIN;
+        if (diffTime < ReplyTime.HOUR) {
+            return diffTime + "시간 전";
+        }
+        diffTime = diffTime / ReplyTime.HOUR;
+        if (diffTime < ReplyTime.DAY) {
+            return diffTime + "일 전";
+        }
+        diffTime = diffTime / ReplyTime.DAY;
+        if (diffTime < ReplyTime.MONTH) {
+            return diffTime + "개월 전";
+        }
+
+        diffTime = diffTime / ReplyTime.MONTH;
+        return diffTime + "년 전";
     }
 
 

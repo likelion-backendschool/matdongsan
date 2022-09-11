@@ -38,12 +38,18 @@ public class Reply {
     @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReplyLike> replyLike;
 
+    private String replyTime;
 
     //데이터 필드를 가지고 있는 단에서 비즈니스 로직내기
     public void updateComment(String comment) {
         this.comment = comment;
         this.modifyDate = LocalDateTime.now();
     }
+
+    public void insertReplyTime(String replyTime) {
+        this.replyTime = replyTime;
+    }
+
 
 
 //    public void save(Posts post, Member member) {

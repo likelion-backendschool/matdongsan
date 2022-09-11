@@ -11,6 +11,9 @@
             </div>
             <div class="post-footer">
                 <ul>
+                    <li>
+                        <a th:text="${reply.writer.account.username}"></a>
+                    </li>
                     <li class="post-react">
                         <a href="javascript:void(0);" class="icofont-love"
                            th:href="@{|/reply/like/${reply.id}|}">React!
@@ -30,15 +33,15 @@
                     ><i class="icofont-delete-alt"></i>Delete</a></li>
                     <!--댓글등록시간-->
                     <div class="d-flex justify-content-end">
-                        <div th:if="${reply.modifyDate != null}"
-                             class="badge bg-light text-dark p-2 text-start mx-3">
-                            <div class="mb-2">수정 시간</div>
-                            <div th:text="${#temporals.format(reply.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
-                        </div>
                         <div th:if="${reply.modifyDate == null}"
                              class="badge bg-light text-dark p-2 text-start">
                             <div class="mb-2">등록 시간</div>
-                            <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div th:text="${reply.replyTime}"></div>
+                        </div>
+                        <div th:if="${reply.modifyDate != null}"
+                             class="badge bg-light text-dark p-2 text-start mx-3">
+                            <div class="mb-2">수정 시간</div>
+                            <div th:text="${reply.replyTime}"></div>
                         </div>
                     </div>
                 </ul>
@@ -53,7 +56,7 @@
         <button type="submit" class="btn btn-primary mx-2">등록</button>
     </form>
     <!-- 페이징처리 시작 -->
-    <div th:if="${page!=null && !paging.isEmpty()}">
+    <div th:if="${!paging.isEmpty()}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"
