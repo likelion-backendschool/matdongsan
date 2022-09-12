@@ -35,9 +35,6 @@ public class ProfileController {
 
     @GetMapping("/profile/{username}")
     public String showProfilePage(@PathVariable String username, Model model, @AuthUser Account account) {
-        log.info("username={}", username);
-        log.info("account.username={}", account.getUsername());
-        log.info("account.member.nickname={}", account.getMember().getNickname());
         MemberVo member = profileService.findByUsernameOrNickname(username);
         if (member == null) {
             MemberVo principalMember = accountService.getReadOnlyMember(account.getUsername());
