@@ -73,8 +73,10 @@
                                 </div>
                             </div>
                             <div class="post-meta">
-                                <div class="meta-text">2 Comments</div>
-                                <div class="meta-text">05 Share</div>
+                                <div class="meta-text" >
+                                    <a th:text="${post.replyList.size()}"></a>
+                                    개의 댓글
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -425,16 +427,4 @@
     </div>
 </div>
 </body>
-
-<script layout:fragment="script" type='text/javascript'>
-    const recommend_elements = document.getElementsByClassName("recommend");
-    Array.from(recommend_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if(confirm("정말로 추천하시겠습니까?")) {
-                location.href = this.dataset.uri;
-            };
-        });
-    });
-</script>
-
 </html>
