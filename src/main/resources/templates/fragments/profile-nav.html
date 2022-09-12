@@ -28,7 +28,7 @@
     </div>
     <div class="block-box user-top-header">
       <ul class="menu-list">
-        <li class="" th:classappend="${status} == 'profile' ? 'active'"><a th:href="@{/profile}">나의 게시물</a></li>
+        <li class="" th:classappend="${status} == 'profile' ? 'active'"><a th:href="@{/profile/{username}(username = ${member.getNickname()})}">나의 게시물</a></li>
         <li class="" th:classappend="${status} == 'bookmark' ? 'active'"><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
         <li>
           <!--<div class="dropdown">
