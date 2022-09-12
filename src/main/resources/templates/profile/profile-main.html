@@ -25,7 +25,7 @@
                         <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
                         <div class="item-subtitle" th:text="${member.getIntroduce()}">소개</div>
                         <ul class="item-social">
-                            <li><a th:href="@{/profile/setting}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
+                            <li><a th:href="@{/settings/profile}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
                         </ul>
                         <ul class="user-meta">
                             <li>Posts: <span th:text="${member.getPostsList().size()}">게시글 수</span></li>

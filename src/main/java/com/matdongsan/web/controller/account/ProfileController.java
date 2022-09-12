@@ -42,7 +42,7 @@ public class ProfileController {
         return "profile/profile-main";
     }
 
-    @GetMapping("/profile/setting")
+    @GetMapping("/settings/profile")
     public String showProfilePage(@AuthUser Account account, Model model) {
         log.info("account.getUsername()={}", account.getUsername());
 
@@ -55,7 +55,7 @@ public class ProfileController {
 
     @ResponseBody
     @RequestMapping(value = "/profile/nicknameCheck")
-    public boolean overlappedID(@RequestParam(value = "nickname") String nickname){
+    public boolean overlappedID(@RequestParam(value = "nickname") String nickname) {
         boolean flag = false;
 
         if (accountService.checkDuplicatedAccount(nickname) && memberService.existMemberNickname(nickname)) {
