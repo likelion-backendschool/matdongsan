@@ -53,8 +53,14 @@ public class ProfileController {
         return "profile/profile-setting";
     }
 
+    @GetMapping("/profile/{nickname}")
+    public String showProfileOtherUser(@PathVariable String nickname) {
+
+        return null;
+    }
+
     @ResponseBody
-    @RequestMapping(value = "/profile/nicknameCheck")
+    @RequestMapping(value = "/settings/profile/nicknameCheck")
     public boolean overlappedID(@RequestParam(value = "nickname") String nickname) {
         boolean flag = false;
 
@@ -65,14 +71,14 @@ public class ProfileController {
         return flag;
     }
 
-    @PostMapping("/profile/change/nickname")
+    @PostMapping("/settings/profile/change/nickname")
     public String changeNickname(@ModelAttribute(value = "nickname") String nickname, @AuthUser Account account, RedirectAttributes redirectAttributes) {
         memberService.changeMemberNickname(nickname, account);
         redirectAttributes.addFlashAttribute("settingMessageSuccess", "닉네임이 변경되었습니다.");
         return "redirect:/profile/setting";
     }
 
-    @PostMapping("/profile/change/password")
+    @PostMapping("/settings/profile/change/password")
     public String changePassword(@Valid ProfilePasswordDto profilePasswordDto, BindingResult bindingResult, @AuthUser Account account, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || !accountService.checkAccountPassword(profilePasswordDto.getOriginalPassword(), account)) {
             redirectAttributes.addFlashAttribute("profilePasswordDto", profilePasswordDto);
