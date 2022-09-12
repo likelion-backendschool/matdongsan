@@ -22,7 +22,8 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn
     private List<Place> placeList;
 
     public Favorite(Member member, String subject) {

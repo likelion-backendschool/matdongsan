@@ -39,10 +39,14 @@ public class FavoriteService {
         for (Favorite favorite : favoriteList) {
             if (favorite.getPlaceList().contains(place)){
                 deletePlace(favorite, place);
+                save(favorite);
             }
         }
+        log.info("favorite -> {}", currentFavorite.getSubject());
         currentFavorite.addPlace(place);
+        log.info("place -> {}", place.getPlaceName());
         save(currentFavorite);
+        log.info("save success");
     }
 
     public void deletePlace(Favorite currentFavorite, Place place) {
