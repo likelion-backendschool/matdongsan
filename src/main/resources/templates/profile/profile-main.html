@@ -15,67 +15,7 @@
     <!--=====================================-->
     <div class="container">
         <!-- Banner Area Start -->
-        <div class="banner-user">
-            <div class="banner-content">
-                <div class="media">
-                    <div class="item-img">
-                        <img th:src="@{/media/banner/user_1.jpg}" alt="User">
-                    </div>
-                    <div class="media-body">
-                        <h3 class="item-title" th:text="${member.getNickname()}">닉네임</h3>
-                        <div class="item-subtitle" th:text="${member.getIntroduce()}">소개</div>
-                        <!--<ul class="item-social" th:if="${#}">
-                            <li><a th:href="@{/settings/profile}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
-                        </ul>-->
-                        <ul class="user-meta">
-                            <li>Posts: <span th:text="${member.getPostsList().size()}">게시글 수</span></li>
-                            <li>Comments: <span th:text="${member.getReplyList().size()}">댓글 수</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="block-box user-top-header">
-            <ul class="menu-list">
-                <li class="active"><a th:href="@{/profile}">나의 게시물</a></li>
-                <li class=""><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
-                <li>
-                    <!--<div class="dropdown">
-                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                            ...
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Shop</a>
-                            <a class="dropdown-item" href="#">Blog</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>-->
-                </li>
-            </ul>
-        </div>
-        <!--<div class="row gutters-20 zoom-gallery">
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="user-group-photo">
-                    <a href="media/figure/photo_lg1.jpg" class="popup-zoom">
-                        <img src="media/figure/user_photo1.jpg" alt="Gallery">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="user-group-photo">
-                    <a href="media/figure/photo_lg2.jpg" class="popup-zoom">
-                        <img src="media/figure/user_photo2.jpg" alt="Gallery">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="user-group-photo">
-                    <a href="media/figure/photo_lg3.jpg" class="popup-zoom">
-                        <img src="media/figure/user_photo3.jpg" alt="Gallery">
-                    </a>
-                </div>
-            </div>
-        </div>-->
+        <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, profile)"></th:block>
         <div>
             <th:block th:if="${member.getPostsList().size() == 0}">
                 <div class="block-box post-view">
