@@ -40,7 +40,9 @@
                                 수정
                             </button>
                             <!-- 삭제 버튼    -->
-                            <button type="button" class="btn btn-outline-warning">삭제</button>
+                            <button type="button" class="btn btn-outline-warning" th:onclick="|location.href='@{/posts/delete/{id}(id=${post.getId()})}'|">
+                                삭제
+                            </button>
                         </div>
                     </div>
                     <div class="post-body">

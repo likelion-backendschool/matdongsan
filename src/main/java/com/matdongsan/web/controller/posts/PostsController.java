@@ -4,6 +4,7 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.posts.PostsRepository;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.PlaceService;
@@ -11,6 +12,7 @@ import com.matdongsan.service.PostsService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
 import com.matdongsan.web.dto.posts.PostCreateDto;
+import com.matdongsan.web.dto.posts.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class PostsController {
     private final PostsService postsService;
     private final AccountService accountService;
     private final ReplyService replyService;
+    private final PostsRepository postsRepository;
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
@@ -88,10 +92,14 @@ public class PostsController {
 
     // 게시글 수정 뷰 페이지
     @GetMapping("/posts/modify/{id}")
-    public String modifyPost(@PathVariable Long id ,Model model) {
+    public String modifyPost(@PathVariable Long id ,Model model) throws IOException {
 
         Posts posts = postsService.findById(id);
+        // posts가 가지고 있는 image들을 list로 받아 와야한다.
+        List<MultipartFile> imageList = postsService.getImageList(posts.getImageUrls());
+
         model.addAttribute("findPost", posts);
+        model.addAttribute("imageList", imageList);
 
         return "posts/posts-updateForm";
     }
@@ -101,21 +109,23 @@ public class PostsController {
     @PostMapping("/posts/update/{id}")
     public String updatePost(@PathVariable Long id , Posts posts){
 
+        log.info("update 시작 전 ");
         Posts updatePost = postsService.findById(id);
+        log.info("update 시작");
         updatePost.change(posts.getTitle() , posts.getContent() , posts.getPlace() , posts.getImageUrls() , posts.isPrivateStatus());
 
-//        return String.format("redirect:/posts/%s" , id);
+        postsRepository.save(updatePost);
+        log.info("update 끝");
         return "redirect:/posts/{id}";
     }
-/*
+
     //
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable Long id){
 
-        Posts posts = postsService.findById(id);
-        postsService.delete(posts);
+        postsService.delete(id);
 
         return "redirect:/posts";
-    }*/
+    }
 
 }

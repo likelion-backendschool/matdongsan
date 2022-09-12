@@ -1,10 +1,227 @@
+<!-- 게시글 상세 페이지 -->
 <!DOCTYPE html>
-<html lang="en">
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout.html}">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>맛동산 | 메인</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" /> <!-- 토스트 ui -->
+
+    <!-- summernote 시작 -->
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- summernote 끝-->
+
 </head>
 <body>
+<div layout:fragment="content">
+    <!--=====================================-->
+    <!--=       Container  Area Start       =-->
+    <!--=====================================-->
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="placeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">맛집 찾기</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="place-modal">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-4" type="search" id="search-input" placeholder="키워드를 입력해주세요!" aria-label="Search">
+                            <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="sendKakaoApi();return false;">Search</button>
+                        </form>
+                        <ul class="list-group list-group-flush" id="search-result-list"></ul>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="forum-topic-add">
 
+            <div class="my-4" >
+                <h3 class="heading-title">게시글 수정</h3>
+                <!-- 저장시 url -->
+                <form th:object="${findPost}" th:action="@{/posts/update/{id}(id=${findPost.getId()})}" method="post" enctype="multipart/form-data" >
+                    <!-- 위치 -->
+                    <div class="form-floating mb-3">
+                        <input hidden id="hiddenPlace" type="text" th:field="*{place.id}" readonly>
+                        <label for="place">위치</label>
+                        <input type="text" class="form-control" id="place"
+                               placeholder="위치를 입력하세요." readonly data-toggle="modal" data-target="#placeModal">
+                        <small class="form-text text-danger fieldError" th:errors="*{place.id}">place Error</small>
+<!--                        th:if="${#fields.hasErrors('placeId')}" 삭제 가능 ? -->
+                    </div>
+                    <!-- 제목 -->
+                    <div class="form-floating mb-3">
+                        <label for="title">제목</label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}" th:value="${findPost.title}" placeholder="제목을 입력하세요.">
+<!--                        th:if="${#fields.hasErrors('title')}" 삭제 가능 -->
+                        <small class="form-text text-danger fieldError" th:errors="*{title}">title Error</small>
+
+                    </div>
+                    <!-- 내용 -->
+                    <div class="form-floating mb-3">
+                        <label for="summernote">내용</label>
+                        <textarea id="summernote" th:field="*{content}" th:text="${findPost.content}"></textarea>
+                        <script>
+                            const imgForm = document.querySelector("#img-form");
+                            $(document).ready(function(){
+                                var toolbar = [
+                                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['height', ['height']],
+                                    ['table', ['table']],
+                                    ['insert', ['link', 'hr']],
+                                    ['view', ['fullscreen', 'codeview']],
+                                    ['help', ['help']]
+                                ];
+
+                                var setting = {
+                                    height : 300,
+                                    minHeight: null,
+                                    maxHeight: null,
+                                    focus : true,
+                                    lang : 'ko-KR',
+                                    toolbar : toolbar,
+                                };
+
+                                $('#summernote').summernote(setting);
+                            });
+
+                            function setThumbnail(event) {
+                                const imgContainer = document.querySelector("div#image_container");
+                                while (imgContainer.hasChildNodes()) {
+                                    imgContainer.removeChild(imgContainer.firstChild);
+                                }
+                                $.each(event.target.files,function(i,j){
+                                    let reader = new FileReader();
+
+                                    reader.onload = function(event) {
+                                        let img = document.createElement("img");
+                                        img.classList.add("img-thumbnail");
+                                        img.setAttribute("title", j.name);
+                                        img.setAttribute("src", event.target.result);
+                                        img.style.width = "200px";
+                                        img.style.height = "200px";
+                                        img.style.objectFit = "cover";
+                                        imgContainer.appendChild(img);
+                                    };
+                                    reader.readAsDataURL(j);
+                                });
+                            }
+                        </script>
+                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">content Error</small>
+                    </div>
+
+<!--                    th:field="*{imgFiles}" -->
+                    <input id="img-form" th:value="${imageList}" multiple type="file" onchange="setThumbnail(event)" >
+                    <!-- 사진 등록 부분-->
+                    <div id="image_container" class="form-floating mb-3 row">
+                    </div>
+
+                    <!-- 공개 비공개 여부 -->
+                    <div class="form-floating mb-3">
+                        <label for="privateStatus">공개 여부</label>
+                        <div class="form-check form-switch" id="privateStatus">
+                            <select th:field="*{privateStatus}" class="select2" th:value="${findPost.privateStatus}">
+                                <option value="true" selected>공개</option>
+                                <option value="false">비공개</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 저장 / 취소 버튼  -->
+                    <div class="d-grid gap-2 d-md-block">
+                        <button class="btn btn-primary" type="submit">저장</button>
+                        <button class="btn btn-primary" type="button">취소</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="block-box user-top-header">
+        </div>
+        <div class="row">
+        </div>
+
+        <script>
+            let currentPlace;
+            const readOnlyPlaceInput = document.querySelector("#place");
+            const hiddenPlaceInput = document.querySelector("#hiddenPlace");
+            const searchInput = document.querySelector('#search-input');
+            const searchResultList = document.querySelector('#search-result-list');
+
+            const sendPlaceSaveApi = (jsonStr)=>{
+                fetch("/api/place",{
+                    method:"POST",
+                    body: JSON.stringify(jsonStr),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }}
+                ).then(async res=>{
+                    console.log(res);
+                })
+            }
+
+            const removeChildren = (el)=>{
+                while(el.hasChildNodes())
+                    el.removeChild(el.firstChild);
+            }
+
+            const drawResult= (places)=>{
+                removeChildren(searchResultList);
+                for(const place of places){
+                    const el = document.createElement('li');
+                    el.className = 'list-group-item';
+                    el.textContent = place['place_name'];
+                    el.setAttribute("data-toggle",'modal');
+                    el.setAttribute("data-target",'#placeModal');
+
+                    el.onclick = ()=>{
+                        currentPlace = place;
+                        removeChildren(searchResultList);
+                        hiddenPlaceInput.value = currentPlace['id']
+                        readOnlyPlaceInput.value = currentPlace['place_name'];
+                        searchInput.value = '';
+                        sendPlaceSaveApi(place);
+                    }
+                    searchResultList.append(el);
+                }
+            }
+            const sendKakaoApi= ()=>{
+                let url = "https://dapi.kakao.com/v2/local/search/keyword.json?"+
+                    "category_group_code=CE7,FD6&"+
+                    "y=37.514322572335935&x=127.06283102249932&sort=distance&query="
+                const searchKeyword = searchInput.value;
+                if(!searchKeyword.trim()) return;
+                url+= searchKeyword.trim()
+                fetch(url,{
+                    method: "GET",
+                    headers:{"Authorization": "KakaoAK b12ed310737d8c0fe214f6b5e4532252",}
+                }).
+                then(async res =>{
+                    const json = await res.json();
+                    drawResult(json['documents'])
+                })
+            }
+        </script>
+    </div>
+</div>
 </body>
+
 </html>

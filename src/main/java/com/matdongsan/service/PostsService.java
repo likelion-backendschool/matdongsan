@@ -7,13 +7,24 @@ import com.matdongsan.domain.posts.PostsRepository;
 import com.matdongsan.util.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostsService {
 
     private final PlaceService placeService;
@@ -46,7 +57,39 @@ public class PostsService {
         return postsRepository.save(posts);
     }
 
-    /*public void delete(Posts posts) {
-        postsRepository.delete(posts);
-    }*/
+    // 이미지 폴더에서 파일을 리스트로 받아오는 로직
+    public List<MultipartFile> getImageList(String imageUrls) throws IOException {
+        List<MultipartFile> imgList = new ArrayList<>();
+
+        // 해당 File의 URL을 바꿔줘야 함 !
+        File file = new File("/Users/bc/Desktop/BC/CODE_LION/project/matdongsan/images");
+        File listFiles[] = file.listFiles();
+
+        for (File listFile : listFiles) {
+            imgList.add(getMultipartFile(listFile));
+        }
+        log.info("리스트 생성 완료");
+
+        return imgList;
+
+    }
+
+    // File 객체를 MultipartFile로 변경하는 로직
+    private MultipartFile getMultipartFile(File file) throws IOException {
+
+        log.info("변환 완료");
+        FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+
+        InputStream input = new FileInputStream(file);
+        OutputStream os = fileItem.getOutputStream();
+        IOUtils.copy(input, os);
+
+        MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+        return multipartFile;
+    }
+
+    public void delete(Long id) {
+        postsRepository.deleteById(id);
+    }
+
 }
