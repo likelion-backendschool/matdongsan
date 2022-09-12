@@ -186,6 +186,7 @@ public class AccountService implements UserDetailsService {
                 .birth(currentMember.getBirth())
                 .gender(currentMember.getGender())
                 .postsList(currentMember.getPostsList())
+                .replyList(currentMember.getReplyList())
                 .build();
     }
 

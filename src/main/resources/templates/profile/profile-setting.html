@@ -56,7 +56,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id="changeNickname" th:action="@{/profile/change/nickname}" method="post">
+                                                    <form id="changeNickname" th:action="@{/settings/profile/change/nickname}" method="post">
                                                         <div class="form-group">
                                                             <label for="nickname" class="col-form-label">닉네임</label>
                                                             <div class="d-flex flex-row">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body pb-2">
-                                <form th:action="@{/profile/change/password}" method="post" th:object="${profilePasswordDto}">
+                                <form th:action="@{/settings/profile/change/password}" method="post" th:object="${profilePasswordDto}">
                                     <div class="form-group">
                                         <label class="form-label">현재 비밀번호</label>
                                         <input type="password" class="form-control" th:field="*{originalPassword}">
@@ -117,7 +117,7 @@
             console.log("버튼 클릭")
             $.ajax({
                 type: "get",
-                url: "/profile/nicknameCheck",
+                url: "/settings/profile/nicknameCheck",
                 data : $('#changeNickname').serialize(),
                 async: true ,
                 success : function(flag){
