@@ -30,7 +30,7 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
