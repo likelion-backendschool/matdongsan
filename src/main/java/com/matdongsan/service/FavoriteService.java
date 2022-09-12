@@ -58,6 +58,7 @@ public class FavoriteService {
     }
 
     public void delete(Favorite favorite) {
+        log.info("favorite.name in service ->{}", favorite.getSubject());
         favoriteRepository.delete(favorite);
     }
 }
