@@ -24,9 +24,9 @@
                     <div class="media-body">
                         <h3 class="item-title" th:text="${member.getNickname()}">닉네임</h3>
                         <div class="item-subtitle" th:text="${member.getIntroduce()}">소개</div>
-                        <ul class="item-social">
+                        <!--<ul class="item-social" th:if="${#}">
                             <li><a th:href="@{/settings/profile}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
-                        </ul>
+                        </ul>-->
                         <ul class="user-meta">
                             <li>Posts: <span th:text="${member.getPostsList().size()}">게시글 수</span></li>
                             <li>Comments: <span th:text="${member.getReplyList().size()}">댓글 수</span></li>
