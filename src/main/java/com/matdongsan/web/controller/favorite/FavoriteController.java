@@ -35,7 +35,7 @@ public class FavoriteController {
 
         Favorite favorite = new Favorite(member, subject);
         favoriteService.save(favorite);
-        return "redirect:/profile/bookmark";
+        return "redirect:/profile/bookmark/view";
     }
 
     /**
@@ -52,7 +52,7 @@ public class FavoriteController {
         Favorite favorite = favoriteService.findById(favoriteId);
         favoriteService.replaceExistPlace(member, place, favorite);
 
-        return "redirect:/profile/bookmark";
+        return "redirect:/profile/bookmark/view";
     }
 
     /**
@@ -68,7 +68,7 @@ public class FavoriteController {
         Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
         favorite.setSubject(subject);
         favoriteService.save(favorite);
-        return "redirect:/profile/bookmark";
+        return "redirect:/profile/bookmark/view";
     }
 
     /**
@@ -83,7 +83,7 @@ public class FavoriteController {
         Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
 
         favoriteService.delete(favorite);
-        return "redirect:/profile/bookmark";
+        return "redirect:/profile/bookmark/view";
     }
 
     @GetMapping("/favorite/{favoriteId}/deletePlace/{placeId}")
@@ -92,6 +92,6 @@ public class FavoriteController {
         Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
         favorite.getPlaceList().remove(placeService.findPlace(placeId));
         favoriteService.save(favorite);
-        return "redirect:/profile/bookmark";
+        return "redirect:/profile/bookmark/view";
     }
 }

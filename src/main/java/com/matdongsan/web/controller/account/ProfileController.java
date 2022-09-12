@@ -96,7 +96,7 @@ public class ProfileController {
      * @param principal
      * @return
      */
-    @GetMapping("/profile/bookmark")
+    @GetMapping("/profile/bookmark/view")
     public String showBookmark(Model model, @AuthUser Account account, Principal principal) {
         Optional<Favorite> optionalFavorite = Optional.ofNullable(favoriteService.findTopByMember(account.getMember()));
         if (optionalFavorite.isPresent()) {
