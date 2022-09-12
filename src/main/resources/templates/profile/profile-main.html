@@ -29,7 +29,7 @@
                         </ul>
                         <ul class="user-meta">
                             <li>Posts: <span th:text="${member.getPostsList().size()}">게시글 수</span></li>
-                            <li>Comments: <span>12</span></li>
+                            <li>Comments: <span th:text="${member.getReplyList().size()}">댓글 수</span></li>
                         </ul>
                     </div>
                 </div>
