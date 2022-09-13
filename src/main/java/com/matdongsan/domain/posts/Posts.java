@@ -63,10 +63,9 @@ public class Posts{
     }
 
     // 수정 메소드
-    public void change(String title, String content, Place place, String imageUrls , boolean privateStatus) {
+    public void change(String title, String content,  String imageUrls , boolean privateStatus) {
         this.title = title;
         this.content = content;
-        this.place = place;
         this.imageUrls = imageUrls == null ? "" : imageUrls;
         this.privateStatus = privateStatus;
     }

@@ -10,13 +10,17 @@ import java.util.List;
 @Getter @Setter
 public class PostUpdateDto {
 
+    private Long id;
+
     private String title;
 
     private String content;
 
-    private List<MultipartFile> imgFiles;
+//    private List<MultipartFile> imgFiles;
 
-    private LocalDateTime modifiedTime;
+    //    private LocalDateTime modifiedTime;
+    private String placeName;
+
 
     private Boolean privateStatus;
 }

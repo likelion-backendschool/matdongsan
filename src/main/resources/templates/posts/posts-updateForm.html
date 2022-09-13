@@ -56,11 +56,10 @@
                 <form th:object="${findPost}" th:action="@{/posts/update/{id}(id=${findPost.getId()})}" method="post" enctype="multipart/form-data" >
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
-                        <input hidden id="hiddenPlace" type="text" th:field="*{place.id}" readonly>
                         <label for="place">위치</label>
                         <input type="text" class="form-control" id="place"
-                               th:placeholder="${findPost.getPlace().getPlaceName()}" readonly>
-                        <small class="form-text text-danger fieldError" th:errors="*{place.id}">place Error</small>
+                               th:placeholder="${findPost.placeName}" readonly>
+<!--                        <small class="form-text text-danger fieldError" th:errors="*{place.id}">place Error</small>-->
 <!--                        th:if="${#fields.hasErrors('placeId')}" 삭제 가능 ? -->
                     </div>
                     <!-- 제목 -->

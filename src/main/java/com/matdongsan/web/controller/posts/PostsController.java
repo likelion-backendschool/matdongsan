@@ -31,6 +31,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -115,21 +116,27 @@ public class PostsController {
         // posts가 가지고 있는 image들을 list로 받아 와야한다.
         List<MultipartFile> imageList = postsService.getImageList(posts.getImageUrls());
 
-        model.addAttribute("findPost", posts);
+        PostUpdateDto dto = new PostUpdateDto();
+        dto.setId(posts.getId());
+        dto.setTitle(posts.getTitle());
+        dto.setContent(posts.getContent());
+        dto.setPlaceName(posts.getPlace().getPlaceName());
+        dto.setPrivateStatus(posts.isPrivateStatus());
+
+
+        model.addAttribute("findPost", dto);
         model.addAttribute("imageList", imageList);
 
         return "posts/posts-updateForm";
     }
 
 
-
     @PostMapping("/posts/update/{id}")
-    public String updatePost(@PathVariable Long id , Posts posts){
-
+    public String updatePost(@PathVariable String id, PostUpdateDto updateDto) {
         log.info("update 시작 전 ");
-        Posts updatePost = postsService.findById(id);
+        Posts updatePost = postsService.findById(Long.parseLong(id));
         log.info("update 시작");
-        updatePost.change(posts.getTitle() , posts.getContent() , posts.getPlace() , posts.getImageUrls() , posts.isPrivateStatus());
+        updatePost.change(updateDto.getTitle(), updateDto.getContent(), "", updateDto.getPrivateStatus());
 
         postsRepository.save(updatePost);
         log.info("update 끝");
