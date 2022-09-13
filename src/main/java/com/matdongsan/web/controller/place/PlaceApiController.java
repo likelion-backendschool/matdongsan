@@ -37,7 +37,7 @@ public class PlaceApiController {
         return ResponseEntity.ok().body("ok");
     }
 
-    @PostMapping("/{placeId}/favorite")
+    /*@PostMapping("/{placeId}/favorite")
     public ResponseEntity<FavoriteDto> doFavorite(Principal principal, @PathVariable("placeId") Long placeId) {
         Account account = accountService.findAccountByUsername(principal.getName());
         Member member = account.getMember();
@@ -49,7 +49,7 @@ public class PlaceApiController {
         boolean isFavorite = favoriteService.existFavorite(member, place);
 
         return ResponseEntity.ok().body(new FavoriteDto(count, isFavorite));
-    }
+    }*/
 
     @Data
     @AllArgsConstructor

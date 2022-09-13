@@ -279,15 +279,16 @@
                                             <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
                                           </span>
                                           <span class="media-body">
-                                              <span class="item-title" sec:authentication="principal.username">닉네임</span>
+                                              <span class="item-title" sec:authentication="principal.nickname">닉네임</span>
                                           </span>
                                       </span>
               </button>
               <div class="dropdown-menu dropdown-menu-right">
                 <ul class="admin-options">
-                  <li><a th:href="@{/profile}">프로필</a></li>
+                  <li><a th:href="@{/profile/{nickname}(nickname=${#authentication.getName()})}">프로필</a></li>
+                  <li><a th:href="@{/settings/profile}">프로필 설정</a></li>
                   <li><a th:href="@{/profile/post}">나만의 맛집</a></li>
-                  <li><a th:href="@{/favorite/list}">맛집 리스트 관리</a></li>
+                  <li><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
                   <li>
                     <form action="#" name="logout" th:action="@{/logout}" method="post">
                       <a href="javascript:logout.submit();">

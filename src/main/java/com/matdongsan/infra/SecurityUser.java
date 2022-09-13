@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 @Setter
 public class SecurityUser extends User {
     private Account account;
+    private String nickname;
 
     public SecurityUser(Account account) {
         super(account.getUsername(), account.getPassword(), AuthorityUtils.createAuthorityList(account.getAccountRole().toString()));
@@ -21,5 +22,6 @@ public class SecurityUser extends User {
         log.info("SecurityUser account.accountRole = {}", account.getAccountRole().toString());
 
         this.account = account;
+        this.nickname = account.getMember().getNickname();
     }
 }

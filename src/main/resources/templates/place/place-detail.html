@@ -103,10 +103,48 @@
                         <ul class="action-area">
                             <li id="quantity-holder">
                                 <div class="input-group quantity-holder">
-                                    <button id="bookmarkBtn" class="quantity-btn quantity-minus" type="button">
-                                        <i id="bookmarkIcon" class="fa-regular fa-bookmark"></i>
-                                        <span id="favoriteCount" >30</span>
-                                    </button>
+
+                                    <!-- modal 형식의 맛집 리스트 이동하기 -->
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크에 추가하기</button>
+                                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">북마크에 추가하기</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div th:each="favorite, loop : ${favorites}">
+                                                        <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{/favorite/changeFavorite/{favoriteId}/{placeId}(favoriteId = ${favorite.id}, placeId = ${place.id})}"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- toggle 형식의 맛집 리스트 이동하기 -->
+                                    <!--<div class="dropdown">
+                                        <a class="btn btn-primary dropdown-toggle btn-sm" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            맛집 리스트 이동하기
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li th:each="favorite, loop : ${favorites}">
+                                                <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{|/favorite/changeFavorite/${place.id}|}"></a>
+                                            </li>
+                                        </ul>
+                                    </div>-->
+
+                                    <!-- 기존 favorite기능 -> 좋아요 기능으로 바꿀 예정? -->
+                                    <!--<div class="input-group quantity-holder">
+                                        <button id="bookmarkBtn" class="quantity-btn quantity-minus" type="button">
+                                            <i id="bookmarkIcon" class="fa-regular fa-bookmark"></i>
+                                            <span id="favoriteCount" >30</span>
+                                        </button>
+                                    </div>-->
+
                                 </div>
                             </li>
                         </ul>

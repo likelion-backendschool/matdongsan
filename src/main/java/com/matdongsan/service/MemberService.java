@@ -3,9 +3,13 @@ package com.matdongsan.service;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
+import com.matdongsan.infra.SecurityUser;
 import com.matdongsan.web.dto.member.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,5 +64,24 @@ public class MemberService {
         Member currentMember = account.getMember();
         currentMember.setNickname(nickname);
         memberRepository.save(currentMember);
+        forceAuthentication(account);
+    }
+
+    public void forceAuthentication (Account account) {
+        SecurityUser securityUser = new SecurityUser(account);
+
+        UsernamePasswordAuthenticationToken authentication =
+                UsernamePasswordAuthenticationToken.authenticated(
+                        securityUser,
+                        null,
+                        securityUser.getAuthorities()
+                );
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+    }
+
+    public void deleteMember(Member member) {
+        memberRepository.delete(member);
     }
 }

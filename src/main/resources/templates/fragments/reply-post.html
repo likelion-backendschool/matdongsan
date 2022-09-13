@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Post 댓글 조각화 -->
+<div class="post-comment" th:fragment="reply_fragment(paging,replyDto)">
+    <div class="comment-body">
+        <div>
+            <div class="card my-3" th:each="reply : ${paging}">
+                <div class="post-body">
+                    <div class="card-text" th:text="${reply.comment}"></div>
+                </div>
+                <div class="post-footer">
+                    <ul>
+                        <li>
+                            <a th:text="${reply.writer.account.username}"></a>
+                        </li>
+                        <li class="post-react">
+                            <a href="javascript:void(0);" class="recommend icofont-love"
+                               th:href="@{|/reply/like/${reply.id}|}">추천
+                                <span class="badge rounded-pill bg-success"
+                                      th:text="${#lists.size(reply.replyLike)}"></span></a></li>
+
+                        <li><a th:href="@{|/reply/update/${reply.id}|}"
+                               class="edit icofont-comment"
+                               sec:authorize="isAuthenticated()"
+                               th:if="${#authentication.principal.username == reply.writer.account.username}"
+                        ><i class=" icofont-fix-tools"></i>수정 </a></li>
+
+                        <li><a th:href="@{|/reply/delete/${reply.id}|}"
+                               class="delete icofont-delete-alt"
+                               sec:authorize="isAuthenticated()"
+                               th:if="${#authentication.principal.username == reply.writer.account.username}"
+                        ><i class="icofont-delete-alt"></i>삭제</a></li>
+
+                        <!--댓글등록시간-->
+                        <div class="d-flex justify-content-end">
+                            <div th:if="${reply.modifyDate == null}"
+                                 class="badge bg-light text-dark p-2 text-start">
+                                <div class="mb-2">등록 시간</div>
+                                <div th:text="${reply.replyTime}"></div>
+                            </div>
+                            <div th:if="${reply.modifyDate != null}"
+                                 class="badge bg-light text-dark p-2 text-start mx-3">
+                                <div class="mb-2">수정 시간</div>
+                                <div th:text="${reply.replyTime}"></div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{|/posts/${post.id}|}" th:object="${replyDto}" method="post">
+            <div class="input-box">
+                <input type="text" th:field="*{comment}" class="form-control"
+                       placeholder="댓글을 입력해 주세요.">
+            </div>
+            <button type="submit" class="btn btn-primary mx-2">등록</button>
+        </form>
+        <!-- 페이징처리 시작 -->
+        <div th:if="${!paging.isEmpty()}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{|?page=${paging.number-1}|}">
+                        <span>이전</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                    th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                    th:classappend="${page == paging.number} ? 'active'"
+                    class="page-item">
+                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                        <span>다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+        <script type='text/javascript'>
+            $(".delete").click(function(){
+
+            });
+            const delete_elements = document.getElementsByClassName("delete");
+            Array.from(delete_elements).forEach(function (element) {
+                element.addEventListener('click', function () {
+                    if (confirm("정말로 삭제하시겠습니까?")) {
+                        location.href = this.dataset.uri;
+                    }
+                    ;
+                });
+            });
+            const recommend_elements = document.getElementsByClassName("recommend");
+            Array.from(recommend_elements).forEach(function (element) {
+                element.addEventListener('click', function () {
+                    if (confirm("정말로 추천하시겠습니까?")) {
+                        location.href = this.dataset.uri;
+                    }
+                    ;
+                });
+            });
+
+            const modify_elements = document.getElementsByClassName("edit");
+            Array.from(modify_elements).forEach(function (element) {
+                element.addEventListener('click', function () {
+                    if (confirm("정말로 수정하시겠습니까?")) {
+                        location.href = this.dataset.uri;
+                    }
+                    ;
+                });
+            });
+        </script>
+    </div>
+</div>

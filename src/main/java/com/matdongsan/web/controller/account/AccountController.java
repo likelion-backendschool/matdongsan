@@ -1,6 +1,7 @@
 package com.matdongsan.web.controller.account;
 
 import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberAge;
@@ -74,7 +75,7 @@ public class AccountController {
 
     @ResponseBody
     @RequestMapping(value = "/account/idCheck")
-    public boolean overlappedID(@RequestParam(value = "username") String username){
+    public boolean overlappedID(@RequestParam(value = "username") String username) {
         boolean flag = false;
         if (accountService.checkDuplicatedAccount(username)) {
             flag = true;
@@ -100,5 +101,12 @@ public class AccountController {
         Member currentMember = account.getMember();
         memberService.updateCurrentMember(currentMember, memberInfoDto);
         return "redirect:/";
+    }
+
+    @PostMapping("/withdrawal")
+    public String accountWithdrawal(@AuthUser Account account) {
+        log.info("회원탈퇴 실행");
+        accountService.withdrawalAccount(account);
+        return "redirect:/logout";
     }
 }

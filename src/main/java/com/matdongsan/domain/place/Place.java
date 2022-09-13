@@ -27,9 +27,6 @@ public class Place {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
     private List<Posts> posts = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
-    private List<Favorite> favorites = new ArrayList<>();
-
     @Column(columnDefinition = "TEXT")
     private String menus;
     private String facilityInfo;
@@ -51,6 +48,5 @@ public class Place {
         this.facilityInfo = facility;
         this.mainPhotoUrl = mainPhotoUrl;
     }
-
 
 }

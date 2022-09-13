@@ -186,6 +186,7 @@ public class AccountService implements UserDetailsService {
                 .birth(currentMember.getBirth())
                 .gender(currentMember.getGender())
                 .postsList(currentMember.getPostsList())
+                .replyList(currentMember.getReplyList())
                 .build();
     }
 
@@ -196,6 +197,13 @@ public class AccountService implements UserDetailsService {
     public void changeAccountPassword(String password, Account currentUser) {
         currentUser.setPassword(passwordEncoder.encode(password));
         accountRepository.save(currentUser);
+    }
+
+    public void withdrawalAccount(Account account) {
+        log.info("탈퇴 메서드 실행");
+//        memberService.deleteMember(account.getMember());
+        accountRepository.deleteByUsername(account.getUsername());
+//        accountRepository.delete(account);
     }
 
     /**

@@ -4,7 +4,9 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.posts.Posts;
+
 import com.matdongsan.domain.posts.PostsRepository;
+
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.PlaceService;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,21 +44,24 @@ public class PostsController {
     private final PostsService postsService;
     private final AccountService accountService;
     private final ReplyService replyService;
+
     private final PostsRepository postsRepository;
+
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto){
+        Posts post = postsService.findById(id);
+        model.addAttribute("post", post);
 
-        Page<Reply> paging = replyService.getReplyList(page);
+        List<Reply> replyList = post.getReplyList();
+        replyService.refreshTime(replyList);
+
+        Page<Reply> paging = replyService.getReplyList(page, id);
         model.addAttribute("paging", paging);
 
-        Posts posts = postsService.findById(id);
-        posts.getPlace(); //수동 초기화
-
-        model.addAttribute("post" , posts);
 
         return "/posts/post-detail";
     }

@@ -4,7 +4,7 @@
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
        xmlns="http://www.w3.org/1999/html"
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout.html}">
+       layout:decorate="~{layouts/layout.html}">
 <head>
     <title>맛동산 | 프로필</title>
 </head>
@@ -15,67 +15,7 @@
     <!--=====================================-->
     <div class="container">
         <!-- Banner Area Start -->
-        <div class="banner-user">
-            <div class="banner-content">
-                <div class="media">
-                    <div class="item-img">
-                        <img src="media/banner/user_1.jpg" alt="User">
-                    </div>
-                    <div class="media-body">
-                        <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
-                        <div class="item-subtitle" th:text="${member.getIntroduce()}">소개</div>
-                        <ul class="item-social">
-                            <li><a th:href="@{/profile/setting}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
-                        </ul>
-                        <ul class="user-meta">
-                            <li>Posts: <span th:text="${member.getPostsList().size()}">게시글 수</span></li>
-                            <li>Comments: <span>12</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="block-box user-top-header">
-            <ul class="menu-list">
-                <li class="active"><a th:href="@{/profile}">나의 게시물</a></li>
-                <li class=""><a th:href="@{/profile/bookmark}">북마크 관리</a></li>
-                <li>
-                    <!--<div class="dropdown">
-                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                            ...
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Shop</a>
-                            <a class="dropdown-item" href="#">Blog</a>
-                            <a class="dropdown-item" href="#">Others</a>
-                        </div>
-                    </div>-->
-                </li>
-            </ul>
-        </div>
-        <!--<div class="row gutters-20 zoom-gallery">
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="user-group-photo">
-                    <a href="media/figure/photo_lg1.jpg" class="popup-zoom">
-                        <img src="media/figure/user_photo1.jpg" alt="Gallery">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="user-group-photo">
-                    <a href="media/figure/photo_lg2.jpg" class="popup-zoom">
-                        <img src="media/figure/user_photo2.jpg" alt="Gallery">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="user-group-photo">
-                    <a href="media/figure/photo_lg3.jpg" class="popup-zoom">
-                        <img src="media/figure/user_photo3.jpg" alt="Gallery">
-                    </a>
-                </div>
-            </div>
-        </div>-->
+        <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, profile)"></th:block>
         <div>
             <th:block th:if="${member.getPostsList().size() == 0}">
                 <div class="block-box post-view">
@@ -91,7 +31,7 @@
                     <div class="post-header">
                         <div class="media">
                             <div class="user-img">
-                                <img src="media/figure/chat_5.jpg" alt="Aahat">
+                                <img th:src="@{/media/figure/chat_5.jpg}" alt="Aahat">
                             </div>
                             <div class="media-body">
                                 <div class="user-title"><a th:text="${post.getAuthor().getNickname()}">닉네임</a></div>
@@ -120,9 +60,9 @@
                             <div class="post-meta">
                                 <div class="post-reaction">
                                     <div class="reaction-icon">
-                                        <img src="media/figure/reaction_1.png" alt="icon">
-                                        <img src="media/figure/reaction_2.png" alt="icon">
-                                        <img src="media/figure/reaction_3.png" alt="icon">
+                                        <img th:src="@{/media/figure/reaction_1.png}" alt="icon">
+                                        <img th:src="@{/media/figure/reaction_2.png}" alt="icon">
+                                        <img th:src="@{/media/figure/reaction_3.png}" alt="icon">
                                     </div>
                                     <div class="meta-text">25</div>
                                 </div>
@@ -137,13 +77,13 @@
                             <li class="post-react">
                                 <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                 <ul class="react-list">
-                                    <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                    <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_1.png}" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_3.png}" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_4.png}" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_2.png}" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_7.png}" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_6.png}" alt="Like"></a></li>
+                                    <li><a href="#"><img th:src="@{/media/figure/reaction_5.png}" alt="Like"></a></li>
                                 </ul>
                             </li>
                             <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
@@ -157,7 +97,7 @@
                                         <div class="post-header">
                                             <div class="media">
                                                 <div class="user-img">
-                                                    <img src="media/figure/chat_14.jpg" alt="Aahat">
+                                                    <img th:src="@{/media/figure/chat_14.jpg}" alt="Aahat">
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="user-title"><a href="user-timeline.html">Aahat Akter</a></div>
@@ -184,19 +124,19 @@
                                         <div class="post-footer">
                                             <ul>
                                                 <li class="react-icon">
-                                                    <img src="media/figure/reaction_1.png" alt="icon">
-                                                    <img src="media/figure/reaction_2.png" alt="icon">
+                                                    <img th:src="@{/media/figure/reaction_1.png}" alt="icon">
+                                                    <img th:src="@{/media/figure/reaction_2.png}" alt="icon">
                                                 </li>
                                                 <li class="post-react">
                                                     <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
                                                     <ul class="react-list">
-                                                        <li><a href="#"><img src="media/figure/reaction_1.png" alt="Like"></a></li>
-                                                        <li><a href="#"><img src="media/figure/reaction_3.png" alt="Like"></a></li>
-                                                        <li><a href="#"><img src="media/figure/reaction_4.png" alt="Like"></a></li>
-                                                        <li><a href="#"><img src="media/figure/reaction_2.png" alt="Like"></a></li>
-                                                        <li><a href="#"><img src="media/figure/reaction_7.png" alt="Like"></a></li>
-                                                        <li><a href="#"><img src="media/figure/reaction_6.png" alt="Like"></a></li>
-                                                        <li><a href="#"><img src="media/figure/reaction_5.png" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_1.png}" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_3.png}" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_4.png}" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_2.png}" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_7.png}" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_6.png}" alt="Like"></a></li>
+                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_5.png}" alt="Like"></a></li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
@@ -211,7 +151,7 @@
                         </ul>
                         <div class="comment-reply">
                             <div class="user-img">
-                                <img src="media/figure/chat_15.jpg" alt="Aahat">
+                                <img th:src="@{/media/figure/chat_15.jpg}" alt="Aahat">
                             </div>
                             <div class="input-box">
                                 <input type="text" name="comment" class="form-control" placeholder="Your Reply....">

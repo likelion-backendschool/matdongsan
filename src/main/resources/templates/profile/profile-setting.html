@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group ml-4">
                                     <label class="form-label">닉네임</label>
-                                    <input type="text" class="form-control mb-1" th:value="${member.getNickname()}" data-toggle="modal" data-target="#nicknameChange" data-whatever="@mdo" autocomplete="off" readonly>
+                                    <input type="text" class="form-control mb-1" th:value="${#authentication.principal.nickname}" data-toggle="modal" data-target="#nicknameChange" data-whatever="@mdo" autocomplete="off" readonly>
                                     <div class="modal fade" id="nicknameChange" tabindex="-1" role="dialog" aria-labelledby="nicknameChangeLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -56,11 +56,11 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form id="changeNickname" th:action="@{/profile/change/nickname}" method="post">
+                                                    <form id="changeNickname" th:action="@{/settings/profile/change/nickname}" method="post">
                                                         <div class="form-group">
                                                             <label for="nickname" class="col-form-label">닉네임</label>
                                                             <div class="d-flex flex-row">
-                                                                <input type="text" class="form-control w-75" name="nickname" id="nickname" th:value="${member.getNickname()}">
+                                                                <input type="text" class="form-control w-75" name="nickname" id="nickname" th:value="${#authentication.principal.nickname}">
                                                                 <button type="button" class="btn btn-primary w-25 mx-3" id="duplicateId">중복 확인</button>
                                                             </div>
                                                             <p id="dupplicateMsg">변경할 닉네임을 입력해주세요.</p>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body pb-2">
-                                <form th:action="@{/profile/change/password}" method="post" th:object="${profilePasswordDto}">
+                                <form th:action="@{/settings/profile/change/password}" method="post" th:object="${profilePasswordDto}">
                                     <div class="form-group">
                                         <label class="form-label">현재 비밀번호</label>
                                         <input type="password" class="form-control" th:field="*{originalPassword}">
@@ -105,7 +105,9 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="account-connections">
-                            <button class="btn btn-danger">회원 탈퇴</button>
+                            <form id="withdrawalForm" th:action="@{/withdrawal}" method="post">
+                                <button type="button" class="btn btn-danger" id="withdrawalBtn">회원 탈퇴</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -113,11 +115,40 @@
         </div>
     </div>
     <script>
+        $("#withdrawalBtn").click(function () {
+            console.log("탈퇴 버튼 클릭");
+            Swal.fire({
+                title: '계정을 지우시겠습니까?',
+                text: "삭제된 계정은 복구할 수 없습니다.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '조아',
+                cancelButtonText: '시럿'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#withdrawalForm").submit();
+                    /*$.ajax({
+                        url: '/withdrawal',
+                        type: 'post',
+                        dataType: 'json',
+                        data: $('form#withdrawalForm').serialize(),
+                        success: function(data) {
+                            console.log("계정 탈퇴");
+                        },
+                        then: function () {
+                            location.href="/";
+                        },
+                    });*/
+                }
+            })
+        });
         $("#duplicateId").click(function(){
             console.log("버튼 클릭")
             $.ajax({
                 type: "get",
-                url: "/profile/nicknameCheck",
+                url: "/settings/profile/nicknameCheck",
                 data : $('#changeNickname').serialize(),
                 async: true ,
                 success : function(flag){
