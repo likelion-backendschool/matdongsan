@@ -16,6 +16,9 @@ import com.matdongsan.web.dto.posts.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,18 +60,32 @@ public class PostsController {
     }
 
     // 게시글 전체 조회
+    // 페이징 처리 하기
+//    @GetMapping("/posts")
+//    public String showAllPosts(Model model) {
+//        List<Posts> posts = postsService.findAll();
+//
+//        model.addAttribute("postList", posts);
+//
+//        return "/posts/posts-list";
+//    }
+
     @GetMapping("/posts")
-    public String showAllPosts(Model model) {
-        List<Posts> posts = postsService.findAll();
+    public String showAllPosts(Model model , @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
 
-        model.addAttribute("postList", posts);
+        // 게시글 전체 조회
+        Page<Posts> paging = postsService.getList(pageable);
+        // model에 담기
+        model.addAttribute("paging" , paging);
 
-        return "/posts/posts-list";
+        return "posts/posts-list";
     }
+
 
     // 게시글 등록 폼 페이지
     @GetMapping("/posts/new")
     public String newPost(Model model) {
+
         model.addAttribute("postCreateDto", new PostCreateDto());
         return "/posts/posts-newForm";
     }

@@ -7,6 +7,7 @@ import com.matdongsan.util.ImageUtil;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,6 +33,8 @@ public class Posts{
     @Column(nullable = false , columnDefinition = "TEXT")
     private String content; // 내용
 
+    // NPE 때문에 추가
+    @Nullable
     private String imageUrls;
 
     @Column(updatable = false) // 수정 불가

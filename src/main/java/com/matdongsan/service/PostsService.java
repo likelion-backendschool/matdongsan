@@ -12,6 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -92,4 +96,9 @@ public class PostsService {
         postsRepository.deleteById(id);
     }
 
+    // 게시글 전체 조회를 페이징으로
+    public Page<Posts> getList(Pageable pageable) {
+
+        return postsRepository.findAll(pageable);
+    }
 }
