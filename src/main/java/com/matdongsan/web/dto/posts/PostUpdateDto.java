@@ -21,6 +21,5 @@ public class PostUpdateDto {
     //    private LocalDateTime modifiedTime;
     private String placeName;
 
-
     private Boolean privateStatus;
 }

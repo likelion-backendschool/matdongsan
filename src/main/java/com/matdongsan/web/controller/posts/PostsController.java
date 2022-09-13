@@ -113,6 +113,7 @@ public class PostsController {
     public String modifyPost(@PathVariable Long id ,Model model) throws IOException {
 
         Posts posts = postsService.findById(id);
+
         // posts가 가지고 있는 image들을 list로 받아 와야한다.
         List<MultipartFile> imageList = postsService.getImageList(posts.getImageUrls());
 
@@ -132,14 +133,14 @@ public class PostsController {
 
 
     @PostMapping("/posts/update/{id}")
-    public String updatePost(@PathVariable String id, PostUpdateDto updateDto) {
-        log.info("update 시작 전 ");
-        Posts updatePost = postsService.findById(Long.parseLong(id));
-        log.info("update 시작");
+    public String updatePost(@PathVariable Long id, PostUpdateDto updateDto) {
+
+        Posts updatePost = postsService.findById(id);
+
         updatePost.change(updateDto.getTitle(), updateDto.getContent(), "", updateDto.getPrivateStatus());
 
         postsRepository.save(updatePost);
-        log.info("update 끝");
+
         return "redirect:/posts/{id}";
     }
 
