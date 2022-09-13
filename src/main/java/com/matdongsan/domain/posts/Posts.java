@@ -67,7 +67,7 @@ public class Posts{
         this.title = title;
         this.content = content;
         this.place = place;
-        this.imageUrls = imageUrls;
+        this.imageUrls = imageUrls == null ? "" : imageUrls;
         this.privateStatus = privateStatus;
     }
 }

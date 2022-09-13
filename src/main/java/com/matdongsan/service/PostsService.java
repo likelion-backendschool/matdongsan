@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -65,13 +66,14 @@ public class PostsService {
     public List<MultipartFile> getImageList(String imageUrls) throws IOException {
         List<MultipartFile> imgList = new ArrayList<>();
 
-        // 해당 File의 URL을 바꿔줘야 함 !
-        File file = new File("/Users/bc/Desktop/BC/CODE_LION/project/matdongsan/images");
-        File listFiles[] = file.listFiles();
-
-        for (File listFile : listFiles) {
-            imgList.add(getMultipartFile(listFile));
+        for (String imgName : imageUrls.split(",")){
+            if (StringUtils.isEmpty(imgName)){
+                continue;
+            }
+            File file = new File(imageUtil.getFullPath(imgName));
+            imgList.add(getMultipartFile(file));
         }
+
         log.info("리스트 생성 완료");
 
         return imgList;

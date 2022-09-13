@@ -59,7 +59,7 @@
                         <input hidden id="hiddenPlace" type="text" th:field="*{place.id}" readonly>
                         <label for="place">위치</label>
                         <input type="text" class="form-control" id="place"
-                               placeholder="위치를 입력하세요." readonly data-toggle="modal" data-target="#placeModal">
+                               th:placeholder="${findPost.getPlace().getPlaceName()}" readonly>
                         <small class="form-text text-danger fieldError" th:errors="*{place.id}">place Error</small>
 <!--                        th:if="${#fields.hasErrors('placeId')}" 삭제 가능 ? -->
                     </div>
@@ -129,7 +129,8 @@
                     </div>
 
 <!--                    th:field="*{imgFiles}" -->
-                    <input id="img-form" th:value="${imageList}" multiple type="file" onchange="setThumbnail(event)" >
+<!--                    <input id="img-form" th:value="${imageList}" multiple type="file" onchange="setThumbnail(event)" >-->
+                    <input id="img-form" multiple type="file" onchange="setThumbnail(event)" >
                     <!-- 사진 등록 부분-->
                     <div id="image_container" class="form-floating mb-3 row">
                     </div>
@@ -147,8 +148,8 @@
 
                     <!-- 저장 / 취소 버튼  -->
                     <div class="d-grid gap-2 d-md-block">
-                        <button class="btn btn-primary" type="submit">저장</button>
-                        <button class="btn btn-primary" type="button">취소</button>
+                        <button class="btn btn-primary" type="submit">수정</button>
+                        <button class="btn btn-primary" type="button" th:href="@{/posts/{id}(id=findPost.id)}">취소</button>
                     </div>
                 </form>
             </div>
