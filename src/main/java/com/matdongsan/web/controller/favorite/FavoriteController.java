@@ -81,6 +81,7 @@ public class FavoriteController {
     public String deleteFavorite(@AuthUser Account account, @PathVariable Long favoriteId) {
         Member member = account.getMember();
         Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        log.info("favorite.name -> {}",favorite.getSubject());
 
         favoriteService.delete(favorite);
         return "redirect:/profile/bookmark/view";
