@@ -14,57 +14,41 @@
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
     <div class="container">
-        <div class="newsfeed-search">
-            <ul class="account-list">
-                <li class="active-account">
-                    <a href="#">
-                                <span class="account-icon">
-                                    <i class="icofont-users"></i>
-                                </span>
-                        <span class="account-text">
-                                    Total Members:
-                                </span>
-                        <span class="account-count">08</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="search-list">
-                <li class="search-filter">
-                    <button class="drop-btn" type="button">
-                        <i class="icofont-abacus-alt"></i>
-                    </button>
-                    <div class="drop-menu">
-                        <select class="select2">
-                            <option>--Everything--</option>
-                            <option>Status</option>
-                            <option>Quotes</option>
-                            <option>Photos</option>
-                            <option>Videos</option>
-                            <option>Audios</option>
-                            <option>slideshows</option>
-                            <option>files</option>
-                            <option>Updates</option>
-                            <option>New Members</option>
-                            <option>Posts</option>
-                            <option>New Groups</option>
-                        </select>
-                    </div>
-                </li>
-                <li class="search-input">
-                    <button class="drop-btn" type="button">
-                        <i class="icofont-search"></i>
-                    </button>
-                    <div class="drop-menu">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search....">
-                            <div class="input-group-append">
-                                <button class="search-btn" type="button"><i class="icofont-search-1"></i></button>
-                            </div>
+        <form>
+            <div class="newsfeed-search px-3">
+                <ul class="search-list">
+                    <li class="search-filter">
+                        <button class="drop-btn" type="button">
+                            <i class="icofont-abacus-alt"></i>
+                        </button>
+                        <div class="drop-menu">
+                            <select class="select2">
+                                <option>--전체 지역--</option>
+                                <option>서울</option>
+                                <option>경기</option>
+                                <option>강원</option>
+                                <option>충청</option>
+                                <option>전라</option>
+                                <option>제주</option>
+                            </select>
+                            <select class="select2">
+                                <option>--전체 분야--</option>
+                                <option>한식</option>
+                                <option>양식</option>
+                                <option>중식</option>
+                                <option>일식</option>
+                            </select>
                         </div>
+                    </li>
+                </ul>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="검색어를 입력해주세요.">
+                    <div class="input-group-append">
+                        <button class="search-btn" type="button"><i class="icofont-search-1"></i></button>
                     </div>
-                </li>
-            </ul>
-        </div>
+                </div>
+            </div>
+        </form>
         <div class="row">
             <div class="col-6">
                 <div class="text-center">

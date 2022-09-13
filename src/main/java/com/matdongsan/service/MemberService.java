@@ -63,6 +63,7 @@ public class MemberService {
     public void changeMemberNickname(String nickname, Account account) {
         Member currentMember = account.getMember();
         currentMember.setNickname(nickname);
+        memberRepository.save(currentMember);
         forceAuthentication(account);
     }
 
