@@ -6,7 +6,7 @@ import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.MemberService;
-import com.matdongsan.service.PostsService;
+import com.matdongsan.service.PostService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class ReplyController {
 
-    private final PostsService postsService;
+    private final PostService postService;
     private final ReplyService replyService;
     private final MemberService memberService;
 
@@ -42,7 +42,7 @@ public class ReplyController {
             log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
             return "redirect:/posts/{postId}";
         }
-        Post post = postsService.findById(id);
+        Post post = postService.findById(id);
         Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
         replyService.saveReply(post, replyDto, memberId);
         return "redirect:/posts/{postId}";

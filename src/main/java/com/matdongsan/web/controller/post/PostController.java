@@ -7,7 +7,7 @@ import com.matdongsan.domain.post.PostRepository;
 
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
-import com.matdongsan.service.PostsService;
+import com.matdongsan.service.PostService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
 import com.matdongsan.web.dto.posts.PostCreateDto;
@@ -36,7 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostsService postsService;
+    private final PostService postService;
     private final AccountService accountService;
     private final ReplyService replyService;
 
@@ -48,7 +48,7 @@ public class PostController {
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto){
-        Post post = postsService.findById(id);
+        Post post = postService.findById(id);
         model.addAttribute("post", post);
 
         List<Reply> replyList = post.getReplyList();
@@ -76,7 +76,7 @@ public class PostController {
     public String showAllPosts(Model model , @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
 
         // 게시글 전체 조회
-        Page<Post> paging = postsService.getList(pageable);
+        Page<Post> paging = postService.getList(pageable);
         // model에 담기
         model.addAttribute("paging" , paging);
 
@@ -101,7 +101,7 @@ public class PostController {
             return "post-newForm";
         }
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
-        Post newPost = postsService.savePost(currentMember, postCreateDto);
+        Post newPost = postService.savePost(currentMember, postCreateDto);
         Long id = newPost.getId();
         redirectAttributes.addAttribute("id", id);
 
@@ -113,10 +113,10 @@ public class PostController {
     @GetMapping("/post/modify/{id}")
     public String modifyPost(@PathVariable Long id ,Model model) throws IOException {
 
-        Post post = postsService.findById(id);
+        Post post = postService.findById(id);
 
         // posts가 가지고 있는 image들을 list로 받아 와야한다.
-        List<MultipartFile> imageList = postsService.getImageList(post.getImageUrls());
+        List<MultipartFile> imageList = postService.getImageList(post.getImageUrls());
 
         PostUpdateDto dto = new PostUpdateDto();
         dto.setId(post.getId());
@@ -136,7 +136,7 @@ public class PostController {
     @PostMapping("/post/update/{id}")
     public String updatePost(@PathVariable Long id, PostUpdateDto updateDto) {
 
-        Post updatePost = postsService.findById(id);
+        Post updatePost = postService.findById(id);
 
         updatePost.change(updateDto.getTitle(), updateDto.getContent(), "", updateDto.getPrivateStatus());
 
@@ -149,7 +149,7 @@ public class PostController {
     @GetMapping("/post/delete/{id}")
     public String deletePost(@PathVariable Long id){
 
-        postsService.delete(id);
+        postService.delete(id);
 
         return "redirect:/posts";
     }

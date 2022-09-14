@@ -28,7 +28,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PostsService {
+public class PostService {
 
     private final PlaceService placeService;
 
