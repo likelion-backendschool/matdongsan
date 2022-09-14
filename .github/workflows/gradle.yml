@@ -61,6 +61,7 @@ jobs:
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
               docker-compose up -d
               docker image prune -f
+            
         
 ## time
   current-time:
