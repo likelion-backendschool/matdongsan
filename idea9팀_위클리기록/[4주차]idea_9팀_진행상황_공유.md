@@ -57,7 +57,7 @@ typeof undefined -> undefined : 자체 유형
 typeof null -> Object : 객체 유형
 typeof NaN -> Number : 숫자 유형
 
-### posts 플로우 
+### post 플로우 
 맛집 등록을 위해서 위치의 데이터 값을 받아와야 하는데 json 형식으로 받아올지 , 아니면 다른 방식으로 받아올 수 있는 방법이 있는지
 html에는 어떤 방법으로 뿌려줄지 결정해야 한다.
 

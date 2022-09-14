@@ -1,0 +1,136 @@
+<!-- 게시글 상세 페이지 -->
+<!DOCTYPE html>
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout.html}">
+
+<head>
+    <title>맛동산 | 메인</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" /> <!-- 토스트 ui -->
+
+    <!-- summernote 시작 -->
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- summernote 끝-->
+
+</head>
+<body>
+<div layout:fragment="content">
+    <!--=====================================-->
+    <!--=       Container  Area Start       =-->
+    <!--=====================================-->
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="placeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">맛집 찾기</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="place-modal">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-4" type="search" id="search-input" placeholder="키워드를 입력해주세요!" aria-label="Search">
+                            <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="sendKakaoApi();return false;">Search</button>
+                        </form>
+                        <ul class="list-group list-group-flush" id="search-result-list"></ul>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="forum-topic-add">
+
+            <div class="my-4">
+                <h3 class="heading-title">맛집 게시글</h3>
+                <!-- 여기서부터 이제 뷰 단을 꾸미면 됨. -->
+            <table class="table text-center">
+                <colgroup>
+                    <col>
+                    <col width="50%">
+                </colgroup>
+                <thead class="table-active">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>작성일시</th>
+<!--                    <th>조회수</th>-->
+<!--                    <th>추천수</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post, loop : ${paging}">
+                    <td th:text="${post.id}"></td>
+                    <td class="text-start">
+                        <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
+                    </td>
+                    <td>
+                        <span th:text="${post.author?.nickname}"></span>
+                    </td>
+                    <td th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}"></td>
+                    <!-- 조회수 부분-->
+<!--                    <td>-->
+<!--                <span class="text-danger small ms-2" th:text="${question.hitCount}">-->
+<!--                </span>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                <span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) > 0}"-->
+<!--                      th:text="${#lists.size(question.answerList)}">-->
+<!--                </span>-->
+
+<!--                        <span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) == 0}"-->
+<!--                              th:text="0">-->
+<!--                </span>-->
+<!--                    </td>-->
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이징처리 시작 -->
+            <div th:if="${!paging.isEmpty()}"
+                 th:with="queryStrBase = '?kw=' + ${param.kw}, queryStrBase = ${queryStrBase} + '&sortCode=' + ${param.sortCode}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{|${queryStrBase}&page=${paging.number-1}|}">
+                            <span>prev</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                        th:classappend="${page == paging.number} ? 'active'"
+                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                        class="page-item">
+                        <a th:text="${page + 1}" class="page-link" th:href="@{|${queryStrBase}&page=${page}|}"></a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                        <a class="page-link" th:href="@{|${queryStrBase}&page=${paging.number+1}|}">
+                            <span>next</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+        </div>
+        <div class="block-box user-top-header">
+        </div>
+        <div class="row">
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

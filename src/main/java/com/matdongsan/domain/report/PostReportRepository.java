@@ -8,5 +8,5 @@ public interface PostReportRepository extends JpaRepository<PostReport,Long> {
 
     List<PostReport> findAllByMemberId(Long memberId);
 
-    List<PostReport> findAllByPostsId(Long postId);
+    List<PostReport> findAllByPostId(Long postId);
 }

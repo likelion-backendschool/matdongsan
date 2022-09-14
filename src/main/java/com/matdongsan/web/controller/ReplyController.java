@@ -3,11 +3,10 @@ package com.matdongsan.web.controller;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
-import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.MemberService;
-import com.matdongsan.service.PostsService;
+import com.matdongsan.service.PostService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class ReplyController {
 
-    private final PostsService postsService;
+    private final PostService postService;
     private final ReplyService replyService;
     private final MemberService memberService;
 
@@ -35,23 +34,23 @@ public class ReplyController {
      * 댓글등록 (버튼)
      */
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/posts/{postId}")
+    @PostMapping("/post/{postId}")
     public String createReply(@PathVariable("postId") Long id,
                               @Valid ReplyDto replyDto, BindingResult bindingResult,
                               @AuthUser Account account) {
         if (bindingResult.hasErrors()) {
             log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
-            return "redirect:/posts/{postId}";
+            return "redirect:/post/{postId}";
         }
-        Posts post = postsService.findById(id);
+        Post post = postService.findById(id);
         Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
         replyService.saveReply(post, replyDto, memberId);
-        return "redirect:/posts/{postId}";
+        return "redirect:/post/{postId}";
 
     }
 
     /**
-     * 댓글 수정 컨트롤러 get, post
+     * 댓글 수정
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/update/{replyId}")
@@ -72,7 +71,7 @@ public class ReplyController {
 
         Reply reply = replyService.getReply(id);
         replyService.update(reply, replyDto.getComment());
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());
+        return String.format("redirect:/post/%s", reply.getPost().getId());
     }
 
     /**
@@ -86,17 +85,6 @@ public class ReplyController {
     public String deleteReply(@PathVariable("replyId") Long id) {
         Reply reply = replyService.getReply(id);
         replyService.deleteReply(reply);
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/reply/like/{id}")
-    public String replyLike(@AuthUser Account account, Principal principal, @PathVariable("id") Long id) {
-        Reply reply = replyService.getReply(id);
-        Member member = account.getMember();
-
-        replyService.plusReplyLike(reply,member);
-
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());
+        return String.format("redirect:/post/%s", reply.getPost().getId());
     }
 }

@@ -1,7 +1,6 @@
 package com.matdongsan.domain.place;
 
-import com.matdongsan.domain.favorite.Favorite;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,10 +24,7 @@ public class Place {
     private String y;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
-    private List<Posts> posts = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
-    private List<Favorite> favorites = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
     private String menus;
@@ -51,6 +47,5 @@ public class Place {
         this.facilityInfo = facility;
         this.mainPhotoUrl = mainPhotoUrl;
     }
-
 
 }

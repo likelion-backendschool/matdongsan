@@ -2,23 +2,19 @@ package com.matdongsan.web.controller.favorite;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
-import com.matdongsan.domain.bookmark.Bookmark;
 import com.matdongsan.domain.favorite.Favorite;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
-import com.matdongsan.service.AccountService;
-import com.matdongsan.service.BookmarkService;
 import com.matdongsan.service.FavoriteService;
 import com.matdongsan.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
+import javax.websocket.server.PathParam;
 
 @Slf4j
 @Controller
@@ -26,41 +22,77 @@ import java.util.List;
 public class FavoriteController {
     private final FavoriteService favoriteService;
     private final PlaceService placeService;
-    private final BookmarkService bookmarkService;
 
     /**
-     * favorite 뷰 이동
-     * @param model
-     * @return "favorites/favorite-list"
+     *
+     * @param account
+     * @param subject
+     * @return
      */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/favorite/list")
-    public String showFavorite(Model model, @AuthUser Account account) {
+    @PostMapping("/favorite/addFavorite")
+    public String addFavorite(@AuthUser Account account, @PathParam("subject") String subject) {
         Member member = account.getMember();
 
-        List<Favorite> favorites = favoriteService.findAllByMember(member);
-        List<Bookmark> bookmarks = bookmarkService.findAllByMember(member);
-        model.addAttribute("favorites", favorites);
-        model.addAttribute("bookmarks", bookmarks);
-
-        return "favorites/favorite-list";
+        Favorite favorite = new Favorite(member, subject);
+        favoriteService.save(favorite);
+        return "redirect:/profile/bookmark/view";
     }
 
     /**
      *
      * @param account
+     * @param favoriteId
      * @param placeId
      * @return
      */
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/favorite/{placeId}/delete")
-    public String deleteFavorite(@AuthUser Account account, @PathVariable("placeId") Long placeId) {
+    @GetMapping("/favorite/changeFavorite/{favoriteId}/{placeId}")
+    public String changeFavorite(@AuthUser Account account,@PathVariable("favoriteId") Long favoriteId, @PathVariable("placeId") long placeId) {
         Member member = account.getMember();
-
         Place place = placeService.findPlace(placeId);
+        Favorite favorite = favoriteService.findById(favoriteId);
+        favoriteService.replaceExistPlace(member, place, favorite);
 
-        favoriteService.doFavorite(member,place);
+        return "redirect:/profile/bookmark/view";
+    }
 
-        return "redirect:/favorite/list";
+    /**
+     *
+     * @param account
+     * @param favoriteId
+     * @param subject
+     * @return
+     */
+    @PostMapping("/favorite/modifyFavorite/{favoriteId}")
+    public String modifyFavorite(@AuthUser Account account, @PathVariable Long favoriteId, @PathParam("subject") String subject) {
+        Member member = account.getMember();
+        Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        favorite.setSubject(subject);
+        favoriteService.save(favorite);
+        return "redirect:/profile/bookmark/view";
+    }
+
+    /**
+     *
+     * @param account
+     * @param favoriteId
+     * @return
+     */
+    @GetMapping("/favorite/deleteFavorite/{favoriteId}")
+    public String deleteFavorite(@AuthUser Account account, @PathVariable Long favoriteId) {
+        Member member = account.getMember();
+        Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        log.info("favorite.name -> {}",favorite.getSubject());
+
+        favoriteService.delete(favorite);
+        return "redirect:/profile/bookmark/view";
+    }
+
+    @GetMapping("/favorite/{favoriteId}/deletePlace/{placeId}")
+    public String deletePlace(@AuthUser Account account, @PathVariable Long favoriteId, @PathVariable Long placeId) {
+        Member member = account.getMember();
+        Favorite favorite = favoriteService.findByIdAndMember(favoriteId, member);
+        favorite.getPlaceList().remove(placeService.findPlace(placeId));
+        favoriteService.save(favorite);
+        return "redirect:/profile/bookmark/view";
     }
 }

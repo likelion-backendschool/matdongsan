@@ -2,8 +2,8 @@ package com.matdongsan.domain.member;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.favorite.Favorite;
-import com.matdongsan.domain.likeuser.ReplyLike;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.like.ReplyLike;
+import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
 
@@ -43,7 +43,7 @@ public class Member {
     private Account account;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Posts> postsList = new ArrayList<>();
+    private List<Post> postList = new ArrayList<>();
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();

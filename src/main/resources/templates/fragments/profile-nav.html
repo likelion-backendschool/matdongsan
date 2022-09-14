@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+  <!-- Sidebar Right -->
+  <th:block th:fragment="profile-nav(member, status)">
+    <div class="banner-user">
+      <div class="banner-content">
+        <div class="media">
+          <div class="item-img">
+            <img th:src="@{/media/banner/user_1.jpg}" alt="User">
+          </div>
+          <div class="media-body">
+            <h3 class="item-title" th:text="${member.getNickname()}">닉네임</h3>
+            <div class="item-subtitle" th:text="${member.getIntroduce()}">소개</div>
+            <!--<ul class="item-social" th:if="${#}">
+                <li><a th:href="@{/settings/profile}" class="bg-aash"><i class="icofont-settings-alt text-dark"></i></a></li>
+            </ul>-->
+            <ul class="user-meta">
+              <li>Posts: <span th:text="${member.getPostList().size()}">게시글 수</span></li>
+              <li>Comments: <span th:text="${member.getReplyList().size()}">댓글 수</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block-box user-top-header">
+      <ul class="menu-list">
+        <li class="" th:classappend="${status} == 'profile' ? 'active'"><a th:href="@{/profile/{username}(username = ${member.getNickname()})}">나의 게시물</a></li>
+        <li class="" th:classappend="${status} == 'bookmark' ? 'active'"><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
+        <li>
+          <!--<div class="dropdown">
+              <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                  ...
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Shop</a>
+                  <a class="dropdown-item" href="#">Blog</a>
+                  <a class="dropdown-item" href="#">Others</a>
+              </div>
+          </div>-->
+        </li>
+      </ul>
+    </div>
+  </th:block>
+</body>
+</html>

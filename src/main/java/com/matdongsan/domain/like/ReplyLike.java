@@ -1,11 +1,10 @@
-package com.matdongsan.domain.likeuser;
+package com.matdongsan.domain.like;
 
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Entity

@@ -1,13 +1,11 @@
-package com.matdongsan.web.controller.posts;
+package com.matdongsan.web.controller.post;
 
 import com.matdongsan.domain.reply.Reply;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class PostsControllerTest {
+class PostControllerTest {
 
     @Test
     public void inputTest() {
