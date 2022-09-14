@@ -17,11 +17,16 @@
         success: function (flag) {
           if (flag) {
             // 좋아요를 안 눌러진 상태일 때 -> 좋아요 추가
+            $("#post-react-btn").addClass('text-primary');
+            $("#post-react-btn-text").html("좋아요 취소");
             console.log(flag);
           } else {
             // 좋아요가 눌러진 상태일 때 -> 좋아요 제거
+            $("#post-react-btn").removeClass('text-primary');
+            $("#post-react-btn-text").html("좋아요");
             console.log(flag);
           }
+          $('#post-ajax-form').load(location.href+' #post-ajax-form');
         },
       })
     });
