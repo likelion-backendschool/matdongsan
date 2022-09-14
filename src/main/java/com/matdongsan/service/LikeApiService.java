@@ -15,6 +15,8 @@ public class LikeApiService {
     private final PostLikeRepository postLikeRepository;
     private final PostService postService;
 
+    /* Post Like 시작 */
+
     @Transactional
     public void createNewPostLike(Member member, Post currentPost) {
         PostLike newPostLike = PostLike.builder()
@@ -41,4 +43,12 @@ public class LikeApiService {
             return true;
         }
     }
+
+    /* Post Like 끝 */
+
+    /* Reply Like 시작 */
+
+
+
+    /* Reply Like 끝 */
 }
