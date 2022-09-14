@@ -34,18 +34,18 @@ public class ReplyController {
      * 댓글등록 (버튼)
      */
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/posts/{postId}")
+    @PostMapping("/post/{postId}")
     public String createReply(@PathVariable("postId") Long id,
                               @Valid ReplyDto replyDto, BindingResult bindingResult,
                               @AuthUser Account account) {
         if (bindingResult.hasErrors()) {
             log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
-            return "redirect:/posts/{postId}";
+            return "redirect:/post/{postId}";
         }
         Post post = postService.findById(id);
         Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
         replyService.saveReply(post, replyDto, memberId);
-        return "redirect:/posts/{postId}";
+        return "redirect:/post/{postId}";
 
     }
 

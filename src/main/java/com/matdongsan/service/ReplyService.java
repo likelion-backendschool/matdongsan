@@ -64,7 +64,7 @@ public class ReplyService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate")); //수정 댓글 리팩토링 필요
         Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
-        return replyRepository.findRepliesByPostsId(id, pageable);
+        return replyRepository.findRepliesByPostId(id, pageable);
     }
 
     /**
