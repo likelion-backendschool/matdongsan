@@ -4,6 +4,7 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.reply.Reply;
+import com.matdongsan.service.LikeApiService;
 import com.matdongsan.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +21,16 @@ import java.util.Map;
 public class LikeApiController {
 
     private final ReplyService replyService;
+    private final LikeApiService likeApiService;
 
     // Post
     @ResponseBody
     @PostMapping("/post/like/check")
     public boolean addNewLike(@AuthUser Account account, @RequestParam Map<String, Long> params) {
-        log.info("postNum={}", params.get("postNum"));
-        return true;
+        Long postId = params.get("postNum");
+
+        // 좋아요가 새로 생겼다면 true, 기존에 좋아요가 있었다면 false
+        return likeApiService.modifyLikeStatus(account.getMember(), postId);
     }
 
     // Reply
