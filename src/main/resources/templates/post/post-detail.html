@@ -32,16 +32,19 @@
                         </ul>
                     </div>
                 </div>
-                <!-- 수정 , 삭제 부분-->
-                <div class="dropdown">
-                    <!-- 수정 버튼    -->
-                    <button type="button" class="btn btn-outline-danger" th:onclick="|location.href='@{/post/modify/{id}(id=${post.getId()})}'|">
-                        수정
+                <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        ...
                     </button>
-                    <!-- 삭제 버튼    -->
-                    <button type="button" class="btn btn-outline-warning" th:onclick="|location.href='@{/post/delete/{id}(id=${post.getId()})}'|">
-                        삭제
-                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <th:block th:if="${#authentication.principal.username == post.author.account.username}">
+                            <a class="dropdown-item" th:href="@{/post/modify/{id}(id=${post.getId()})}"><span class="ml-1">수정</span></a>
+                            <a class="dropdown-item" th:href="@{/post/delete/{id}(id=${post.getId()})}"><span class="ml-1">삭제</span></a>
+                        </th:block>
+                        <th:block th:if="${#authentication.principal.username != post.author.account.username}">
+                            <a class="dropdown-item" href="#">신고하기</a>
+                        </th:block>
+                    </div>
                 </div>
             </div>
             <div class="post-body">
@@ -85,8 +88,7 @@
                     </div>
                 </div>
                 <!--댓글 부분-->
-                <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})">
-                </div>
+                <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
                 <!-- 댓글 끝 -->
             </div>
             <!--<div class="post-footer">

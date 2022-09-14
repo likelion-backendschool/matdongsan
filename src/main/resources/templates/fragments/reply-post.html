@@ -1,7 +1,110 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <!-- Post 댓글 조각화 -->
 <div class="post-comment" th:fragment="reply_fragment(paging,replyDto)">
+    <ul class="comment-list">
+        <li class="main-comments"  th:each="reply : ${paging}">
+            <div class="each-comment">
+                <div class="post-header">
+                    <div class="media">
+                        <div class="user-img">
+                            <img th:src="@{/media/figure/chat_14.jpg}" alt="Aahat">
+                        </div>
+                        <div class="media-body">
+                            <div class="user-title"><a th:href="@{/profile/{nickname}(nickname=${reply.writer.nickname})}" th:text="${reply.writer.nickname}"></a></div>
+                            <ul class="entry-meta">
+                                <th:block th:if="${reply.modifyDate == null}">
+                                    <li class="meta-time" th:text="${reply.replyTime}">등록 시간</li>
+                                </th:block>
+                                <th:block th:if="${reply.modifyDate != null}">
+                                    <li class="meta-time" th:text="|${reply.replyTime}(수정됨)|">수정시간</li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="dropdown" sec:authorize="isAuthenticated()">
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <th:block th:if="${#authentication.principal.username == reply.writer.account.username}">
+                                <a class="edit icofont-comment dropdown-item" th:href="@{|/reply/update/${reply.id}|}"><span class="ml-1">수정</span></a>
+                                <a class="delete icofont-delete-alt dropdown-item" th:href="@{|/reply/delete/${reply.id}|}"><span class="ml-1">삭제</span></a>
+                            </th:block>
+                            <th:block th:if="${#authentication.principal.username != reply.writer.account.username}">
+                                <a class="dropdown-item" href="#">신고하기</a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-body">
+                    <p th:text="${reply.comment}">댓글 내용</p>
+                </div>
+                <div class="post-footer">
+                    <ul>
+                        <li class="post-react">
+                            <a href="javascript:void(0);" class="recommend text-dark" th:href="@{|/reply/like/${reply.id}|}">
+                                <i class="icofont-thumbs-up"></i>추천
+                                <span class="badge rounded-pill bg-primary text-white ml-1" th:text="${#lists.size(reply.replyLike)}"></span>
+                            </a>
+                        </li>
+                        <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="load-more-btn">
+        <a href="#" class="item-btn">Load More Comments <span>4+</span></a>
+    </div>
+    <div class="my-2">
+        <form th:action="@{|/post/${post.id}|}" th:object="${replyDto}" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control w-75" th:field="*{comment}" placeholder="댓글을 입력해 주세요.">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary mx-2">등록</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type='text/javascript'>
+        $(".delete").click(function(){
+
+        });
+        const delete_elements = document.getElementsByClassName("delete");
+        Array.from(delete_elements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                if (confirm("정말로 삭제하시겠습니까?")) {
+                    location.href = this.dataset.uri;
+                }
+                ;
+            });
+        });
+        const recommend_elements = document.getElementsByClassName("recommend");
+        Array.from(recommend_elements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                if (confirm("정말로 추천하시겠습니까?")) {
+                    location.href = this.dataset.uri;
+                }
+                ;
+            });
+        });
+
+        const modify_elements = document.getElementsByClassName("edit");
+        Array.from(modify_elements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                if (confirm("정말로 수정하시겠습니까?")) {
+                    location.href = this.dataset.uri;
+                }
+                ;
+            });
+        });
+    </script>
+</div>
+<!--
+<div class="post-comment">
     <div class="comment-body">
         <div>
             <div class="card my-3" th:each="reply : ${paging}">
@@ -14,24 +117,30 @@
                             <a th:text="${reply.writer.account.username}"></a>
                         </li>
                         <li class="post-react">
-                            <a href="javascript:void(0);" class="recommend icofont-love"
-                               th:href="@{|/reply/like/${reply.id}|}">추천
-                                <span class="badge rounded-pill bg-success"
-                                      th:text="${#lists.size(reply.replyLike)}"></span></a></li>
-
-                        <li><a th:href="@{|/reply/update/${reply.id}|}"
-                               class="edit icofont-comment"
+                            <a href="javascript:void(0);" class="recommend icofont-love text-dark" th:href="@{|/reply/like/${reply.id}|}">
+                                <span class="ml-1">추천</span>
+                                <span class="badge rounded-pill bg-primary text-white" th:text="${#lists.size(reply.replyLike)}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{|/reply/update/${reply.id}|}"
+                               class="edit icofont-comment text-dark"
                                sec:authorize="isAuthenticated()"
-                               th:if="${#authentication.principal.username == reply.writer.account.username}"
-                        ><i class=" icofont-fix-tools"></i>수정 </a></li>
+                               th:if="${#authentication.principal.username == reply.writer.account.username}">
+                                <span class="ml-1">수정</span>
+                            </a>
+                        </li>
 
-                        <li><a th:href="@{|/reply/delete/${reply.id}|}"
-                               class="delete icofont-delete-alt"
+                        <li>
+                            <a th:href="@{|/reply/delete/${reply.id}|}"
+                               class="delete icofont-delete-alt text-dark"
                                sec:authorize="isAuthenticated()"
-                               th:if="${#authentication.principal.username == reply.writer.account.username}"
-                        ><i class="icofont-delete-alt"></i>삭제</a></li>
+                               th:if="${#authentication.principal.username == reply.writer.account.username}">
+                                <span class="ml-1">삭제</span>
+                            </a>
+                        </li>
 
-                        <!--댓글등록시간-->
+                        &lt;!&ndash;댓글등록시간&ndash;&gt;
                         <div class="d-flex justify-content-end">
                             <div th:if="${reply.modifyDate == null}"
                                  class="badge bg-light text-dark p-2 text-start">
@@ -49,13 +158,14 @@
             </div>
         </div>
         <form th:action="@{|/post/${post.id}|}" th:object="${replyDto}" method="post">
-            <div class="input-box">
-                <input type="text" th:field="*{comment}" class="form-control"
-                       placeholder="댓글을 입력해 주세요.">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" th:field="*{comment}" placeholder="댓글을 입력해 주세요.">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary mx-2">등록</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary mx-2">등록</button>
         </form>
-        <!-- 페이징처리 시작 -->
+        &lt;!&ndash; 페이징처리 시작 &ndash;&gt;
         <div th:if="${!paging.isEmpty()}">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
@@ -77,7 +187,7 @@
                 </li>
             </ul>
         </div>
-        <!-- 페이징처리 끝 -->
+        &lt;!&ndash; 페이징처리 끝 &ndash;&gt;
         <script type='text/javascript'>
             $(".delete").click(function(){
 
@@ -112,4 +222,4 @@
             });
         </script>
     </div>
-</div>
+</div>-->
