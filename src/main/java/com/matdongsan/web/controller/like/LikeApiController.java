@@ -25,9 +25,9 @@ public class LikeApiController {
 
     // Post
     @ResponseBody
-    @PostMapping("/post/like/check")
-    public boolean addNewLike(@AuthUser Account account, @RequestParam Map<String, Long> params) {
-        Long postId = params.get("postNum");
+    @PostMapping("/post/modify/like")
+    public boolean addNewLike(@AuthUser Account account, @RequestParam Map<String, String> params) {
+        Long postId = Long.valueOf(params.get("postNum"));
 
         // 좋아요가 새로 생겼다면 true, 기존에 좋아요가 있었다면 false
         return likeApiService.modifyLikeStatus(account.getMember(), postId);
