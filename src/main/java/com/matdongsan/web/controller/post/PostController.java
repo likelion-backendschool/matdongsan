@@ -98,7 +98,7 @@ public class PostController {
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("postCreateDto", postCreateDto);
-            return "post-newForm";
+            return "/post/post-newForm";
         }
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
         Post newPost = postService.savePost(currentMember, postCreateDto);
@@ -142,7 +142,7 @@ public class PostController {
 
         postRepository.save(updatePost);
 
-        return "redirect:/posts/{id}";
+        return "redirect:/post/{id}";
     }
 
     //
