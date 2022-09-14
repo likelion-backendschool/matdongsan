@@ -6,8 +6,24 @@
 <th:block th:fragment="likes(postId)">
   <script th:inline="javascript">
     $("#post-react-btn").click(function (){
-      let postNum = "[[${postId}]]";
-
+      const param = {
+        postNum: "[[${postId}]]"
+      };
+      console.log(param);
+      $.ajax({
+        type: "POST",
+        url: "/post/like/check",
+        data : param,
+        success: function (flag) {
+          if (flag) {
+            // 좋아요가 있을 때 로직
+            console.log(flag);
+          } else {
+            // 좋아요가 없을 때 로직
+            console.log(flag);
+          }
+        },
+      })
     });
   </script>
 </th:block>
