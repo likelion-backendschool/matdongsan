@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+<th:block th:fragment="likes(postId)">
+  <script th:inline="javascript">
+    $("#post-react-btn").click(function (){
+      let postNum = "[[${postId}]]";
+
+    });
+  </script>
+</th:block>
+</body>
+</html>
