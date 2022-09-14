@@ -1,5 +1,7 @@
 package com.matdongsan.web.controller.post;
 
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.post.Post;
 
@@ -7,6 +9,7 @@ import com.matdongsan.domain.post.PostRepository;
 
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
+import com.matdongsan.service.LikeApiService;
 import com.matdongsan.service.PostService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
@@ -42,12 +45,15 @@ public class PostController {
 
     private final PostRepository postRepository;
 
+    private final LikeApiService likeApiService;
+
 
     // 게시글 상세 조회
     @GetMapping("/post/{id}")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
-                                 Model model, @ModelAttribute("replyDto") ReplyDto replyDto){
+                                 Model model, @ModelAttribute("replyDto") ReplyDto replyDto,
+                                 @AuthUser Account account) {
         Post post = postService.findById(id);
         model.addAttribute("post", post);
 
@@ -56,6 +62,9 @@ public class PostController {
 
         Page<Reply> paging = replyService.getReplyList(page, id);
         model.addAttribute("paging", paging);
+
+        boolean likeFlag = likeApiService.existPostLikeFlag(account.getMember(), post);
+        model.addAttribute("likeFlag", likeFlag);
 
 
         return "/post/post-detail";

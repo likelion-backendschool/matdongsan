@@ -16,119 +16,103 @@
     <!--=====================================-->
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
-    <div class="row justify-content-center container" id="justify-content">
-            <div class="col-lg-8">
-                <div class="block-box post-view">
-                    <div class="post-header">
-                        <div class="media">
-                            <div class="user-img">
-                                <img src="/media/figure/chat_8.jpg" alt="Aahat">
-                            </div>
-                            <div class="media-body">
-                                <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
-                                    <i class="icofont-check"></i></div>
-                                <ul class="entry-meta">
-                                    <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
-                                    <li class="meta-time">8 minutes ago</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- 수정 , 삭제 부분-->
-                        <div class="dropdown">
-                            <!-- 수정 버튼    -->
-                            <button type="button" class="btn btn-outline-danger" th:onclick="|location.href='@{/post/modify/{id}(id=${post.getId()})}'|">
-                                수정
-                            </button>
-                            <!-- 삭제 버튼    -->
-                            <button type="button" class="btn btn-outline-warning" th:onclick="|location.href='@{/post/delete/{id}(id=${post.getId()})}'|">
-                                삭제
-                            </button>
-                        </div>
+    <div class="container">
+        <div class="block-box post-view">
+            <div class="post-header">
+                <div class="media">
+                    <div class="user-img">
+                        <img src="/media/figure/chat_8.jpg" alt="Aahat">
                     </div>
-                    <div class="post-body">
-                        <div class="post-no-thumbnail">
-                            <h3 th:text="${post.getTitle()}">제목</h3>
-                            <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">
-                                <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">
-                                    <img th:src="|/images/${url}|" class="img-thumbnail"
-                                         width="150px" height="150px" style="object-fit: cover">
-                                </div>
-                            </div>
-                            <div th:utext="${post.getContent()}">내용</div>
-                            <!-- 비밀 글-->
-                            <div th:if="${!post.isPrivateStatus()}">비밀 글입니다</div>
-
-                            <div style="font-weight: bold;font-size: 16px;text-align: end">
-                                <a th:text="${post.getPlace().getPlaceName()}" th:href="@{/place/{id}/detail(id = ${post.getPlace().getId()})}">
-                                    음식점 이름
-                                </a>
-                            </div>
-                        </div>
-                        <div class="post-meta-wrap">
-                            <div class="post-meta">
-                                <div class="post-reaction">
-                                    <div class="reaction-icon">
-                                        <img src="/media/figure/reaction_1.png" alt="icon">
-                                        <img src="/media/figure/reaction_2.png" alt="icon">
-                                        <img src="/media/figure/reaction_3.png" alt="icon">
-                                    </div>
-                                    <div class="meta-text">15</div>
-                                </div>
-                            </div>
-                            <div class="post-meta">
-                                <div class="meta-text" >
-                                    <a th:text="${post.replyList.size()}"></a>
-                                    개의 댓글
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <ul>
-                            <li class="post-react">
-                                <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                <ul class="react-list">
-
-                                    <ul class="react-list">
-                                        <li><a href="#"><img src="/media/figure/reaction_1.png" alt="Like"></a></li>
-                                        <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
-                                        <li><a href="#"><img src="/media/figure/reaction_4.png" alt="Like"></a></li>
-                                        <li><a href="#"><img src="/media/figure/reaction_2.png" alt="Like"></a></li>
-                                        <li><a href="#"><img src="/media/figure/reaction_7.png" alt="Like"></a></li>
-                                        <li><a href="#"><img src="/media/figure/reaction_6.png" alt="Like"></a></li>
-                                        <li><a href="#"><img src="/media/figure/reaction_5.png" alt="Like"></a></li>
-                                    </ul>
-                                    </li>
-                                    <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
-                                    <li class="post-share">
-                                        <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
-                                        <ul class="share-list">
-                                            <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
-                                            <li><a href="#" class="color-messenger"><i
-                                                    class="icofont-facebook-messenger"></i></a></li>
-                                            <li><a href="#" class="color-instagram"><i
-                                                    class="icofont-instagram"></i></a></li>
-                                            <li><a href="#" class="color-whatsapp"><i
-                                                    class="icofont-brand-whatsapp"></i></a>
-                                            </li>
-                                            <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                    <div class="media-body">
+                        <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
+                            <i class="icofont-check"></i></div>
+                        <ul class="entry-meta">
+                            <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
+                            <li class="meta-time">8 minutes ago</li>
                         </ul>
                     </div>
-                    <!--댓글 부분-->
-                    <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})">
-                    </div>
-                    <!-- 댓글 끝 -->
                 </div>
-                <div class="block-box load-more-btn">
-                    <a href="#" class="item-btn"><i class="icofont-refresh"></i>Load More Posts</a>
+                <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        ...
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <th:block th:if="${#authentication.principal.username == post.author.account.username}">
+                            <a class="dropdown-item" th:href="@{/post/modify/{id}(id=${post.getId()})}"><span class="ml-1">수정</span></a>
+                            <a class="dropdown-item" th:href="@{/post/delete/{id}(id=${post.getId()})}"><span class="ml-1">삭제</span></a>
+                        </th:block>
+                        <th:block th:if="${#authentication.principal.username != post.author.account.username}">
+                            <a class="dropdown-item" href="#">신고하기</a>
+                        </th:block>
+                    </div>
                 </div>
             </div>
+            <div class="post-body">
+                <div class="post-no-thumbnail">
+                    <h3 th:text="${post.getTitle()}">제목</h3>
+                    <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">
+                        <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">
+                            <img th:src="|/images/${url}|" class="img-thumbnail"
+                                 width="150px" height="150px" style="object-fit: cover">
+                        </div>
+                    </div>
+                    <div th:utext="${post.getContent()}">내용</div>
+                    <!-- 비밀 글-->
+                    <div th:if="${!post.isPrivateStatus()}">비밀 글입니다</div>
+
+                    <div style="font-weight: bold;font-size: 16px;text-align: end">
+                        <a th:text="${post.getPlace().getPlaceName()}" th:href="@{/place/{id}/detail(id = ${post.getPlace().getId()})}">
+                            음식점 이름
+                        </a>
+                    </div>
+                </div>
+                <div class="post-meta-wrap">
+                    <div class="post-meta" id="post-ajax-form">
+                        <button class="btn" id="post-react-btn">
+                            <th:block th:if="${!likeFlag}">
+                                <i class="icofont-thumbs-up"></i>
+                                <span class="mx-2">좋아요</span>
+                            </th:block>
+                            <th:block th:if="${likeFlag}">
+                                <i class="icofont-thumbs-up text-primary"></i>
+                                <span class="mx-2 text-primary">좋아요 취소</span>
+                            </th:block>
+                            <span class="badge rounded-pill bg-primary text-white" th:text="${post.getPostLike().size()}"></span>
+                        </button>
+                    </div>
+                    <div class="post-meta">
+                        <div class="meta-text" >
+                            <a th:text="${post.replyList.size()}"></a>
+                            개의 댓글
+                        </div>
+                    </div>
+                </div>
+                <!--댓글 부분-->
+                <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
+                <!-- 댓글 끝 -->
+            </div>
+            <!--<div class="post-footer">
+                <ul>
+                    <li class="post-share">
+                        <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
+                        <ul class="share-list">
+                            <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
+                            <li><a href="#" class="color-messenger"><i
+                                    class="icofont-facebook-messenger"></i></a></li>
+                            <li><a href="#" class="color-instagram"><i
+                                    class="icofont-instagram"></i></a></li>
+                            <li><a href="#" class="color-whatsapp"><i
+                                    class="icofont-brand-whatsapp"></i></a>
+                            </li>
+                            <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>-->
         </div>
+    </div>
+    <th:block th:replace="/fragments/likes/post-like-fragments::likes(${post.getId()})"></th:block>
 </div>
 </body>
 </html>

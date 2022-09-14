@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+<th:block th:fragment="likes(postId)">
+  <script th:inline="javascript">
+    $("#post-react-btn").click(function (){
+      console.log("함수 실행");
+      let param = {
+        postNum: "[[${postId}]]"
+      };
+      console.log(param);
+      $.ajax({
+        type: "POST",
+        url: "/post/modify/like",
+        data : param,
+        success: function (flag) {
+          $('#post-ajax-form').load(location.href+' #post-ajax-form');
+        },
+      })
+    });
+  </script>
+</th:block>
+</body>
+</html>
