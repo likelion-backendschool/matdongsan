@@ -15,7 +15,7 @@
     <!--=====================================-->
     <div class="container">
         <!-- Banner Area Start -->
-        <th:block th:replace="fragments/profile-nav::profile-nav(${member}, profile)"></th:block>
+        <th:block th:replace="../fragments/profile-nav::profile-nav(${member}, profile)"></th:block>
         <div>
             <th:block th:if="${member.getPostList().size() == 0}">
                 <div class="block-box post-view">
