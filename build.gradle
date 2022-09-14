@@ -19,7 +19,11 @@ repositories {
 }
 
 dependencies {
+	// bootJar 실행시 'reason: class file for javax.annotation.meta.When not found' warning 해결을 위함
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
 	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
+	// aws s3와 통신
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
@@ -42,8 +46,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// file to multipart를 위한 의존성 추가
-	compileOnly group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
-	compileOnly group: 'commons-io', name: 'commons-io', version: '2.4'
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 
 tasks.named('test') {

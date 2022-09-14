@@ -1,5 +1,7 @@
 package com.matdongsan.util;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,11 +13,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Profile("local")
 @Component
 public class LocalImageUtil implements ImageUtil {
 
     final private String fileDir =
-            Paths.get(System.getProperty("user.dir"), "images").toString();
+            Paths.get(System.getProperty("user.dir"), "images").toString()+"/";
 
     @Override
     public String saveFiles(List<MultipartFile> files) {
@@ -30,7 +34,7 @@ public class LocalImageUtil implements ImageUtil {
 
     @Override
     public String getFullPath(String fileName) {
-        return fileDir +"/"+ fileName;
+        return "file:"+fileDir + fileName;
     }
 
     private String saveFile(MultipartFile file) {
@@ -38,7 +42,7 @@ public class LocalImageUtil implements ImageUtil {
         try {
             String origin = file.getOriginalFilename();
             String storeFileName = createStoreFileName(origin);
-            file.transferTo(new File(getFullPath(storeFileName)));
+            file.transferTo(new File(fileDir + storeFileName));
             return storeFileName;
         } catch (IOException e) {
             throw new RuntimeException("파일 저장 중 에러 발생");

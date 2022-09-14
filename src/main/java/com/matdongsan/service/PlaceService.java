@@ -49,14 +49,6 @@ public class PlaceService {
         return place.orElseThrow(() -> new EntityNotFoundException("해당 음식점이 없음"));
     }
 
-    /*public boolean doFavorite(long memberId,long placeId) {
-        Place findPlace = findPlace(placeId);
-        Member findMember = memberService.findMember(memberId);
-
-        return favoriteService.doFavorite(findMember, findPlace);
-    }*/
-
-
 
     private void pullInfo(Place place) {
 
@@ -97,7 +89,7 @@ public class PlaceService {
             }
             place.setAdditionalInfo(menus, facilityInfo,mainPhotoUrl);
         } catch (ParseException e) {
-            log.error("parser error",e);
+            log.error("Place parser error",e);
             throw new RuntimeException(e);
         }
     }
