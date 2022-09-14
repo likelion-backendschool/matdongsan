@@ -52,6 +52,9 @@ public class Posts{
     @ManyToOne(fetch = FetchType.LAZY)
     private Place place;
 
+//    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<PostLike> postLike;
+
     public void addPlace(Place place) {
         this.place = place;
         place.getPosts().add(this);
