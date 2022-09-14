@@ -1,8 +1,8 @@
 package com.matdongsan.domain.reply;
 
-import com.matdongsan.domain.likeuser.ReplyLike;
+import com.matdongsan.domain.like.ReplyLike;
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,7 +30,7 @@ public class Reply {
     private LocalDateTime modifyDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Posts posts;
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY) //댓글 작성자
     private Member writer;
@@ -52,8 +52,8 @@ public class Reply {
 
 
 
-//    public void save(Posts post, Member member) {
-//        this.posts = post;
+//    public void save(Post post, Member member) {
+//        this.post = post;
 //        this.writer = member;
 //    }
 

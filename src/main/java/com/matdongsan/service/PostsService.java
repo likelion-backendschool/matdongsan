@@ -2,8 +2,8 @@ package com.matdongsan.service;
 
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
-import com.matdongsan.domain.posts.Posts;
-import com.matdongsan.domain.posts.PostsRepository;
+import com.matdongsan.domain.post.Post;
+import com.matdongsan.domain.post.PostRepository;
 import com.matdongsan.util.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,20 +33,20 @@ public class PostsService {
     private final PlaceService placeService;
 
     private final ImageUtil imageUtil;
-    private final PostsRepository postsRepository;
-    public Posts findById(Long id) {
-        return postsRepository.findById(id).get();
+    private final PostRepository postRepository;
+    public Post findById(Long id) {
+        return postRepository.findById(id).get();
     }
 
-    public List<Posts> findAll() {
-        return postsRepository.findAll();
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 
-    public Posts savePost(Member member, PostCreateDto dto) {
+    public Post savePost(Member member, PostCreateDto dto) {
         String imageUrls = imageUtil.saveFiles(dto.getImgFiles());
         Place place = placeService.findPlace(dto.getPlaceId());
 
-        Posts posts = Posts.builder()
+        Post post = Post.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .privateStatus(dto.getPrivateStatus())
@@ -57,9 +55,9 @@ public class PostsService {
                 .createdTime(LocalDateTime.now())
                 .modifiedTime(null)
                 .build();
-        posts.addPlace(place);
+        post.addPlace(place);
 
-        return postsRepository.save(posts);
+        return postRepository.save(post);
     }
 
     // 이미지 폴더에서 파일을 리스트로 받아오는 로직
@@ -95,12 +93,12 @@ public class PostsService {
     }
 
     public void delete(Long id) {
-        postsRepository.deleteById(id);
+        postRepository.deleteById(id);
     }
 
     // 게시글 전체 조회를 페이징으로
-    public Page<Posts> getList(Pageable pageable) {
+    public Page<Post> getList(Pageable pageable) {
 
-        return postsRepository.findAll(pageable);
+        return postRepository.findAll(pageable);
     }
 }

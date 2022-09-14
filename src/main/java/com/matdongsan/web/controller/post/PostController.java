@@ -1,15 +1,12 @@
-package com.matdongsan.web.controller.posts;
+package com.matdongsan.web.controller.post;
 
-import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.place.Place;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 
-import com.matdongsan.domain.posts.PostsRepository;
+import com.matdongsan.domain.post.PostRepository;
 
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
-import com.matdongsan.service.PlaceService;
 import com.matdongsan.service.PostsService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
@@ -22,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,26 +30,25 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class PostsController {
+public class PostController {
 
     private final PostsService postsService;
     private final AccountService accountService;
     private final ReplyService replyService;
 
-    private final PostsRepository postsRepository;
+    private final PostRepository postRepository;
 
 
     // 게시글 상세 조회
-    @GetMapping("/posts/{id}")
+    @GetMapping("/post/{id}")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto){
-        Posts post = postsService.findById(id);
+        Post post = postsService.findById(id);
         model.addAttribute("post", post);
 
         List<Reply> replyList = post.getReplyList();
@@ -63,95 +58,95 @@ public class PostsController {
         model.addAttribute("paging", paging);
 
 
-        return "/posts/post-detail";
+        return "/post/post-detail";
     }
 
     // 게시글 전체 조회
     // 페이징 처리 하기
-//    @GetMapping("/posts")
+//    @GetMapping("/post")
 //    public String showAllPosts(Model model) {
-//        List<Posts> posts = postsService.findAll();
+//        List<Post> post = postsService.findAll();
 //
-//        model.addAttribute("postList", posts);
+//        model.addAttribute("postList", post);
 //
-//        return "/posts/posts-list";
+//        return "/post/post-list";
 //    }
 
     @GetMapping("/posts")
     public String showAllPosts(Model model , @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
 
         // 게시글 전체 조회
-        Page<Posts> paging = postsService.getList(pageable);
+        Page<Post> paging = postsService.getList(pageable);
         // model에 담기
         model.addAttribute("paging" , paging);
 
-        return "posts/posts-list";
+        return "/post/posts-list";
     }
 
 
     // 게시글 등록 폼 페이지
-    @GetMapping("/posts/new")
+    @GetMapping("/post/new")
     public String newPost(Model model) {
 
         model.addAttribute("postCreateDto", new PostCreateDto());
-        return "/posts/posts-newForm";
+        return "/post/post-newForm";
     }
 
 
-    // 게시글 등록 posts
-    @PostMapping("/posts/new")
+    // 게시글 등록 post
+    @PostMapping("/post/new")
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("postCreateDto", postCreateDto);
-            return "posts/posts-newForm";
+            return "post-newForm";
         }
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
-        Posts newPosts = postsService.savePost(currentMember, postCreateDto);
-        Long id = newPosts.getId();
+        Post newPost = postsService.savePost(currentMember, postCreateDto);
+        Long id = newPost.getId();
         redirectAttributes.addAttribute("id", id);
 
         // 저장 완료 후 , 게시글 목록으로 간다.
-        return "redirect:/posts/{id}";
+        return "redirect:/post/{id}";
     }
 
     // 게시글 수정 뷰 페이지
-    @GetMapping("/posts/modify/{id}")
+    @GetMapping("/post/modify/{id}")
     public String modifyPost(@PathVariable Long id ,Model model) throws IOException {
 
-        Posts posts = postsService.findById(id);
+        Post post = postsService.findById(id);
 
         // posts가 가지고 있는 image들을 list로 받아 와야한다.
-        List<MultipartFile> imageList = postsService.getImageList(posts.getImageUrls());
+        List<MultipartFile> imageList = postsService.getImageList(post.getImageUrls());
 
         PostUpdateDto dto = new PostUpdateDto();
-        dto.setId(posts.getId());
-        dto.setTitle(posts.getTitle());
-        dto.setContent(posts.getContent());
-        dto.setPlaceName(posts.getPlace().getPlaceName());
-        dto.setPrivateStatus(posts.isPrivateStatus());
+        dto.setId(post.getId());
+        dto.setTitle(post.getTitle());
+        dto.setContent(post.getContent());
+        dto.setPlaceName(post.getPlace().getPlaceName());
+        dto.setPrivateStatus(post.isPrivateStatus());
 
 
         model.addAttribute("findPost", dto);
         model.addAttribute("imageList", imageList);
 
-        return "posts/posts-updateForm";
+        return "/post/post-updateForm";
     }
 
 
-    @PostMapping("/posts/update/{id}")
+    @PostMapping("/post/update/{id}")
     public String updatePost(@PathVariable Long id, PostUpdateDto updateDto) {
 
-        Posts updatePost = postsService.findById(id);
+        Post updatePost = postsService.findById(id);
 
         updatePost.change(updateDto.getTitle(), updateDto.getContent(), "", updateDto.getPrivateStatus());
 
-        postsRepository.save(updatePost);
+        postRepository.save(updatePost);
 
         return "redirect:/posts/{id}";
     }
 
     //
-    @GetMapping("/posts/delete/{id}")
+    @GetMapping("/post/delete/{id}")
     public String deletePost(@PathVariable Long id){
 
         postsService.delete(id);

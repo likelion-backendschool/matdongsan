@@ -53,7 +53,7 @@
             <div class="my-4" >
                 <h3 class="heading-title">게시글 수정</h3>
                 <!-- 저장시 url -->
-                <form th:object="${findPost}" th:action="@{/posts/update/{id}(id=${findPost.getId()})}" method="post" enctype="multipart/form-data" >
+                <form th:object="${findPost}" th:action="@{/post/update/{id}(id=${findPost.getId()})}" method="post" enctype="multipart/form-data" >
                     <!-- 위치 -->
                     <div class="form-floating mb-3">
                         <label for="place">위치</label>
@@ -148,7 +148,7 @@
                     <!-- 저장 / 취소 버튼  -->
                     <div class="d-grid gap-2 d-md-block">
                         <button class="btn btn-primary" type="submit">수정</button>
-                        <button class="btn btn-primary" type="button" th:onclick="|location.href='@{/posts/{id}(id=${findPost.getId()})}'|">취소</button>
+                        <button class="btn btn-primary" type="button" th:onclick="|location.href='@{/post/{id}(id=${findPost.getId()})}'|">취소</button>
                     </div>
                 </form>
             </div>

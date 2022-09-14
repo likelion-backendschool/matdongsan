@@ -69,15 +69,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="posts, loop : ${paging}">
-                    <td th:text="${posts.id}"></td>
+                <tr th:each="post, loop : ${paging}">
+                    <td th:text="${post.id}"></td>
                     <td class="text-start">
-                        <a th:href="@{|/posts/${posts.id}|}" th:text="${posts.title}"></a>
+                        <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
                     </td>
                     <td>
-                        <span th:text="${posts.author?.nickname}"></span>
+                        <span th:text="${post.author?.nickname}"></span>
                     </td>
-                    <td th:text="${#temporals.format(posts.createdTime, 'yy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}"></td>
                     <!-- 조회수 부분-->
 <!--                    <td>-->
 <!--                <span class="text-danger small ms-2" th:text="${question.hitCount}">-->

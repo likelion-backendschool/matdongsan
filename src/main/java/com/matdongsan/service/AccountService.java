@@ -5,7 +5,6 @@ import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.member.MemberRepository;
 import com.matdongsan.infra.SecurityUser;
 import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
@@ -185,7 +184,7 @@ public class AccountService implements UserDetailsService {
                 .introduce(currentMember.getIntroduce())
                 .birth(currentMember.getBirth())
                 .gender(currentMember.getGender())
-                .postsList(currentMember.getPostsList())
+                .postList(currentMember.getPostList())
                 .replyList(currentMember.getReplyList())
                 .build();
     }

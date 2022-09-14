@@ -3,8 +3,7 @@ package com.matdongsan.web.controller;
 
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
-import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.service.PostsService;
@@ -21,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -44,7 +42,7 @@ public class ReplyController {
             log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
             return "redirect:/posts/{postId}";
         }
-        Posts post = postsService.findById(id);
+        Post post = postsService.findById(id);
         Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
         replyService.saveReply(post, replyDto, memberId);
         return "redirect:/posts/{postId}";
@@ -73,7 +71,7 @@ public class ReplyController {
 
         Reply reply = replyService.getReply(id);
         replyService.update(reply, replyDto.getComment());
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());
+        return String.format("redirect:/post/%s", reply.getPost().getId());
     }
 
     /**
@@ -87,17 +85,6 @@ public class ReplyController {
     public String deleteReply(@PathVariable("replyId") Long id) {
         Reply reply = replyService.getReply(id);
         replyService.deleteReply(reply);
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/reply/like/{id}")
-    public String replyLike(@AuthUser Account account, Principal principal, @PathVariable("id") Long id) {
-        Reply reply = replyService.getReply(id);
-        Member member = account.getMember();
-
-        replyService.plusReplyLike(reply,member);
-
-        return String.format("redirect:/posts/%s", reply.getPosts().getId());
+        return String.format("redirect:/post/%s", reply.getPost().getId());
     }
 }

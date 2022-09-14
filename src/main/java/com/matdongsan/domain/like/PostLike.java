@@ -1,7 +1,7 @@
-package com.matdongsan.domain.likeuser;
+package com.matdongsan.domain.like;
 
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +18,7 @@ public class PostLike {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Posts posts;
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;

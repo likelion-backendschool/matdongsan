@@ -17,7 +17,7 @@
         <!-- Banner Area Start -->
         <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, profile)"></th:block>
         <div>
-            <th:block th:if="${member.getPostsList().size() == 0}">
+            <th:block th:if="${member.getPostList().size() == 0}">
                 <div class="block-box post-view">
                     <div class="post-body">
                         <div class="post-no-thumbnail text-center align-middle">
@@ -26,8 +26,8 @@
                     </div>
                 </div>
             </th:block>
-            <th:block th:if="${member.getPostsList().size() != 0}">
-                <div class="block-box post-view" th:each="post : ${member.getPostsList()}">
+            <th:block th:if="${member.getPostList().size() != 0}">
+                <div class="block-box post-view" th:each="post : ${member.getPostList()}">
                     <div class="post-header">
                         <div class="media">
                             <div class="user-img">

@@ -1,8 +1,7 @@
 package com.matdongsan.domain.report;
 
-import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,7 @@ public class PostReport {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Posts posts;
+    private Post post;
 
     @Enumerated(EnumType.STRING)
     private ReportCategory reportCategory;
@@ -35,10 +34,10 @@ public class PostReport {
     private LocalDateTime reportDate;
 
     //== 생성 메서드 == //
-    public static PostReport createReport(Member member, Posts posts, ReportCategory reportCategory, String content) {
+    public static PostReport createReport(Member member, Post post, ReportCategory reportCategory, String content) {
         PostReport postReport = new PostReport();
         postReport.member = member;
-        postReport.posts = posts;
+        postReport.post = post;
         postReport.reportCategory = reportCategory;
         postReport.content = content;
         postReport.reportDate = LocalDateTime.now();

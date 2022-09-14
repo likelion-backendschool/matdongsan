@@ -1,6 +1,6 @@
 package com.matdongsan.web.vo;
 
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.reply.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class MemberVo {
     private final Date birth;
     private final LocalDateTime signUpDate;
     private final String gender;
-    private final List<Posts> postsList;
+    private final List<Post> postList;
     private final List<Reply> replyList;
 
 }

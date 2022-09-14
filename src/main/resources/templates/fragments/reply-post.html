@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <form th:action="@{|/posts/${post.id}|}" th:object="${replyDto}" method="post">
+        <form th:action="@{|/post/${post.id}|}" th:object="${replyDto}" method="post">
             <div class="input-box">
                 <input type="text" th:field="*{comment}" class="form-control"
                        placeholder="댓글을 입력해 주세요.">

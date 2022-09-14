@@ -1,11 +1,10 @@
-package com.matdongsan.domain.posts;
+package com.matdongsan.domain.post;
 
+import com.matdongsan.domain.like.PostLike;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.reply.Reply;
-import com.matdongsan.util.ImageUtil;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.lang.Nullable;
 
@@ -13,12 +12,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Posts{
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,8 +52,8 @@ public class Posts{
     @ManyToOne(fetch = FetchType.LAZY)
     private Place place;
 
-//    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<PostLike> postLike;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PostLike> postLike;
 
     public void addPlace(Place place) {
         this.place = place;
@@ -62,7 +62,7 @@ public class Posts{
 
     public void addReply(Reply reply) {
         this.replyList.add(reply);
-        reply.setPosts(this);
+        reply.setPost(this);
     }
 
     // 수정 메소드

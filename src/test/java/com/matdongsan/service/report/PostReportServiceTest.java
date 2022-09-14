@@ -1,7 +1,7 @@
 package com.matdongsan.service.report;
 
 import com.matdongsan.domain.account.AccountRepository;
-import com.matdongsan.domain.posts.PostsRepository;
+import com.matdongsan.domain.post.PostRepository;
 import com.matdongsan.domain.report.PostReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class PostReportServiceTest {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
-    private PostsRepository postsRepository;
+    private PostRepository postRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -41,10 +41,10 @@ class PostReportServiceTest {
 //                .signUpDate(LocalDateTime.now())
 //                .accountRole(AccountRole.ROLE_USER)
 //                .build();
-//        Posts posts = new Posts(null, member, "title", "content", LocalDateTime.now(), LocalDateTime.now());
+//        Post post = new Post(null, member, "title", "content", LocalDateTime.now(), LocalDateTime.now());
 //
 //        Account savedMember = accountRepository.save(member);
-//        Posts savedPost = postsRepository.save(posts);
+//        Post savedPost = postRepository.save(post);
 //
 //        // 결과 비교
 //        PostReport savedReport = postReportService

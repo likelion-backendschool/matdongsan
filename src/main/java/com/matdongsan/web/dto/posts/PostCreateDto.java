@@ -1,7 +1,5 @@
 package com.matdongsan.web.dto.posts;
 
-import com.matdongsan.domain.member.Member;
-import com.matdongsan.domain.posts.Posts;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 

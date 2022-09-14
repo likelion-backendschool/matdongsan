@@ -1,10 +1,10 @@
 package com.matdongsan.service;
 
-import com.matdongsan.domain.likeuser.ReplyLike;
+import com.matdongsan.domain.like.ReplyLike;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
-import com.matdongsan.domain.posts.Posts;
-import com.matdongsan.domain.posts.PostsRepository;
+import com.matdongsan.domain.post.Post;
+import com.matdongsan.domain.post.PostRepository;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.domain.reply.ReplyRepository;
 import com.matdongsan.domain.reply.ReplyTime;
@@ -29,20 +29,20 @@ import java.util.Optional;
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
-    private final PostsRepository postsRepository;
+    private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
 
     /**
      * 댓글저장
      */
-    public void saveReply(Posts post, ReplyDto replyDto, Long id) {
+    public void saveReply(Post post, ReplyDto replyDto, Long id) {
         Optional<Member> byId = memberRepository.findById(id);
         Reply reply = Reply.builder()
                 .comment(replyDto.getComment())
                 .createDate(LocalDateTime.now())
                 .writer(byId.get())////
-                .posts(post)
+                .post(post)
                 .build();
         Reply savedReply = replyRepository.save(reply);     //id와 comment만 등록되어 있는 상태.
         post.addReply(savedReply);                 //Reply에 Post객체 초기화
