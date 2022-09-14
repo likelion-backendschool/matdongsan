@@ -1,4 +1,4 @@
-package com.matdongsan.util;
+package com.matdongsan.util.image;
 
 import org.springframework.web.multipart.MultipartFile;
 

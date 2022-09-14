@@ -29,201 +29,145 @@
                     <div class="product-gallery">
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade active show" id="related1">
-                                <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="/media/figure/product_10.jpg">
-                                </a>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="related2">
-                                <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="/media/figure/product_10.jpg">
-                                </a>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="related3">
-                                <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="/media/figure/product_10.jpg">
-                                </a>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="related4">
-                                <a href="#">
-                                    <img class="zoom_01 img-fluid" alt="single" src="/media/figure/product_10.jpg" data-zoom-image="media/figure/product_10.jpg">
-                                </a>
+                                <img th:if="${#lists.size(#strings.arraySplit(place.photoUrls,','))>0}" style="height: 600px; margin-left: 50px" th:src="${#strings.arraySplit(place.photoUrls,',')[0]}">
+                                <img th:unless="${#lists.size(#strings.arraySplit(place.photoUrls,','))>0}" style="height: 600px; margin-left: 50px" src="/media/figure/product_10.jpg">
                             </div>
                         </div>
-                        <ul class="nav nav-tabs tab-nav-list">
-                            <li class="nav-item">
-                                <a class="active" href="#related1" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related1" src="/media/figure/product_11.png" class="img-fluid">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#related2" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related2" src="/media/figure/product_11.png" class="img-fluid">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#related3" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related3" src="/media/figure/product_11.png" class="img-fluid">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#related4" data-toggle="tab" aria-expanded="false">
-                                    <img alt="related3" src="/media/figure/product_11.png" class="img-fluid">
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="product-content">
-                        <div class="item-category">PLACE</div>
-                        <h2 class="item-title" style="margin-bottom:0 " th:text="${place.placeName}">가게명</h2>
-                        <div class="item-price"><a th:href="${place.placeUrl}" style="font-size: small">웹 페이지로 가기</a></div>
-                        <ul class="entry-meta">
-                            <li>Category:
-                                <span th:text="${place.categoryName}">카테고리</span>
-                            </li>
-                            <li>Address:
-                                <span th:text="${place.addressName}"></span>
-                            </li>
-                            <li>Road Address:
-                                <span th:text="${place.roadAddressName}"></span>
-                            </li>
-                            <li>
-                                Phone:
-                                <span th:text="${place.phone}">010-0000-0000</span>
-                            </li>
-                                <li th:if='${not #strings.isEmpty(place.menus)}'>
-                                    Menu:
-                                    <div  th:each="menu : ${#strings.arraySplit(place.menus,'|')}" class="container">
-                                        <div class="row">
-                                            <span th:text="${#strings.arraySplit(menu,'=')[0]}">메뉴명</span>
-                                            <div class="col"></div>
-                                            <span th:text="${#strings.arraySplit(menu,'=')[1]}">가격</span>
-                                            <div class="w-50"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                        </ul>
-                        <ul class="action-area">
-                            <li id="quantity-holder">
-                                <div class="input-group quantity-holder">
 
-                                    <!-- modal 형식의 맛집 리스트 이동하기 -->
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크에 추가하기</button>
-                                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">북마크에 추가하기</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div th:each="favorite, loop : ${favorites}">
-                                                        <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{/favorite/changeFavorite/{favoriteId}/{placeId}(favoriteId = ${favorite.id}, placeId = ${place.id})}"></a>
+                        <div class="col-lg-6">
+                            <div class="product-content">
+                                <div class="item-category">PLACE</div>
+                                <h2 class="item-title" style="margin-bottom:0 " th:text="${place.placeName}">가게명</h2>
+                                <div class="item-price"><a th:href="${place.placeUrl}" style="font-size: small">웹 페이지로 가기</a></div>
+                                <ul class="entry-meta">
+                                    <li>Category:
+                                        <span th:text="${place.categoryName}">카테고리</span>
+                                    </li>
+                                    <li>Address:
+                                        <span th:text="${place.addressName}"></span>
+                                    </li>
+                                    <li>Road Address:
+                                        <span th:text="${place.roadAddressName}"></span>
+                                    </li>
+                                    <li>
+                                        Phone:
+                                        <span th:text="${place.phone}">010-0000-0000</span>
+                                    </li>
+                                    <li th:if='${not #strings.isEmpty(place.menus)}'>
+                                        Menu:
+                                        <div  th:each="menu : ${#strings.arraySplit(place.menus,'|')}" class="container">
+                                            <div class="row">
+                                                <span th:text="${#strings.arraySplit(menu,'=')[0]}">메뉴명</span>
+                                                <div class="col"></div>
+                                                <span th:text="${#strings.arraySplit(menu,'=')[1]}">가격</span>
+                                                <div class="w-50"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="action-area">
+                                    <li id="quantity-holder">
+                                        <div class="input-group quantity-holder">
+
+                                            <!-- modal 형식의 맛집 리스트 이동하기 -->
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크에 추가하기</button>
+                                            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">북마크에 추가하기</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div th:each="favorite, loop : ${favorites}">
+                                                                <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{/favorite/changeFavorite/{favoriteId}/{placeId}(favoriteId = ${favorite.id}, placeId = ${place.id})}"></a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <!-- toggle 형식의 맛집 리스트 이동하기 -->
-                                    <!--<div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle btn-sm" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            맛집 리스트 이동하기
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li th:each="favorite, loop : ${favorites}">
-                                                <a th:text="${favorite.subject}" class="dropdown-item btn-sm" th:href="@{|/favorite/changeFavorite/${place.id}|}"></a>
-                                            </li>
-                                        </ul>
-                                    </div>-->
-
-                                    <!-- 기존 favorite기능 -> 좋아요 기능으로 바꿀 예정? -->
-                                    <!--<div class="input-group quantity-holder">
-                                        <button id="bookmarkBtn" class="quantity-btn quantity-minus" type="button">
-                                            <i id="bookmarkIcon" class="fa-regular fa-bookmark"></i>
-                                            <span id="favoriteCount" >30</span>
-                                        </button>
-                                    </div>-->
-
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="single-product-info">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#reviews" role="tab" aria-selected="false">Reviews</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade active show" id="reviews" role="tabpanel">
-                    <div class="product-review">
-                        <div class="media">
-                            <div class="item-img">
-                                <img src="/media/figure/author_6.jpg" alt="blog">
-                            </div>
-                            <div class="media-body">
-                                <div class="item-date">DateTime</div>
-                                <div class="author-name">
-                                    <h5 class="item-title">Writer</h5>
-                                </div>
-                                <p style="font-weight: bold">title</p>
-                                <p>content</p>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="single-product-info">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#reviews" role="tab" aria-selected="false">Reviews</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="reviews" role="tabpanel">
+                            <div class="product-review">
+                                <div th:each="post : ${posts}">
+                                    <div class="media">
+                                        <div class="item-img">
+                                            <img src="/media/figure/author_6.jpg" alt="blog">
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="item-date" th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}">DateTime</div>
+                                            <div class="author-name">
+                                                <h5 class="item-title" th:text="${post.author.nickname}">Writer</h5>
+                                            </div>
+                                            <p style="font-weight: bold" th:text="${post.title}">title</p>
+                                            <p th:utext="${post.content}">content</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script th:inline="javascript">
+                    let placeId = [[${place.id}]];
+                    let favoriteCount = [[${favoriteCount}]];
+                    let isFavorite = [[${isFavorite}]];
+
+                    let favoriteCountEl = document.getElementById("favoriteCount");
+                    let bookmarkIconEl = document.getElementById("bookmarkIcon");
+                    let bookmarkBtnEl = document.getElementById("bookmarkBtn");
+
+                    updateFavoriteContent();
+
+                    function updateFavoriteContent(){
+                        favoriteCountEl.innerText = favoriteCount;
+                        if(isFavorite){
+                            bookmarkIconEl.classList.replace("fa-regular","fa-solid")
+                        }else{
+                            bookmarkIconEl.classList.replace("fa-solid","fa-regular")
+                        }
+                    }
+
+                    function sendFavorite(){
+                        console.log("sendFavorite");
+                        return fetch("/api/place/"+placeId+"/favorite",{
+                            method:"POST",
+                        }).then(async res => {
+                            var json = await res.json()
+                            console.log(json);
+                            favoriteCount = json['favoriteCount'];
+                            isFavorite = json['favorite'];
+
+                            console.log(favoriteCount);
+                            console.log(isFavorite);
+                            updateFavoriteContent();
+                        })
+                    }
+
+                    bookmarkBtnEl.addEventListener("click",sendFavorite)
+
+
+                </script>
             </div>
         </div>
-        <script th:inline="javascript">
-            let placeId = [[${place.id}]];
-            let favoriteCount = [[${favoriteCount}]];
-            let isFavorite = [[${isFavorite}]];
-
-            let favoriteCountEl = document.getElementById("favoriteCount");
-            let bookmarkIconEl = document.getElementById("bookmarkIcon");
-            let bookmarkBtnEl = document.getElementById("bookmarkBtn");
-
-            updateFavoriteContent();
-
-            function updateFavoriteContent(){
-                favoriteCountEl.innerText = favoriteCount;
-                if(isFavorite){
-                    bookmarkIconEl.classList.replace("fa-regular","fa-solid")
-                }else{
-                    bookmarkIconEl.classList.replace("fa-solid","fa-regular")
-                }
-            }
-
-            function sendFavorite(){
-                console.log("sendFavorite");
-                return fetch("/api/place/"+placeId+"/favorite",{
-                    method:"POST",
-                }).then(async res => {
-                    var json = await res.json()
-                    console.log(json);
-                    favoriteCount = json['favoriteCount'];
-                    isFavorite = json['favorite'];
-
-                    console.log(favoriteCount);
-                    console.log(isFavorite);
-                    updateFavoriteContent();
-                })
-            }
-
-            bookmarkBtnEl.addEventListener("click",sendFavorite)
-
-
-        </script>
-    </div>
-</div>
 </body>
 
 </html>

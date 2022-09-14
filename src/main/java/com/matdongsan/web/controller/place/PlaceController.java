@@ -4,9 +4,11 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.favorite.Favorite;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
+import com.matdongsan.domain.post.Post;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.FavoriteService;
 import com.matdongsan.service.PlaceService;
+import com.matdongsan.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Literal;
@@ -29,6 +31,7 @@ public class PlaceController {
     private final PlaceService placeService;
     private final FavoriteService favoriteService;
     private final AccountService accountService;
+    private final PostService postService;
 
     @GetMapping
     public String showList(){
@@ -46,6 +49,7 @@ public class PlaceController {
         Account account = accountService.findAccountByUsername(principal.getName());
         Member member = account.getMember();
         Place place = placeService.findPlace(placeId);
+        List<Post> posts = postService.findAllByPlace(place);
 
         Optional<Favorite> optionalFavorite = Optional.ofNullable(favoriteService.findTopByMember(member));
         if (optionalFavorite.isPresent()) {
@@ -57,6 +61,7 @@ public class PlaceController {
             model.addAttribute("favorites", favorite);
         }
         model.addAttribute("place", place);
+        model.addAttribute("posts", posts);
 
         return "place/place-detail";
     }
