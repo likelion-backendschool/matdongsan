@@ -37,6 +37,10 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
+
+    ## gradle build
+    - name: Build with Gradle
+      run: ./gradlew bootJar
   
     ## docker build & push to production
     - name: Docker build & push to prod
