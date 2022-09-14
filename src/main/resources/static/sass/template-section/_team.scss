@@ -1,0 +1,240 @@
+/*------------------- 5.8 Team -------------------*/
+.team-circle {
+    .nav-tabs {
+        border-bottom: none;
+        position: relative;
+        height: 100%;
+        @media only screen and (max-width: 991px) {
+            justify-content: center;     
+        }
+        .nav-item {
+            margin-bottom: 0;
+            transform: scale(0.55);
+            position: absolute;
+            @media only screen and (max-width: 991px) {
+                transform: scale(1) !important;
+                position: initial;
+                margin-right: 15px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+            @media only screen and (max-width: 575px) {
+                margin-bottom: 15px;                     
+            }
+            &:nth-child(1n) {
+                transform: scale(0.75);
+                top: -8%;
+                right: -17%;
+            }
+
+            &:nth-child(2n) {
+                transform: scale(0.55);
+                top: 34%;
+                left: -25%;
+            }
+
+            &:nth-child(3n) {
+                transform: scale(0.55);
+                top: 44%;
+                right: -35%;
+            }
+        }
+
+        .nav-link {
+            padding: 0;
+            border: none;
+            background-color: transparent;
+
+            img {
+                border-radius: 50%;
+                @media only screen and (max-width: 991px) {
+                    height: 100px;
+                    width: 100px;     
+                }
+                @media only screen and (max-width: 767px) {
+                    height: 70px;
+                    width: 70px;     
+                }
+            }
+        }
+    }
+
+    .nav-tabs-right {
+        .nav-item {
+            &:nth-child(1n) {
+                transform: scale(0.55);
+                top: -14%;
+                left: -30%;
+                right: auto;
+            }
+
+            &:nth-child(2n) {
+                transform: scale(0.55);
+                top: 0;
+                left: auto;
+                right: -17%;
+            }
+
+            &:nth-child(3n) {
+                transform: scale(0.75);
+                top: 34%;
+                right: -40%;
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 50px 30px 110px;
+        @media only screen and (max-width: 991px) {
+            padding: 50px 0;  
+        }
+        @media only screen and (max-width: 575px) {
+           padding: 30px 0 50px;  
+                              
+        }
+        .tab-pane {
+            text-align: center;
+        }
+    }
+
+    .team-box {
+        display: inline-block;
+        position: relative;
+
+        .item-img {
+            position: relative;
+
+            &:before {
+                content: "";
+                height: 100%;
+                width: 100%;
+                background-color: rgba(93, 93, 250, .85);
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                transition: all 0.3s ease-in-out;
+                z-index: 1;
+            }
+
+            img {
+                border-radius: 50%;
+                filter: grayscale(100%);
+            }
+        }
+
+        .item-content {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            transition: all 0.3s ease-in-out;
+            z-index: 2;
+
+            .item-title {
+                font-size: 24px;
+                position: relative;
+                padding-bottom: 16px;
+                margin-bottom: 8px;
+                transition: all 0.3s ease-in-out;
+
+                a {
+                    color: $color_light;
+
+                    &:hover {
+                        color: $color_secondary;
+                    }
+                }
+
+                &:before {
+                    content: "";
+                    height: 3px;
+                    width: 10px;
+                    background-color: $color_light;
+                    border-radius: 4px;
+                    position: absolute;
+                    left: -32px;
+                    right: 0;
+                    bottom: 0;
+                    margin: 0 auto;
+                }
+
+                &:after {
+                    content: "";
+                    height: 3px;
+                    width: 30px;
+                    background-color: $color_light;
+                    border-radius: 4px;
+                    position: absolute;
+                    left: 13px;
+                    right: 0;
+                    bottom: 0;
+                    margin: 0 auto;
+                }
+            }
+
+            .group-count {
+                font-size: 18px;
+                color: $color_light;
+                transition: all 0.3s ease-in-out;
+                span {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+    .see-all-btn {
+    	text-align: center;
+    	padding: 10px 0 20px;
+    }
+    .shape-wrap {
+    	li {
+    		position: absolute;
+    		z-index: -1;
+    		&:nth-child(1n) {
+    			top: -4%;
+    			left: 16%;
+    			animation: movingleftright1 15000ms linear infinite;
+    		}
+    		&:nth-child(2n) {
+    			top: 33%;
+    			left: 9%;
+    			animation: movingleftright2 25000ms linear infinite;
+    		}
+    		&:nth-child(3n) {
+    			top: 78%;
+    			left: 18%;
+    			animation: movingleftright3 20000ms linear infinite;
+    		}
+    		&:nth-child(4n) {
+    			top: 8%;
+    			left: 35%;
+    			animation: movingleftright2 20000ms linear infinite;
+    		}
+    		&:nth-child(5n) {
+    			top: 73%;
+    			left: 46%;
+    			animation: movingleftright1 30000ms linear infinite;
+    		}
+    		&:nth-child(6n) {
+    			top: 10%;
+    			left: 61%;
+    			animation: movingleftright3 25000ms linear infinite;
+    		}
+    		&:nth-child(7n) {
+    			top: 4%;
+    			left: 82%;
+    			animation: movingleftright2 30000ms linear infinite;
+    		}
+    		&:nth-child(8n) {
+    			top: 70%;
+    			left: 60%;
+    			animation: movingleftright1 40000ms linear infinite;
+    		}
+    	}
+    }
+}

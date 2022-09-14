@@ -1,0 +1,94 @@
+
+body {
+    font-family: $font_family;    
+    font-size: 16px;
+    line-height: 28px;
+    color: $color_body;
+    font-weight: 400;
+    height: 100%;
+    vertical-align: baseline;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background-color: #ffffff;
+}
+
+p {
+    margin: 0 0 10px 0;
+    color: $color_body;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font_family;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    line-height: 28px;
+    color: $color_black;
+}
+
+h1 {
+    font-size: 46px;
+    line-height: 52px;
+    @media only screen and (max-width: 1199px) {
+        font-size: 44px;   
+    }
+    @media only screen and (max-width: 991px) {
+        font-size: 40px;   
+    }
+    @media only screen and (max-width: 767px) {
+        font-size: 34px;   
+    }
+    @media only screen and (max-width: 575px) {
+        font-size: 30px;   
+    }
+}
+
+h2 {
+    font-size: 36px;
+    line-height: 42px;
+    @media only screen and (max-width: 1199px) {
+        font-size: 34px;
+    }
+    @media only screen and (max-width: 991px) {
+        font-size: 32px;   
+    }
+    @media only screen and (max-width: 767px) {
+        font-size: 30px; 
+    }
+    @media only screen and (max-width: 575px) {
+        font-size: 24px; 
+    }
+}
+
+h3 {
+    font-size: 28px;
+    @media only screen and (max-width: 1199px) {
+        font-size: 26px;   
+    }
+    @media only screen and (max-width: 991px) {
+        font-size: 24px;   
+    }
+    @media only screen and (max-width: 767px) {
+        font-size: 22px;   
+    }
+}
+
+h4 {
+    font-size: 22px;
+    @media only screen and (max-width: 575px) {
+        font-size: 20px;   
+    }
+}
+
+h5 {
+    font-size: 18px;
+}
+
+h6 {
+    font-size: 14px;
+}

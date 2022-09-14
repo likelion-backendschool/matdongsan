@@ -1,0 +1,30 @@
+/*------------------- 2.1 Margin -------------------*/
+.countdown-box {
+	margin-bottom: 20px;
+	.countdown {
+		display: flex;
+		align-items: center;
+		background-color: $color_light;
+		border-radius: 4px;
+		.countdown-section {
+			padding: 5px 15px;
+			line-height: 1.3;
+			border: 1px solid #efefef;
+			border-radius: 4px;
+			text-align: center;
+			margin-right: 12px;
+			&:last-child {
+				margin-right: 0;
+			}
+			.countdown-number {
+				font-size: 18px;
+				font-weight: 600;
+				color: #0e0e0e;
+			}
+			.countdown-unit {
+				font-size: 14px;
+				color: #c0c0c0;
+			}
+		}
+	}
+}

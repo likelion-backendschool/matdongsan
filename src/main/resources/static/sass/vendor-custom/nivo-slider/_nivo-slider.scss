@@ -1,0 +1,301 @@
+/*------------------- 3.1 Nivo Slider -------------------*/
+.slider-area {
+    position: relative;
+    &:hover {
+        .nivo-directionNav {
+            a {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+    .nivo-directionNav {
+        a {
+            z-index: 6;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid $color_light;
+            background-color: $color_light;
+            color: $color_primary;
+            font-size: 0;
+            transition: all 0.3s ease-in-out;
+            @media only screen and (max-width: 1199px) {
+                visibility: hidden;
+                opacity: 0;     
+            }
+            @media only screen and (max-width: 1199px) {
+                width: 50px;
+                height: 50px;   
+            }
+            @media only screen and (max-width: 767px) {
+                width: 45px;
+                height: 45px;   
+            }
+            @media only screen and (max-width: 575px) {
+                width: 40px;
+                height: 40px;   
+            }
+            &:before {
+                content: "\f053";
+                font-family: "Font Awesome 5 Free";
+                font-weight: 700;
+                cursor: pointer;
+                font-size: 18px;
+                position: absolute;
+                text-align: center;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 9;
+                left: 0;
+                right: 0;
+            }
+            &:hover {
+                background-color: transparent;
+                color: $color_light;
+            }
+        }
+        a.nivo-prevNav {
+            left: calc((100% - 1170px) / 2 - 100px);
+            @media only screen and (max-width: 1440px) {
+                left: 0;
+            }
+        }
+        a.nivo-nextNav {
+            right: calc((100% - 1170px) / 2 - 100px);
+            @media only screen and (max-width: 1440px) {
+                right: 0;
+            }
+            
+            &:before {
+                content: "\f054";
+            }
+        }
+    }
+
+    .nivo-caption {
+        opacity: 1;
+    }
+
+    .slider-content {
+        .product-type {
+            margin-bottom: 12px;
+            @media only screen and (max-width: 575px) {
+                display: none;                     
+            }
+            span {
+                font-size: 13px;
+                color: $color_light;
+                padding: 6px 12px;
+                border-radius: 4px;
+                margin-right: 2px;
+            }
+        }
+        .product-category {
+            font-size: 13px;
+            margin-bottom: 10px;
+            @media only screen and (max-width: 767px) {
+                display: none;                     
+            }
+        }
+        .item-title {
+            color: $color_light;
+            margin-bottom: 20px;
+            line-height: 40px;
+            @media only screen and (max-width: 575px) {
+                text-align: center;
+                font-size: 26px;                     
+            }
+        }
+        .entry-meta {
+            margin-bottom: 5px;
+            @media only screen and (max-width: 991px) {
+                display: none;     
+            }
+            li {
+                display: inline-block;
+                margin-right: 15px;
+                i {
+                    margin-right: 8px;
+                }
+                &:last-child {
+                    margin-right: 0;
+                    &:after {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .meta-tag {
+            li {
+                position: relative;
+                margin-right: 10px;
+                &:after {
+                    content: ".";
+                    font-size: 20px;
+                    color: $color_light;
+                    padding-left: 10px;
+                }
+            }
+        }
+        .bottom-area {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            @media only screen and (max-width: 575px) {
+                display: none;                     
+            }
+            li {
+                margin-right: 30px;
+            }
+            .item-price {
+                font-size: 28px;
+                font-weight: 700;
+                span {
+                    font-weight: 400;
+                    font-size: 18px;
+                }
+            }
+            .item-author {
+                img {
+                    position: inherit;
+                    border-radius: 50%;
+                    margin-right: 14px;
+
+                }
+            }
+            .action-btn {
+                a {
+                    color: $color_light;
+                    font-size: 20px;
+                    margin-right: 12px;
+                    &:hover {
+                        color: $color_primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.slider-layout1 {
+    margin-top: -122px;
+    @media only screen and (max-width: 991px) {
+        margin-top: 0;     
+    }
+    &:before {
+        content: "";
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 6;
+        transition: all 0.3s ease-in-out;
+    } 
+    &:after {
+        content: "";
+        height: 30%;
+        width: 100%;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) , transparent);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 6;
+        transition: all 0.3s ease-in-out;
+    }
+    .nivo-caption {
+        top: 50px;
+        @media only screen and (max-width: 1199px) {
+            top: 28px;     
+        }
+        @media only screen and (max-width: 991px) {
+            top: 0;   
+        }
+    }
+    .slider-content {
+        .product-type {
+            animation: fadeInUp 1000ms ease-in-out;
+        }
+        .product-category {
+            animation: fadeInUp 1000ms ease-in-out;
+        }
+        .item-title {
+            animation: fadeInUp 1000ms ease-in-out;
+        }
+        .entry-meta {
+            animation: fadeInUp 1000ms ease-in-out;
+        }
+        .bottom-area {
+            animation: fadeInUp 1000ms ease-in-out;
+        }
+    } 
+}
+
+.slider-layout2 {
+    .nivo-caption {
+        @media only screen and (max-width: 479px) {
+            top: -10px;                
+        }
+    }
+    .slider-content {
+         animation: fadeInUp 1500ms ease-in-out;
+        .item-content {
+            max-width: 500px;
+            background-color: $color_light;
+            border-radius: 8px;
+            padding: 38px 40px 30px;
+            margin: 0 auto;
+            @media only screen and (max-width: 767px) {
+                transform: scale(0.7);   
+                max-width: 100%;                  
+            }
+            @media only screen and (max-width: 479px) {
+                padding: 20px;                      
+            }
+            .product-type {
+                margin-bottom: 18px;
+            }
+            .item-title {
+                font-size: 24px;
+                color: $color_black;
+                margin-bottom: 10px;
+                @media only screen and (max-width: 1199px) {
+                    margin-bottom: 0;     
+                }
+            }
+            .entry-meta {
+                li {
+                    color: $color_body;
+                    i {
+                        color: $color_primary;
+                    }
+                }
+            }
+            .bottom-area {
+                margin-top: 10px;
+                li {
+                    color: #444444;
+                }
+                .item-price {
+                    color: $color_primary;
+                    span {
+                        color: #444444;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+

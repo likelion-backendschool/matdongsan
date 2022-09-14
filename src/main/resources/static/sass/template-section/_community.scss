@@ -1,0 +1,89 @@
+/*------------------- 5.4 Community -------------------*/
+.community-network {
+	background-color: #f6f6f6;
+	padding: 125px 0;
+	background-image: url('../../media/figure/map_1.png');
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	position: relative;
+    z-index: 1;
+    @media only screen and (max-width: 1199px) {
+        padding: 100px 0;     
+    }
+    @media only screen and (max-width: 991px) {
+        padding: 75px 0;    
+        background-image: none; 
+    }
+	.bg-shape {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+        z-index: -1;
+        @media only screen and (max-width: 767px) {
+            display: none;                     
+        }
+	}
+	.community-content {
+		.item-title {
+			width: 80%;
+			margin-bottom: 20px;
+            @media only screen and (max-width: 1199px) {
+                width: 100%;     
+            }
+			span {
+				color: $color_primary;
+			}
+		}
+		p {
+			color: #71728c;
+            @media only screen and (max-width: 991px) {
+                margin-bottom: 0;     
+            }
+		}
+	}
+ 	.map-marker {
+ 		position: relative;
+        @media only screen and (max-width: 991px) {
+            display: none;  
+        }   
+        li {
+            position: absolute;
+
+            &:nth-child(1n) {
+                top: 35px;
+                left: 11%;
+            }
+
+            &:nth-child(2n) {
+                top: 60px;
+                left: 25%;
+            }
+
+            &:nth-child(3n) {
+                top: 230px;
+                left: 28%;
+            }
+
+            &:nth-child(4n) {
+                top: 115px;
+                left: 37%;
+            } 
+            &:nth-child(5n) {
+                top: 185px;
+                left: 16%;
+            }
+
+            &:after {
+                content: "";
+                height: 6px;
+                width: 33px;
+                background-color: #bcbcbc;
+                border-radius: 50%;
+                position: absolute;
+                top: 33px;
+                left: -5px;
+                animation: pulse 1500ms infinite;
+            }
+        }
+    }
+}
