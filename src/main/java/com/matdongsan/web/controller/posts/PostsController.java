@@ -4,6 +4,9 @@ import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.posts.Posts;
+
+import com.matdongsan.domain.posts.PostsRepository;
+
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.PlaceService;
@@ -11,9 +14,14 @@ import com.matdongsan.service.PostsService;
 import com.matdongsan.service.ReplyService;
 import com.matdongsan.web.dto.ReplyDto;
 import com.matdongsan.web.dto.posts.PostCreateDto;
+import com.matdongsan.web.dto.posts.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +31,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -35,12 +45,14 @@ public class PostsController {
     private final AccountService accountService;
     private final ReplyService replyService;
 
+    private final PostsRepository postsRepository;
+
 
     // 게시글 상세 조회
     @GetMapping("/posts/{id}")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
-                                 Model model, @ModelAttribute("replyDto") ReplyDto replyDto) {
+                                 Model model, @ModelAttribute("replyDto") ReplyDto replyDto){
         Posts post = postsService.findById(id);
         model.addAttribute("post", post);
 
@@ -55,27 +67,41 @@ public class PostsController {
     }
 
     // 게시글 전체 조회
+    // 페이징 처리 하기
+//    @GetMapping("/posts")
+//    public String showAllPosts(Model model) {
+//        List<Posts> posts = postsService.findAll();
+//
+//        model.addAttribute("postList", posts);
+//
+//        return "/posts/posts-list";
+//    }
+
     @GetMapping("/posts")
-    public String showAllPosts(Model model) {
-        List<Posts> posts = postsService.findAll();
+    public String showAllPosts(Model model , @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
 
-        model.addAttribute("postList", posts);
+        // 게시글 전체 조회
+        Page<Posts> paging = postsService.getList(pageable);
+        // model에 담기
+        model.addAttribute("paging" , paging);
 
-        return "/posts/posts-list";
+        return "posts/posts-list";
     }
+
 
     // 게시글 등록 폼 페이지
     @GetMapping("/posts/new")
     public String newPost(Model model) {
+
         model.addAttribute("postCreateDto", new PostCreateDto());
         return "/posts/posts-newForm";
     }
+
 
     // 게시글 등록 posts
     @PostMapping("/posts/new")
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            log.info("error 발생");
             model.addAttribute("postCreateDto", postCreateDto);
             return "posts/posts-newForm";
         }
@@ -89,33 +115,48 @@ public class PostsController {
     }
 
     // 게시글 수정 뷰 페이지
-    /*@GetMapping("/posts/update/{id}")
-    public String modifyPost(@PathVariable Long id ,Model model) {
+    @GetMapping("/posts/modify/{id}")
+    public String modifyPost(@PathVariable Long id ,Model model) throws IOException {
 
         Posts posts = postsService.findById(id);
 
-        model.addAttribute("findPost", posts);
+        // posts가 가지고 있는 image들을 list로 받아 와야한다.
+        List<MultipartFile> imageList = postsService.getImageList(posts.getImageUrls());
+
+        PostUpdateDto dto = new PostUpdateDto();
+        dto.setId(posts.getId());
+        dto.setTitle(posts.getTitle());
+        dto.setContent(posts.getContent());
+        dto.setPlaceName(posts.getPlace().getPlaceName());
+        dto.setPrivateStatus(posts.isPrivateStatus());
+
+
+        model.addAttribute("findPost", dto);
+        model.addAttribute("imageList", imageList);
 
         return "posts/posts-updateForm";
     }
 
 
     @PostMapping("/posts/update/{id}")
-    public String editPost(@PathVariable Long id , PostCreateDto postCreateDto){
+    public String updatePost(@PathVariable Long id, PostUpdateDto updateDto) {
 
-        Posts postsUpdate = postsService.findById(id);
+        Posts updatePost = postsService.findById(id);
 
-        return String.format("redirect:/posts/%s" , id);
+        updatePost.change(updateDto.getTitle(), updateDto.getContent(), "", updateDto.getPrivateStatus());
+
+        postsRepository.save(updatePost);
+
+        return "redirect:/posts/{id}";
     }
 
     //
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable Long id){
 
-        Posts posts = postsService.findById(id);
-        postsService.delete(posts);
+        postsService.delete(id);
 
         return "redirect:/posts";
-    }*/
+    }
 
 }

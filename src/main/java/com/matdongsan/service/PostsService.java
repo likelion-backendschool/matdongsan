@@ -7,13 +7,29 @@ import com.matdongsan.domain.posts.PostsRepository;
 import com.matdongsan.util.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostsService {
 
     private final PlaceService placeService;
@@ -46,18 +62,45 @@ public class PostsService {
         return postsRepository.save(posts);
     }
 
-    /*public Posts update(Posts posts , String title , String content , Member author , boolean status) {
+    // 이미지 폴더에서 파일을 리스트로 받아오는 로직
+    public List<MultipartFile> getImageList(String imageUrls) throws IOException {
+        List<MultipartFile> imgList = new ArrayList<>();
 
-        posts.setTitle(title);
-        posts.setContent(content);
-        posts.setAuthor(author);
-        posts.setPrivateStatus(status);
+        for (String imgName : imageUrls.split(",")){
+            if (StringUtils.isEmpty(imgName)){
+                continue;
+            }
+            File file = new File(imageUtil.getFullPath(imgName));
+            imgList.add(getMultipartFile(file));
+        }
 
-        return postsRepository.save(posts);
+        log.info("리스트 생성 완료");
 
-    }*/
+        return imgList;
 
-    /*public void delete(Posts posts) {
-        postsRepository.delete(posts);
-    }*/
+    }
+
+    // File 객체를 MultipartFile로 변경하는 로직
+    private MultipartFile getMultipartFile(File file) throws IOException {
+
+        log.info("변환 완료");
+        FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+
+        InputStream input = new FileInputStream(file);
+        OutputStream os = fileItem.getOutputStream();
+        IOUtils.copy(input, os);
+
+        MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+        return multipartFile;
+    }
+
+    public void delete(Long id) {
+        postsRepository.deleteById(id);
+    }
+
+    // 게시글 전체 조회를 페이징으로
+    public Page<Posts> getList(Pageable pageable) {
+
+        return postsRepository.findAll(pageable);
+    }
 }
