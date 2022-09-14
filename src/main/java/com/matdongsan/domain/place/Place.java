@@ -23,6 +23,9 @@ public class Place {
     private String x;
     private String y;
 
+    @Lob
+    private String photoUrls;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "place")
     private List<Post> posts = new ArrayList<>();
 
@@ -42,10 +45,13 @@ public class Place {
         this.x = x;
         this.y = y;
     }
-    public void setAdditionalInfo(String menu,String facility,String mainPhotoUrl){
+    public void setAdditionalInfo(String menu,String facility,String mainPhotoUrl,String photoUrls){
         this.menus = menu;
         this.facilityInfo = facility;
         this.mainPhotoUrl = mainPhotoUrl;
+        this.photoUrls = photoUrls;
+
+        System.out.println(photoUrls);
     }
 
 }

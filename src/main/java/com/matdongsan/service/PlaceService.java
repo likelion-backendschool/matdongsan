@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,6 +65,7 @@ public class PlaceService {
             String menus="";
             String facilityInfo="";
             String mainPhotoUrl = "";
+            String photoUrls = "";
             String url = "https://place.map.kakao.com/main/v/" + place.getId();
             HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(new HttpHeaders());
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
@@ -82,6 +84,18 @@ public class PlaceService {
                     return (menu + "=" + price);
                 }).collect(Collectors.joining("|")).toString();
             }
+
+            if(bodyJson.containsKey("photo")){
+                JSONObject photo = (JSONObject) bodyJson.get("photo");
+                JSONArray photoList = (JSONArray) photo.get("photoList");
+                JSONObject first = (JSONObject) photoList.get(0);
+                JSONArray array = (JSONArray) first.get("list");
+                photoUrls = (String) array.stream().map(i -> {
+                    JSONObject tmp = (JSONObject) i;
+                    return tmp.get("orgurl").toString();
+                }).limit(4).collect(Collectors.joining(","));
+            }
+
             JSONObject basicInfo = (JSONObject) bodyJson.get("basicInfo");
 
             if (basicInfo.containsKey("mainphotourl")) {
@@ -95,7 +109,7 @@ public class PlaceService {
                     return entry.getKey() + "=" + entry.getValue();
                 }).collect(Collectors.joining("|")).toString();
             }
-            place.setAdditionalInfo(menus, facilityInfo,mainPhotoUrl);
+            place.setAdditionalInfo(menus, facilityInfo,mainPhotoUrl,photoUrls);
         } catch (ParseException e) {
             log.error("parser error",e);
             throw new RuntimeException(e);
