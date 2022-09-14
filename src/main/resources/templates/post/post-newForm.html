@@ -36,9 +36,9 @@
                         </button>
                     </div>
                     <div class="modal-body" id="place-modal">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-4" type="search" id="search-input" placeholder="키워드를 입력해주세요!" aria-label="Search">
-                            <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="sendKakaoApi();return false;">Search</button>
+                        <form class="form-inline flex-fill justify-content-around">
+                            <input class="form-control" size="30" type="search" id="search-input" placeholder="키워드를 입력해주세요!" aria-label="Search">
+                            <button class="btn btn-primary" type="submit" onclick="sendKakaoApi();return false;">Search</button>
                         </form>
                         <ul class="list-group list-group-flush" id="search-result-list"></ul>
                     </div>
@@ -184,7 +184,8 @@
                 for(const place of places){
                     const el = document.createElement('li');
                     el.className = 'list-group-item';
-                    el.textContent = place['place_name'];
+                    el.innerHTML = place['place_name']+"<br> <span style='font-size: 13px'>"+place['road_address_name']+"</span>";
+                    //road_address_name
                     el.setAttribute("data-toggle",'modal');
                     el.setAttribute("data-target",'#placeModal');
 
@@ -202,7 +203,7 @@
             const sendKakaoApi= ()=>{
                 let url = "https://dapi.kakao.com/v2/local/search/keyword.json?"+
                             "category_group_code=CE7,FD6&"+
-                            "y=37.514322572335935&x=127.06283102249932&sort=distance&query="
+                            "query="
                 const searchKeyword = searchInput.value;
                 if(!searchKeyword.trim()) return;
                 url+= searchKeyword.trim()

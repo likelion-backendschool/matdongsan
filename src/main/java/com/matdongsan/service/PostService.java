@@ -4,7 +4,7 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.post.PostRepository;
-import com.matdongsan.util.ImageUtil;
+import com.matdongsan.util.image.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
 
@@ -34,12 +34,17 @@ public class PostService {
 
     private final ImageUtil imageUtil;
     private final PostRepository postRepository;
+
     public Post findById(Long id) {
         return postRepository.findById(id).get();
     }
 
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    public List<Post> findAllByPlace(Place place){
+        return postRepository.findAllByPlace(place);
     }
 
     public Post savePost(Member member, PostCreateDto dto) {

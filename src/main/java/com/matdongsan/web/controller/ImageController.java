@@ -1,7 +1,7 @@
 package com.matdongsan.web.controller;
 
 
-import com.matdongsan.util.ImageUtil;
+import com.matdongsan.util.image.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.MalformedURLException;
-import java.nio.file.Paths;
 
 @RestController
 @RequiredArgsConstructor

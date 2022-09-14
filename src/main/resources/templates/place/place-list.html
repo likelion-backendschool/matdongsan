@@ -25,7 +25,9 @@
         <div style="height: 50px"></div>
         <!-- Banner Area Start -->
         <div id="card-list" class="row gutters-20 justify-content-center" >
-            <h1>로딩중 ...</h1>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
         <div class="row  justify-content-center">
             <button id="more-button" type="button" class="btn btn-primary d-none">Load More</button>
@@ -73,6 +75,7 @@
                         // alert(position.coords.latitude + ' ' + position.coords.longitude);
                     }, function(error) {
                         console.error(error);
+                         cb();
                     }, {
                         enableHighAccuracy: false,
                         maximumAge: 0,
