@@ -24,14 +24,14 @@ public class LikeApiService {
         postLikeRepository.save(newPostLike);
     }
 
-    public boolean existLikeChk(Member member, Post post) {
+    public boolean existPostLikeFlag(Member member, Post post) {
         return postLikeRepository.existsByMemberAndPost(member, post);
     }
 
     @Transactional
     public boolean modifyLikeStatus(Member member, Long postId) {
         Post currentPost = postService.findById(postId);
-        boolean flag = existLikeChk(member, currentPost);
+        boolean flag = existPostLikeFlag(member, currentPost);
         if (flag) {
             PostLike currentPostLike = postLikeRepository.findByMemberAndPost(member, currentPost);
             postLikeRepository.delete(currentPostLike);

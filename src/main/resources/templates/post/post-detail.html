@@ -65,9 +65,17 @@
                 </div>
                 <div class="post-meta-wrap">
                     <div class="post-meta" id="post-ajax-form">
-                        <form id="react-form" onsubmit="return false;">
-                            <button class="btn text-primary" type="button" id="post-react-btn"><i class="icofont-thumbs-up"></i><span class="mx-2" id="post-react-btn-text">좋아요</span><span class="badge rounded-pill bg-primary text-white">3</span></button>
-                        </form>
+                        <button class="btn" id="post-react-btn">
+                            <th:block th:if="${!likeFlag}">
+                                <i class="icofont-thumbs-up"></i>
+                                <span class="mx-2">좋아요</span>
+                            </th:block>
+                            <th:block th:if="${likeFlag}">
+                                <i class="icofont-thumbs-up text-primary"></i>
+                                <span class="mx-2 text-primary">좋아요 취소</span>
+                            </th:block>
+                            <span class="badge rounded-pill bg-primary text-white" th:text="${post.getPostLike().size()}"></span>
+                        </button>
                     </div>
                     <div class="post-meta">
                         <div class="meta-text" >
@@ -76,6 +84,10 @@
                         </div>
                     </div>
                 </div>
+                <!--댓글 부분-->
+                <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})">
+                </div>
+                <!-- 댓글 끝 -->
             </div>
             <!--<div class="post-footer">
                 <ul>
@@ -96,10 +108,6 @@
                     </li>
                 </ul>
             </div>-->
-            <!--댓글 부분-->
-            <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})">
-            </div>
-            <!-- 댓글 끝 -->
         </div>
     </div>
     <th:block th:replace="/fragments/likes/post-like-fragments::likes(${post.getId()})"></th:block>
