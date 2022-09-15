@@ -113,4 +113,20 @@ public class ProfileController {
         return "/profile/profile-bookmark";
     }
 
+    @PostMapping("/profile/bookmark/favorite/subjectCheck")
+    @ResponseBody
+    public boolean subjectCheck(@AuthUser Account account, @RequestBody String bookmarkSubject) {
+        Member member = account.getMember();
+        boolean check = false;
+        List<Favorite> favoriteList = favoriteService.findAllByMember(member);
+        for (Favorite favorite : favoriteList) {
+            log.info("favorite.subject->{}", favorite.getSubject());
+            log.info("bookmark.subject->{}", bookmarkSubject);
+            log.info("true->{}", bookmarkSubject.equals(favorite.getSubject()));
+            if (bookmarkSubject.equals(favorite.getSubject())){
+                check = true;
+            }
+        }
+        return check;
+    }
 }

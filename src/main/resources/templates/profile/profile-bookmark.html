@@ -23,7 +23,7 @@
     </div>
 
     <!-- Modal -->
-    <form th:action="@{/favorite/addFavorite}" th:method="post">
+    <form th:action="@{/favorite/addFavorite}" th:method="post" id="addFavorite">
       <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -38,12 +38,41 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-              <button type="submit" class="btn btn-primary">추가</button>
+              <button type="button" id="subjectButton" class="btn btn-primary">추가</button>
             </div>
           </div>
         </div>
       </div>
     </form>
+
+    <script type="text/javascript">
+      $("#subjectButton").click(function() {
+        var bookmarkSubject =  $("#floatingInput").val();
+        console.log("버튼 클릭" + bookmarkSubject);
+
+        $.ajax({
+          async: true,
+          type : 'POST',
+          data : bookmarkSubject,
+          url : "favorite/subjectCheck",
+          dataType : "json",
+          contentType: "application/json; charset=UTF-8",
+          success : function(result) {
+            console.log(result);
+            if (result) {
+              alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+              $("#floatingInput").focus();
+            } else {
+              document.getElementById('addFavorite').submit();
+            }
+          },
+          error : function(error) {
+
+            alert("error : " + error);
+          }
+        });
+      });
+    </script>
 
     <!-- 북마크 리스트 -->
     <div class="block-box post-view" th:each="favorite, loop : ${favorites}">
@@ -130,11 +159,8 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
 </body>
-
 </html>
