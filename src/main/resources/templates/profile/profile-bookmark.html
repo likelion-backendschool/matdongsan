@@ -36,6 +36,7 @@
             <div class="modal-body">
               <div id="status"></div>
               <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
+              <span id="makeError"></span>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -49,8 +50,9 @@
     <script type="text/javascript">
       $("#subjectButton").click(function() {
         var bookmarkSubject =  $("#floatingInput").val();
-        console.log("버튼 클릭" + bookmarkSubject);
-
+        if (bookmarkSubject == "") {
+          $('#makeError').text("북마크 이름을 입력해주세요.");
+        }
         $.ajax({
           async: true,
           type : 'POST',
@@ -61,16 +63,12 @@
           success : function(result) {
             console.log(result);
             if (result) {
-              alert("북마크 이름은 중복으로 사용이 불가능 합니다.");
+              $('#makeError').text("북마크 이름은 중복으로 사용이 불가능 합니다.");
               $("#floatingInput").focus();
             } else {
               document.getElementById('addFavorite').submit();
             }
           },
-          error : function(error) {
-
-            alert("error : " + error);
-          }
         });
       });
     </script>
@@ -99,13 +97,15 @@
                 <h6 class="modal-title">북마크 수정하기</h6>
                 <form th:action="@{|/favorite/modifyFavorite/${favorite.id}|}" th:method="post" th:id="'modifyFavorite' + ${favorite.id}" onsubmit="return false">
                   <input tpye="text" class="form-control" name="subject" th:id="'floatingInput2'+${favorite.id}" placeholder="북마크 이름을 입력해주세요." required>
+                  <span th:id="|error${favorite.id}|"></span>
                   <button type="button" th:id="'subjectButton' + ${favorite.id}" class="dropdown-item">수정</button>
                   <script type="text/javascript" th:inline="javascript">
                     /*<![CDATA[*/
                     $("#subjectButton" + /*[[${favorite.id}]]*/).click(function() {
                       var bookmarkSubject =  $("#floatingInput2" + /*[[${favorite.id}]]*/).val();
-                      console.log("버튼 클릭" + bookmarkSubject);
-
+                      if (bookmarkSubject == "") {
+                        $('#error' + /*[[${favorite.id}]]*/).text("북마크 이름을 입력해주세요.");
+                      }
                       $.ajax({
                         async: true,
                         type : 'POST',
@@ -116,16 +116,12 @@
                         success : function(result) {
                           console.log(result);
                           if (result) {
-                            alert("북마크 이름은 중복으로 사용이 불가능 합니다.");
+                            $('#error' + /*[[${favorite.id}]]*/).text("북마크 이름은 중복으로 사용이 불가능 합니다.");
                             $("#floatingInput2").focus();
                           } else {
                             document.getElementById('modifyFavorite' + /*[[${favorite.id}]]*/).submit();
                           }
                         },
-                        error : function(error) {
-
-                          alert("error : " + error);
-                        }
                       });
                     });
                     /*]]>*/
