@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+<th:block th:fragment="likes">
+  <script th:inline="javascript">
+    let addReplyLike = {
+      modifyReplyLike: function (replyId) {
+        let param = {
+          replyNum: replyId
+        };
+        console.log(param);
+        $.ajax({
+          type: "POST",
+          url: "/reply/modify/like",
+          data : param,
+          success: function (flag) {
+            $(`#reply${replyId}`).load(location.href+` #reply${replyId}`);
+          },
+        })
+      }
+    }
+  </script>
+</th:block>
+</body>
+</html>
