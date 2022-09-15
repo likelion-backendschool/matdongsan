@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class PostReportServiceTest {
+    // 주석 추가
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
