@@ -20,7 +20,8 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
-// 처음 프로젝트를 실행할 때만 작성되는 class
+// 처음 프로젝트를 실행할 때만 작성되는 clas
+// s
 
     private final AccountRepository accountRepository;
     private final MemberRepository memberRepository;

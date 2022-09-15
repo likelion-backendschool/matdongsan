@@ -32,6 +32,7 @@ public class AccountController {
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
+        log.info("=========== check login ================");
         // 로그인할 때 사용할 Dto 전달
         model.addAttribute("accountLoginDto", new AccountLoginDto());
         return "account/account-login";

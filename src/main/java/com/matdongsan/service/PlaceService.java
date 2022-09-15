@@ -51,13 +51,14 @@ public class PlaceService {
 
 
     private void pullInfo(Place place) {
-
         try {
             String menus="";
             String facilityInfo="";
             String mainPhotoUrl = "";
-            String url = "https://place.map.kakao.com/main/v/" + place.getId();
-            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(new HttpHeaders());
+            String url = "http://3.36.121.246:8080?placeId=" + place.getId();
+            HttpHeaders headers = new HttpHeaders();
+
+            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(headers);
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
             String body = response.getBody();
 
