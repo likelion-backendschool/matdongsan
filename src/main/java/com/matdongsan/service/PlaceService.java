@@ -57,7 +57,11 @@ public class PlaceService {
             String facilityInfo="";
             String mainPhotoUrl = "";
             String url = "https://place.map.kakao.com/main/v/" + place.getId();
-            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(new HttpHeaders());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("user-agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" +
+                            " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(headers);
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
             String body = response.getBody();
 
