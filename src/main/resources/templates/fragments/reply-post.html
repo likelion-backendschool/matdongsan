@@ -5,7 +5,7 @@
 <!-- Post 댓글 조각화 -->
 <div class="post-comment" th:fragment="reply_fragment(paging,replyDto)">
     <ul class="comment-list">
-        <li class="main-comments"  th:each="reply : ${paging}">
+        <li class="main-comments" th:id="|reply${reply.id}|" th:each="reply : ${paging}">
             <div class="each-comment">
                 <div class="post-header">
                     <div class="media">
@@ -39,13 +39,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="postㅌ-body">
+                <div class="post-body">
                     <p th:text="${reply.comment}">댓글 내용</p>
                 </div>
                 <div class="post-footer">
                     <ul>
                         <li class="post-react">
-                            <a href="javascript:void(0);" class="recommend text-dark" th:href="@{|/reply/like/${reply.id}|}">
+                            <a class="text-dark" th:onclick="|addReplyLike.modifyReplyLike(${reply.id})|">
                                 <i class="icofont-thumbs-up"></i>추천
                                 <span class="badge rounded-pill bg-primary text-white ml-1" th:text="${#lists.size(reply.replyLike)}"></span>
                             </a>
@@ -90,6 +90,7 @@
             </li>
         </ul>
     </div>
+    <th:block th:replace="/fragments/likes/reply-like-fragments::likes"></th:block>
     <script type='text/javascript'>
         $(".delete").click(function(){
 

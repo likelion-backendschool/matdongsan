@@ -26,14 +26,23 @@ public class LikeApiController {
     // Post
     @ResponseBody
     @PostMapping("/post/modify/like")
-    public boolean addNewLike(@AuthUser Account account, @RequestParam Map<String, String> params) {
+    public boolean modifyPostLike(@AuthUser Account account, @RequestParam Map<String, String> params) {
         Long postId = Long.valueOf(params.get("postNum"));
 
         // 좋아요가 새로 생겼다면 true, 기존에 좋아요가 있었다면 false
-        return likeApiService.modifyLikeStatus(account.getMember(), postId);
+        return likeApiService.modifyLikeStatus(account.getMember(), postId, "post");
     }
 
     // Reply
+    @ResponseBody
+    @PostMapping("/reply/modify/like")
+    public boolean modifyReplyLike(@AuthUser Account account, @RequestParam Map<String, String> params) {
+        Long replyId = Long.parseLong(params.get("replyNum"));
+
+        // 좋아요가 새로 생겼다면 true, 기존에 좋아요가 있었다면 false
+        return likeApiService.modifyLikeStatus(account.getMember(), replyId, "reply");
+    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reply/like/{id}")
     public String replyLike(@AuthUser Account account, Principal principal, @PathVariable("id") Long id) {
