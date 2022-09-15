@@ -2,7 +2,6 @@ package com.matdongsan.service.report;
 
 import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.post.PostRepository;
-import com.matdongsan.domain.report.PostReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class PostReportServiceTest {
-/*
-    @Autowired
-    private PostReportService postReportService;
-    @Autowired
-    private PostReportRepository postReportRepository;*/
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
