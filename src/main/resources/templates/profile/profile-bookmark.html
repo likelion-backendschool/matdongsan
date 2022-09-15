@@ -97,7 +97,7 @@
               </div>
               <div class="modal-body">
                 <h6 class="modal-title">북마크 수정하기</h6>
-                <form th:action="@{|/favorite/modifyFavorite/${favorite.id}|}" th:method="post" th:id="'modifyFavorite' + ${favorite.id}">
+                <form th:action="@{|/favorite/modifyFavorite/${favorite.id}|}" th:method="post" th:id="'modifyFavorite' + ${favorite.id}" onsubmit="return false">
                   <input tpye="text" class="form-control" name="subject" th:id="'floatingInput2'+${favorite.id}" placeholder="북마크 이름을 입력해주세요." required>
                   <button type="button" th:id="'subjectButton' + ${favorite.id}" class="dropdown-item">수정</button>
                   <script type="text/javascript" th:inline="javascript">
