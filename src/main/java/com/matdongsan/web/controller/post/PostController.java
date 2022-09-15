@@ -70,22 +70,14 @@ public class PostController {
         return "/post/post-detail";
     }
 
-    // 게시글 전체 조회
-    // 페이징 처리 하기
-//    @GetMapping("/post")
-//    public String showAllPosts(Model model) {
-//        List<Post> post = postsService.findAll();
-//
-//        model.addAttribute("postList", post);
-//
-//        return "/post/post-list";
-//    }
-
     @GetMapping("/posts")
-    public String showAllPosts(Model model , @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
+    public String showAllPosts(@RequestParam(defaultValue = "")String keyword,
+                               @RequestParam(defaultValue = "0") int page,
+                               Model model ,
+                               @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
 
         // 게시글 전체 조회
-        Page<Post> paging = postService.getList(pageable);
+        Page<Post> paging = postService.getList(keyword , page , pageable);
         // model에 담기
         model.addAttribute("paging" , paging);
 
