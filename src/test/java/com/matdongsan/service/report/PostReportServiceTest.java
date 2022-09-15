@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class PostReportServiceTest {
-
+/*
     @Autowired
     private PostReportService postReportService;
     @Autowired
-    private PostReportRepository postReportRepository;
+    private PostReportRepository postReportRepository;*/
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
