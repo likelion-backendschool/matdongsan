@@ -9,6 +9,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
+
 @Configuration
 public class AppConfig {
     @Bean
@@ -19,8 +20,6 @@ public class AppConfig {
     @Bean
     public RestTemplate restTemplate(){
         HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        httpRequestFactory.setConnectTimeout(2000);
-        httpRequestFactory.setReadTimeout(3000);
         HttpClient httpClient = HttpClientBuilder.create()
                 .setMaxConnTotal(200)
                 .setMaxConnPerRoute(20)

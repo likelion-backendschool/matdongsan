@@ -1,0 +1,58 @@
+/*------------------- 4.4 Global -------------------*/
+a {
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+a:active,
+a:hover,
+a:focus {
+    text-decoration: none;
+    color: $color_dark;
+    outline: 0 none;
+}
+
+button:active,
+button:hover,
+button:focus {
+    outline: 0 none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+hr {
+    margin: 0;
+}
+
+[class^="flaticon-"]:before,
+[class*=" flaticon-"]:before,
+[class^="flaticon-"]:after,
+[class*=" flaticon-"]:after {
+    margin-left: 0;
+}
+
+.item-icon {
+    line-height: 1;
+
+    i {
+        display: inline-block;
+    }
+}
+
+
+
+
+
+
+

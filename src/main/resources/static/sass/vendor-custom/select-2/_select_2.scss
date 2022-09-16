@@ -1,0 +1,73 @@
+/*------------------- 3.2 Select 2 -------------------*/
+.select2-container {
+    min-width: 250px;
+}
+
+.select2-container--classic .select2-selection--single {
+    background: $color_light;
+    border: 1px solid #eaeaea;
+    height: 40px;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__rendered {
+    line-height: 40px;
+    color: #646464;
+    padding-left: 20px;
+    font-size: 14px;
+}
+
+.select2-container--classic .select2-selection--single:focus {
+    border: 1px solid #eaeaea;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__arrow {
+    background: none;
+    border-left: none;
+    height: 40px;
+    top: 0;
+    right: 4px;
+    width: 40px;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__arrow b {
+    border-color: #646464 transparent transparent transparent;
+    border-width: 6px 5px 0 5px;
+
+}
+
+.select2-container--classic.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #646464 transparent;
+    border-width: 0 5px 6px 5px;
+}
+
+// open dropdown
+.select2-container--classic.select2-container--open.select2-container--below .select2-selection--single {
+    background: $color_light;
+    border-color: #eaeaea;
+}
+
+.select2-container--classic.select2-container--open.select2-container--above .select2-selection--single {
+    border-color: #eaeaea;
+    background: transparent;
+    border-top: 1px solid #eaeaea;
+}
+
+.select2-container--classic.select2-container--open .select2-dropdown {
+    border-color: #eaeaea;
+    position: inherit !important;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.select2-container--classic .select2-results__option--highlighted[aria-selected] {
+    background-color: $color_primary;
+}
+
+.select2-results__option {
+    padding: 5px 20px;
+    font-size: 14px;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__placeholder {
+    color: $color_body;
+}

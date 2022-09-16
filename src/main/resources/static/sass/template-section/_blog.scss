@@ -1,0 +1,93 @@
+/*------------------- 5.3 Blog -------------------*/
+.blog-grid {
+    .blog-box {
+        margin-bottom: 30px;
+        .blog-img {
+            position: relative;
+            margin-bottom: 18px;
+            a {
+                display: block;
+                position: relative;
+                border-radius: 8px;
+                overflow: hidden;
+                &:after {
+                    content: "";
+                    height: 60%;
+                    width: 100%;
+                    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+                    border-radius: 0 0 8px 8px;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    transition: all 0.3s ease-in-out;
+                }
+            }
+            img {
+                border-radius: 8px;
+                transform: scale(1);
+                transition: all 0.3s ease-in-out;
+            }
+            .blog-date {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background-color: $color_primary;
+                border-radius: 0 5px 0 5px;
+                font-weight: 700;
+                color: $color_light;
+                padding: 5px 16px;
+                i {
+                    margin-right: 8px;
+                }
+            }
+        }
+        .blog-content {
+            .blog-title {
+                margin-bottom: 14px;
+                font-size: 22px;
+                @media only screen and (max-width: 991px) {
+                    font-size: 20px;     
+                }
+                a {
+                    color: $color_black;
+                    &:hover {
+                        color: $color_secondary;
+                    }
+                }
+            }
+            .entry-meta {
+                li {
+                    display: inline-block;
+                    color: #71728c;
+                    position: relative;
+                    &:last-child {
+                        &:after {
+                            display: none;
+                        }
+                    }
+                    &:after {
+                        content: "/";
+                        padding: 0 10px 0 12px;
+                    }
+                    a {
+                        color: #71728c;
+                        &:hover {
+                            color: $color_secondary;
+                        }
+                    }
+                    i {
+                       color: #bcbcc7;
+                       margin-right: 10px;
+                    }
+                }
+            }
+        }
+        &:hover {
+            .blog-img {
+                img {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+/*------------------- 2.2 Grid -------------------*/
+@media only screen and (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+.container-fluid.full-width {
+	padding-left: 0;
+	padding-right: 0;
+	>.row {
+		margin-left: 0;
+		margin-right: 0;
+    	>[class^="col-"],
+    	>[class*=" col-"] {
+    	    padding-right: 0;
+    	    padding-left: 0;
+    	}
+    }
+}
+
+.row.gutters-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    >[class^="col-"] {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+.row.gutters-15 {
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+
+    >[class^="col-"] {
+        padding-left: 7.5px;
+        padding-right: 7.5px;
+    }
+}
+
+.row.gutters-20 {
+    padding-left: 5px;
+    padding-right: 5px;
+
+    >[class^="col-"] {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

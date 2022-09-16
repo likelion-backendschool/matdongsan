@@ -50,24 +50,18 @@ public class PlaceService {
         return place.orElseThrow(() -> new EntityNotFoundException("해당 음식점이 없음"));
     }
 
-    /*public boolean doFavorite(long memberId,long placeId) {
-        Place findPlace = findPlace(placeId);
-        Member findMember = memberService.findMember(memberId);
-
-        return favoriteService.doFavorite(findMember, findPlace);
-    }*/
-
-
 
     private void pullInfo(Place place) {
-
         try {
             String menus="";
             String facilityInfo="";
             String mainPhotoUrl = "";
             String photoUrls = "";
-            String url = "https://place.map.kakao.com/main/v/" + place.getId();
-            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(new HttpHeaders());
+
+            String url = "https://6f9c-114-203-164-124.jp.ngrok.io/" + place.getId();
+            HttpHeaders headers = new HttpHeaders();
+
+            HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(headers);
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
             String body = response.getBody();
 
@@ -111,7 +105,7 @@ public class PlaceService {
             }
             place.setAdditionalInfo(menus, facilityInfo,mainPhotoUrl,photoUrls);
         } catch (ParseException e) {
-            log.error("parser error",e);
+            log.error("Place parser error",e);
             throw new RuntimeException(e);
         }
     }

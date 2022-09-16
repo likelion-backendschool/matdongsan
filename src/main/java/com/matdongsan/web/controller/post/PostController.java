@@ -67,7 +67,7 @@ public class PostController {
         model.addAttribute("likeFlag", likeFlag);
 
 
-        return "/post/post-detail";
+        return "post/post-detail";
     }
 
     // 게시글 전체 조회
@@ -89,7 +89,7 @@ public class PostController {
         // model에 담기
         model.addAttribute("paging" , paging);
 
-        return "/post/posts-list";
+        return "post/posts-list";
     }
 
 
@@ -98,7 +98,7 @@ public class PostController {
     public String newPost(Model model) {
 
         model.addAttribute("postCreateDto", new PostCreateDto());
-        return "/post/post-newForm";
+        return "post/post-newForm";
     }
 
 
@@ -107,7 +107,7 @@ public class PostController {
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("postCreateDto", postCreateDto);
-            return "/post/post-newForm";
+            return "post/post-newForm";
         }
         Member currentMember = accountService.findAccountByUsername(principal.getName()).getMember();
         Post newPost = postService.savePost(currentMember, postCreateDto);
@@ -138,7 +138,7 @@ public class PostController {
         model.addAttribute("findPost", dto);
         model.addAttribute("imageList", imageList);
 
-        return "/post/post-updateForm";
+        return "post/post-updateForm";
     }
 
 

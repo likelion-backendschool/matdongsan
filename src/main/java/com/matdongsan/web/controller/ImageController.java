@@ -21,7 +21,6 @@ public class ImageController {
 
     @GetMapping(value = "/images/{filename}",produces = "image/*")
     public Resource downloadImage(@PathVariable("filename") String filename) throws MalformedURLException {
-        log.info("fullPath = {}", imageUtil.getFullPath(filename));
-        return new UrlResource("file:" + imageUtil.getFullPath(filename));
+        return new UrlResource(imageUtil.getFullPath(filename));
     }
 }

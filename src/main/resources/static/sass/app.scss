@@ -1,0 +1,105 @@
+/*---------------------------------------------
+Template Name: Cirkle Social Media Community HTML Template
+Template URL: http://www.radiustheme.com/demo/html/cirkle/
+Description: Social Media and Community HTML Template
+Author: RadiusTheme
+Author URL: http://www.radiustheme.com 
+Version: 1.0.0
+
+===================   
+CSS INDEX
+===================
+1. Typography
+2. Bootstrap Overwrite
+	2.1 Form
+    2.2 Grid
+3. Vendor Custom Style
+    3.1 Slick
+    3.2 Select 2
+4. Template Layout Style
+	4.1 Back To Top
+	4.2 Breadcrumb Banner
+    4.3 Footer
+    4.4 Global
+    4.5 Helper Classes
+    4.6 Header Menu
+    4.7 Pagination
+    4.8 Preloader
+    4.9 Section
+5. Template Page Style
+	5.1 About
+	5.2 Banner
+	5.3 Blog
+	5.4 Community
+	5.5 Contact Us
+	5.6 Groups
+	5.7 Location
+	5.8 Team
+	5.9 Testimonial
+	5.10 Why Choose Us
+	5.11 Login Page
+6.  Dashboard
+	6.1 Banner
+	6.2 Blocks
+	6.3 Forum
+	6.4 Post
+	6.5 Product
+	6.6 Search
+	6.7 User Activity
+	6.8 Widget 
+--------------------------------------------*/
+@import "generate/_variables.scss";
+/*=======================================================================
+1. Typography 
+=========================================================================*/
+@import "template-layout/_typography.scss";
+/*=======================================================================
+2. Bootstrap Overwrite
+=========================================================================*/
+@import "vendor-custom/bootstrap/_form.scss";
+@import "vendor-custom/bootstrap/_grid.scss";
+/*=======================================================================
+3. Vendor Custom Style
+=========================================================================*/
+@import "vendor-custom/slick/_slick.scss";
+@import "vendor-custom/select-2/_select_2.scss";
+/*=======================================================================
+4. Template Layout Style
+=========================================================================*/
+@import "template-layout/_back_to_top.scss";
+@import "template-layout/_breadcrumbs.scss";
+@import "template-layout/_footer.scss";
+@import "template-layout/_global.scss";
+@import "template-layout/_helper-class.scss";
+@import "template-layout/_menu.scss";
+@import "template-layout/_pagination.scss";
+@import "template-layout/_preloader.scss";
+@import "template-layout/_section.scss";
+/*=======================================================================
+5. Template Page Style
+=========================================================================*/
+@import "template-section/_about.scss";
+@import "template-section/_banner.scss";
+@import "template-section/_blog.scss";
+@import "template-section/_community.scss";
+@import "template-section/_contact.scss";
+@import "template-section/_groups.scss";
+@import "template-section/_location.scss";
+@import "template-section/_team.scss";
+@import "template-section/_testimonial.scss";
+@import "template-section/_why_choose.scss";
+@import "template-section/_login.scss";
+/*=======================================================================
+6. Dashboard Style
+=========================================================================*/
+@import "dashboard/_block.scss";
+@import "dashboard/_banner.scss";
+@import "dashboard/_forum.scss";
+@import "dashboard/_post.scss";
+@import "dashboard/_product.scss";
+@import "dashboard/_search_bar.scss";
+@import "dashboard/_user_profile.scss";
+@import "dashboard/_widget.scss";
+
+
+

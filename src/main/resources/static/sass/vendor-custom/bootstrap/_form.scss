@@ -1,0 +1,168 @@
+/*------------------- 2.1 Form -------------------*/
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+    .form-control {
+        color: #111111;
+        padding: 20px;
+        border-color: #d7d7d7;
+        background-color: #ffffff;
+        border-radius: 4px;
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    input {
+        height: 50px;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+    .submit-btn {
+        height: auto;
+        border: none;
+        border-radius: 4px;
+        font-weight: 700;
+        color: $color_light;
+        font-size: 14px;
+        padding: 8px 25px;
+        background-color: $color_primary;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            background-color: $color_secondary;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+
+    input.form-control::-webkit-input-placeholder,
+    textarea.form-control::-webkit-input-placeholder {
+        color: #646464;
+    }
+}
+
+.input-group {
+    border-radius: 30px;
+    background-color: $color_light;
+    border: none;
+    .form-control {
+        border-radius: 4px 0 0 4px;
+        padding: 0 20px;
+        height: 40px;
+        font-size: 12px;
+        color: $color_dark;
+        border: none;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+    .input-group-append {
+        .search-btn {
+            border: none;
+            background-color: $color_primary;
+            color: $color_light;
+            padding: 5px 15px;
+            border-radius: 0 4px 4px 0;
+            transition: all 0.3s ease-in-out;
+            &:focus {
+                outline: none;
+            }
+            &:hover {
+                background-color: $color_secondary;
+            }
+        }
+    }
+    input.form-control::-webkit-input-placeholder,
+    textarea.form-control::-webkit-input-placeholder {
+        color: #969696;
+    }
+}
+
+.form-check {
+    position: relative;
+    padding-left: 0;
+}
+
+.form-check label {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    font-size: 14px;
+    color: #646464;
+    cursor: pointer;
+    i {
+        color: #ffbc09;
+        margin-right: 4px;
+    }
+}
+
+.form-check label:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 0;
+    top: 5px;
+    background-color: transparent;
+    border: 2px solid #b1b0b0;
+    border-radius: 2px;
+    transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.form-check label:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 2px;
+    top: 0;
+   font-size: 16px;
+
+}
+
+.form-check input[type="checkbox"] {
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 4px;
+    left: 20px;
+    z-index: 1;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.form-check input[type="checkbox"]:checked+label {
+    color: $color_black;
+}
+.form-check input[type="checkbox"]:checked+label:after {
+    font-family: IcoFont;
+    content: "\eed8";
+    font-weight: 600;
+}
+
+.form-check input[type="checkbox"]:disabled+label {
+    opacity: 0.65;
+}
+
+.form-check input[type="checkbox"]:disabled+label:before {
+    background-color: #eeeeee;
+    cursor: not-allowed;
+}
+
+.form-check label::before {
+    border-radius: 4px;
+}
+
+.form-check input[type="checkbox"]:checked+label:before {
+    background-color: $color_primary;
+    border-color: $color_primary;
+}
+
+.form-check input[type="checkbox"]:checked+label:after {
+    color: $color_light;
+}

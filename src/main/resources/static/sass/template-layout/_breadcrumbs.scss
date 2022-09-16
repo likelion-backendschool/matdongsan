@@ -1,0 +1,78 @@
+/*------------------- 4.2 Breadcrumb Banner -------------------*/
+.breadcrumbs-banner {
+    margin-top: -97px;
+    padding: 185px 0 95px;
+    background-color: $color_primary;
+    background-image: url('../../media/banner/hero_1.jpg');
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    @media only screen and (max-width: 1199px) {
+        padding: 165px 0 75px;  
+    }
+    @media only screen and (max-width: 1199px) {
+        padding: 145px 0 55px;  
+    }
+    .breadcrumb-animate-img {
+        position: absolute;
+        right: 9%;
+        bottom: 0;
+        line-height: 0;
+        z-index: -1;
+        @media only screen and (max-width: 1199px) {
+            right: -10%;
+            bottom: -10%; 
+            img {
+                transform: scale(0.8); 
+            }    
+        }
+        @media only screen and (max-width: 991px) {
+            right: -20%;
+            bottom: -25%;
+            img {
+                transform: scale(0.6);
+            }     
+        }
+    }
+    .breadcrumbs-area {
+        position: relative;
+        z-index: 1;
+        h1 {
+            font-size: 30px;
+            color: $color_light;
+            margin-bottom: 6px;
+        }
+        ul {
+            li {
+                display: inline-block;
+                color: $color_light;
+                position: relative;
+                margin-right: 20px;
+                font-size: 14px;
+                &:after {
+                    content: "/";
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: -14px;
+                }
+                a {
+                    color: $color_light;
+                    transition: all 0.3s ease-in-out;
+                    &:hover {
+                        color: $color_secondary;
+                    }
+                }
+                &:last-child {
+                    margin-right: 0;
+                    &:after {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
