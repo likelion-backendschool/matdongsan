@@ -58,7 +58,7 @@ public class PlaceService {
             String mainPhotoUrl = "";
             String photoUrls = "";
 
-            String url = "https://6f9c-114-203-164-124.jp.ngrok.io/" + place.getId();
+            String url = "https://82a2-114-203-164-124.jp.ngrok.io/" + place.getId();
             HttpHeaders headers = new HttpHeaders();
 
             HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(headers);
