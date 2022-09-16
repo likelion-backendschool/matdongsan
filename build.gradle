@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.seleniumhq.selenium:selenium-java:4.4.0'
+
 	// bootJar 실행시 'reason: class file for javax.annotation.meta.When not found' warning 해결을 위함
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 

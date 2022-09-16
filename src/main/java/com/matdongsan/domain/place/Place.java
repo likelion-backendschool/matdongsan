@@ -31,7 +31,7 @@ public class Place {
 
     @Column(columnDefinition = "TEXT")
     private String menus;
-    private String facilityInfo;
+    @Lob
     private String mainPhotoUrl;
 
     public Place(long id, String placeName, String placeUrl, String categoryName, String addressName, String roadAddressName, String phone, String x, String y) {
@@ -45,9 +45,8 @@ public class Place {
         this.x = x;
         this.y = y;
     }
-    public void setAdditionalInfo(String menu,String facility,String mainPhotoUrl,String photoUrls){
+    public void setAdditionalInfo(String menu,String mainPhotoUrl,String photoUrls){
         this.menus = menu;
-        this.facilityInfo = facility;
         this.mainPhotoUrl = mainPhotoUrl;
         this.photoUrls = photoUrls;
 
