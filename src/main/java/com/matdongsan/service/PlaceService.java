@@ -55,6 +55,7 @@ public class PlaceService {
             String menus="";
             String facilityInfo="";
             String mainPhotoUrl = "";
+
             String url = "http://13.124.146.166:8080?placeId=" + place.getId();
             HttpHeaders headers = new HttpHeaders();
 
