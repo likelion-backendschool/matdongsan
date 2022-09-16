@@ -137,6 +137,8 @@ images/*
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
+chromedriver
+
 ### Java ###
 # Compiled class file
 *.class

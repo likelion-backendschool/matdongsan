@@ -1,17 +1,21 @@
 package com.matdongsan.util.webdriver;
 
 import com.matdongsan.domain.place.PlaceWebInfo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.cfg.Environment;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -20,13 +24,18 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class WebDriverUtil {
+
     private WebDriver driver;
     public final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public final String WEB_DRIVER_PATH = "/Users/woowang/Desktop/chromedriver";
+    public String WEB_DRIVER_PATH = "";
 
     @PostConstruct
     public void postConstruct(){
-        System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+        if(System.getProperty("spring.profiles.active").equals("local")){
+            WEB_DRIVER_PATH = Paths.get(System.getProperty("user.dir"),"chromedriver").toString();
+        }else if(System.getProperty("spring.profiles.active").equals("prod")){
+            WEB_DRIVER_PATH = "/driver/chromedriver";
+        }
 
         // webDriver 옵션 설정.
         ChromeOptions options = new ChromeOptions();

@@ -1,4 +1,4 @@
-package com.matdongsan.util;
+package com.matdongsan.util.image;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
