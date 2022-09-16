@@ -27,135 +27,19 @@
                 </div>
             </th:block>
             <th:block th:if="${member.getPostList().size() != 0}">
-                <div class="block-box post-view" th:each="post : ${member.getPostList()}">
-                    <div class="post-header">
-                        <div class="media">
-                            <div class="user-img">
-                                <img th:src="@{/media/figure/chat_5.jpg}" alt="Aahat">
-                            </div>
-                            <div class="media-body">
-                                <div class="user-title"><a th:text="${post.getAuthor().getNickname()}">닉네임</a></div>
-                                <ul class="entry-meta">
-                                    <li class="meta-time">2 mins ago</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Close</a>
-                                <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="#">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-body">
-                        <div class="post-no-thumbnail">
-                            <h4 th:text="${post.getTitle()}">제목</h4>
-                            <p th:utext="${post.getContent()}">내용</p>
-                        </div>
-                        <div class="post-meta-wrap">
-                            <div class="post-meta">
-                                <div class="post-reaction">
-                                    <div class="reaction-icon">
-                                        <img th:src="@{/media/figure/reaction_1.png}" alt="icon">
-                                        <img th:src="@{/media/figure/reaction_2.png}" alt="icon">
-                                        <img th:src="@{/media/figure/reaction_3.png}" alt="icon">
-                                    </div>
-                                    <div class="meta-text">25</div>
+                <div class="row gutters-20 ">
+                    <div class="col-lg-3 col-md-4 col-6" th:each="post : ${member.getPostList()}">
+                        <div class="bg-white mb-2 p-2 rounded">
+                            <a th:href="@{/post/{postId}(postId = ${post.getId()})}">
+                                <p class="text-dark" th:text="${post.getTitle()}">포스트 제목</p>
+                                <div>
+                                    <span><i class="icofont-thumbs-up text-dark"></i><a th:text="${post.getPostLike().size()}" class="mx-2">추천 수</a></span>
+                                    <span><i class="icofont-comment text-dark"></i><a th:text="${post.getReplyList().size()}" class="mx-2">댓글 수</a></span>
                                 </div>
-                            </div>
-                            <div class="post-meta">
-                                <div class="meta-text"><span th:text="${post.getReplyList().size()}">댓글 수</span> Comments</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <ul>
-                            <li class="post-react">
-                                <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                <ul class="react-list">
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_1.png}" alt="Like"></a></li>
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_3.png}" alt="Like"></a></li>
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_4.png}" alt="Like"></a></li>
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_2.png}" alt="Like"></a></li>
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_7.png}" alt="Like"></a></li>
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_6.png}" alt="Like"></a></li>
-                                    <li><a href="#"><img th:src="@{/media/figure/reaction_5.png}" alt="Like"></a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="icofont-comment"></i>Comment</a></li>
-                        </ul>
-                    </div>
-                    <div class="post-comment">
-                        <ul class="comment-list">
-                            <th:block th:if="${post.getReplyList().size() != 0}">
-                                <li class="main-comments">
-                                    <div class="each-comment">
-                                        <div class="post-header">
-                                            <div class="media">
-                                                <div class="user-img">
-                                                    <img th:src="@{/media/figure/chat_14.jpg}" alt="Aahat">
-                                                </div>
-                                                <div class="media-body">
-                                                    <div class="user-title"><a href="user-timeline.html">Aahat Akter</a></div>
-                                                    <ul class="entry-meta">
-                                                        <li class="meta-privacy"><i class="icofont-world"></i>Friends</li>
-                                                        <li class="meta-time">5 mins ago</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                                    ...
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#">Close</a>
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="post-body">
-                                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium der doloremque laudantiumSed ut perspicia tisery..</p>
-                                        </div>
-                                        <div class="post-footer">
-                                            <ul>
-                                                <li class="react-icon">
-                                                    <img th:src="@{/media/figure/reaction_1.png}" alt="icon">
-                                                    <img th:src="@{/media/figure/reaction_2.png}" alt="icon">
-                                                </li>
-                                                <li class="post-react">
-                                                    <a href="#"><i class="icofont-thumbs-up"></i>React!</a>
-                                                    <ul class="react-list">
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_1.png}" alt="Like"></a></li>
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_3.png}" alt="Like"></a></li>
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_4.png}" alt="Like"></a></li>
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_2.png}" alt="Like"></a></li>
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_7.png}" alt="Like"></a></li>
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_6.png}" alt="Like"></a></li>
-                                                        <li><a href="#"><img th:src="@{/media/figure/reaction_5.png}" alt="Like"></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <div class="load-more-btn">
-                                    <a href="#" class="item-btn">Load More Comments <span>4+</span></a>
-                                </div>
-                            </th:block>
-                        </ul>
-                        <div class="comment-reply">
-                            <div class="user-img">
-                                <img th:src="@{/media/figure/chat_15.jpg}" alt="Aahat">
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="comment" class="form-control" placeholder="Your Reply....">
-                            </div>
+                                <a th:href="@{/place/{placeId}/detail(placeId = ${post.getPlace().getId()})}">
+                                    <p class="text-primary font-weight-bold" th:text="${post.getPlace().placeName}">장소 이름</p>
+                                </a>
+                            </a>
                         </div>
                     </div>
                 </div>
