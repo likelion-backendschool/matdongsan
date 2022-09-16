@@ -274,9 +274,10 @@
             <div class="dropdown dropdown-admin">
               <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                       <span class="media">
-                                          <span class="item-img">
-                                              <img src="/media/figure/chat_5.jpg" alt="Chat">
-                                            <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
+                                          <span class="item-img bg-white rounded-circle">
+                                              <svg th:data-jdenticon-value="${#authentication.principal.nickname}" width="45" height="45" class="rounded-circle"></svg>
+                                              <!--<img src="/media/figure/chat_5.jpg" alt="Chat">-->
+                                              <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
                                           </span>
                                           <span class="media-body">
                                               <span class="item-title" sec:authentication="principal.nickname">닉네임</span>
