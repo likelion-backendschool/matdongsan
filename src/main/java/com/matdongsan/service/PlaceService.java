@@ -55,7 +55,7 @@ public class PlaceService {
             String menus="";
             String facilityInfo="";
             String mainPhotoUrl = "";
-            String url = "http://3.36.121.246:8080?placeId=" + place.getId();
+            String url = "http://13.124.146.166:8080?placeId=" + place.getId();
             HttpHeaders headers = new HttpHeaders();
 
             HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(headers);
