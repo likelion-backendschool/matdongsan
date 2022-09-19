@@ -40,8 +40,8 @@
 
                             </div>
                             <div class="card-body media align-items-center justify-content-start bd-highlight">
-                                <div class="ml-4">
-                                    <img src="/media/banner/user_1.jpg" alt="" class="rounded-circle">
+                                <div class="ml-4 item-img bg-white">
+                                    <svg th:data-jdenticon-value="${member.getNickname()}" width="115" height="115" class="rounded-circle"></svg>
                                 </div>
                                 <div class="form-group ml-4">
                                     <label class="form-label">닉네임</label>
@@ -75,6 +75,15 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="px-5 mb-3">
+                                <form th:action="@{/settings/profile/change/introduce}" method="post" th:object="${profileIntroduceDto}">
+                                    <label class="form-label">소개글</label>
+                                    <input class="form-control" rows="3" placeholder="소개글을 입력해주세요." name="introduce" th:value="${member.getIntroduce()}">
+                                    <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('introduce')}" th:errors="*{introduce}">Introduce Error</small>
+                                    <small class="text-dark">소개글은 4글자 ~ 25글자까지 입력할 수 있습니다.</small><br>
+                                    <button type="submit" class="btn btn-primary mt-2">변경</button>&nbsp;
+                                </form>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="account-change-password">
