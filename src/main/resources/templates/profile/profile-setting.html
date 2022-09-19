@@ -105,13 +105,11 @@
                             </div>
                         </div>
                         <div class="tab-pane fade p-3" id="account-connections">
-                            <form id="withdrawalForm" th:action="@{/withdrawal}" method="post">
-                                <div class="align-middle">
-                                    <button type="button" class="btn btn-danger text-center" data-toggle="modal" data-target="#exampleModalCenter">회원 탈퇴</button>
-                                </div>
-                                <p class="text-center">회원탈퇴 시 기존에 저장되어 있던 정보는 모두 사라지게 됩니다.</p>
-                                <p class="text-center">회원 탈퇴와 함께 맛동산에 등록된 모든 개인정보는 삭제, 폐기 처리되며 복구되지 않습니다.</p>
-                            </form>
+                            <div class="align-middle">
+                                <button type="button" class="btn btn-danger text-center" data-toggle="modal" data-target="#exampleModalCenter">회원 탈퇴</button>
+                            </div>
+                            <p class="text-center">회원탈퇴 시 기존에 저장되어 있던 정보는 모두 사라지게 됩니다.</p>
+                            <p class="text-center">회원 탈퇴와 함께 맛동산에 등록된 모든 개인정보는 삭제, 폐기 처리되며 복구되지 않습니다.</p>
                         </div>
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -123,10 +121,10 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form th:action="@{/withdrawal}" id="withdrawalForm" method="post" th:object="${profileWithdrawalDto}">
                                             <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">회원탈퇴를 위해 현재 비밀번호를 입력해주세요.</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <label class="col-form-label">회원탈퇴를 위해 현재 비밀번호를 입력해주세요.</label>
+                                                <input type="password" class="form-control" th:field="*{password}">
                                             </div>
                                         </form>
                                     </div>

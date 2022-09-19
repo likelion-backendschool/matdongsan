@@ -11,6 +11,7 @@ import com.matdongsan.service.SocialLoginApiService;
 import com.matdongsan.web.dto.account.AccountLoginDto;
 import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
+import com.matdongsan.web.dto.profile.ProfileWithdrawalDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -104,8 +105,11 @@ public class AccountController {
     }
 
     @PostMapping("/withdrawal")
-    public String accountWithdrawal(@AuthUser Account account) {
-        log.info("회원탈퇴 실행");
+    public String accountWithdrawal(@AuthUser Account account, ProfileWithdrawalDto dto, Model model) {
+        if (!accountService.checkAccountPassword(dto.getPassword(), account)) {
+            model.addAttribute("profileWithdrawalDto", dto);
+            return "profile/profile-setting";
+        }
         accountService.withdrawalAccount(account);
         return "redirect:/logout";
     }

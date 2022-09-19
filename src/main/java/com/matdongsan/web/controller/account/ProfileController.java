@@ -9,6 +9,7 @@ import com.matdongsan.service.FavoriteService;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
 import com.matdongsan.web.dto.profile.ProfilePasswordDto;
+import com.matdongsan.web.dto.profile.ProfileWithdrawalDto;
 import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,7 @@ public class ProfileController {
         MemberVo member = accountService.getReadOnlyMember(account.getUsername());
         model.addAttribute("member", member);
         model.addAttribute("profilePasswordDto", new ProfilePasswordDto());
+        model.addAttribute("profileWithdrawalDto", new ProfileWithdrawalDto());
 
         return "profile/profile-setting";
     }
