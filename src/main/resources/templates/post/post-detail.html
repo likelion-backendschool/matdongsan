@@ -68,7 +68,7 @@
                 </div>
                 <div class="post-meta-wrap">
                     <div class="post-meta" id="post-ajax-form">
-                        <button class="btn" id="post-react-btn">
+                        <button class="btn" id="post-react-btn" th:onclick="|addPostLike.modifyPostLike(${post.getId()})|">
                             <th:block th:if="${!likeFlag}">
                                 <i class="icofont-thumbs-up"></i>
                                 <span class="mx-2">좋아요</span>
