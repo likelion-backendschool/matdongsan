@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,8 +38,9 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY) //댓글 작성자
     private Member writer;
 
+    @Builder.Default
     @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ReplyLike> replyLike;
+    private Set<ReplyLike> replyLike = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="parent_id")
@@ -60,11 +62,5 @@ public class Reply {
         this.replyTime = replyTime;
     }
 
-
-
-//    public void save(Post post, Member member) {
-//        this.post = post;
-//        this.writer = member;
-//    }
 
 }
