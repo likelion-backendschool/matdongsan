@@ -38,7 +38,6 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY) //댓글 작성자
     private Member writer;
 
-    @Builder.Default
     @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReplyLike> replyLike = new HashSet<>();
 
