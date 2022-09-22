@@ -1,4 +1,4 @@
-package com.matdongsan.util.time;
+package com.matdongsan.web.controller.util.time;
 
 import com.matdongsan.domain.reply.ReplyTime;
 

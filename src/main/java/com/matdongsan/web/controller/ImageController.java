@@ -1,7 +1,7 @@
 package com.matdongsan.web.controller;
 
 
-import com.matdongsan.util.image.ImageUtil;
+import com.matdongsan.web.controller.util.image.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;

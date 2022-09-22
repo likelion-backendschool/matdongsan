@@ -5,6 +5,7 @@ import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.post.PostRepository;
 import com.matdongsan.domain.post.PostRepositoryImpl;
+import com.matdongsan.domain.post.SearchType;
 import com.matdongsan.web.controller.util.image.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -105,13 +106,18 @@ public class PostService {
     }
 
     // 게시글 전체 조회를 페이징으로
-    public Page<Post> getList(String keyword , int page , Pageable pageable) {
+    public Page<Post> getList(String keyword , int page , String searchType ,Pageable pageable) {
 
-        if (keyword == null || keyword.trim().length() == 0) {
-            return postRepository.findAll(pageable);
+        searchType = searchType.toLowerCase();
+
+        if (searchType.equals(SearchType.TITLE.getKey())) {
+            return postRepository.searchTitle(keyword, pageable);
+        } else if (searchType.equals(SearchType.CONTENT.getKey())) {
+            return postRepository.searchContent(keyword, pageable);
+        } else if (searchType.equals(SearchType.AUTHOR.getKey())) {
+            return postRepository.searchAuthor(keyword, pageable);
         }
 
-        return postRepositoryImpl.searchKeyword(keyword, pageable);
-
+        return postRepository.findAll(pageable);
     }
 }
