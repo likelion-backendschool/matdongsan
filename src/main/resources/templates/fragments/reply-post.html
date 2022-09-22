@@ -181,8 +181,6 @@
                 url: "/post/" + postId + "/reply",
                 data: $('#replyForm').serialize(),
                 success: function (replyDto) {
-                    console.log(replyDto.nickname);
-                    console.log(replyDto.comment);
                     let result = $("#reply_async_template").html()
                         // .replace("{imageUrl}", )
                         .replace("{nickname}", replyDto.nickname)
@@ -191,7 +189,6 @@
                         .replace("{likeCount}", replyDto.replyLikeCount)
                         .replace("{id}", replyDto.id)
                         .replace("replyLike{id}", "replyLike" + replyDto.id);
-                    console.log(result);
                     $(".comment-list").prepend(result);
                 }
             })
