@@ -12,6 +12,7 @@ import com.matdongsan.web.dto.ReplyDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,19 +35,32 @@ public class ReplyController {
      * 댓글등록 (버튼)
      */
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/post/{postId}")
-    public String createReply(@PathVariable("postId") Long id,
+    @ResponseBody
+    @RequestMapping(value = "/post/{postId}/reply", method = {RequestMethod.POST})
+    public ResponseEntity createReply(@RequestParam(value = "COMMENT") String comment,
+                              @PathVariable("postId") Long id,
                               @Valid ReplyDto replyDto, BindingResult bindingResult,
                               @AuthUser Account account) {
         if (bindingResult.hasErrors()) {
             log.info("값이 들어가지 않습니다. : " + replyDto.getComment());
-            return "redirect:/post/{postId}";
+            return ResponseEntity.badRequest().build();
         }
         Post post = postService.findById(id);
-        Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
-        replyService.saveReply(post, replyDto, memberId);
-        return "redirect:/post/{postId}";
 
+        Long memberId = account.getMember().getId(); //securityuser . account . member . id가져오기
+        Long replyId = replyService.saveReply(post, replyDto, memberId, comment);
+        Reply reply = replyService.getReply(replyId);
+
+        ReplyDto newReplyDto = ReplyDto.builder()
+                .id(reply.getId())
+                .nickname(reply.getWriter().getNickname())
+                .replyLikeCount(reply.getReplyLike().size())
+                .replyTime(reply.getReplyTime())
+                .comment(reply.getComment())
+                .build();
+
+        log.info("값이 들어갔습니다 = " + comment);
+        return ResponseEntity.ok(newReplyDto);
     }
 
     /**
@@ -61,7 +75,7 @@ public class ReplyController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "권한이 없습니다.");
         }
 
-        replyDto.editComment(reply.getComment());
+        replyDto.insertComment(reply.getComment());
         return "/reply/reply-editForm";
     }
 
@@ -76,6 +90,7 @@ public class ReplyController {
 
     /**
      * 댓글 삭제
+     *
      * @param id
      * @return
      */

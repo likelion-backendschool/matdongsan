@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,23 +30,27 @@ import java.util.Optional;
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
-    private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
 
     /**
      * 댓글저장
      */
-    public void saveReply(Post post, ReplyDto replyDto, Long id) {
+    public Long saveReply(Post post, ReplyDto replyDto, Long id,String comment) {
         Optional<Member> byId = memberRepository.findById(id);
+        replyDto.insertComment(comment);
+        String newTypeTime = convertDateTime(LocalDateTime.now());
         Reply reply = Reply.builder()
                 .comment(replyDto.getComment())
                 .createDate(LocalDateTime.now())
                 .writer(byId.get())////
                 .post(post)
+                .replyLike(new HashSet<>())
+                .replyTime(newTypeTime)
                 .build();
         Reply savedReply = replyRepository.save(reply);     //id와 comment만 등록되어 있는 상태.
         post.addReply(savedReply);                 //Reply에 Post객체 초기화
+        return reply.getId();
     }
 
     /**

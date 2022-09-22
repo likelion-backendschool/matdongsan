@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<template id="reply_async_template" th:fragment="reply_async">
+    <li class="main-comments">
+        <form method="post">
+            <div class="each-comment">
+                <div class="post-header">
+                    <div class="media">
+                        <div class="user-img">
+                            <img th:src="@{/media/figure/chat_14.jpg}" src="{imageUrl}" alt="Aahat">
+                        </div>
+                        <div class="media-body">
+                            <div class="user-title">
+                                <a>{nickname}</a>
+                            </div>
+                            <ul class="entry-meta">
+                                <li class="meta-time">{replyTime}</li>
+                                <!--                                <li class="meta-time">{modifyDate}</li>-->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                            ...
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!--                                        <a class="edit icofont-comment dropdown-item"-->
+                            <!--                                           th:href="@{|/reply/update/${reply.id}|}"><span class="ml-1">수정</span></a>-->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="edit icofont-comment dropdown-item" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                댓글 수정
+                            </button>
+
+
+                            <a class="delete icofont-delete-alt dropdown-item"
+                               th:href="@{/reply/delete/}"><span class="ml-1">삭제</span></a>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal" id="exampleModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기
+                                        </button>
+                                        <button type="button" class="btn btn-primary">댓글 저장</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-body">
+                    <p>{comment}</p>
+                </div>
+                <div class="post-footer">
+                    <ul>
+                        <li class="post-react">
+                            <a class="text-dark" onclick="addReplyLike.modifyReplyLike({id})">
+                                <i class="icofont-thumbs-up"></i>추천
+                                <span id="replyLike{id}" class="badge rounded-pill bg-primary text-white ml-1">
+                                    {likeCount}</span>
+                            </a>
+                        </li>
+                        <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </li>
+</template>
+</html>
