@@ -40,10 +40,12 @@
                                     <th:block
                                             th:if="${#authentication.principal.username == reply.writer.account.username}">
                                         <!--모달 button test -->
+                                        <a class="edit icofont-comment dropdown-item" th:href="@{|/reply/update/${reply.id}|}"><span class="ml-1">수정</span></a>
+
                                         <button type="button" class="edit icofont-comment dropdown-item"
                                                 data-toggle="modal"
                                                 data-target="#exampleModal">
-                                            댓글 수정
+                                            댓글 수정 test
                                         </button>
 
                                         <a class="delete icofont-delete-alt dropdown-item"
