@@ -16,7 +16,14 @@
           url: "/reply/modify/like",
           data : param,
           success: function (flag) {
-            $(`#reply${replyId}`).load(location.href+` #reply${replyId}`);
+            let replyLikeCount = $(`#replyLike${replyId}`).text().replace(/ /g, "");
+            if (flag) {
+              replyLikeCount = Number(replyLikeCount) + 1;
+              $(`#replyLike${replyId}`).text(replyLikeCount);
+            } else {
+              replyLikeCount = Number(replyLikeCount) - 1;
+              $(`#replyLike${replyId}`).text(replyLikeCount);
+            }
           },
         })
       }
