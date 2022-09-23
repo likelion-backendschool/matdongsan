@@ -1,4 +1,4 @@
-package com.matdongsan.util.image;
+package com.matdongsan.web.controller.util.image;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

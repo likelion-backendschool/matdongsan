@@ -3,10 +3,12 @@ package com.matdongsan.web.controller.post;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.account.AuthUser;
 import com.matdongsan.domain.member.Member;
+import com.matdongsan.domain.member.MemberAge;
 import com.matdongsan.domain.post.Post;
 
 import com.matdongsan.domain.post.PostRepository;
 
+import com.matdongsan.domain.post.SearchType;
 import com.matdongsan.domain.reply.Reply;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.LikeApiService;
@@ -70,23 +72,19 @@ public class PostController {
         return "/post/post-detail";
     }
 
-    // 게시글 전체 조회
-    // 페이징 처리 하기
-//    @GetMapping("/post")
-//    public String showAllPosts(Model model) {
-//        List<Post> post = postsService.findAll();
-//
-//        model.addAttribute("postList", post);
-//
-//        return "/post/post-list";
-//    }
-
     @GetMapping("/posts")
-    public String showAllPosts(Model model , @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
+    public String showAllPosts(@RequestParam(defaultValue = "")String keyword,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "title")String searchType,
+                               Model model ,
+                               @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
+
+        // model에 담기
+        model.addAttribute("searchType", SearchType.values());
 
         // 게시글 전체 조회
-        Page<Post> paging = postService.getList(pageable);
-        // model에 담기
+        Page<Post> paging = postService.getList(keyword , page ,  searchType , pageable);
+
         model.addAttribute("paging" , paging);
 
         return "/post/posts-list";

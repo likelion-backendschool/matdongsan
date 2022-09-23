@@ -52,7 +52,19 @@
 
             <div class="my-4">
                 <h3 class="heading-title">맛집 게시글</h3>
-                <!-- 여기서부터 이제 뷰 단을 꾸미면 됨. -->
+
+                <!-- 검색창  -->
+                <div class="col-6" style="float:right">
+                    <form class="input-group">
+                        <select class="from-select" th:name="searchType" data-placeholder="검색어를 입력해주세요" required >
+                            <option th:each="type : ${searchType}" th:value="${type}" th:text="${type.getValue()}"></option>
+                        </select>
+<!--                        <input class="form-control" type="text" name="keyword" placeholder="검색어를 입력해주세요." th:value="${param.keyword}" >-->
+                        <input class="form-control" type="text" name="keyword" placeholder="검색어를 입력해주세요." th:value="${param.keyword}" onclick="getSearchList()">
+                        <button type="submit" class="btn btn-outline-secondary">검색</button>
+                    </form>
+                </div>
+
             <table class="table text-center">
                 <colgroup>
                     <col>
