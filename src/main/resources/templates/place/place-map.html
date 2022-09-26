@@ -57,6 +57,9 @@
             #pagination {margin:10px auto;text-align: center;}
             #pagination a {display:inline-block;margin-right:10px;}
             #pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+            #myLocationControl {position:absolute;bottom:10px;right:10px;width:42px;height:42px;z-index: 1;cursor: pointer; background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) no-repeat -150px -450px;}
+            #myLocationControl.active {background-position: -150px -350px;}
         </style>
     <title>맛동산 | 메인</title>
 </head>
@@ -86,6 +89,7 @@
                 <ul id="placesList"></ul>
                 <div id="pagination"></div>
             </div>
+            <div class="MapControlView" id="myLocationControl" onclick="getCurrentPos()"></div>
         </div>
 
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b2359366093e6940be82de1064805f0&libraries=services"></script>
@@ -98,7 +102,6 @@
             mapWrap.classList.add("d-none");
 
             var markers = [];
-
 
             var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1});
             var contentNode = document.createElement('div'); // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
@@ -122,6 +125,61 @@
             // 지도를 생성합니다
             var map;
 
+            // gps로 위치불러오기
+            function getCurrentPos() {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var lat = position.coords.latitude, // 위도
+                        lon = position.coords.longitude; // 경도
+
+                    var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                        message = '<div style="padding:5px;">내 위치</div>'; // 인포윈도우에 표시될 내용입니다
+
+                    var control = document.getElementById('myLocationControl');
+
+                    // 버튼이 눌린 상태가 아니면
+                    if (control.className.indexOf('active') === -1) {
+                        control.className = 'active';
+                        // 마커와 인포윈도우를 표시합니다
+                        displayMarker(locPosition, message);
+                    }
+                    else {
+                        control.className = '';
+
+                    }
+                });
+            }
+
+            var ifExist = false;
+
+            // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+            function displayMarker(locPosition, message) {
+
+                if (!ifExist) {
+                    // 마커를 생성합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: locPosition
+                    });
+
+                    var iwContent = message, // 인포윈도우에 표시할 내용
+                        iwRemoveable = true;
+
+                    // 인포윈도우를 생성합니다
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content : iwContent,
+                        removable : iwRemoveable
+                    });
+                    // 인포윈도우를 마커위에 표시합니다
+                    infowindow.open(map, marker);
+                    // 지도 중심좌표를 접속위치로 변경합니다
+                    map.setCenter(locPosition);
+                    ifExist = true;
+                }
+                else {
+                    // 지도 중심좌표를 접속위치로 변경합니다
+                    map.setCenter(locPosition);
+                }
+            }
 
             // 장소 검색 객체를 생성합니다
             var ps;
