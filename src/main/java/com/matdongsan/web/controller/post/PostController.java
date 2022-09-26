@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -92,6 +93,7 @@ public class PostController {
 
 
     // 게시글 등록 폼 페이지
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/new")
     public String newPost(Model model) {
 
@@ -101,6 +103,7 @@ public class PostController {
 
 
     // 게시글 등록 post
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/post/new")
     public String createPost(@Valid PostCreateDto postCreateDto , BindingResult bindingResult , Model model , Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -117,6 +120,7 @@ public class PostController {
     }
 
     // 게시글 수정 뷰 페이지
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/modify/{id}")
     public String modifyPost(@PathVariable Long id ,Model model) throws IOException {
 
@@ -152,7 +156,8 @@ public class PostController {
         return "redirect:/post/{id}";
     }
 
-    //
+    // 글 삭제
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/delete/{id}")
     public String deletePost(@PathVariable Long id){
 

@@ -97,4 +97,17 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
 
         return PageableExecutionUtils.getPage(posts, pageable, postCountQuery::fetchOne);
     }
+
+    @Override
+    public List<Post> findPostTop5() {
+        JPAQuery<Post> postQuery = jpaQueryFactory
+                .select(post)
+                .from(post)
+                .orderBy(post.postLike.size().desc())
+                .limit(5);
+
+        List<Post> posts = postQuery.fetch();
+
+        return posts;
+    }
 }
