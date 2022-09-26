@@ -120,4 +120,8 @@ public class PostService {
 
         return postRepository.findAll(pageable);
     }
+
+    public List<Post> findTop5Post() {
+        return postRepository.findPostTop5();
+    }
 }
