@@ -17,62 +17,6 @@
     <!-- Banner Area Start -->
     <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, bookmark)"></th:block>
 
-    <!-- 북마크 추가 버튼 -->
-    <div class="">
-      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가</button>
-    </div>
-
-    <!-- Modal -->
-    <form th:action="@{/favorite/addFavorite}" th:method="post" id="addFavorite" onsubmit="return false">
-      <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">북마크 추가하기</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div id="status"></div>
-              <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
-              <span id="makeError"></span>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-              <button type="button" id="subjectButton" class="btn btn-primary">추가</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-
-    <script type="text/javascript">
-      $("#subjectButton").click(function() {
-        var bookmarkSubject =  $("#floatingInput").val();
-        if (bookmarkSubject == "") {
-          $('#makeError').text("북마크 이름을 입력해주세요.");
-        }
-        $.ajax({
-          async: true,
-          type : 'POST',
-          data : bookmarkSubject,
-          url : "favorite/subjectCheck",
-          dataType : "json",
-          contentType: "application/json; charset=UTF-8",
-          success : function(result) {
-            console.log(result);
-            if (result) {
-              $('#makeError').text("북마크 이름은 중복으로 사용이 불가능 합니다.");
-              $("#floatingInput").focus();
-            } else {
-              document.getElementById('addFavorite').submit();
-            }
-          },
-        });
-      });
-    </script>
-
     <!-- 북마크 리스트 -->
     <div class="block-box post-view" th:each="favorite, loop : ${favorites}">
       <div class="post-header d-flex justify-content-between">
@@ -187,6 +131,63 @@
         </div>
       </div>
     </div>
+
+    <!-- 북마크 추가 버튼 -->
+    <div class="d-flex flex-row-reverse">
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#staticBackdrop">북마크 추가</button>
+    </div>
+
+    <!-- Modal -->
+    <form th:action="@{/favorite/addFavorite}" th:method="post" id="addFavorite" onsubmit="return false">
+      <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">북마크 추가하기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="status"></div>
+              <input type="text" class="form-control" name="subject" id="floatingInput" placeholder="북마크 이름을 입력해주세요." required>
+              <span id="makeError"></span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+              <button type="button" id="subjectButton" class="btn btn-primary">추가</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script type="text/javascript">
+      $("#subjectButton").click(function() {
+        var bookmarkSubject =  $("#floatingInput").val();
+        if (bookmarkSubject == "") {
+          $('#makeError').text("북마크 이름을 입력해주세요.");
+        }
+        $.ajax({
+          async: true,
+          type : 'POST',
+          data : bookmarkSubject,
+          url : "favorite/subjectCheck",
+          dataType : "json",
+          contentType: "application/json; charset=UTF-8",
+          success : function(result) {
+            console.log(result);
+            if (result) {
+              $('#makeError').text("북마크 이름은 중복으로 사용이 불가능 합니다.");
+              $("#floatingInput").focus();
+            } else {
+              document.getElementById('addFavorite').submit();
+            }
+          },
+        });
+      });
+    </script>
+
   </div>
 </div>
 </body>
