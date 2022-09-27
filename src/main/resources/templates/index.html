@@ -14,7 +14,7 @@
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
     <div class="container">
-        <form>
+        <form th:action="@{/posts}" method="get">
             <div class="newsfeed-search px-3">
                 <ul class="search-list">
                     <li class="search-filter">
@@ -22,29 +22,16 @@
                             <i class="icofont-abacus-alt"></i>
                         </button>
                         <div class="drop-menu">
-                            <select class="select2">
-                                <option>--전체 지역--</option>
-                                <option>서울</option>
-                                <option>경기</option>
-                                <option>강원</option>
-                                <option>충청</option>
-                                <option>전라</option>
-                                <option>제주</option>
-                            </select>
-                            <select class="select2">
-                                <option>--전체 분야--</option>
-                                <option>한식</option>
-                                <option>양식</option>
-                                <option>중식</option>
-                                <option>일식</option>
+                            <select class="select2" th:name="searchType">
+                                <option th:each="type : ${searchType}" th:value="${type}" th:text="${type.getValue()}">검색 분류</option>
                             </select>
                         </div>
                     </li>
                 </ul>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="검색어를 입력해주세요.">
+                    <input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="keyword">
                     <div class="input-group-append">
-                        <button class="search-btn" type="button"><i class="icofont-search-1"></i></button>
+                        <button class="search-btn" type="submit"><i class="icofont-search-1"></i></button>
                     </div>
                 </div>
             </div>

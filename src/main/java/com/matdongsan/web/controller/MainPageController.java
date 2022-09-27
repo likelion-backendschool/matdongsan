@@ -1,5 +1,6 @@
 package com.matdongsan.web.controller;
 
+import com.matdongsan.domain.post.SearchType;
 import com.matdongsan.service.PlaceService;
 import com.matdongsan.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class MainPageController {
 
     @GetMapping("/")
     public String mainPageMapping(Model model) {
+        model.addAttribute("searchType", SearchType.values());
         model.addAttribute("top5Post", postService.findTop5Post());
         model.addAttribute("top5Place", placeService.findTop5Place());
         return "index";

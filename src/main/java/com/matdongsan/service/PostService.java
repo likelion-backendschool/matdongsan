@@ -6,7 +6,7 @@ import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.post.PostRepository;
 import com.matdongsan.domain.post.PostRepositoryImpl;
 import com.matdongsan.domain.post.SearchType;
-import com.matdongsan.web.controller.util.image.ImageUtil;
+import com.matdongsan.util.image.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
 
