@@ -159,8 +159,8 @@
             </li>
         </ul>
     </div>
-    <th:block th:replace="/fragments/likes/reply-like-fragments::likes"></th:block>
-    <th:block th:replace="/fragments/reply-post-async::reply_async"></th:block>
+    <th:block th:replace="fragments/likes/reply-like-fragments::likes"></th:block>
+    <th:block th:replace="fragments/reply-post-async::reply_async"></th:block>
     <script type='text/javascript' th:inline="javascript">
         const postId = [[${post.id}]]
         $(".delete").click(function () {

@@ -34,7 +34,8 @@ public class WebDriverUtil {
         if(System.getProperty("spring.profiles.active").equals("local")){
             WEB_DRIVER_PATH = Paths.get(System.getProperty("user.dir"),"chromedriver").toString();
         }else if(System.getProperty("spring.profiles.active").equals("prod")){
-            WEB_DRIVER_PATH = "/driver/chromedriver";
+            WEB_DRIVER_PATH = Paths.get(System.getProperty("user.dir"),"chromedriver").toString();
+//            WEB_DRIVER_PATH = "/driver/chromedriver";
         }
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
