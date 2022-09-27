@@ -45,10 +45,8 @@
               북마크 선택
             </a>
 
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-menu" th:each="favorite, loop : ${favorites}">
+              <a th:text="${favorite.subject}" class="dropdown-item" th:href="@{/favorite/chooseFavorite/{favoriteId}(favoriteId = ${favorite.id})}"></a>
             </div>
           </div>
         </div>
