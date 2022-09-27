@@ -17,7 +17,7 @@
           <nav id="dropdown" class="template-main-menu">
             <ul class="menu-content">
               <li class="header-nav-item">
-                <a th:href="@{/post/new}" class="menu-link active">맛집 추가</a>
+                <a th:href="@{/post/new}" class="menu-link active">맛집 리뷰 추가</a>
               </li>
               <!--<li class="header-nav-item">
                   <a href="#" class="menu-link have-sub">Community</a>
@@ -101,14 +101,14 @@
           </nav>
         </div>
         <div class="nav-item header-control">
-          <div class="inline-item d-none d-md-block">
+          <!--<div class="inline-item d-none d-md-block">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="검색어를 입력해주세요.">
               <div class="input-group-append">
                 <button class="submit-btn" type="button"><i class="icofont-search"></i></button>
               </div>
             </div>
-          </div>
+          </div>-->
           <!--<div class="inline-item d-flex align-items-center">
             <div class="dropdown dropdown-friend">
               <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -273,15 +273,16 @@
           <div class="inline-item">
             <div class="dropdown dropdown-admin">
               <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                      <span class="media">
-                                          <span class="item-img">
-                                              <img src="/media/figure/chat_5.jpg" alt="Chat">
-                                            <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
-                                          </span>
-                                          <span class="media-body">
-                                              <span class="item-title" sec:authentication="principal.nickname">닉네임</span>
-                                          </span>
-                                      </span>
+                  <span class="media">
+                      <span class="item-img bg-white rounded-circle">
+                          <svg th:data-jdenticon-value="${#authentication.principal.nickname}" width="45" height="45" class="rounded-circle"></svg>
+                          <!--<img src="/media/figure/chat_5.jpg" alt="Chat">-->
+                          <!--<span class="acc-verified"><i class="icofont-check"></i></span>-->
+                      </span>
+                      <span class="media-body">
+                          <span class="item-title" sec:authentication="principal.nickname">닉네임</span>
+                      </span>
+                  </span>
               </button>
               <div class="dropdown-menu dropdown-menu-right">
                 <ul class="admin-options">

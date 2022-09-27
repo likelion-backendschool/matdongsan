@@ -52,6 +52,11 @@ public class MemberService {
         return memberInfoDto;
     }
 
+    public void changeMemberIntroduce(Member member, String introduce) {
+        member.changeBasicInfo(introduce);
+        memberRepository.save(member);
+    }
+
     public boolean existMemberNickname(String nickname) {
         return memberRepository.existsByNickname(nickname);
     }

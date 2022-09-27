@@ -51,6 +51,9 @@
     <script th:src="@{/dependencies/elevate-zoom/jquery.elevatezoom.js}"></script>
     <script th:src="@{/dependencies/bootstrap-validator/js/validator.min.js}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtmXSwv4YmAKtcZyyad9W7D4AC08z0Rb4}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.2.0/dist/jdenticon.min.js" async
+            integrity="sha384-yBhgDqxM50qJV5JPdayci8wCfooqvhFYbIKhv0hTtLvfeeyJMJCscRfFNKIxt43M" crossorigin="anonymous">
+    </script>
 
     <script th:src="@{/timeconvert.js}"></script>
 
@@ -65,13 +68,13 @@
     <div id="wrapper" class="wrapper">
         <header th:replace="fragments/header :: header"></header>
         <div th:replace="fragments/left-sidebar :: left-sidebar"></div>
-        <div th:replace="fragments/right-sidebar :: right-sidebar"></div>
+        <!--<div th:replace="fragments/right-sidebar :: right-sidebar"></div>-->
         <div class="page-content">
             <div layout:fragment="content">
                 내용
             </div>
-            <div th:replace="fragments/footer :: footer"></div>
         </div>
+        <div th:replace="fragments/footer :: footer"></div>
     </div>
 
     <!-- Chat Modal Here -->

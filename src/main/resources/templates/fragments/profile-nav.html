@@ -6,11 +6,11 @@
 <body>
   <!-- Sidebar Right -->
   <th:block th:fragment="profile-nav(member, status)">
-    <div class="banner-user">
+    <div class="banner-user" style="background-image: url('https://picsum.photos/seed/picsum/1170/337')">
       <div class="banner-content">
         <div class="media">
-          <div class="item-img">
-            <img th:src="@{/media/banner/user_1.jpg}" alt="User">
+          <div class="item-img bg-white">
+            <svg th:data-jdenticon-value="${member.getNickname()}" width="115" height="115" class="rounded-circle"></svg>
           </div>
           <div class="media-body">
             <h3 class="item-title" th:text="${member.getNickname()}">닉네임</h3>
@@ -29,7 +29,10 @@
     <div class="block-box user-top-header">
       <ul class="menu-list">
         <li class="" th:classappend="${status} == 'profile' ? 'active'"><a th:href="@{/profile/{username}(username = ${member.getNickname()})}">나의 게시물</a></li>
-        <li class="" th:classappend="${status} == 'bookmark' ? 'active'"><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
+        <th:block th:if="${#authentication.principal.nickname == member.getNickname()}">
+          <li class="" th:classappend="${status} == 'bookmark' ? 'active'"><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
+          <li class="" th:classappend="${status} == 'map' ? 'active'"><a th:href="@{/profile/map/view}">나만의 지도</a></li>
+        </th:block>
         <li>
           <!--<div class="dropdown">
               <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">

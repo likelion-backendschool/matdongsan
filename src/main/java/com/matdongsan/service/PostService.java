@@ -4,6 +4,8 @@ import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.place.Place;
 import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.post.PostRepository;
+import com.matdongsan.domain.post.PostRepositoryImpl;
+import com.matdongsan.domain.post.SearchType;
 import com.matdongsan.util.image.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +37,7 @@ public class PostService {
 
     private final ImageUtil imageUtil;
     private final PostRepository postRepository;
+    private final PostRepositoryImpl postRepositoryImpl;
 
     public Post findById(Long id) {
         return postRepository.findById(id).get();
@@ -102,8 +106,22 @@ public class PostService {
     }
 
     // 게시글 전체 조회를 페이징으로
-    public Page<Post> getList(Pageable pageable) {
+    public Page<Post> getList(String keyword , int page , String searchType ,Pageable pageable) {
+
+        searchType = searchType.toLowerCase();
+
+        if (searchType.equals(SearchType.TITLE.getKey())) {
+            return postRepository.searchTitle(keyword, pageable);
+        } else if (searchType.equals(SearchType.CONTENT.getKey())) {
+            return postRepository.searchContent(keyword, pageable);
+        } else if (searchType.equals(SearchType.AUTHOR.getKey())) {
+            return postRepository.searchAuthor(keyword, pageable);
+        }
 
         return postRepository.findAll(pageable);
+    }
+
+    public List<Post> findTop5Post() {
+        return postRepository.findPostTop5();
     }
 }

@@ -8,7 +8,9 @@ import com.matdongsan.service.AccountService;
 import com.matdongsan.service.FavoriteService;
 import com.matdongsan.service.MemberService;
 import com.matdongsan.service.ProfileService;
+import com.matdongsan.web.dto.profile.ProfileIntroduceDto;
 import com.matdongsan.web.dto.profile.ProfilePasswordDto;
+import com.matdongsan.web.dto.profile.ProfileWithdrawalDto;
 import com.matdongsan.web.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +55,8 @@ public class ProfileController {
         MemberVo member = accountService.getReadOnlyMember(account.getUsername());
         model.addAttribute("member", member);
         model.addAttribute("profilePasswordDto", new ProfilePasswordDto());
+        model.addAttribute("profileWithdrawalDto", new ProfileWithdrawalDto());
+        model.addAttribute("profileIntroduceDto", new ProfileIntroduceDto());
 
         return "profile/profile-setting";
     }
@@ -73,6 +77,18 @@ public class ProfileController {
     public String changeNickname(@ModelAttribute(value = "nickname") String nickname, @AuthUser Account account, RedirectAttributes redirectAttributes) {
         memberService.changeMemberNickname(nickname, account);
         redirectAttributes.addFlashAttribute("settingMessageSuccess", "닉네임이 변경되었습니다.");
+        return "redirect:/settings/profile";
+    }
+
+    @PostMapping("/settings/profile/change/introduce")
+    public String changeIntroduce(@Valid ProfileIntroduceDto profileIntroduceDto, BindingResult bindingResult, @AuthUser Account account, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("settingMessageError", "소개글은 4글자 이상 25글자 이내로 작성해주세요.");
+            redirectAttributes.addFlashAttribute("profileIntroduceDto", profileIntroduceDto);
+            return "redirect:/settings/profile";
+        }
+        memberService.changeMemberIntroduce(account.getMember(), profileIntroduceDto.getIntroduce());
+        redirectAttributes.addFlashAttribute("settingMessageSuccess", "소개글이 변경되었습니다.");
         return "redirect:/settings/profile";
     }
 
@@ -111,6 +127,13 @@ public class ProfileController {
         model.addAttribute("member", memberVo);
 
         return "profile/profile-bookmark";
+    }
+
+    @GetMapping("/profile/map/view")
+    public String showMyMap(@AuthUser Account account, Model model, Principal principal) {
+        MemberVo memberVo = accountService.getReadOnlyMember(principal.getName());
+        model.addAttribute("member", memberVo);
+        return "profile/profile-map";
     }
 
     @PostMapping("/profile/bookmark/favorite/subjectCheck")

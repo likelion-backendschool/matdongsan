@@ -5,21 +5,21 @@
 <body>
 <th:block th:fragment="likes(postId)">
   <script th:inline="javascript">
-    $("#post-react-btn").click(function (){
-      console.log("함수 실행");
-      let param = {
-        postNum: "[[${postId}]]"
-      };
-      console.log(param);
-      $.ajax({
-        type: "POST",
-        url: "/post/modify/like",
-        data : param,
-        success: function (flag) {
-          $('#post-ajax-form').load(location.href+' #post-ajax-form');
-        },
-      })
-    });
+    let addPostLike = {
+      modifyPostLike: function (postId) {
+        let param = {
+          postNum: postId
+        };
+        $.ajax({
+          type: "POST",
+          url: "/post/modify/like",
+          data : param,
+          success: function (flag) {
+            $('#post-ajax-form').load(location.href+' #post-ajax-form');
+          },
+        })
+      },
+    }
   </script>
 </th:block>
 </body>

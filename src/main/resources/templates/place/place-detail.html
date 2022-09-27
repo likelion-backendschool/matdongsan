@@ -112,12 +112,14 @@
                                             <img src="/media/figure/author_6.jpg" alt="blog">
                                         </div>
                                         <div class="media-body">
-                                            <div class="item-date" th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}">DateTime</div>
-                                            <div class="author-name">
-                                                <h5 class="item-title" th:text="${post.author.nickname}">Writer</h5>
-                                            </div>
-                                            <p style="font-weight: bold" th:text="${post.title}">title</p>
-                                            <p th:utext="${post.content}">content</p>
+                                            <a th:href="@{/post/{id}(id = ${post.id})}">
+                                                <div class="item-date" th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}">DateTime</div>
+                                                <div class="author-name">
+                                                    <h5 class="item-title" th:text="${post.author.nickname}">Writer</h5>
+                                                </div>
+                                                <p style="font-weight: bold" th:text="${post.title}">title</p>
+                                                <p th:utext="${post.content}">content</p>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

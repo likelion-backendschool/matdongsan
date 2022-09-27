@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout.html}">
+<head>
+  <title>맛동산 | 프로필</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <!--=====================================-->
+  <!--=       Container  Area Start       =-->
+  <!--=====================================-->
+  <div class="container">
+    <!-- Banner Area Start -->
+    <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, map)"></th:block>
+
+    <div class="block-box post-view">
+      <div class="post-body">
+        <div class="post-no-thumbnail text-center align-middle">
+          <br>
+          <h5>등록된 북마크가 없습니다.</h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
