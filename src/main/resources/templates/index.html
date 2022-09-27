@@ -73,8 +73,8 @@
                 </div>
             </div>
         </div>-->
-        <h3>인기 포스팅 TOP 5</h3>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <h3>인기 플레이스 TOP 5</h3>
+        <div id="placeTop5" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -82,18 +82,44 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item" th:each="top, status : ${top5}" th:classappend="${status.index == 0} ? active" style=" cursor: pointer;" th:onclick="'location.href=\'' + @{/post/{postId}(postId = ${top.id})} + '\''">
-                    <img class="d-block w-100" th:src="@{${top.getPlace().mainPhotoUrl}}" style="height: 300px;">
+                    <img class="d-block w-100" th:src="@{${top.getPlace().mainPhotoUrl}}" style="height: 300px; opacity: 0.5;">
                     <div class="carousel-caption d-none d-md-block">
                         <h5 th:text="${top.title}">제목</h5>
                         <p th:utext="${top.content}">내용 조금</p>
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#placeTop5" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#placeTop5" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <br>
+        <h3>인기 포스팅 TOP 5</h3>
+        <div id="postingTop5" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item" th:each="top, status : ${top5}" th:classappend="${status.index == 0} ? active" style=" cursor: pointer;" th:onclick="'location.href=\'' + @{/post/{postId}(postId = ${top.id})} + '\''">
+                    <img class="d-block w-100" th:src="@{${top.getPlace().mainPhotoUrl}}" style="height: 300px; opacity: 0.5;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 th:text="${top.title}">제목</h5>
+                        <p th:utext="${top.content}">내용 조금</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#postingTop5" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#postingTop5" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
