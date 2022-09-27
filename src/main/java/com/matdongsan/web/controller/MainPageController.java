@@ -1,5 +1,6 @@
 package com.matdongsan.web.controller;
 
+import com.matdongsan.service.PlaceService;
 import com.matdongsan.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainPageController {
 
     private final PostService postService;
+    private final PlaceService placeService;
 
     @GetMapping("/")
     public String mainPageMapping(Model model) {
-        model.addAttribute("top5", postService.findTop5Post());
+        model.addAttribute("top5Post", postService.findTop5Post());
+        model.addAttribute("top5Place", placeService.findTop5Place());
         return "index";
     }
 

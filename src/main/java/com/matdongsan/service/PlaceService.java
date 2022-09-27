@@ -116,4 +116,8 @@ public class PlaceService {
         }
     }
 
+    public List<Place> findTop5Place() {
+        return placeRepository.findByTop5Place();
+    }
+
 }
