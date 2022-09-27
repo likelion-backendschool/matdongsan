@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  // 카카오 맵 외부 요청을 받
                 .csrf().disable() // /api/place 로 보내지지가 않아서 설정
                 .authorizeRequests()
-                .mvcMatchers("/login", "/signup", "/account/idCheck", "/account/kakao/**", "/", "/place", "/place/map", "/posts", "/post/**").permitAll() // 누구나 접근 가능
+                .mvcMatchers("/login", "/signup", "/account/idCheck", "/account/kakao/**", "/", "/place", "/place/map", "/posts", "/post/*/detail").permitAll() // 누구나 접근 가능
                 .anyRequest().authenticated(); // 나머지 요청은 권한이 있어야함
         http.logout()
                 .logoutUrl("/logout")

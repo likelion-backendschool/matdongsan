@@ -52,7 +52,7 @@ public class PostController {
 
 
     // 게시글 상세 조회
-    @GetMapping("/post/{id}")
+    @GetMapping("/post/{id}/detail")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto,

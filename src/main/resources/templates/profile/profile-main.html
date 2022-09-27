@@ -31,7 +31,7 @@
                 <div class="row gutters-20 ">
                     <div class="col-lg-3 col-md-4 col-6" th:each="post : ${member.getPostList()}">
                         <div class="bg-white mb-2 p-2 rounded">
-                            <a th:href="@{/post/{postId}(postId = ${post.getId()})}">
+                            <a th:href="@{/post/{postId}/detail(postId = ${post.getId()})}">
                                 <p class="text-dark" th:text="${post.getTitle()}">포스트 제목</p>
                                 <div>
                                     <span><i class="icofont-thumbs-up text-dark"></i><a th:text="${post.getPostLike().size()}" class="mx-2">추천 수</a></span>

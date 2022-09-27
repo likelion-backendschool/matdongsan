@@ -112,7 +112,7 @@
                                             <img src="/media/figure/author_6.jpg" alt="blog">
                                         </div>
                                         <div class="media-body">
-                                            <a th:href="@{/post/{id}(id = ${post.id})}">
+                                            <a th:href="@{/post/{id}/detail(id = ${post.id})}">
                                                 <div class="item-date" th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}">DateTime</div>
                                                 <div class="author-name">
                                                     <h5 class="item-title" th:text="${post.author.nickname}">Writer</h5>

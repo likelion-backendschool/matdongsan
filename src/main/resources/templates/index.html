@@ -103,7 +103,7 @@
                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item" th:each="top, status : ${top5Post}" th:classappend="${status.index == 0} ? active" style=" cursor: pointer;" th:onclick="'location.href=\'' + @{/post/{postId}(postId = ${top.id})} + '\''">
+                    <div class="carousel-item" th:each="top, status : ${top5Post}" th:classappend="${status.index == 0} ? active" style=" cursor: pointer;" th:onclick="'location.href=\'' + @{/post/{postId}/detail(postId = ${top.id})} + '\''">
                         <img class="d-block w-100" th:src="@{${top.getPlace().mainPhotoUrl}}" style="height: 300px; opacity: 0.5;">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 th:text="${top.title}">제목</h5>
