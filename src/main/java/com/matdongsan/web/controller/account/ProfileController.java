@@ -129,6 +129,13 @@ public class ProfileController {
         return "/profile/profile-bookmark";
     }
 
+    @GetMapping("/profile/map/view")
+    public String showMyMap(@AuthUser Account account, Model model, Principal principal) {
+        MemberVo memberVo = accountService.getReadOnlyMember(principal.getName());
+        model.addAttribute("member", memberVo);
+        return "profile/profile-map";
+    }
+
     @PostMapping("/profile/bookmark/favorite/subjectCheck")
     @ResponseBody
     public boolean subjectCheck(@AuthUser Account account, @RequestBody String bookmarkSubject) {

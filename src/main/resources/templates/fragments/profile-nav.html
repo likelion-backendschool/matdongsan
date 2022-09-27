@@ -31,6 +31,7 @@
         <li class="" th:classappend="${status} == 'profile' ? 'active'"><a th:href="@{/profile/{username}(username = ${member.getNickname()})}">나의 게시물</a></li>
         <th:block th:if="${#authentication.principal.nickname == member.getNickname()}">
           <li class="" th:classappend="${status} == 'bookmark' ? 'active'"><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
+          <li class="" th:classappend="${status} == 'map' ? 'active'"><a th:href="@{/profile/map/view}">나만의 지도</a></li>
         </th:block>
         <li>
           <!--<div class="dropdown">
