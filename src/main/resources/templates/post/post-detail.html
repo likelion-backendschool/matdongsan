@@ -24,11 +24,17 @@
                         <img src="/media/figure/chat_8.jpg" alt="Aahat">
                     </div>
                     <div class="media-body">
-                        <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
+                        <div class="user-title"><a th:href="@{/profile/{username}(username = ${post.getAuthor().nickname})}" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
                             <i class="icofont-check"></i></div>
                         <ul class="entry-meta">
-                            <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
+                            <th:block th:if="${!post.privateStatus}">
+                                <li class="meta-privacy"><i class="icofont-lock"></i> Private</li>
+                            </th:block>
+                            <th:block th:if="${post.privateStatus}">
+                                <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
+                            </th:block>
                             <li class="meta-time">8 minutes ago</li>
+<!--                            th:onclick="|timeForToday( ${post.createdTime} )|"-->
                         </ul>
                     </div>
                 </div>
@@ -67,19 +73,21 @@
                     </div>
                 </div>
                 <div class="post-meta-wrap">
-                    <div class="post-meta" id="post-ajax-form">
-                        <button class="btn" id="post-react-btn" th:onclick="|addPostLike.modifyPostLike(${post.getId()})|">
-                            <th:block th:if="${!likeFlag}">
-                                <i class="icofont-thumbs-up"></i>
-                                <span class="mx-2">좋아요</span>
-                            </th:block>
-                            <th:block th:if="${likeFlag}">
-                                <i class="icofont-thumbs-up text-primary"></i>
-                                <span class="mx-2 text-primary">좋아요 취소</span>
-                            </th:block>
-                            <span class="badge rounded-pill bg-primary text-white" th:text="${post.getPostLike().size()}"></span>
-                        </button>
-                    </div>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="post-meta" id="post-ajax-form">
+                            <button class="btn" id="post-react-btn" th:onclick="|addPostLike.modifyPostLike(${post.getId()})|">
+                                <th:block th:if="${!likeFlag}">
+                                    <i class="icofont-thumbs-up"></i>
+                                    <span class="mx-2">좋아요</span>
+                                </th:block>
+                                <th:block th:if="${likeFlag}">
+                                    <i class="icofont-thumbs-up text-primary"></i>
+                                    <span class="mx-2 text-primary">좋아요 취소</span>
+                                </th:block>
+                                <span class="badge rounded-pill bg-primary text-white" th:text="${post.getPostLike().size()}"></span>
+                            </button>
+                        </div>
+                    </th:block>
                     <div class="post-meta">
                         <div class="meta-text" >
                             <a th:text="${post.replyList.size()}"></a>
@@ -87,29 +95,19 @@
                         </div>
                     </div>
                 </div>
-                <!--댓글 부분-->
-                <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
-                <!-- 댓글 끝 -->
+                <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <!--댓글 부분-->
+                    <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
+                    <!-- 댓글 끝 -->
+                </div>
+                <div class="dropdown" sec:authorize="!isAuthenticated()">
+                    <!--댓글 부분-->
+                    <div class="text-center align-middle pb-2">
+                        <h5><a th:href="@{/login}">로그인</a> 후 댓글을 확인할 수 있습니다.</h5>
+                    </div>
+                    <!-- 댓글 끝 -->
+                </div>
             </div>
-            <!--<div class="post-footer">
-                <ul>
-                    <li class="post-share">
-                        <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
-                        <ul class="share-list">
-                            <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="#" class="color-messenger"><i
-                                    class="icofont-facebook-messenger"></i></a></li>
-                            <li><a href="#" class="color-instagram"><i
-                                    class="icofont-instagram"></i></a></li>
-                            <li><a href="#" class="color-whatsapp"><i
-                                    class="icofont-brand-whatsapp"></i></a>
-                            </li>
-                            <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>-->
         </div>
     </div>
     <th:block th:replace="/fragments/likes/post-like-fragments::likes(${post.getId()})"></th:block>

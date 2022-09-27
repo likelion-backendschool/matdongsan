@@ -66,9 +66,10 @@ public class PostController {
         Page<Reply> paging = replyService.getReplyList(page, id);
         model.addAttribute("paging", paging);
 
-        boolean likeFlag = likeApiService.existPostLikeFlag(account.getMember(), post);
-        model.addAttribute("likeFlag", likeFlag);
-
+        if (account != null) {
+            boolean likeFlag = likeApiService.existPostLikeFlag(account.getMember(), post);
+            model.addAttribute("likeFlag", likeFlag);
+        }
 
         return "/post/post-detail";
     }
