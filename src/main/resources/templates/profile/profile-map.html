@@ -7,6 +7,18 @@
        layout:decorate="~{layouts/layout.html}">
 <head>
   <title>맛동산 | 프로필</title>
+  <style>
+    .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+    .map_wrap {position:relative;width:100%;height:500px;}
+
+    #map_wrap{position:relative;overflow:hidden; z-index: 0;}
+    .category, .category *{margin:0;padding:0;color:#000;}
+    .category {position:absolute;top:10px;left:10px;width:auto;height:auto;z-index:10;text-align:center;background-color:#fff;}
+
+    #myLocationControl {position:absolute;bottom:10px;right:10px;width:42px;height:42px;z-index: 1;cursor: pointer; background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) no-repeat -150px -450px;}
+    #myLocationControl.active {background-position: -150px -350px;}
+  </style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -17,15 +29,146 @@
     <!-- Banner Area Start -->
     <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, map)"></th:block>
 
-    <div class="block-box post-view">
-      <div class="post-body">
-        <div class="post-no-thumbnail text-center align-middle">
-          <br>
-          <h5>등록된 북마크가 없습니다.</h5>
+    <div class="container">
+      <div id="loading" class="row justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       </div>
-    </div>
+      <div id="map_wrap" class="map_wrap">
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
+        <!-- 지도 위에 표시될 마커 카테고리 -->
+        <div class="category">
+          <div class="dropdown">
+            <a class="btn btn-lg dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              북마크 선택
+            </a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="MapControlView" id="myLocationControl" onclick="getCurrentPos()"></div>
+      </div>
+
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b2359366093e6940be82de1064805f0&libraries=services"></script>
+      <script>
+        // 마커를 담을 배열입니다
+        let x_pos=126.9786567;
+        let y_pos=37.566826;
+        const mapWrap = document.querySelector("#map_wrap");
+        const loadingEL = document.querySelector("#loading");
+        mapWrap.classList.add("d-none");
+
+        var markers = [];
+
+        var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1});
+        var contentNode = document.createElement('div'); // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
+
+        placeOverlay.setContent(contentNode);
+        contentNode.className = 'placeinfo_wrap';
+
+        var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+
+        getLocation(()=>{
+          var mapOption = {
+            center: new kakao.maps.LatLng(y_pos, x_pos), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+          };
+          loadingEL.classList.add("d-none");
+          mapWrap.classList.remove("d-none");
+          map = new kakao.maps.Map(mapContainer, mapOption);
+          ps  = new kakao.maps.services.Places();
+        })
+
+        // 지도를 생성합니다
+        var map;
+
+        // gps로 위치불러오기
+        function getCurrentPos() {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude, // 위도
+                    lon = position.coords.longitude; // 경도
+
+            var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                    message = '<div style="padding:5px;">내 위치</div>'; // 인포윈도우에 표시될 내용입니다
+
+            var control = document.getElementById('myLocationControl');
+
+            // 버튼이 눌린 상태가 아니면
+            if (control.className.indexOf('active') === -1) {
+              control.className = 'active';
+              // 마커와 인포윈도우를 표시합니다
+              displayMarker(locPosition, message);
+            }
+            else {
+              control.className = '';
+
+            }
+          });
+        }
+
+        var ifExist = false;
+
+        // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+        function displayMarker(locPosition, message) {
+
+          if (!ifExist) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+              map: map,
+              position: locPosition
+            });
+
+            var iwContent = message, // 인포윈도우에 표시할 내용
+                    iwRemoveable = true;
+
+            // 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+              content : iwContent,
+              removable : iwRemoveable
+            });
+            // 인포윈도우를 마커위에 표시합니다
+            infowindow.open(map, marker);
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition);
+            ifExist = true;
+          }
+          else {
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition);
+          }
+        }
+
+        function getLocation(cb) {
+          if (navigator.geolocation) { // GPS를 지원하면
+            navigator.geolocation.getCurrentPosition((position) =>{
+              y_pos = position.coords.latitude;
+              x_pos = position.coords.longitude;
+              console.log("YES : " + y_pos, x_pos)
+              cb();
+              // alert(position.coords.latitude + ' ' + position.coords.longitude);
+            }, function(error) {
+              console.error(error);
+              cb();
+            }, {
+              enableHighAccuracy: false,
+              maximumAge: 0,
+              timeout: Infinity
+            });
+          } else {
+            alert('GPS를 지원하지 않습니다');
+          }
+        }
+
+      </script>
+
+    </div>
   </div>
 </div>
 </body>
