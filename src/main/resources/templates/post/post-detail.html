@@ -33,8 +33,15 @@
                             <th:block th:if="${post.privateStatus}">
                                 <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
                             </th:block>
-                            <li class="meta-time">8 minutes ago</li>
-<!--                            th:onclick="|timeForToday( ${post.createdTime} )|"-->
+                            <!--  여기 수정 중 -->
+                            <ul class="entry-meta">
+                                <th:block th:if="${post.modifiedTime == null}">
+                                    <li class="meta-time" th:text="${post.postTime}">등록 시간</li>
+                                </th:block>
+                                <th:block th:if="${post.modifiedTime != null}">
+                                    <li class="meta-time" th:text="|${post.postTime}(수정됨)|">수정시간</li>
+                                </th:block>
+                            </ul>
                         </ul>
                     </div>
                 </div>

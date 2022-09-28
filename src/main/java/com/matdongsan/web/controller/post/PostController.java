@@ -62,6 +62,7 @@ public class PostController {
 
         List<Reply> replyList = post.getReplyList();
         replyService.refreshTime(replyList);
+        postService.refreshTime(post);
 
         Page<Reply> paging = replyService.getReplyList(page, id);
         model.addAttribute("paging", paging);

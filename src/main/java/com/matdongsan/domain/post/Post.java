@@ -55,6 +55,14 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PostLike> postLike;
 
+    // 추가 부분
+    private String postTime;
+
+    public void insertReplyTime(String postTime) {
+        this.postTime = postTime;
+    }
+
+
     public void addPlace(Place place) {
         this.place = place;
         place.getPosts().add(this);
