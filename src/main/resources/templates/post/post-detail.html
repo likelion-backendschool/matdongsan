@@ -21,7 +21,9 @@
             <div class="post-header">
                 <div class="media">
                     <div class="user-img">
-                        <img src="/media/figure/chat_8.jpg" alt="Aahat">
+                        <div class="item-img bg-white">
+                            <svg th:data-jdenticon-value="${post.getAuthor().nickname}" width="44" height="44" class="rounded-circle"></svg>
+                        </div>
                     </div>
                     <div class="media-body">
                         <div class="user-title"><a th:href="@{/profile/{username}(username = ${post.getAuthor().nickname})}" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
@@ -33,7 +35,6 @@
                             <th:block th:if="${post.privateStatus}">
                                 <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
                             </th:block>
-                            <!--  여기 수정 중 -->
                             <ul class="entry-meta">
                                 <th:block th:if="${post.modifiedTime == null}">
                                     <li class="meta-time" th:text="${post.postTime}">등록 시간</li>

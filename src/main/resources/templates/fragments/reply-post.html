@@ -14,7 +14,7 @@
                         <div class="post-header">
                             <div class="media">
                                 <div class="user-img">
-                                    <img th:src="@{/media/figure/chat_14.jpg}" alt="Aahat">
+                                    <svg th:data-jdenticon-value="${reply.writer.nickname}" width="40" height="40" class="rounded-circle"></svg>
                                 </div>
                                 <div class="media-body">
                                     <div class="user-title"><a
@@ -41,12 +41,6 @@
                                             th:if="${#authentication.principal.username == reply.writer.account.username}">
                                         <!--모달 button test -->
                                         <a class="edit icofont-comment dropdown-item" th:href="@{|/reply/update/${reply.id}|}"><span class="ml-1">수정</span></a>
-
-                                        <button type="button" class="edit icofont-comment dropdown-item"
-                                                data-toggle="modal"
-                                                data-target="#exampleModal">
-                                            댓글 수정 test
-                                        </button>
 
                                         <a class="delete icofont-delete-alt dropdown-item"
                                            th:href="@{|/reply/delete/${reply.id}|}"><span class="ml-1">삭제</span></a>
@@ -184,7 +178,7 @@
                 data: $('#replyForm').serialize(),
                 success: function (replyDto) {
                     let result = $("#reply_async_template").html()
-                        // .replace("{imageUrl}", )
+                        .replace("{imageUrl}", replyDto.nickname)
                         .replace("{nickname}", replyDto.nickname)
                         .replace("{comment}", replyDto.comment)
                         .replace("{replyTime}", replyDto.replyTime)
