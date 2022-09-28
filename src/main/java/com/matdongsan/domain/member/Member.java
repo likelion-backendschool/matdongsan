@@ -1,47 +1,72 @@
 package com.matdongsan.domain.member;
 
-import com.matdongsan.domain.posts.Posts;
+import com.matdongsan.domain.account.Account;
+import com.matdongsan.domain.favorite.Favorite;
+import com.matdongsan.domain.like.ReplyLike;
+import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.reply.Reply;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-@Entity @Getter
+@Entity
+@Getter
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
-
+    // 주석 추가
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(unique = true)
-    // 로그인 아이디
-    private String username;
-
-    private String password;
-
-    @Column(unique = true)
-    private String email;
 
     private Date birth;
 
     private String gender;
 
+    private String introduce;
+
     private LocalDateTime signUpDate;
 
+    @Setter
+    private String nickname;
+
     @Enumerated(EnumType.STRING)
-    private MemberRole memberRole;
+    private MemberAge memberAge;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Posts> postsList = new ArrayList<>();
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Account account;
 
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
-//    private List<Reply> replyList = new ArrayList<>();
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reply> replyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favoriteList = new ArrayList<>();
+
+    public void addReply(Reply reply) {
+        this.replyList.add(reply);
+        reply.setWriter(this);
+    }
+
+    public void addBasicInfo(Date birth, String gender, String introduce, MemberAge memberAge) {
+        this.birth = birth;
+        this.gender = gender;
+        this.introduce = introduce;
+        this.memberAge = memberAge;
+    }
+
+    public void changeBasicInfo(String introduce) {
+        this.introduce = introduce;
+    }
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReplyLike> replyLike;
 }

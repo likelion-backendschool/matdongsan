@@ -10,117 +10,228 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <!-- Page Content -->
-    <div class="page-content">
+    <!--=====================================-->
+    <!--=       Container  Area Start       =-->
+    <!--=====================================-->
+    <div class="container light-style flex-grow-1">
 
-        <!--=====================================-->
-        <!--=        Newsfeed  Area Start       =-->
-        <!--=====================================-->
-        <div class="container">
-            <!-- Banner Area Start -->
-            <div class="banner-user">
-                <div class="banner-content">
-                    <div class="media">
-                        <div class="item-img">
-                            <img src="/media/banner/user_1.jpg" alt="User">
-                        </div>
-                        <div class="media-body">
-                            <h3 class="item-title" sec:authentication="principal.username">닉네임</h3>
-                            <div class="item-subtitle">United State of America</div>
-                            <ul class="item-social">
-                                <li><a href="#" class="bg-fb"><i class="icofont-facebook"></i></a></li>
-                                <li><a href="#" class="bg-twitter"><i class="icofont-twitter"></i></a></li>
-                                <li><a href="#" class="bg-dribble"><i class="icofont-dribbble"></i></a></li>
-                                <li><a href="#" class="bg-youtube"><i class="icofont-brand-youtube"></i></a></li>
-                                <li><a href="#" class="bg-behance"><i class="icofont-behance"></i></a></li>
-                            </ul>
-                        </div>
+        <h4 class="font-weight-bold py-3 mb-4">
+            계정 설정
+        </h4>
+        <div th:if="${settingMessageSuccess}">
+            <div th:replace="fragments/message-fragments :: success-notice (message = ${settingMessageSuccess})"></div>
+        </div>
+        <div th:if="${settingMessageError}">
+            <div th:replace="fragments/message-fragments :: danger-notice (message = ${settingMessageError})"></div>
+        </div>
+        <div class="card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush account-settings-links">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">프로필</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">보안</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">계정</a>
                     </div>
                 </div>
-            </div>
-            <div class="block-box user-top-header">
-                <ul class="menu-list">
-                    <li class="active"><a href="#">내 정보</a></li>
-                    <li><a href="#">맛집 정보</a></li>
-                    <li><a href="#">팔로잉</a></li>
-                    <li><a href="#">팔로워</a></li>
-                    <li>
-                        <div class="dropdown">
-                            <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Shop</a>
-                                <a class="dropdown-item" href="#">Blog</a>
-                                <a class="dropdown-item" href="#">Others</a>
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="account-general">
+                            <div class="d-flex justify-content-start">
+
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="block-box user-about">
-                        <div class="widget-heading">
-                            <h3 class="widget-title">Contact Info</h3>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">...</button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Close</a>
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
+                            <div class="card-body media align-items-center justify-content-start bd-highlight">
+                                <div class="ml-4 item-img bg-white">
+                                    <svg th:data-jdenticon-value="${member.getNickname()}" width="115" height="115" class="rounded-circle"></svg>
+                                </div>
+                                <div class="form-group ml-4">
+                                    <label class="form-label">닉네임</label>
+                                    <input type="text" class="form-control mb-1" th:value="${#authentication.principal.nickname}" data-toggle="modal" data-target="#nicknameChange" data-whatever="@mdo" autocomplete="off" readonly>
+                                    <div class="modal fade" id="nicknameChange" tabindex="-1" role="dialog" aria-labelledby="nicknameChangeLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="nicknameChangeLabel">닉네임 변경</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="changeNickname" th:action="@{/settings/profile/change/nickname}" method="post">
+                                                        <div class="form-group">
+                                                            <label for="nickname" class="col-form-label">닉네임</label>
+                                                            <div class="d-flex flex-row">
+                                                                <input type="text" class="form-control w-75" name="nickname" id="nickname" th:value="${#authentication.principal.nickname}">
+                                                                <button type="button" class="btn btn-primary w-25 mx-3" id="duplicateId">중복 확인</button>
+                                                            </div>
+                                                            <p id="dupplicateMsg">변경할 닉네임을 입력해주세요.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                                            <button type="button" id="nicknameSubmitBtn" class="btn btn-secondary">변경하기</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <ul class="user-info">
-                            <li>
-                                <label>소개</label>
-                                <p>방구뿡</p>
-                            </li>
-                            <li>
-                                <label>Phone:</label>
-                                <p>+123 98566836</p>
-                            </li>
-                            <li>
-                                <label>Address:</label>
-                                <p>59 Street, Newyorkc City</p>
-                            </li>
-                            <li>
-                                <label>Website:</label>
-                                <p><a href="#">www.rebeca.com</a></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 widget-block widget-break-lg mb-3">
-                    <div class="widget widget-user-about">
-                        <div class="widget-heading">
-                            <h3 class="widget-title">About Me</h3>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                    ...
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Close</a>
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
-                                </div>
+                            <div class="px-5 mb-3">
+                                <form th:action="@{/settings/profile/change/introduce}" method="post" th:object="${profileIntroduceDto}">
+                                    <label class="form-label">소개글</label>
+                                    <input class="form-control" rows="3" placeholder="소개글을 입력해주세요." name="introduce" th:value="${member.getIntroduce()}">
+                                    <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('introduce')}" th:errors="*{introduce}">Introduce Error</small>
+                                    <small class="text-dark">소개글은 4글자 ~ 25글자까지 입력할 수 있습니다.</small><br>
+                                    <button type="submit" class="btn btn-primary mt-2">변경</button>&nbsp;
+                                </form>
                             </div>
                         </div>
-                        <div class="user-info">
-                            <ul class="info-list">
-                                <!--                                    <li><span>가입일</span><a th:text="${#temporals.format(#authentication.principal.signUpDate,'yyyy-MM-dd')}">가입날짜</a></li>-->
-                                <li><span>이메일</span><a sec:authentication="principal">이메일</a></li>
-                                <li><span>등록한 맛집</span><a>100</a></li>
-                                <li><span>등록한 댓글</span><a>100</a></li>
-                                <li><span>조회수 총합</span><a>100</a></li>
-                            </ul>
+                        <div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2">
+                                <form th:action="@{/settings/profile/change/password}" method="post" th:object="${profilePasswordDto}">
+                                    <div class="form-group">
+                                        <label class="form-label">현재 비밀번호</label>
+                                        <input type="password" class="form-control" th:field="*{originalPassword}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">새로운 비밀번호</label>
+                                        <input type="password" class="form-control" id="original-password">
+                                        <small>특수문자(.,!@#$%^)를 사용해서 비밀번호를 입력해주세요.</small>
+                                        <small class="form-text text-danger fieldError" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}">Password Error</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">비밀번호 확인</label>
+                                        <input type="password" th:field="*{newPassword}" class="form-control" id="new-password">
+                                        <span id="passwordChkMsg"></span>
+                                    </div>
+
+                                    <div class="text-right mt-3">
+                                        <button type="button" class="btn btn-primary" id="passwordSubmitBtn">변경</button>&nbsp;
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade p-3" id="account-connections">
+                            <div class="align-middle">
+                                <button type="button" class="btn btn-danger text-center" data-toggle="modal" data-target="#exampleModalCenter">회원 탈퇴</button>
+                            </div>
+                            <p class="text-center">회원탈퇴 시 기존에 저장되어 있던 정보는 모두 사라지게 됩니다.</p>
+                            <p class="text-center">회원 탈퇴와 함께 맛동산에 등록된 모든 개인정보는 삭제, 폐기 처리되며 복구되지 않습니다.</p>
+                        </div>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">회원 탈퇴</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:action="@{/withdrawal}" id="withdrawalForm" method="post" th:object="${profileWithdrawalDto}">
+                                            <div class="form-group">
+                                                <label class="col-form-label">회원탈퇴를 위해 현재 비밀번호를 입력해주세요.</label>
+                                                <input type="password" class="form-control" th:field="*{password}">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-danger" id="withdrawalBtn">탈퇴하기</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $("#withdrawalBtn").click(function () {
+            console.log("탈퇴 버튼 클릭");
+            Swal.fire({
+                title: '계정을 지우시겠습니까?',
+                text: "삭제된 계정은 복구할 수 없습니다.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#withdrawalForm").submit();
+                    /*$.ajax({
+                        url: '/withdrawal',
+                        type: 'post',
+                        dataType: 'json',
+                        data: $('form#withdrawalForm').serialize(),
+                        success: function(data) {
+                            console.log("계정 탈퇴");
+                        },
+                        then: function () {
+                            location.href="/";
+                        },
+                    });*/
+                }
+            })
+        });
+        $("#duplicateId").click(function(){
+            console.log("버튼 클릭")
+            $.ajax({
+                type: "get",
+                url: "/settings/profile/nicknameCheck",
+                data : $('#changeNickname').serialize(),
+                async: true ,
+                success : function(flag){
+                    console.log(flag);
+                    if(flag) {
+                        $("#dupplicateMsg").text("이미 사용중인 ID 입니다.")
+                            .addClass("text-danger")
+                            .removeClass("text-primary");
+                        $("#nicknameSubmitBtn").attr("type", "button")
+                            .addClass("btn-secondary")
+                            .removeClass("btn-primary");
+                    } else {
+                        idChk = true;
+                        console.log("idChk : " + idChk);
+                        $("#dupplicateMsg").text("사용 가능한 ID 입니다.")
+                            .addClass("text-primary")
+                            .removeClass("text-danger");
+                        $("#nickname").attr("readonly", "true")
+                            .addClass("bg-light");
+                        $("#nicknameSubmitBtn").attr("type", "submit")
+                            .addClass("btn-primary")
+                            .removeClass("btn-secondary");
+                    }
+                },
+            });
+        });
+        $(function(){
+            $('#original-password').on("propertychange change keyup paste input", function(){
+                $('#passwordChkMsg').html('');
+            });
+
+            $('#original-password, #new-password').keyup(function(){
+
+                if($('#original-password').val() !== $('#new-password').val()){
+                    $("#passwordChkMsg").text("비밀번호가 일치하지 않습니다.")
+                        .addClass("text-danger")
+                        .removeClass("text-primary");
+                    $("#passwordSubmitBtn").attr("type", "button");
+                } else{
+                    $("#passwordChkMsg").text("비밀번호가 일치합니다.")
+                        .addClass("text-primary")
+                        .removeClass("text-danger");
+                    $("#passwordSubmitBtn").attr("type", "submit");
+                }
+
+            });
+        });
+    </script>
 </div>
 </body>
 

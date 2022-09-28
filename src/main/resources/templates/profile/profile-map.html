@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html  class="no-js"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+       xmlns="http://www.w3.org/1999/html"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout.html}">
+<head>
+  <title>맛동산 | 프로필</title>
+  <style>
+    .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+    .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+    .map_wrap {position:relative;width:100%;height:500px;}
+
+    #map_wrap{position:relative;overflow:hidden; z-index: 0;}
+    .category, .category *{margin:0;padding:0;color:#000;}
+    .category {position:absolute;top:10px;left:10px;width:auto;height:auto;z-index:10;text-align:center;background-color:#fff;}
+
+    #myLocationControl {position:absolute;bottom:10px;right:10px;width:42px;height:42px;z-index: 1;cursor: pointer; background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) no-repeat -150px -450px;}
+    #myLocationControl.active {background-position: -150px -350px;}
+  </style>
+</head>
+<body>
+<div layout:fragment="content">
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b2359366093e6940be82de1064805f0&libraries=services"></script>
+  <!--=====================================-->
+  <!--=       Container  Area Start       =-->
+  <!--=====================================-->
+  <div class="container">
+    <!-- Banner Area Start -->
+    <th:block th:replace="/fragments/profile-nav::profile-nav(${member}, map)"></th:block>
+
+    <div class="container">
+      <div id="loading" class="row justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div id="map_wrap" class="map_wrap">
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+        <!-- 지도 위에 표시될 마커 카테고리 -->
+        <div class="category">
+          <div class="dropdown">
+            <a class="btn btn-lg dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              북마크 선택
+            </a>
+
+            <div class="dropdown-menu">
+              <div th:each="favorite, loop : ${favorites}">
+                <a th:text="${favorite.subject}" class="dropdown-item" th:id="'onClickBookmark' + ${favorite.id}"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="MapControlView" id="myLocationControl" onclick="getCurrentPos()"></div>
+      </div>
+
+      <script>
+        // 마커를 담을 배열입니다
+        let x_pos=126.9786567;
+        let y_pos=37.566826;
+        const mapWrap = document.querySelector("#map_wrap");
+        const loadingEL = document.querySelector("#loading");
+        mapWrap.classList.add("d-none");
+
+        var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1});
+        var contentNode = document.createElement('div'); // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
+
+        placeOverlay.setContent(contentNode);
+        contentNode.className = 'placeinfo_wrap';
+
+        var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+
+        getLocation(()=>{
+          var mapOption = {
+            center: new kakao.maps.LatLng(y_pos, x_pos), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+          };
+          loadingEL.classList.add("d-none");
+          mapWrap.classList.remove("d-none");
+          map = new kakao.maps.Map(mapContainer, mapOption);
+          ps  = new kakao.maps.services.Places();
+        })
+
+        // 지도를 생성합니다
+        var map;
+
+        // gps로 위치불러오기
+        function getCurrentPos() {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude, // 위도
+                    lon = position.coords.longitude; // 경도
+
+            var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                    message = '<div style="padding:5px;">내 위치</div>'; // 인포윈도우에 표시될 내용입니다
+
+            var control = document.getElementById('myLocationControl');
+
+            // 버튼이 눌린 상태가 아니면
+            if (control.className.indexOf('active') === -1) {
+              control.className = 'active';
+              // 마커와 인포윈도우를 표시합니다
+              displayMarker(locPosition, message);
+            }
+            else {
+              control.className = '';
+
+            }
+          });
+        }
+
+        var ifExist = false;
+
+        // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+        function displayMarker(locPosition, message) {
+
+          if (!ifExist) {
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+              map: map,
+              position: locPosition
+            });
+
+            var iwContent = message, // 인포윈도우에 표시할 내용
+                    iwRemoveable = true;
+
+            // 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+              content : iwContent,
+              removable : iwRemoveable
+            });
+            // 인포윈도우를 마커위에 표시합니다
+            infowindow.open(map, marker);
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition);
+            ifExist = true;
+          }
+          else {
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition);
+          }
+        }
+
+        function getLocation(cb) {
+          if (navigator.geolocation) { // GPS를 지원하면
+            navigator.geolocation.getCurrentPosition((position) =>{
+              y_pos = position.coords.latitude;
+              x_pos = position.coords.longitude;
+              cb();
+              // alert(position.coords.latitude + ' ' + position.coords.longitude);
+            }, function(error) {
+              console.error(error);
+              cb();
+            }, {
+              enableHighAccuracy: false,
+              maximumAge: 0,
+              timeout: Infinity
+            });
+          } else {
+            alert('GPS를 지원하지 않습니다');
+          }
+        }
+
+        // marker 담을 배열 생성
+        let markers = [];
+        // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+      </script>
+      <div th:each="favorite, loop : ${favorites}">
+        <script type="text/javascript" th:inline="javascript">
+          /*<![CDATA[*/
+
+          $("#onClickBookmark" + /*[[${favorite.id}]]*/).click(function () {
+            removeMarker();
+            let place = new Object();
+            var i = 0;
+
+            /*[# th:each="place : ${favorite.placeList}"]*/
+            place.x =  /*[[${place.x}]]*/;
+            place.y =  /*[[${place.y}]]*/;
+            place.subject = /*[[${place.placeName}]]*/;
+
+            var placePosition = new kakao.maps.LatLng(place.y, place.x),
+                    marker = addMarker(placePosition, i);
+            i++;
+
+            (function(marker, title) {
+              kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+              });
+
+              kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+              });
+
+            })(marker, place.subject);
+
+
+
+            /*[/]*/
+          });
+
+          // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+          function addMarker(position) {
+            // 마커 이미지의 이미지 주소입니다
+            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            var imageSize = new kakao.maps.Size(24, 35);
+
+            markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+                    marker = new kakao.maps.Marker({
+                      position: position, // 마커의 위치
+                      image: markerImage
+                    });
+
+            marker.setMap(map); // 지도 위에 마커를 표출합니다
+            markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+            return marker;
+          }
+
+          // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+          function removeMarker() {
+            for ( var i = 0; i < markers.length; i++ ) {
+              markers[i].setMap(null);
+            }
+            markers = [];
+          }
+
+          // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+          // 인포윈도우에 장소명을 표시합니다
+          function displayInfowindow(marker, title) {
+            var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+            infowindow.setContent(content);
+            infowindow.open(map, marker);
+          }
+
+          /*]]>*/
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

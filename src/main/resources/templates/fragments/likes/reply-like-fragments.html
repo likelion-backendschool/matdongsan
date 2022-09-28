@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+<th:block th:fragment="likes">
+  <script th:inline="javascript">
+    let addReplyLike = {
+      modifyReplyLike: function (replyId) {
+        let param = {
+          replyNum: replyId
+        };
+        $.ajax({
+          type: "POST",
+          url: "/reply/modify/like",
+          data : param,
+          success: function (flag) {
+            let replyLikeCount = $(`#replyLike${replyId}`).text().replace(/ /g, "");
+            if (flag) {
+              replyLikeCount = Number(replyLikeCount) + 1;
+              $(`#replyLike${replyId}`).text(replyLikeCount);
+            } else {
+              replyLikeCount = Number(replyLikeCount) - 1;
+              $(`#replyLike${replyId}`).text(replyLikeCount);
+            }
+          },
+        })
+      }
+    }
+  </script>
+</th:block>
+</body>
+</html>

@@ -84,7 +84,19 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 **/resources/theme-template/
-**/resources/static/
+**/resources/static/assets/
+**/resources/static/dependencies/
+**/resources/static/media/
+**/resources/static/php/
+**/resources/static/sass/
+!**/resources/static/dist/
+!**/resources/static/style.css
+/node_modules/
+package-lock.json
+
+# 테스트용 이미지 로컬 저장소
+images/*
+
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
@@ -132,7 +144,6 @@ fabric.properties
 
 # BlueJ files
 *.ctxt
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -150,3 +161,5 @@ hs_err_pid*
 replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java
+
+.DS_Store

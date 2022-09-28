@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+  <!--=====================================-->
+  <!--=        Footer Area Start       	=-->
+  <!--=====================================-->
+  <footer class="footer-wrap footer-dashboard" th:fragment="footer">
+    <div class="main-footer">
+      <div class="container">
+        <div class="footer-box">
+          <div class="footer-logo">
+            <a th:href="@{/}"><img th:src="@{/media/logo_dark.png}" alt="Logo"></a>
+          </div>
+          <p>맛동산 프로젝트 | <a href="https://github.com/likelion-backendschool/matdongsan" target="_blank">Github</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright">Copy© Matdongsan 2022. All Rights Reserved</div>
+    </div>
+  </footer>
+</body>
+</html>
