@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+<th:block th:fragment="update">
+  <script th:inline="javascript">
+    let removeReplyBtn = {
+      removeReply: function (replyId) {
+        let param = {
+          replyNum: replyId
+        };
+        $.ajax({
+          type: "POST",
+          url: "/reply/remove",
+          data : param,
+          success: function (flag) {
+            $(`#replyDiv`).load(location.href+` #replyDiv`);
+            $(`#replyUpdate${replyId}`).modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+          },
+        })
+      },
+    }
+  </script>
+</th:block>
+</body>
+</html>

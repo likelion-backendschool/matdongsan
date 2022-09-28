@@ -67,24 +67,18 @@ public class ReplyController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reply/update")
     @ResponseBody
-    public String updateReply(@RequestParam Map<String, String> params) {
+    public boolean updateReply(@RequestParam Map<String, String> params) {
         Reply currentReply = replyService.getReply(Long.valueOf(params.get("replyNum")));
         replyService.update(currentReply, params.get("replyComment"));
-        return "abcdefu";
+        return true;
     }
 
-    /**
-     * 댓글 삭제
-     *
-     * @param id
-     * @return
-     */
-
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/reply/delete/{replyId}")
-    public String deleteReply(@PathVariable("replyId") Long id) {
-        Reply reply = replyService.getReply(id);
-        replyService.deleteReply(reply);
-        return String.format("redirect:/post/%s", reply.getPost().getId());
+    @PostMapping("/reply/remove")
+    @ResponseBody
+    public boolean removeReply(@RequestParam Map<String, String> params) {
+        Reply currentReply = replyService.getReply(Long.valueOf(params.get("replyNum")));
+        replyService.deleteReply(currentReply);
+        return true;
     }
 }

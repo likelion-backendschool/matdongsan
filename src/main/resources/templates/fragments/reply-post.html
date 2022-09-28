@@ -38,9 +38,9 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <th:block th:if="${#authentication.principal.username == reply.writer.account.username}">
-                                        <a class="edit icofont-comment dropdown-item" data-toggle="modal" th:data-target="|#replyUpdate${reply.id}|"><span class="ml-1">수정</span></a>
+                                        <a class="icofont-comment dropdown-item" data-toggle="modal" th:data-target="|#replyUpdate${reply.id}|"><span class="ml-1">수정</span></a>
 
-                                        <a class="delete icofont-delete-alt dropdown-item" th:href="@{|/reply/delete/${reply.id}|}"><span class="ml-1">삭제</span></a>
+                                        <a class="icofont-delete-alt dropdown-item" data-toggle="modal" th:data-target="|#replyRemove${reply.id}|"><span class="ml-1">삭제</span></a>
                                     </th:block>
                                 </div>
 
@@ -70,6 +70,27 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="|replyRemove${reply.id}|" tabindex="-1" role="dialog" th:aria-labelledby="|replyRemoveModalCenterTitle${reply.id}|" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" th:id="|replyRemoveLongTitle${reply.id}|">댓글 삭제</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        삭제된 댓글은 복구할 수 없습니다.<br>
+                                        정말 삭제하시겠습니까?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                        <button type="button" class="btn btn-danger" th:onclick="|removeReplyBtn.removeReply(${reply.id})|">삭제</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="post-body" th:id="|replyOriginalComment${reply.id}|">
@@ -108,7 +129,6 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
                             </ul>
                         </div>
                     </div>
@@ -116,9 +136,9 @@
             </li>
         </ul>
     </div>
-    <div class="load-more-btn">
+    <!--<div class="load-more-btn">
         <a href="#" class="item-btn">Load More Comments <span>4+</span></a>
-    </div>
+    </div>-->
     <div class="my-2">
         <form method="POST" th:action="@{|/post/${post.id}|}" id="replyForm">
             <div class="input-group">
@@ -150,10 +170,11 @@
             </li>
         </ul>
     </div>
-    <th:block th:replace="/fragments/likes/reply-like-fragments::likes"></th:block>
-    <th:block th:replace="/fragments/reply/reply-update-fragments::update"></th:block>
-    <th:block th:replace="/fragments/reply-post-async::reply_async"></th:block>
-    <script type='text/javascript' th:inline="javascript">
+    <th:block th:replace="fragments/likes/reply-like-fragments::likes"></th:block>
+    <th:block th:replace="fragments/reply/reply-update-fragments::update"></th:block>
+    <th:block th:replace="fragments/reply/reply-remove-fragments::update"></th:block>
+    <th:block th:replace="fragments/reply-post-async::reply_async"></th:block>
+    <!--<script type='text/javascript' th:inline="javascript">
         const postId = [[${post.id}]]
         $(".delete").click(function () {
         });
@@ -167,7 +188,7 @@
             });
         });
 
-    </script>
+    </script>-->
     <script th:inline="javascript">
         // /reply/update/{replyId}
         $("#replyButton").click(function (e) {
