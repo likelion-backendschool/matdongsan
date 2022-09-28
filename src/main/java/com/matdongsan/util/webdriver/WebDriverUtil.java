@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class WebDriverUtil {
 
+
     private WebDriver driver;
     public final String WEB_DRIVER_ID = "webdriver.chrome.driver";
     public String WEB_DRIVER_PATH = "";
