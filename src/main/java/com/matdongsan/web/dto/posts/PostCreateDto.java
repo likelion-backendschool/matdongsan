@@ -29,4 +29,6 @@ public class PostCreateDto {
     @NotNull(message = "음식점을 골라주세요")
     private Long placeId;
 
+    private String postTime;
+
 }

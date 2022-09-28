@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -63,43 +64,21 @@ public class ReplyController {
         return ResponseEntity.ok(newReplyDto);
     }
 
-    /**
-     * 댓글 수정
-     */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/reply/update/{replyId}")
-    public String updateReply(@ModelAttribute("replyDto") ReplyDto replyDto,
-                              @PathVariable("replyId") Long id, Principal principal) {
-        Reply reply = replyService.getReply(id);
-        if (!reply.getWriter().getAccount().getUsername().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "권한이 없습니다.");
-        }
-
-        replyDto.insertComment(reply.getComment());
-        return "/reply/reply-editForm";
+    @PostMapping("/reply/update")
+    @ResponseBody
+    public boolean updateReply(@RequestParam Map<String, String> params) {
+        Reply currentReply = replyService.getReply(Long.valueOf(params.get("replyNum")));
+        replyService.update(currentReply, params.get("replyComment"));
+        return true;
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/reply/update/{replyId}")
-    public String updateReply(@PathVariable("replyId") Long id, @Valid ReplyDto replyDto) {
-
-        Reply reply = replyService.getReply(id);
-        replyService.update(reply, replyDto.getComment());
-        return String.format("redirect:/post/%s", reply.getPost().getId());
-    }
-
-    /**
-     * 댓글 삭제
-     *
-     * @param id
-     * @return
-     */
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/reply/delete/{replyId}")
-    public String deleteReply(@PathVariable("replyId") Long id) {
-        Reply reply = replyService.getReply(id);
-        replyService.deleteReply(reply);
-        return String.format("redirect:/post/%s", reply.getPost().getId());
+    @PostMapping("/reply/remove")
+    @ResponseBody
+    public boolean removeReply(@RequestParam Map<String, String> params) {
+        Reply currentReply = replyService.getReply(Long.valueOf(params.get("replyNum")));
+        replyService.deleteReply(currentReply);
+        return true;
     }
 }

@@ -62,6 +62,7 @@ public class PostController {
 
         List<Reply> replyList = post.getReplyList();
         replyService.refreshTime(replyList);
+        postService.refreshTime(post);
 
         Page<Reply> paging = replyService.getReplyList(page, id);
         model.addAttribute("paging", paging);
@@ -117,7 +118,7 @@ public class PostController {
         redirectAttributes.addAttribute("id", id);
 
         // 저장 완료 후 , 게시글 목록으로 간다.
-        return "redirect:/post/{id}";
+        return "redirect:/post/{id}/detail";
     }
 
     // 게시글 수정 뷰 페이지
