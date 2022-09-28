@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="dropdown" sec:authorize="isAuthenticated()">
+                <div id="replyDiv" sec:authorize="isAuthenticated()">
                     <!--댓글 부분-->
                     <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
                     <!-- 댓글 끝 -->
