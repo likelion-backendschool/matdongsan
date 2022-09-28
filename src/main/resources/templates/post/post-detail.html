@@ -40,14 +40,12 @@
                             <th:block th:if="${post.privateStatus}">
                                 <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
                             </th:block>
-                            <ul class="entry-meta">
-                                <th:block th:if="${post.modifiedTime == null}">
-                                    <li class="meta-time" th:text="${post.postTime}">등록 시간</li>
-                                </th:block>
-                                <th:block th:if="${post.modifiedTime != null}">
-                                    <li class="meta-time" th:text="|${post.postTime}(수정됨)|">수정시간</li>
-                                </th:block>
-                            </ul>
+                            <th:block th:if="${post.modifiedTime == null}">
+                                <li class="meta-time" th:text="${post.postTime}">등록 시간</li>
+                            </th:block>
+                            <th:block th:if="${post.modifiedTime != null}">
+                                <li class="meta-time" th:text="|${post.postTime}(수정됨)|">수정시간</li>
+                            </th:block>
                         </ul>
                     </div>
                 </div>
@@ -70,8 +68,6 @@
                 <div class="post-no-thumbnail">
                     <h3 th:text="${post.getTitle()}">제목</h3>
                     <div th:utext="${post.getContent()}">내용</div>
-<!--                    <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">-->
-<!--                        <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">-->
                     <!-- 이미지-->
                     <div class="container row">
                         <div class="row">
