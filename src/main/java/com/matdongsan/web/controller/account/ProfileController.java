@@ -131,6 +131,15 @@ public class ProfileController {
 
     @GetMapping("/profile/map/view")
     public String showMyMap(@AuthUser Account account, Model model, Principal principal) {
+        Optional<Favorite> optionalFavorite = Optional.ofNullable(favoriteService.findTopByMember(account.getMember()));
+        if (optionalFavorite.isPresent()) {
+            List<Favorite> favoriteList = favoriteService.findAllByMember(account.getMember());
+            model.addAttribute("favorites", favoriteList);
+        } else {
+            Favorite favorite = new Favorite(account.getMember(), "나만의 맛집");
+            favoriteService.save(favorite);
+            model.addAttribute("favorites", favorite);
+        }
         MemberVo memberVo = accountService.getReadOnlyMember(principal.getName());
         model.addAttribute("member", memberVo);
         return "profile/profile-map";
