@@ -43,7 +43,7 @@
                   <ul class="admin-options">
                     <li><a th:href="@{/profile/{nickname}(nickname=${#authentication.getName()})}">프로필</a></li>
                     <li><a th:href="@{/settings/profile}">프로필 설정</a></li>
-                    <li><a th:href="@{/profile/post}">나만의 맛집</a></li>
+                    <li><a th:href="@{/profile/post}">나의 맛집 리뷰</a></li>
                     <li><a th:href="@{/profile/bookmark/view}">북마크 관리</a></li>
                     <li>
                       <form action="#" name="logout" th:action="@{/logout}" method="post">
