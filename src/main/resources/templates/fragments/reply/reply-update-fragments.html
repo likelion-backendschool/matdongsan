@@ -7,9 +7,7 @@
   <script th:inline="javascript">
     let updateReplyBtn = {
       updateReply: function (replyId) {
-        console.log(replyId);
         let comment = $(`#updateReplyComment${replyId}`).val();
-        console.log(comment);
         let param = {
           replyNum: replyId,
           replyComment : comment
