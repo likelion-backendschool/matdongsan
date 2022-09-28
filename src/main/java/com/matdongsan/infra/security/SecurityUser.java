@@ -1,4 +1,4 @@
-package com.matdongsan.infra;
+package com.matdongsan.infra.security;
 
 import com.matdongsan.domain.account.Account;
 import lombok.Getter;

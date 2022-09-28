@@ -3,7 +3,7 @@ package com.matdongsan.service;
 import com.matdongsan.domain.account.Account;
 import com.matdongsan.domain.member.Member;
 import com.matdongsan.domain.member.MemberRepository;
-import com.matdongsan.infra.SecurityUser;
+import com.matdongsan.infra.security.SecurityUser;
 import com.matdongsan.web.dto.member.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @Service

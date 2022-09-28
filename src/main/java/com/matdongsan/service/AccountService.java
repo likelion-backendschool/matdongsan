@@ -5,7 +5,7 @@ import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.infra.SecurityUser;
+import com.matdongsan.infra.security.SecurityUser;
 import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
 import com.matdongsan.web.vo.MemberVo;
