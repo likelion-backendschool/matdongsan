@@ -59,7 +59,6 @@
                         <select class="from-select" th:name="searchType" data-placeholder="검색어를 입력해주세요" required >
                             <option th:each="type : ${searchType}" th:value="${type}" th:text="${type.getValue()}"></option>
                         </select>
-<!--                        <input class="form-control" type="text" name="keyword" placeholder="검색어를 입력해주세요." th:value="${param.keyword}" >-->
                         <input class="form-control" type="text" name="keyword" placeholder="검색어를 입력해주세요." th:value="${param.keyword}" onclick="getSearchList()">
                         <button type="submit" class="btn btn-outline-secondary">검색</button>
                     </form>
@@ -76,12 +75,11 @@
                     <th>제목</th>
                     <th>글쓴이</th>
                     <th>작성일시</th>
-<!--                    <th>조회수</th>-->
-<!--                    <th>추천수</th>-->
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="post, loop : ${paging}">
+
                     <td th:text="${post.id}"></td>
                     <td class="text-start">
                         <a th:href="@{|/post/${post.id}/detail|}" th:text="${post.title}"></a>
@@ -91,19 +89,6 @@
                     </td>
                     <td th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}"></td>
                     <!-- 조회수 부분-->
-<!--                    <td>-->
-<!--                <span class="text-danger small ms-2" th:text="${question.hitCount}">-->
-<!--                </span>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                <span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) > 0}"-->
-<!--                      th:text="${#lists.size(question.answerList)}">-->
-<!--                </span>-->
-
-<!--                        <span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) == 0}"-->
-<!--                              th:text="0">-->
-<!--                </span>-->
-<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>
