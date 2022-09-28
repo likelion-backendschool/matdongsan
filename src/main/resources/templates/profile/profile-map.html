@@ -148,7 +148,6 @@
             navigator.geolocation.getCurrentPosition((position) =>{
               y_pos = position.coords.latitude;
               x_pos = position.coords.longitude;
-              console.log("YES : " + y_pos, x_pos)
               cb();
               // alert(position.coords.latitude + ' ' + position.coords.longitude);
             }, function(error) {
@@ -163,7 +162,12 @@
             alert('GPS를 지원하지 않습니다');
           }
         }
+
+        // marker 담을 배열 생성
         let markers = [];
+        // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
       </script>
       <div th:each="favorite, loop : ${favorites}">
         <script type="text/javascript" th:inline="javascript">
@@ -182,6 +186,20 @@
             var placePosition = new kakao.maps.LatLng(place.y, place.x),
                     marker = addMarker(placePosition, i);
             i++;
+
+            (function(marker, title) {
+              kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+              });
+
+              kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+              });
+
+            })(marker, place.subject);
+
+
+
             /*[/]*/
           });
 
@@ -209,6 +227,15 @@
               markers[i].setMap(null);
             }
             markers = [];
+          }
+
+          // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+          // 인포윈도우에 장소명을 표시합니다
+          function displayInfowindow(marker, title) {
+            var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+            infowindow.setContent(content);
+            infowindow.open(map, marker);
           }
 
           /*]]>*/
