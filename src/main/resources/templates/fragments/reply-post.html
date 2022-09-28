@@ -174,23 +174,9 @@
     <th:block th:replace="fragments/reply/reply-update-fragments::update"></th:block>
     <th:block th:replace="fragments/reply/reply-remove-fragments::update"></th:block>
     <th:block th:replace="fragments/reply-post-async::reply_async"></th:block>
-    <!--<script type='text/javascript' th:inline="javascript">
-        const postId = [[${post.id}]]
-        $(".delete").click(function () {
-        });
-        const delete_elements = document.getElementsByClassName("delete");
-        Array.from(delete_elements).forEach(function (element) {
-            element.addEventListener('click', function () {
-                if (confirm("정말로 삭제하시겠습니까?")) {
-                    location.href = this.dataset.uri;
-                }
-                ;
-            });
-        });
 
-    </script>-->
     <script th:inline="javascript">
-        // /reply/update/{replyId}
+        const postId = [[${post.id}]]
         $("#replyButton").click(function (e) {
             $.ajax({
                 type: "POST",
