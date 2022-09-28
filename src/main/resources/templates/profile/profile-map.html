@@ -18,6 +18,17 @@
 
     #myLocationControl {position:absolute;bottom:10px;right:10px;width:42px;height:42px;z-index: 1;cursor: pointer; background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) no-repeat -150px -450px;}
     #myLocationControl.active {background-position: -150px -350px;}
+
+    .placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
+    .placeinfo {position:relative;width:300px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
+    .placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+    .placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;}
+    .placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
+    .placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    .placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
+    .placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:5px; color: #fff;background: #d95050;}
+    .placeinfo .tel {color:#0f7833;}
+    .placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
   </style>
 </head>
 <body>
@@ -183,6 +194,9 @@
             place.y =  /*[[${place.y}]]*/;
             place.subject = /*[[${place.placeName}]]*/;
             place.url = '/place/' + [[${place.id}]] + '/detail';
+            place.address_name = /*[[${place.addressName}]]*/;
+            place.road_address_name = /*[[${place.roadAddressName}]]*/;
+            place.phone = /*[[${place.phone}]]*/;
 
             var placePosition = new kakao.maps.LatLng(place.y, place.x),
                     marker = addMarker(placePosition, i);
@@ -190,7 +204,7 @@
 
             (function(marker, title) {
               kakao.maps.event.addListener(marker, 'mouseover', function() {
-                displayInfowindow(marker, title, place.url);
+                displayInfowindow(marker, title, place);
               });
 
               kakao.maps.event.addListener(marker, 'mouseout', function() {
@@ -233,10 +247,16 @@
 
           // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
           // 인포윈도우에 장소명을 표시합니다
-          function displayInfowindow(marker, title, url) {
+          function displayInfowindow(marker, title, place) {
 
             // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-            var iwContent = '<div style="padding:5px;"><a href="' + url + '">' + title + '</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            var iwContent = '<div class="placeinfo">' +
+                            '<a class="title" href="' + place.url + '">' + title + '</a>' +
+                            '<span title="'+ place.road_address_name +'">' + place.road_address_name + '</span>' +
+                            '<span class="jibun" title="'+ place.road_address_name +'">(지번 : '+ place.address_name +')</span>' +
+                            '<span class="tel">' + place.phone + '</span>' +
+                            '</div>' +
+                            '<div class="after"></div>',
                     iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
             // 인포윈도우를 생성합니다
