@@ -69,13 +69,16 @@
             <div class="post-body">
                 <div class="post-no-thumbnail">
                     <h3 th:text="${post.getTitle()}">제목</h3>
-                    <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">
-                        <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">
-                            <img th:src="|/images/${url}|" class="img-thumbnail"
+                    <div th:utext="${post.getContent()}">내용</div>
+<!--                    <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">-->
+<!--                        <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">-->
+                    <!-- 이미지-->
+                    <div class="container row">
+                        <div class="row">
+                            <img th:src="|/image/${postImage}|" class="img-thumbnail"
                                  width="150px" height="150px" style="object-fit: cover">
                         </div>
                     </div>
-                    <div th:utext="${post.getContent()}">내용</div>
                     <!-- 비밀 글-->
                     <div th:if="${!post.isPrivateStatus()}">비밀 글입니다</div>
 

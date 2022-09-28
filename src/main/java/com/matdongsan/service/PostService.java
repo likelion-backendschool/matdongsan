@@ -167,4 +167,17 @@ public class PostService {
         diffTime = diffTime / ReplyTime.MONTH;
         return diffTime + "년 전";
     }
+
+    // image 불러오기
+    public String callImage(long id) {
+        String imgSource = "";
+        if (id % 3 == 0){
+            imgSource = "jjajang.jpg";
+        } else if ( id % 3 == 1) {
+            imgSource = "jongro.jpg";
+        } else {
+            imgSource = "sushi.jpg";
+        }
+        return imgSource;
+    }
 }

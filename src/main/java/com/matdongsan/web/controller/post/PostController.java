@@ -60,6 +60,10 @@ public class PostController {
         Post post = postService.findById(id);
         model.addAttribute("post", post);
 
+        // 이미지
+        String postImage = postService.callImage(id);
+        model.addAttribute("postImage" , postImage);
+
         List<Reply> replyList = post.getReplyList();
         replyService.refreshTime(replyList);
         postService.refreshTime(post);
