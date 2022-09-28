@@ -1,5 +1,5 @@
 FROM openjdk:11-jdk-slim
-EXPOSE 8080
+EXPOSE 443
 RUN mkdir "images"
 
 RUN apt-get -y update
