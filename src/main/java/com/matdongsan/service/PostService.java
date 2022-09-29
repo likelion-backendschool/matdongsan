@@ -50,8 +50,8 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> findAllByPlace(Place place){
-        return postRepository.findAllByPlace(place);
+    public List<Post> findAllByPlaceAndPrivateStatus(Place place){
+        return postRepository.findAllByPlaceAndPrivateStatus(place, true);
     }
 
     public Post savePost(Member member, PostCreateDto dto) {

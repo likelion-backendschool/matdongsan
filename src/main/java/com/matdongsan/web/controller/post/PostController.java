@@ -58,6 +58,11 @@ public class PostController {
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto,
                                  @AuthUser Account account) {
         Post post = postService.findById(id);
+        if (post.isPrivateStatus()) {
+            if (!account.getMember().getNickname().equals(post.getAuthor().getNickname())) {
+                return "redirect:/posts";
+            }
+        }
         model.addAttribute("post", post);
 
         // 이미지
