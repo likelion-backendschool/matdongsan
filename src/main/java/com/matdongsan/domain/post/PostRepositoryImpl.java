@@ -25,8 +25,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     public Page<Post> searchTitle(String keyword, Pageable pageable) {
         JPAQuery<Post> postQuery = jpaQueryFactory
                 .selectFrom(post)
-                .where(
-                        post.title.contains(keyword)
+                .where(post.title.contains(keyword)
+                        .and(post.privateStatus.eq(true))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
@@ -41,7 +41,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         JPAQuery<Long> postCountQuery = jpaQueryFactory
                 .select(post.count())
                 .from(post)
-                .where(post.title.contains(keyword));
+                .where(post.title.contains(keyword)
+                        .and(post.privateStatus.eq(true)));
 
         return PageableExecutionUtils.getPage(posts, pageable, postCountQuery::fetchOne);
     }
@@ -51,8 +52,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     public Page<Post> searchContent(String keyword, Pageable pageable) {
         JPAQuery<Post> postQuery = jpaQueryFactory
                 .selectFrom(post)
-                .where(
-                        post.content.contains(keyword)
+                .where(post.content.contains(keyword)
+                        .and(post.privateStatus.eq(true))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
@@ -67,7 +68,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         JPAQuery<Long> postCountQuery = jpaQueryFactory
                 .select(post.count())
                 .from(post)
-                .where(post.content.contains(keyword));
+                .where(post.content.contains(keyword)
+                        .and(post.privateStatus.eq(true)));
 
         return PageableExecutionUtils.getPage(posts, pageable, postCountQuery::fetchOne);
     }
@@ -77,8 +79,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     public Page<Post> searchAuthor(String keyword, Pageable pageable) {
         JPAQuery<Post> postQuery = jpaQueryFactory
                 .selectFrom(post)
-                .where(
-                        post.author.nickname.contains(keyword)
+                .where(post.author.nickname.contains(keyword)
+                        .and(post.privateStatus.eq(true))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
@@ -93,7 +95,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         JPAQuery<Long> postCountQuery = jpaQueryFactory
                 .select(post.count())
                 .from(post)
-                .where(post.author.nickname.contains(keyword));
+                .where(post.author.nickname.contains(keyword)
+                        .and(post.privateStatus.eq(true)));
 
         return PageableExecutionUtils.getPage(posts, pageable, postCountQuery::fetchOne);
     }
@@ -103,6 +106,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         JPAQuery<Post> postQuery = jpaQueryFactory
                 .select(post)
                 .from(post)
+                .where(post.privateStatus.eq(true))
                 .orderBy(post.postLike.size().desc())
                 .limit(5);
 

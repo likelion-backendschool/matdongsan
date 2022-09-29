@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<body>
+<th:block th:fragment="update">
+  <script th:inline="javascript">
+    let updateReplyBtn = {
+      updateReply: function (replyId) {
+        let comment = $(`#updateReplyComment${replyId}`).val();
+        let param = {
+          replyNum: replyId,
+          replyComment : comment
+        };
+        $.ajax({
+          type: "POST",
+          url: "/reply/update",
+          data : param,
+          success: function (flag) {
+            $(`#replyDiv`).load(location.href+` #replyDiv`);
+            $(`#replyUpdate${replyId}`).modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+          },
+        })
+        imageDelay(function (){
+          $(".identicon").each(function() {
+            var hash = md5($(this).data('id')).toString();
+            var data = new Identicon(hash,{format:'svg'}).toString();
+            $(this).attr('src', "data:image/svg+xml;base64,"+data);
+          });
+        }, 1000);
+      },
+    }
+  </script>
+</th:block>
+</body>
+</html>

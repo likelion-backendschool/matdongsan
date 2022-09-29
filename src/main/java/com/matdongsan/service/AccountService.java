@@ -5,7 +5,7 @@ import com.matdongsan.domain.account.AccountRepository;
 import com.matdongsan.domain.account.AccountRole;
 import com.matdongsan.domain.account.LoginType;
 import com.matdongsan.domain.member.Member;
-import com.matdongsan.infra.SecurityUser;
+import com.matdongsan.infra.security.SecurityUser;
 import com.matdongsan.web.dto.account.AccountSignUpDto;
 import com.matdongsan.web.dto.member.MemberInfoDto;
 import com.matdongsan.web.vo.MemberVo;
@@ -177,8 +177,7 @@ public class AccountService implements UserDetailsService {
      * @returns Member가 아닌 VO 객체를 반환함
      */
     public MemberVo getReadOnlyMember(String username) {
-        Member currentMember = findAccountByUsername(username).getMember();
-        log.info("currentUser.introduce={}", currentMember.getIntroduce());
+        Member currentMember = memberService.findMemberByUsername(username);
         return MemberVo.builder()
                 .nickname(currentMember.getNickname())
                 .introduce(currentMember.getIntroduce())

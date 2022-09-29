@@ -9,6 +9,11 @@
 
 <head>
     <title>맛동산 | 메인</title>
+    <!-- OPENGRAPH -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" th:content="${post.getTitle()}" />
+    <meta property="og:description" th:content="${post.getContent()}" />
+    <meta property="og:url" th:content="@{matdongsan.tk/post/{id}/detail(id = ${post.getId()})}">
 </head>
 <body>
 
@@ -18,47 +23,70 @@
     <!--=====================================-->
     <div class="container">
         <div class="block-box post-view">
-            <div class="post-header">
+            <div class="post-header pb-0">
                 <div class="media">
-                    <div class="user-img">
-                        <img src="/media/figure/chat_8.jpg" alt="Aahat">
-                    </div>
-                    <div class="media-body">
-                        <div class="user-title"><a href="#" th:text="${post.getAuthor().getAccount().username}">닉네임</a>
-                            <i class="icofont-check"></i></div>
-                        <ul class="entry-meta">
-                            <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
-                            <li class="meta-time">8 minutes ago</li>
-                        </ul>
-                    </div>
+                    <h3 th:text="${post.getTitle()}">제목</h3>
                 </div>
                 <div class="dropdown" sec:authorize="isAuthenticated()">
-                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                        ...
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <th:block th:if="${#authentication.principal.username == post.author.account.username}">
+                    <th:block th:if="${#authentication.principal.username == post.author.account.username}">
+                        <button class="dropdown-toggle text-primary" type="button" data-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" th:href="@{/post/modify/{id}(id=${post.getId()})}"><span class="ml-1">수정</span></a>
                             <a class="dropdown-item" th:href="@{/post/delete/{id}(id=${post.getId()})}"><span class="ml-1">삭제</span></a>
-                        </th:block>
-                        <th:block th:if="${#authentication.principal.username != post.author.account.username}">
-                            <a class="dropdown-item" href="#">신고하기</a>
-                        </th:block>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="post-header pt-0">
+                <div class="media">
+                    <div class="user-img">
+                        <div class="item-img bg-white">
+                            <svg th:data-jdenticon-value="${post.getAuthor().nickname}" width="44" height="44" class="rounded-circle"></svg>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="user-title"><a th:href="@{/profile/{username}(username = ${post.getAuthor().nickname})}" th:text="${post.getAuthor().nickname}">닉네임</a></div>
+                        <ul class="entry-meta">
+                            <th:block th:if="${!post.privateStatus}">
+                                <li class="meta-privacy"><i class="icofont-lock"></i>비공개</li>
+                            </th:block>
+                            <th:block th:if="${post.privateStatus}">
+                                <li class="meta-privacy"><i class="icofont-world"></i>공개</li>
+                            </th:block>
+                            <th:block th:if="${post.modifiedTime == null}">
+                                <li class="meta-time" th:text="${post.postTime}">등록 시간</li>
+                            </th:block>
+                            <th:block th:if="${post.modifiedTime != null}">
+                                <li class="meta-time" th:text="|${post.postTime}(수정됨)|">수정시간</li>
+                            </th:block>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="post-body">
                 <div class="post-no-thumbnail">
-                    <h3 th:text="${post.getTitle()}">제목</h3>
-                    <div class="container row" th:if="${not #strings.isEmpty(post.getImageUrls())}">
-                        <div class="row" th:each="url : ${#strings.arraySplit(post.getImageUrls(),',')}">
-                            <img th:src="|/images/${url}|" class="img-thumbnail"
-                                 width="150px" height="150px" style="object-fit: cover">
-                        </div>
-                    </div>
                     <div th:utext="${post.getContent()}">내용</div>
-                    <!-- 비밀 글-->
-                    <div th:if="${!post.isPrivateStatus()}">비밀 글입니다</div>
+                    <!-- 이미지-->
+                    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true">
+
+                        <ul class="uk-slider-items uk-grid uk-grid-match" uk-height-viewport="offset-top: true; offset-bottom: 30">
+                            <li class="uk-width-1-5">
+                                <div class="uk-cover-container">
+                                    <a th:href="${post.getPlace().mainPhotoUrl}" target="_blank" data-fancybox="gallery">
+                                        <img class="rounded"
+                                             th:src="@{${post.getPlace().mainPhotoUrl}}" uk-cover/>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+                    </div>
 
                     <div style="font-weight: bold;font-size: 16px;text-align: end">
                         <a th:text="${post.getPlace().getPlaceName()}" th:href="@{/place/{id}/detail(id = ${post.getPlace().getId()})}">
@@ -67,19 +95,21 @@
                     </div>
                 </div>
                 <div class="post-meta-wrap">
-                    <div class="post-meta" id="post-ajax-form">
-                        <button class="btn" id="post-react-btn" th:onclick="|addPostLike.modifyPostLike(${post.getId()})|">
-                            <th:block th:if="${!likeFlag}">
-                                <i class="icofont-thumbs-up"></i>
-                                <span class="mx-2">좋아요</span>
-                            </th:block>
-                            <th:block th:if="${likeFlag}">
-                                <i class="icofont-thumbs-up text-primary"></i>
-                                <span class="mx-2 text-primary">좋아요 취소</span>
-                            </th:block>
-                            <span class="badge rounded-pill bg-primary text-white" th:text="${post.getPostLike().size()}"></span>
-                        </button>
-                    </div>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="post-meta" id="post-ajax-form">
+                            <button class="btn" id="post-react-btn" th:onclick="|addPostLike.modifyPostLike(${post.getId()})|">
+                                <th:block th:if="${!likeFlag}">
+                                    <i class="icofont-thumbs-up"></i>
+                                    <span class="mx-2">좋아요</span>
+                                </th:block>
+                                <th:block th:if="${likeFlag}">
+                                    <i class="icofont-thumbs-up text-primary"></i>
+                                    <span class="mx-2 text-primary">좋아요 취소</span>
+                                </th:block>
+                                <span class="badge rounded-pill bg-primary text-white" th:text="${post.getPostLike().size()}"></span>
+                            </button>
+                        </div>
+                    </th:block>
                     <div class="post-meta">
                         <div class="meta-text" >
                             <a th:text="${post.replyList.size()}"></a>
@@ -87,29 +117,19 @@
                         </div>
                     </div>
                 </div>
-                <!--댓글 부분-->
-                <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
-                <!-- 댓글 끝 -->
+                <div id="replyDiv" sec:authorize="isAuthenticated()">
+                    <!--댓글 부분-->
+                    <div class="post-comment" th:replace="fragments/reply-post::reply_fragment(${paging},${replyDto})"></div>
+                    <!-- 댓글 끝 -->
+                </div>
+                <div class="dropdown" sec:authorize="!isAuthenticated()">
+                    <!--댓글 부분-->
+                    <div class="text-center align-middle pb-2">
+                        <h5><a th:href="@{/login}">로그인</a> 후 댓글을 확인할 수 있습니다.</h5>
+                    </div>
+                    <!-- 댓글 끝 -->
+                </div>
             </div>
-            <!--<div class="post-footer">
-                <ul>
-                    <li class="post-share">
-                        <a href="javascript:void(0);" class="share-btn"><i class="icofont-share"></i>Share</a>
-                        <ul class="share-list">
-                            <li><a href="#" class="color-fb"><i class="icofont-facebook"></i></a></li>
-                            <li><a href="#" class="color-messenger"><i
-                                    class="icofont-facebook-messenger"></i></a></li>
-                            <li><a href="#" class="color-instagram"><i
-                                    class="icofont-instagram"></i></a></li>
-                            <li><a href="#" class="color-whatsapp"><i
-                                    class="icofont-brand-whatsapp"></i></a>
-                            </li>
-                            <li><a href="#" class="color-twitter"><i class="icofont-twitter"></i></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>-->
         </div>
     </div>
     <th:block th:replace="fragments/likes/post-like-fragments::likes(${post.getId()})"></th:block>

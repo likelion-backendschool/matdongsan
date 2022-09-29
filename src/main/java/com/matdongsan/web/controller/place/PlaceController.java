@@ -49,7 +49,7 @@ public class PlaceController {
         Account account = accountService.findAccountByUsername(principal.getName());
         Member member = account.getMember();
         Place place = placeService.findPlace(placeId);
-        List<Post> posts = postService.findAllByPlace(place);
+        List<Post> posts = postService.findAllByPlaceAndPrivateStatus(place);
 
         Optional<Favorite> optionalFavorite = Optional.ofNullable(favoriteService.findTopByMember(member));
         if (optionalFavorite.isPresent()) {

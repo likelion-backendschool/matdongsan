@@ -6,6 +6,8 @@ import com.matdongsan.domain.post.Post;
 import com.matdongsan.domain.post.PostRepository;
 import com.matdongsan.domain.post.PostRepositoryImpl;
 import com.matdongsan.domain.post.SearchType;
+import com.matdongsan.domain.reply.Reply;
+import com.matdongsan.domain.reply.ReplyTime;
 import com.matdongsan.util.image.ImageUtil;
 import com.matdongsan.web.dto.posts.PostCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +50,14 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> findAllByPlace(Place place){
-        return postRepository.findAllByPlace(place);
+    public List<Post> findAllByPlaceAndPrivateStatus(Place place){
+        return postRepository.findAllByPlaceAndPrivateStatus(place, true);
     }
 
     public Post savePost(Member member, PostCreateDto dto) {
         String imageUrls = imageUtil.saveFiles(dto.getImgFiles());
         Place place = placeService.findPlace(dto.getPlaceId());
+        String newTypeTime = convertDateTime(LocalDateTime.now());
 
         Post post = Post.builder()
                 .title(dto.getTitle())
@@ -63,6 +67,7 @@ public class PostService {
                 .imageUrls(imageUrls)
                 .createdTime(LocalDateTime.now())
                 .modifiedTime(null)
+                .postTime(newTypeTime)
                 .build();
         post.addPlace(place);
 
@@ -123,5 +128,56 @@ public class PostService {
 
     public List<Post> findTop5Post() {
         return postRepository.findPostTop5();
+    }
+
+    // 추가 부분
+
+    public void refreshTime(Post post) {
+        if (post.getModifiedTime() == null){
+            post.insertReplyTime(convertDateTime(post.getCreatedTime()));
+        }else{
+            post.insertReplyTime(convertDateTime(post.getModifiedTime()));
+        }
+    }
+    public static String convertDateTime(LocalDateTime localDateTime) {
+        LocalDateTime now = LocalDateTime.now();
+
+        long diffTime = localDateTime.until(now, ChronoUnit.SECONDS);
+
+        if (diffTime < ReplyTime.SEC){
+            return diffTime + "초전";
+        }
+        diffTime = diffTime / ReplyTime.SEC;
+        if (diffTime < ReplyTime.MIN) {
+            return diffTime + "분 전";
+        }
+        diffTime = diffTime / ReplyTime.MIN;
+        if (diffTime < ReplyTime.HOUR) {
+            return diffTime + "시간 전";
+        }
+        diffTime = diffTime / ReplyTime.HOUR;
+        if (diffTime < ReplyTime.DAY) {
+            return diffTime + "일 전";
+        }
+        diffTime = diffTime / ReplyTime.DAY;
+        if (diffTime < ReplyTime.MONTH) {
+            return diffTime + "개월 전";
+        }
+
+        diffTime = diffTime / ReplyTime.MONTH;
+        return diffTime + "년 전";
+    }
+
+    // image 불러오기
+    public String callImage(long id) {
+        String imgSource = "";
+        if (id % 3 == 0){
+            imgSource = "jjajang.jpg";
+        } else if ( id % 3 == 1) {
+            imgSource = "jongro.jpg";
+        } else {
+            imgSource = "sushi.jpg";
+        }
+        return imgSource;
     }
 }

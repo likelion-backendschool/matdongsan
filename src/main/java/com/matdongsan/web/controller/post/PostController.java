@@ -10,6 +10,7 @@ import com.matdongsan.domain.post.PostRepository;
 
 import com.matdongsan.domain.post.SearchType;
 import com.matdongsan.domain.reply.Reply;
+import com.matdongsan.infra.security.SecurityUser;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.LikeApiService;
 import com.matdongsan.service.PostService;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,23 +54,36 @@ public class PostController {
 
 
     // 게시글 상세 조회
-    @GetMapping("/post/{id}")
+    @GetMapping("/post/{id}/detail")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                 RedirectAttributes redirectAttributes,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto,
-                                 @AuthUser Account account) {
+                                 @AuthUser Account account, @AuthenticationPrincipal SecurityUser securityUser) {
         Post post = postService.findById(id);
+        if (!post.isPrivateStatus()) {
+            if (securityUser == null || !account.getMember().getNickname().equals(post.getAuthor().getNickname())) {
+                redirectAttributes.addFlashAttribute("accessError", "비공개 글에는 접근할 수 없습니다.");
+                return "redirect:/posts";
+            }
+        }
         model.addAttribute("post", post);
+
+        // 이미지
+        String postImage = postService.callImage(id);
+        model.addAttribute("postImage", postImage);
 
         List<Reply> replyList = post.getReplyList();
         replyService.refreshTime(replyList);
+        postService.refreshTime(post);
 
         Page<Reply> paging = replyService.getReplyList(page, id);
         model.addAttribute("paging", paging);
 
-        boolean likeFlag = likeApiService.existPostLikeFlag(account.getMember(), post);
-        model.addAttribute("likeFlag", likeFlag);
-
+        if (account != null) {
+            boolean likeFlag = likeApiService.existPostLikeFlag(account.getMember(), post);
+            model.addAttribute("likeFlag", likeFlag);
+        }
 
         return "post/post-detail";
     }
@@ -78,7 +93,7 @@ public class PostController {
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "title")String searchType,
                                Model model ,
-                               @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
+                               @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 12)Pageable pageable){
 
         // model에 담기
         model.addAttribute("searchType", SearchType.values());
@@ -116,7 +131,7 @@ public class PostController {
         redirectAttributes.addAttribute("id", id);
 
         // 저장 완료 후 , 게시글 목록으로 간다.
-        return "redirect:/post/{id}";
+        return "redirect:/post/{id}/detail";
     }
 
     // 게시글 수정 뷰 페이지
@@ -153,7 +168,7 @@ public class PostController {
 
         postRepository.save(updatePost);
 
-        return "redirect:/post/{id}";
+        return "redirect:/post/{id}/detail";
     }
 
     // 글 삭제

@@ -14,7 +14,7 @@
                         <div class="post-header">
                             <div class="media">
                                 <div class="user-img">
-                                    <img th:src="@{/media/figure/chat_14.jpg}" alt="Aahat">
+                                    <svg th:data-jdenticon-value="${reply.writer.nickname}" width="40" height="40" class="rounded-circle identicon" th:data-id="${reply.writer.nickname}"></svg>
                                 </div>
                                 <div class="media-body">
                                     <div class="user-title"><a
@@ -32,56 +32,62 @@
                             </div>
 
                             <div class="dropdown" sec:authorize="isAuthenticated()">
-                                <button class="dropdown-toggle" type="button" data-toggle="dropdown"
-                                        aria-expanded="false">
-                                    ...
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <th:block
-                                            th:if="${#authentication.principal.username == reply.writer.account.username}">
-                                        <!--모달 button test -->
-                                        <a class="edit icofont-comment dropdown-item" th:href="@{|/reply/update/${reply.id}|}"><span class="ml-1">수정</span></a>
+                                <th:block th:if="${#authentication.principal.username == reply.writer.account.username}">
+                                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="icofont-comment dropdown-item" data-toggle="modal" th:data-target="|#replyUpdate${reply.id}|"><span class="ml-1">수정</span></a>
 
-                                        <button type="button" class="edit icofont-comment dropdown-item"
-                                                data-toggle="modal"
-                                                data-target="#exampleModal">
-                                            댓글 수정 test
-                                        </button>
-
-                                        <a class="delete icofont-delete-alt dropdown-item"
-                                           th:href="@{|/reply/delete/${reply.id}|}"><span class="ml-1">삭제</span></a>
-                                    </th:block>
-                                </div>
-                                <!-- Modal content test -->
-                                <div class="modal" id="exampleModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기
-                                                </button>
-                                                <button type="button" class="btn btn-primary">댓글 저장</button>
-                                            </div>
-                                        </div>
+                                        <a class="icofont-delete-alt dropdown-item" data-toggle="modal" th:data-target="|#replyRemove${reply.id}|"><span class="ml-1">삭제</span></a>
                                     </div>
-                                </div>
-                                <th:block
-                                        th:if="${#authentication.principal.username != reply.writer.account.username}">
-                                    <a class="dropdown-item" href="#">신고하기</a>
                                 </th:block>
                             </div>
                         </div>
-                        <div class="post-body">
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="|replyUpdate${reply.id}|" tabindex="-1" role="dialog" th:aria-labelledby="|replyModalCenterTitle${reply.id}|" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <form th:id="|replyUpdateForm${reply.id}|">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" th:id="|replyModalLongTitle${reply.id}|">댓글 수정하기</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" th:id="|updateReplyComment${reply.id}|" th:value="${reply.comment}" class="form-control w-75" placeholder="댓글을 입력해 주세요.">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                            <button type="button" class="btn btn-primary" th:onclick="|updateReplyBtn.updateReply(${reply.id})|">변경하기</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="|replyRemove${reply.id}|" tabindex="-1" role="dialog" th:aria-labelledby="|replyRemoveModalCenterTitle${reply.id}|" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" th:id="|replyRemoveLongTitle${reply.id}|">댓글 삭제</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        삭제된 댓글은 복구할 수 없습니다.<br>
+                                        정말 삭제하시겠습니까?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                        <button type="button" class="btn btn-danger" th:onclick="|removeReplyBtn.removeReply(${reply.id})|">삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-body" th:id="|replyOriginalComment${reply.id}|">
                             <p th:text="${reply.comment}">댓글 내용</p>
                         </div>
                         <div class="post-footer">
@@ -92,32 +98,8 @@
                                         <span th:id="|replyLike${reply.id}|"
                                               class="badge rounded-pill bg-primary text-white ml-1"
                                               th:text="${#lists.size(reply.replyLike)}"></span>
-                                        <div class="modal" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Modal title</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Modal body text goes here.</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-                                                        <button type="button" class="btn btn-primary">Save changes
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </a>
                                 </li>
-                                <li><a href="#"><i class="icofont-reply"></i>Reply</a></li>
                             </ul>
                         </div>
                     </div>
@@ -125,9 +107,9 @@
             </li>
         </ul>
     </div>
-    <div class="load-more-btn">
+    <!--<div class="load-more-btn">
         <a href="#" class="item-btn">Load More Comments <span>4+</span></a>
-    </div>
+    </div>-->
     <div class="my-2">
         <form method="POST" th:action="@{|/post/${post.id}|}" id="replyForm">
             <div class="input-group">
@@ -150,7 +132,7 @@
                 th:if="${page >= paging.number-5 and page <= paging.number+5}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <a th:text="${page} + 1" class="page-link" th:href="@{|?page=${page}|}"></a>
             </li>
             <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
                 <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
@@ -160,23 +142,12 @@
         </ul>
     </div>
     <th:block th:replace="fragments/likes/reply-like-fragments::likes"></th:block>
+    <th:block th:replace="fragments/reply/reply-update-fragments::update"></th:block>
+    <th:block th:replace="fragments/reply/reply-remove-fragments::update"></th:block>
     <th:block th:replace="fragments/reply-post-async::reply_async"></th:block>
-    <script type='text/javascript' th:inline="javascript">
-        const postId = [[${post.id}]]
-        $(".delete").click(function () {
-        });
-        const delete_elements = document.getElementsByClassName("delete");
-        Array.from(delete_elements).forEach(function (element) {
-            element.addEventListener('click', function () {
-                if (confirm("정말로 삭제하시겠습니까?")) {
-                    location.href = this.dataset.uri;
-                }
-                ;
-            });
-        });
 
-    </script>
     <script th:inline="javascript">
+        const postId = [[${post.id}]]
         $("#replyButton").click(function (e) {
             $.ajax({
                 type: "POST",
@@ -184,7 +155,7 @@
                 data: $('#replyForm').serialize(),
                 success: function (replyDto) {
                     let result = $("#reply_async_template").html()
-                        // .replace("{imageUrl}", )
+                        .replace("{imageUrl}", replyDto.nickname)
                         .replace("{nickname}", replyDto.nickname)
                         .replace("{comment}", replyDto.comment)
                         .replace("{replyTime}", replyDto.replyTime)
@@ -194,6 +165,13 @@
                     $(".comment-list").prepend(result);
                 }
             })
+            imageDelay(function (){
+                $(".identicon").each(function() {
+                    var hash = md5($(this).data('id')).toString();
+                    var data = new Identicon(hash,{format:'svg'}).toString();
+                    $(this).attr('src', "data:image/svg+xml;base64,"+data);
+                });
+            }, 1000);
         });
     </script>
 </div>
