@@ -55,11 +55,13 @@ public class PostController {
     @GetMapping("/post/{id}/detail")
     public String showDetailPost(@PathVariable long id,
                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                 RedirectAttributes redirectAttributes,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto,
-                                 @AuthUser Account account) {
+                                 @AuthUser Account account, Principal principal) {
         Post post = postService.findById(id);
-        if (post.isPrivateStatus()) {
-            if (!account.getMember().getNickname().equals(post.getAuthor().getNickname())) {
+        if (!post.isPrivateStatus()) {
+            if (!account.getMember().getNickname().equals(post.getAuthor().getNickname()) || principal == null) {
+                redirectAttributes.addFlashAttribute("accessError", "비공개 글에는 접근할 수 없습니다.");
                 return "redirect:/posts";
             }
         }
@@ -67,7 +69,7 @@ public class PostController {
 
         // 이미지
         String postImage = postService.callImage(id);
-        model.addAttribute("postImage" , postImage);
+        model.addAttribute("postImage", postImage);
 
         List<Reply> replyList = post.getReplyList();
         replyService.refreshTime(replyList);
@@ -89,7 +91,7 @@ public class PostController {
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "title")String searchType,
                                Model model ,
-                               @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 10)Pageable pageable){
+                               @PageableDefault(sort = "id" , direction = Sort.Direction.DESC , size = 12)Pageable pageable){
 
         // model에 담기
         model.addAttribute("searchType", SearchType.values());

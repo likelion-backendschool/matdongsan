@@ -25,64 +25,73 @@
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
     <div class="container">
-        <div class="forum-topic-add">
-            <div class="my-4">
-                <h3 class="heading-title">맛집 게시글</h3>
-
-                <!-- 검색창  -->
-                <div class="col-6" style="float:right">
-                    <form class="input-group">
-                        <div class="input-group w-25">
+        <div class="newsfeed-search">
+            <ul class="member-list">
+                <li class="active-member">
+                    <span class="member-text">
+                            맛집 게시글
+                    </span>
+                </li>
+            </ul>
+            <ul class="search-list">
+                <form class="input-group">
+                    <li class="search-filter">
+                        <button class="drop-btn" type="button">
+                            <i class="icofont-abacus-alt"></i>
+                        </button>
+                        <div class="drop-menu">
                             <select class="select2" th:name="searchType" data-placeholder="검색어를 입력해주세요" required >
                                 <option th:each="type : ${searchType}" th:value="${type}" th:text="${type.getValue()}"></option>
                             </select>
                         </div>
-                        <div class="input-group w-75">
-                            <input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="keyword" th:value="${param.keyword}">
-                            <div class="input-group-append">
-                                <button class="search-btn" type="submit"><i class="icofont-search-1"></i></button>
+                    </li>
+                    <li class="search-input">
+                        <button class="drop-btn" type="button">
+                            <i class="icofont-search"></i>
+                        </button>
+                        <div class="drop-menu">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="keyword" th:value="${param.keyword}">
+                                <div class="input-group-append">
+                                    <button class="search-btn" type="submit"><i class="icofont-search-1"></i></button>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </li>
+                </form>
+            </ul>
+        </div>
+        <div th:if="${accessError}">
+            <div th:replace="fragments/message-fragments :: danger-notice (message = ${accessError})"></div>
+        </div>
+        <div class="row gutters-20">
+            <div class="col-lg-4 col-md-6" th:each="post, loop : ${paging}">
+                <div class="block-box user-blog">
+                    <div class="blog-content">
+                        <div class="blog-category">
+                            <a th:href="@{|/post/${post.id}/detail|}" th:text="|#${post.id}|"></a>
+                            <a th:href="@{|/place/${post.getPlace().id}/detail|}" th:text="${post.getPlace().getPlaceName()}"></a>
+                        </div>
+                        <h3 class="blog-title"><a th:href="@{|/post/${post.id}/detail|}" th:text="${post.title}">제목</a></h3>
+                    </div>
+                    <div class="blog-meta">
+                        <ul>
+                            <li><i class="icofont-thumbs-up"></i><span th:text="${post.postLike.size()}">좋아요 수</span></li>
+                            <li><i class="icofont-comment"></i><span th:text="${post.replyList.size()}">댓글 수</span></li>
+                            <li><i class="icofont-clock-time"></i><span th:text="${post.postTime}">업로드 시간</span></li>
+                        </ul>
+                    </div>
                 </div>
-
-            <table class="table text-center">
-                <colgroup>
-                    <col>
-                    <col width="50%">
-                </colgroup>
-                <thead class="table-active">
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>작성일시</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="post, loop : ${paging}">
-
-                    <td th:text="${post.id}"></td>
-                    <td class="text-start">
-                        <a th:href="@{|/post/${post.id}/detail|}" th:text="${post.title}"></a>
-                    </td>
-                    <td>
-                        <span th:text="${post.author?.nickname}"></span>
-                    </td>
-                    <td th:text="${#temporals.format(post.createdTime, 'yy-MM-dd HH:mm')}"></td>
-                    <!-- 조회수 부분-->
-                </tr>
-                </tbody>
-            </table>
-
-            <!-- 페이징처리 시작 -->
+            </div>
+        </div>
+        <div class="load-more-post">
             <div th:if="${!paging.isEmpty()}"
                  th:with="queryStrBase = '?kw=' + ${param.kw}, queryStrBase = ${queryStrBase} + '&sortCode=' + ${param.sortCode}">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <ul class="pagination pagination-sm justify-content-center">
+                    <li class="page-item mr-1" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                         <a class="page-link"
                            th:href="@{|${queryStrBase}&page=${paging.number-1}|}">
-                            <span>prev</span>
+                            <span>이전</span>
                         </a>
                     </li>
 
@@ -94,20 +103,13 @@
                     </li>
 
                     <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                        <a class="page-link" th:href="@{|${queryStrBase}&page=${paging.number+1}|}">
-                            <span>next</span>
+                        <a class="page-link ml-1" th:href="@{|${queryStrBase}&page=${paging.number+1}|}">
+                            <span>다음</span>
                         </a>
                     </li>
                 </ul>
             </div>
-            </div>
-
         </div>
-        <div class="block-box user-top-header">
-        </div>
-        <div class="row">
-        </div>
-
     </div>
 </div>
 </body>
