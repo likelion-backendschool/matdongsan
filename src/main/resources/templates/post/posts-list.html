@@ -25,42 +25,24 @@
     <!--=       Container  Area Start       =-->
     <!--=====================================-->
     <div class="container">
-        <!-- Modal -->
-        <div class="modal fade" id="placeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">맛집 찾기</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="place-modal">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-4" type="search" id="search-input" placeholder="키워드를 입력해주세요!" aria-label="Search">
-                            <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="sendKakaoApi();return false;">Search</button>
-                        </form>
-                        <ul class="list-group list-group-flush" id="search-result-list"></ul>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="forum-topic-add">
-
             <div class="my-4">
                 <h3 class="heading-title">맛집 게시글</h3>
 
                 <!-- 검색창  -->
                 <div class="col-6" style="float:right">
                     <form class="input-group">
-                        <select class="from-select" th:name="searchType" data-placeholder="검색어를 입력해주세요" required >
-                            <option th:each="type : ${searchType}" th:value="${type}" th:text="${type.getValue()}"></option>
-                        </select>
-                        <input class="form-control" type="text" name="keyword" placeholder="검색어를 입력해주세요." th:value="${param.keyword}" onclick="getSearchList()">
-                        <button type="submit" class="btn btn-outline-secondary">검색</button>
+                        <div class="input-group w-25">
+                            <select class="select2" th:name="searchType" data-placeholder="검색어를 입력해주세요" required >
+                                <option th:each="type : ${searchType}" th:value="${type}" th:text="${type.getValue()}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group w-75">
+                            <input type="text" class="form-control" placeholder="검색어를 입력해주세요." name="keyword" th:value="${param.keyword}">
+                            <div class="input-group-append">
+                                <button class="search-btn" type="submit"><i class="icofont-search-1"></i></button>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
