@@ -51,9 +51,7 @@ public class ProfileController {
 
     @GetMapping("/settings/profile")
     public String showProfileSettingPage(@AuthUser Account account, Model model) {
-        log.info("account.getUsername()={}", account.getUsername());
-
-        MemberVo member = accountService.getReadOnlyMember(account.getUsername());
+        MemberVo member = accountService.getReadOnlyMember(account.getMember().getNickname());
         model.addAttribute("member", member);
         model.addAttribute("profilePasswordDto", new ProfilePasswordDto());
         model.addAttribute("profileWithdrawalDto", new ProfileWithdrawalDto());

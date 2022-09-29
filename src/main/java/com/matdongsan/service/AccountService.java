@@ -178,7 +178,6 @@ public class AccountService implements UserDetailsService {
      */
     public MemberVo getReadOnlyMember(String username) {
         Member currentMember = memberService.findMemberByUsername(username);
-        log.info("currentUser.introduce={}", currentMember.getIntroduce());
         return MemberVo.builder()
                 .nickname(currentMember.getNickname())
                 .introduce(currentMember.getIntroduce())
