@@ -35,10 +35,10 @@
                             <i class="icofont-check"></i></div>
                         <ul class="entry-meta">
                             <th:block th:if="${!post.privateStatus}">
-                                <li class="meta-privacy"><i class="icofont-lock"></i> Private</li>
+                                <li class="meta-privacy"><i class="icofont-lock"></i>비공개</li>
                             </th:block>
                             <th:block th:if="${post.privateStatus}">
-                                <li class="meta-privacy"><i class="icofont-world"></i> Public</li>
+                                <li class="meta-privacy"><i class="icofont-world"></i>공개</li>
                             </th:block>
                             <th:block th:if="${post.modifiedTime == null}">
                                 <li class="meta-time" th:text="${post.postTime}">등록 시간</li>
@@ -80,8 +80,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 비밀 글-->
-                    <div th:if="${!post.isPrivateStatus()}">비밀 글입니다</div>
 
                     <div style="font-weight: bold;font-size: 16px;text-align: end">
                         <a th:text="${post.getPlace().getPlaceName()}" th:href="@{/place/{id}/detail(id = ${post.getPlace().getId()})}">

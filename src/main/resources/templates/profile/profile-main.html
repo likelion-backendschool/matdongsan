@@ -32,30 +32,30 @@
                     <th:block th:each="post : ${member.getPostList()}">
                         <th:block th:if="${post.getAuthor().nickname == #authentication.principal.nickname}">
                             <div class="col-lg-3 col-md-4 col-6">
-                                <div class="card">
+                                <div class="card mb-2">
                                     <img th:src="${post.getPlace().mainPhotoUrl}" class="card-img-top" alt="..." style="height:180px;">
                                     <div class="card-body">
                                         <h5 class="card-title"><a th:href="@{|/post/${post.id}/detail|}" th:text="${post.title}">제목</a></h5>
                                         <span>
-                                    <i class="icofont-location-pin"></i>
-                                    <a th:href="@{/place/{placeId}/detail(placeId = ${post.getPlace().getId()})}">
-                                        <h6 class="card-text" th:text="${post.getPlace().placeName}">장소 이름</h6>
-                                    </a>
-                                </span>
+                                            <i class="icofont-location-pin"></i>
+                                            <a th:href="@{/place/{placeId}/detail(placeId = ${post.getPlace().getId()})}">
+                                                <h6 class="card-text" th:text="${post.getPlace().placeName}">장소 이름</h6>
+                                            </a>
+                                        </span>
                                         <hr class="my-1">
                                         <div>
-                                    <span>
-                                        <i class="icofont-clock-time"></i>
-                                        <span th:text="${post.postTime}" class="mx-2">업로드 시간</span>
-                                    </span>
                                             <span>
-                                        <th:block th:if="${!post.privateStatus}">
-                                            <i class="icofont-lock"></i><span class="mx-2">Private</span>
-                                        </th:block>
-                                        <th:block th:if="${post.privateStatus}">
-                                            <i class="icofont-world"></i><span class="mx-2">Public</span>
-                                        </th:block>
-                                    </span>
+                                                <i class="icofont-clock-time"></i>
+                                                <span th:text="${post.postTime}" class="mx-2">업로드 시간</span>
+                                            </span>
+                                            <span>
+                                                <th:block th:if="${!post.privateStatus}">
+                                                    <i class="icofont-lock"></i><span class="mx-2">비공개</span>
+                                                </th:block>
+                                                <th:block th:if="${post.privateStatus}">
+                                                    <i class="icofont-world"></i><span class="mx-2">공개</span>
+                                                </th:block>
+                                            </span>
                                         </div>
                                         <div>
                                             <span><i class="icofont-thumbs-up text-dark"></i><span th:text="${post.getPostLike().size()}" class="mx-2">추천 수</span></span>
@@ -67,30 +67,30 @@
                         </th:block>
                         <th:block th:if="${(post.getAuthor().nickname != #authentication.principal.nickname) && post.privateStatus}">
                             <div class="col-lg-3 col-md-4 col-6">
-                                <div class="card">
+                                <div class="card mb-2">
                                     <img th:src="${post.getPlace().mainPhotoUrl}" class="card-img-top" alt="..." style="height:180px;">
                                     <div class="card-body">
                                         <h5 class="card-title"><a th:href="@{|/post/${post.id}/detail|}" th:text="${post.title}">제목</a></h5>
                                         <span>
-                                    <i class="icofont-location-pin"></i>
-                                    <a th:href="@{/place/{placeId}/detail(placeId = ${post.getPlace().getId()})}">
-                                        <h6 class="card-text" th:text="${post.getPlace().placeName}">장소 이름</h6>
-                                    </a>
-                                </span>
+                                            <i class="icofont-location-pin"></i>
+                                            <a th:href="@{/place/{placeId}/detail(placeId = ${post.getPlace().getId()})}">
+                                                <h6 class="card-text" th:text="${post.getPlace().placeName}">장소 이름</h6>
+                                            </a>
+                                        </span>
                                         <hr class="my-1">
                                         <div>
-                                    <span>
-                                        <i class="icofont-clock-time"></i>
-                                        <span th:text="${post.postTime}" class="mx-2">업로드 시간</span>
-                                    </span>
                                             <span>
-                                        <th:block th:if="${!post.privateStatus}">
-                                            <i class="icofont-lock"></i><span class="mx-2">Private</span>
-                                        </th:block>
-                                        <th:block th:if="${post.privateStatus}">
-                                            <i class="icofont-world"></i><span class="mx-2">Public</span>
-                                        </th:block>
-                                    </span>
+                                                <i class="icofont-clock-time"></i>
+                                                <span th:text="${post.postTime}" class="mx-2">업로드 시간</span>
+                                            </span>
+                                            <span>
+                                                <th:block th:if="${!post.privateStatus}">
+                                                    <i class="icofont-lock"></i><span class="mx-2">비공개</span>
+                                                </th:block>
+                                                <th:block th:if="${post.privateStatus}">
+                                                    <i class="icofont-world"></i><span class="mx-2">공개</span>
+                                                </th:block>
+                                            </span>
                                         </div>
                                         <div>
                                             <span><i class="icofont-thumbs-up text-dark"></i><span th:text="${post.getPostLike().size()}" class="mx-2">추천 수</span></span>
