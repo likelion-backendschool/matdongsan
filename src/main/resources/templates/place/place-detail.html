@@ -109,7 +109,9 @@
                                 <div th:each="post : ${posts}">
                                     <div class="media">
                                         <div class="item-img">
-                                            <img src="/media/figure/author_6.jpg" alt="blog">
+                                            <div class="user-img">
+                                                <svg th:data-jdenticon-value="${post.author.nickname}" width="90" height="90" class="rounded-circle identicon" th:data-id="${post.author.nickname}"></svg>
+                                            </div>
                                         </div>
                                         <div class="media-body">
                                             <a th:href="@{/post/{id}/detail(id = ${post.id})}">
