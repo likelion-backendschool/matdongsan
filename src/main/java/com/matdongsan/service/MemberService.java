@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,11 @@ public class MemberService {
         account.addMember(newMember);
         log.info("newMember={}", newMember);
         return memberRepository.save(newMember);
+    }
+
+    public Member findMemberByUsername(String username){
+        Optional<Member> currentMember = memberRepository.findByNickname(username);
+        return currentMember.orElse(null);
     }
 
     public void updateCurrentMember(Member member, MemberInfoDto memberInfoDto) {

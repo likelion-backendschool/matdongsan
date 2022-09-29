@@ -177,7 +177,7 @@ public class AccountService implements UserDetailsService {
      * @returns Member가 아닌 VO 객체를 반환함
      */
     public MemberVo getReadOnlyMember(String username) {
-        Member currentMember = findAccountByUsername(username).getMember();
+        Member currentMember = memberService.findMemberByUsername(username);
         log.info("currentUser.introduce={}", currentMember.getIntroduce());
         return MemberVo.builder()
                 .nickname(currentMember.getNickname())

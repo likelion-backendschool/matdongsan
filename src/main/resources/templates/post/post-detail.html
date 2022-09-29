@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="media-body">
-                        <div class="user-title"><a th:href="@{/profile/{username}(username = ${post.getAuthor().nickname})}" th:text="${post.getAuthor().getAccount().username}">닉네임</a></div>
+                        <div class="user-title"><a th:href="@{/profile/{username}(username = ${post.getAuthor().nickname})}" th:text="${post.getAuthor().nickname}">닉네임</a></div>
                         <ul class="entry-meta">
                             <th:block th:if="${!post.privateStatus}">
                                 <li class="meta-privacy"><i class="icofont-lock"></i>비공개</li>

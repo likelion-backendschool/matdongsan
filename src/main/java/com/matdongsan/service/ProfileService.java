@@ -23,12 +23,7 @@ public class ProfileService {
         return currentMember.orElse(null);
     }
 
-    public MemberVo findByUsernameOrNickname(String nickname) {
-        if (accountRepository.findByUsername(nickname).isPresent()) {
-            return accountService.getReadOnlyMember(accountRepository.findByUsername(nickname).get().getUsername());
-        } else if (memberRepository.findByNickname(nickname).isPresent()) {
-            return accountService.getReadOnlyMember(memberRepository.findByNickname(nickname).get().getNickname());
-        }
-        return null;
+    public Optional<MemberVo> findByUsernameOrNickname(String nickname) {
+        return Optional.of(accountService.getReadOnlyMember(memberRepository.findByNickname(nickname).get().getNickname()));
     }
 }
