@@ -159,7 +159,7 @@ public class PostController {
 
         postRepository.save(updatePost);
 
-        return "redirect:/post/{id}";
+        return "redirect:/post/{id}/detail";
     }
 
     // 글 삭제

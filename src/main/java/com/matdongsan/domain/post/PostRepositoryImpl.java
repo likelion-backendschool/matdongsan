@@ -103,6 +103,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         JPAQuery<Post> postQuery = jpaQueryFactory
                 .select(post)
                 .from(post)
+                .where(post.privateStatus.eq(true))
                 .orderBy(post.postLike.size().desc())
                 .limit(5);
 
