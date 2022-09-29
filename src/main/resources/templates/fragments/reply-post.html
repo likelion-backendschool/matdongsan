@@ -152,7 +152,7 @@
             $.ajax({
                 type: "POST",
                 url: "/post/" + postId + "/reply",
-                data: $('#replyForm').serialize(),ㅔ
+                data: $('#replyForm').serialize(),
                 success: function (replyDto) {
                     let result = $("#reply_async_template").html()
                         .replace("{imageUrl}", replyDto.nickname)
