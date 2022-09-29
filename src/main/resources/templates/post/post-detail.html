@@ -50,18 +50,15 @@
                     </div>
                 </div>
                 <div class="dropdown" sec:authorize="isAuthenticated()">
-                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                        ...
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <th:block th:if="${#authentication.principal.username == post.author.account.username}">
+                    <th:block th:if="${#authentication.principal.username == post.author.account.username}">
+                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" th:href="@{/post/modify/{id}(id=${post.getId()})}"><span class="ml-1">수정</span></a>
                             <a class="dropdown-item" th:href="@{/post/delete/{id}(id=${post.getId()})}"><span class="ml-1">삭제</span></a>
-                        </th:block>
-                        <th:block th:if="${#authentication.principal.username != post.author.account.username}">
-                            <a class="dropdown-item" href="#">신고하기</a>
-                        </th:block>
-                    </div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
             <div class="post-body">
