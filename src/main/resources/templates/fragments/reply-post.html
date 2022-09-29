@@ -14,7 +14,7 @@
                         <div class="post-header">
                             <div class="media">
                                 <div class="user-img">
-                                    <svg th:data-jdenticon-value="${reply.writer.nickname}" width="40" height="40" class="rounded-circle"></svg>
+                                    <svg th:data-jdenticon-value="${reply.writer.nickname}" width="40" height="40" class="rounded-circle identicon" th:data-id="${reply.writer.nickname}"></svg>
                                 </div>
                                 <div class="media-body">
                                     <div class="user-title"><a
@@ -104,29 +104,6 @@
                                         <span th:id="|replyLike${reply.id}|"
                                               class="badge rounded-pill bg-primary text-white ml-1"
                                               th:text="${#lists.size(reply.replyLike)}"></span>
-                                        <div class="modal" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Modal title</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Modal body text goes here.</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-                                                        <button type="button" class="btn btn-primary">Save changes
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </a>
                                 </li>
                             </ul>
@@ -194,6 +171,13 @@
                     $(".comment-list").prepend(result);
                 }
             })
+            imageDelay(function (){
+                $(".identicon").each(function() {
+                    var hash = md5($(this).data('id')).toString();
+                    var data = new Identicon(hash,{format:'svg'}).toString();
+                    $(this).attr('src', "data:image/svg+xml;base64,"+data);
+                });
+            }, 1000);
         });
     </script>
 </div>
