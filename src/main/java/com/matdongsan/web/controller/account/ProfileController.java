@@ -37,22 +37,21 @@ public class ProfileController {
 
     @GetMapping("/profile/{username}")
     public String showProfilePage(@PathVariable String username, Model model, @AuthUser Account account) {
-        MemberVo member = profileService.findByUsernameOrNickname(username);
-        if (member == null) {
-            MemberVo principalMember = accountService.getReadOnlyMember(account.getUsername());
+        Optional<MemberVo> member = profileService.findByUsernameOrNickname(username);
+        if (member.isEmpty()) {
+            MemberVo principalMember = accountService.getReadOnlyMember(account.getMember().getNickname());
             model.addAttribute("member", principalMember);
+            model.addAttribute("isNotPresentMemberMessage", "해당 유저가 존재하지 않습니다.");
             return "profile/profile-main";
         }
-        model.addAttribute("member", member);
+        model.addAttribute("member", member.get());
 
         return "profile/profile-main";
     }
 
     @GetMapping("/settings/profile")
     public String showProfileSettingPage(@AuthUser Account account, Model model) {
-        log.info("account.getUsername()={}", account.getUsername());
-
-        MemberVo member = accountService.getReadOnlyMember(account.getUsername());
+        MemberVo member = accountService.getReadOnlyMember(account.getMember().getNickname());
         model.addAttribute("member", member);
         model.addAttribute("profilePasswordDto", new ProfilePasswordDto());
         model.addAttribute("profileWithdrawalDto", new ProfileWithdrawalDto());

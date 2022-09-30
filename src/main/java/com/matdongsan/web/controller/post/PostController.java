@@ -10,6 +10,7 @@ import com.matdongsan.domain.post.PostRepository;
 
 import com.matdongsan.domain.post.SearchType;
 import com.matdongsan.domain.reply.Reply;
+import com.matdongsan.infra.security.SecurityUser;
 import com.matdongsan.service.AccountService;
 import com.matdongsan.service.LikeApiService;
 import com.matdongsan.service.PostService;
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,10 +59,10 @@ public class PostController {
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  RedirectAttributes redirectAttributes,
                                  Model model, @ModelAttribute("replyDto") ReplyDto replyDto,
-                                 @AuthUser Account account, Principal principal) {
+                                 @AuthUser Account account, @AuthenticationPrincipal SecurityUser securityUser) {
         Post post = postService.findById(id);
         if (!post.isPrivateStatus()) {
-            if (!account.getMember().getNickname().equals(post.getAuthor().getNickname()) || principal == null) {
+            if (securityUser == null || !account.getMember().getNickname().equals(post.getAuthor().getNickname())) {
                 redirectAttributes.addFlashAttribute("accessError", "비공개 글에는 접근할 수 없습니다.");
                 return "redirect:/posts";
             }
