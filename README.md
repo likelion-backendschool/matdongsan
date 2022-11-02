@@ -37,13 +37,13 @@
 
 ## 스크린샷
 
-![맛집 등록 페이지](docs/screenshot-1.png)
+맛집 리뷰를 등록하는 페이지
 
-맛집을 등록하는 페이지
-
-![맛집 포스팅 페이지](docs/screenshot-2.png)
+<img width="1436" alt="스크린샷 2022-11-02 11 37 09" src="https://user-images.githubusercontent.com/82663161/199382477-742de13e-bd75-4616-9b80-c9ed9e9c27a0.png">
 
 내가 등록한 리뷰를 맛집 지도로 볼 수 있는 페이지
+
+<img width="1432" alt="스크린샷 2022-11-02 11 41 01" src="https://user-images.githubusercontent.com/82663161/199382838-ef6bdf2f-0bc0-41e8-add9-3dec6c605ab3.png">
 
 ## 왜 이 프로젝트를 만들었는가?
 
@@ -79,6 +79,6 @@ Chromium 기반의 웹에서 모두 작동하며, 위치 기반의 서비스를 
 - [GitHub Actions](https://github.com/features/actions)
 
 ## 앞으로 진행될 사항들
-
+- 로고 이미지 수정
 - AWS S3 도입 ➡️ 이미지처리
 - 클린 코드를 위한 코드 리팩터링
